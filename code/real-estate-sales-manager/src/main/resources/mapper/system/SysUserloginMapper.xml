@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zx.system.dao.SysUserloginDao">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="SysUserlogin">
+		<result column="id" property="id"  />
+		<result column="logintoken" property="logintoken"  />
+		<result column="userid" property="userid"  />
+		<result column="branchcode" property="branchcode"  />
+		<result column="branchname" property="branchname"  />
+		<result column="username" property="username"  />
+		<result column="realname" property="realname"  />
+		<result column="loginphoto" property="loginphoto"  />
+		<result column="clientip" property="clientip"  />
+		<result column="rolenames" property="rolenames"  />
+		<result column="issuper" property="issuper"  />
+		<result column="createtime" property="createtime"  />
+		<result column="prelogintime" property="prelogintime"  />
+		<result column="lastaccesstime" property="lastaccesstime"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="base_column_list">
+		 id,logintoken,userid,branchcode,branchname,username,realname,loginphoto,clientip,rolenames,issuper,createtime,prelogintime,lastaccesstime
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="id != null and id!=''">
+				and  id = #{id}
+			</if>
+			<if test="logintoken != null and logintoken!=''">
+				 and  logintoken = #{logintoken}
+			</if>
+			<if test="userid != null and userid!=''">
+				 and  userid = #{userid}
+			</if>
+			<if test="branchcode != null and branchcode!=''">
+				 and  branchcode = #{branchcode}
+			</if>
+			<if test="branchname != null and branchname!=''">
+				 and  branchname = #{branchname}
+			</if>
+			<if test="username != null and username!=''">
+				 and  username = #{username}
+			</if>
+			<if test="realname != null and realname!=''">
+				 and  realname = #{realname}
+			</if>
+			<if test="loginphoto != null and loginphoto!=''">
+				 and  loginphoto = #{loginphoto}
+			</if>
+			<if test="clientip != null and clientip!=''">
+				 and  clientip = #{clientip}
+			</if>
+			<if test="rolenames != null and rolenames!=''">
+				 and  rolenames = #{rolenames}
+			</if>
+			<if test="issuper != null">
+				 and  issuper = #{issuper}
+			</if>
+			<if test="createtime != null">
+				 and  createtime = #{createtime}
+			</if>
+			<if test="prelogintime != null">
+				 and  prelogintime = #{prelogintime}
+			</if>
+			<if test="lastaccesstime != null">
+				 and  lastaccesstime = #{lastaccesstime}
+			</if>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	<where>
+		<trim prefixOverrides="and">
+			<include refid="base_condition_filed" />
+			<if test="logintokenFuzzy!= null  and logintokenFuzzy!=''">
+				 and  logintoken like concat('%', #{logintokenFuzzy}, '%')
+			</if>
+			<if test="useridFuzzy!= null  and useridFuzzy!=''">
+				 and  userid like concat('%', #{useridFuzzy}, '%')
+			</if>
+			<if test="branchcodeFuzzy!= null  and branchcodeFuzzy!=''">
+				 and  branchcode like concat('%', #{branchcodeFuzzy}, '%')
+			</if>
+			<if test="branchnameFuzzy!= null  and branchnameFuzzy!=''">
+				 and  branchname like concat('%', #{branchnameFuzzy}, '%')
+			</if>
+			<if test="usernameFuzzy!= null  and usernameFuzzy!=''">
+				 and  username like concat('%', #{usernameFuzzy}, '%')
+			</if>
+			<if test="realnameFuzzy!= null  and realnameFuzzy!=''">
+				 and  realname like concat('%', #{realnameFuzzy}, '%')
+			</if>
+			<if test="loginphotoFuzzy!= null  and loginphotoFuzzy!=''">
+				 and  loginphoto like concat('%', #{loginphotoFuzzy}, '%')
+			</if>
+			<if test="clientipFuzzy!= null  and clientipFuzzy!=''">
+				 and  clientip like concat('%', #{clientipFuzzy}, '%')
+			</if>
+			<if test="rolenamesFuzzy!= null  and rolenamesFuzzy!=''">
+				 and  rolenames like concat('%', #{rolenamesFuzzy}, '%')
+			</if>
+			<if test="IncludeLogintoken != null and IncludeLogintoken.size > 0">
+				AND logintoken in
+				<foreach collection="IncludeLogintoken" item="item" index="index" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</trim>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" />
+			FROM sys_userlogin <include refid="query_condition" />
+		 <if test="orderBy!=null">
+			 order by ${orderBy}
+		 </if>
+		 <if test="page!=null">
+			 limit #{page.start},#{page.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1)
+			FROM sys_userlogin <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="SysUserlogin">
+		 INSERT INTO sys_userlogin
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="logintoken != null">
+				 logintoken,
+			</if>
+			<if test="userid != null">
+				 userid,
+			</if>
+			<if test="branchcode != null">
+				 branchcode,
+			</if>
+			<if test="branchname != null">
+				 branchname,
+			</if>
+			<if test="username != null">
+				 username,
+			</if>
+			<if test="realname != null">
+				 realname,
+			</if>
+			<if test="loginphoto != null">
+				 loginphoto,
+			</if>
+			<if test="clientip != null">
+				 clientip,
+			</if>
+			<if test="rolenames != null">
+				 rolenames,
+			</if>
+			<if test="issuper != null">
+				 issuper,
+			</if>
+			<if test="createtime != null">
+				 createtime,
+			</if>
+			<if test="prelogintime != null">
+				 prelogintime,
+			</if>
+			<if test="lastaccesstime != null">
+				 lastaccesstime,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="logintoken!=null">
+				 #{logintoken},
+			</if>
+			<if test="userid!=null">
+				 #{userid},
+			</if>
+			<if test="branchcode!=null">
+				 #{branchcode},
+			</if>
+			<if test="branchname!=null">
+				 #{branchname},
+			</if>
+			<if test="username!=null">
+				 #{username},
+			</if>
+			<if test="realname!=null">
+				 #{realname},
+			</if>
+			<if test="loginphoto!=null">
+				 #{loginphoto},
+			</if>
+			<if test="clientip!=null">
+				 #{clientip},
+			</if>
+			<if test="rolenames!=null">
+				 #{rolenames},
+			</if>
+			<if test="issuper!=null">
+				 #{issuper},
+			</if>
+			<if test="createtime!=null">
+				 #{createtime},
+			</if>
+			<if test="prelogintime!=null">
+				 #{prelogintime},
+			</if>
+			<if test="lastaccesstime!=null">
+				 #{lastaccesstime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 根据id修改-->
+	<update id="updateByLogintoken" parameterType="SysUserlogin">
+		 UPDATE sys_userlogin
+ 		 <set> 
+			<if test="userid != null">
+				 userid = #{userid},
+			</if>
+			<if test="userareacode != null">
+				 userareacode = #{userareacode},
+			</if>
+			<if test="userareaname != null">
+				 userareaname = #{userareaname},
+			</if>
+			<if test="branchcode != null">
+				 branchcode = #{branchcode},
+			</if>
+			<if test="branchname != null">
+				 branchname = #{branchname},
+			</if>
+			<if test="username != null">
+				 username = #{username},
+			</if>
+			<if test="realname != null">
+				 realname = #{realname},
+			</if>
+			<if test="loginphoto != null">
+				 loginphoto = #{loginphoto},
+			</if>
+			<if test="clientip != null">
+				 clientip = #{clientip},
+			</if>
+			<if test="rolenames != null">
+				 rolenames = #{rolenames},
+			</if>
+			<if test="issuper != null">
+				 issuper = #{issuper},
+			</if>
+			<if test="createtime != null">
+				 createtime = #{createtime},
+			</if>
+			<if test="prelogintime != null">
+				 prelogintime = #{prelogintime},
+			</if>
+			<if test="lastaccesstime != null">
+				 lastaccesstime = #{lastaccesstime},
+			</if>
+ 		 </set>
+ 		 where logintoken=#{logintoken}
+	</update>
+
+	<!-- 根据Logintoken删除-->
+	<delete id="deleteByLogintoken">
+		delete from sys_userlogin where logintoken=#{logintoken}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByLogintoken" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from sys_userlogin where logintoken=#{logintoken}
+	</select>
+
+</mapper>

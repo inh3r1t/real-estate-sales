@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<body>
+<div class="padding" data-layout-fragment="renderBody">
+    <form id="form" th:method="post" class="layui-form  layui-form-pane" th:action="@{/category/submit}">
+        <input type="hidden" name="_f_token" th:value="${_f_token}" />
+        <input type="hidden" name="id" th:value="${sysCategory.id}"/>
+        <input type="hidden" name="code" th:value="${sysCategory.code}"/>
+        <input type="hidden" name="categoryType" th:value="${categoryType}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级分类</label>
+            <div class="layui-input-block">
+                <select name="parentCode" lay-search="" th:disabled="${sysCategory.id==null?false:true}">
+                    <option value="">无</option>
+                    <div th:each="sysCategory:${list}">
+                        <option th:value="${sysCategory.code}" th:text="${sysCategory.name}"
+                                th:selected="${sysCategory.code==parentCode?true:false}">--
+                        </option>
+                    </div>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-col-xs6">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" placeholder="请输入分类名称" maxlength="50" autocomplete="off"
+                           class="layui-input required form-stringCheck"
+                           th:value="${sysCategory.name}">
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <label class="layui-form-label">分类别名</label>
+                <div class="layui-input-block form-stringCheck">
+                    <input type="text" name="nameother" placeholder="请输入分类别名" maxlength="50" autocomplete="off"
+                           class="layui-input"
+                           th:value="${sysCategory.nameother}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea type="text" name="remark" placeholder="请输入备注" maxlength="100" autocomplete="off"
+                          class="layui-textarea"
+                          th:text="${sysCategory.remark}" rows="3" cols="3"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item form-footer">
+            <button class="layui-btn" lay-submit lay-filter="formedit" id="btnSubmit" type="submit">保存</button>
+            <span class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.close();">关闭</span>
+        </div>
+
+    </form>
+</div>
+
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    //表单验证提交
+    $('#form').initForm();
+
+    function ViewModel() {
+        var self = this;
+        self.items = ko.observableArray([]);
+        self.reload = function () {
+            $.getJSON("/category/treeJson", function (data) {
+                viewModel.items(data);
+            });
+        }
+    }
+
+    //绑定数据
+    var viewModel = new ViewModel();
+    $.getJSON("/category/treeJson", function (data) {
+        viewModel.items(data);
+    });
+    ko.applyBindings(viewModel);
+</script>
+</body>
+</html>

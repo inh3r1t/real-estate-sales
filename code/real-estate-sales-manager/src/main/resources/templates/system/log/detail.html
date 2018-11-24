@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout" >
+
+<head>
+    <title>日志详细</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <div class="layui-container" th:hidden="${LogItem!=null}"></div>
+    <div class="layui-container" th:hidden="${LogItem==null}">
+        <div class="layui-row" style="margin:5px 0px">
+            <div class="layui-col-xs2 layui-col-xs-offset1"><label class="bold">日志描述：</label></div>
+            <div class="layui-col-xs9" th:text="${LogItem.getDescription()}"></div>
+        </div>
+
+        <div class="layui-row" style="margin-bottom: 5px" th:hidden="${LogItem.getDetails() == null}">
+            <div class="layui-col-xs2 layui-col-xs-offset1"> <label class="bold">日志详情：</label></div>
+            <div class="layui-col-xs9" th:text="${LogItem.getDetails()}"></div>
+        </div>
+
+        <div class="layui-row" style="margin-bottom: 5px">
+            <div class="layui-col-xs2 layui-col-xs-offset1"><label class="bold">请求的地址：</label> </div>
+            <div class="layui-col-xs9" th:text="${LogItem.getUrl()}"></div>
+        </div>
+
+        <div class="layui-row" style="margin-bottom: 5px">
+            <div class="layui-col-xs2 layui-col-xs-offset1"> <label class="bold">客户端信息：</label></div>
+            <div class="layui-col-xs9">
+                <span th:text="${LogItem.getClientip()}"></span>　<span th:text="${LogItem.getClientbrowser()}"></span>　<span th:text="${LogItem.getClientos()}"></span>
+            </div>
+        </div>
+
+        <div class="layui-row" style="margin-bottom: 5px">
+            <div class="layui-col-xs2 layui-col-xs-offset1"><label class="bold">记录时间：</label></div>
+            <div class="layui-col-xs9" th:text="${#dates.format(LogItem.getCreatetime(), 'yyyy-MM-dd HH:mm:ss')}"></div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-col-xs2 layui-col-xs-offset1"><label class="bold">操作类型：</label></div>
+            <div class="layui-col-xs9" th:text="${LogItem.getLoglevelname()}"></div>
+        </div>
+    </div>
+</div >
+
+</html>

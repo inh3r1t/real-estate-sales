@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<head>
+    <title>编辑角色</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <form id="addRolesForm" class="layui-form" th:method="post" action="/user/addRoles">
+        <input type="hidden" name="_f_token" th:value="${_f_token}" />
+        <!-- <div class="layui-form">
+             <button class="close" data-dismiss="alert"></button>
+             <span style="margin-left: 20px;">
+             <strong>系统提示：</strong>
+             重新分配角色后，被分配用户需重新登录系统才能使“角色-权限”生效！
+         </span>
+         </div>-->
+
+        <div class="layui-form-item">
+            <div class="layui-col-xs6">
+                <label>用户：</label>
+                <span th:text="${userinfo.username}"></span>
+                <input type="hidden" id="id" name="id" th:value="${userinfo.id}">
+            </div>
+            <div class="layui-col-xs6">
+                <label>姓名：</label><span th:text="${userinfo.fullname}"></span>
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group form-group-sm">
+            <label>角色：</label>
+            <div class="checkbox">
+
+                <div class="layui-col-xs6 " style="padding-left: 30px;margin-top: 10px" th:each="role:${roleList}">
+                    <input type="checkbox" lay-skin="primary" name="roleIds" class="icheckbox" th:id="${role.id}"
+                           th:value="${role.id}" th:checked="${userinfo.hasRole(role)}"/>
+                    <label th:for="${role.id}" th:title="${role.name}" th:text="${role.name}" class="text-ellipsis-150"
+                           style="margin-bottom: -4px;">
+                    </label>
+                    <!-- <a onclick="btn_menu('@item.UID', '@item.Name')" title="查看该角色的权限" data-toggle="tooltip" data-placement="top">权限</a>-->
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item form-footer">
+            <span class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.closeAll();">关闭</span>
+            <button th:type="submit" class="layui-btn pull-right" lay-submit lay-filter="formedit" id="btnSubmit">保存
+            </button>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    var viewModel = new ViewModel();
+    function ViewModel() {
+        var $this = this;
+        $this.hasSelectRole = ko.observableArray([]);
+    }
+
+    $(function () {
+        ko.applyBindings(viewModel);
+        $.ajax({
+            type: 'POST',
+            url: '/user/getHasSelectRole?userID=' + $("#id").val(),
+            dataType: 'json',
+            success: function (data) {
+                //data.splice(0,1);
+                viewModel.hasSelectRole(data);
+                RefreshForm();
+            }
+        });
+    });
+
+
+    function RefreshForm() {
+        $("[name='checkbox']").removeAttr("checked");
+        for (var i = 0; i < viewModel.hasSelectRole().length; i++) {
+            $("#" + viewModel.hasSelectRole()[i].id).attr("checked", 'true');
+        }
+
+    }
+
+    layui.use('form', function () {
+        var form = layui.form;
+        $("#addRolesForm").initForm({
+            ajaxSuccessHandler: function (data) {
+                dialog.success(data.message);
+                dialog.closeAll(true);
+            }
+        })
+    });
+</script>
+
+</html>

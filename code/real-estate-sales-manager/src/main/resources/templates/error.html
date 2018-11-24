@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<head>
+    <title>错误页 - <th:block th:text="${SYSTEM_NAME}"></th:block></title>
+</head>
+<body>
+<div class="text-center" style="position: absolute;padding-left: 50%;margin-left: -280px;"
+     data-layout-fragment="renderBody">
+    <div id="ErrorBox" class="panel panel-default" style="width: 560px; height: 330px; margin: 280px auto 0px;">
+        <div class="panel-heading">
+            <div class="panel-title" style="font-size: 20px;font-weight: bold">
+                <th:block th:text="${SYSTEM_NAME}"></th:block>系统
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="dialog-alert text-center">
+                <img src="/images/error_icon.png" style="margin: 50px 0"/>
+                <span th:text="${code}"></span>
+                <div class="title" th:text="${msg}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-layout-fragment="renderScripts">
+    $(function () {
+        if (self == top) {
+            $('#ErrorBox').addClass('panel panel-default');
+            $('#ErrorBox').find('.panel-heading').show();
+        }
+        $('#ErrorBox').css('marginTop', $(document).height() / 2 - $('#ErrorBox').height() / 2 - 30);
+        $('#ErrorBox').show();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.system.dao.SysUserDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_column_list">
+       id,username,psd,fullname,sex,
+       birthday,policenum,policeduty,mobile,phone,deadline,
+       email,ip,state,createtime,prelogintime,
+       lastlogintime,remark,photo,logoncount,branchcode
+       ,branchname,createid,lastloginerrortime,loginerrorcount
+    </sql>
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectById" resultType="SysUser">
+        select
+        <include refid="base_column_list"/>
+        from sys_users where id=#{id}
+    </select>
+    <!-- 插入 （匹配有值的字段）-->
+    <insert id="insert" parameterType="SysUser">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO sys_users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="username != null">
+                username,
+            </if>
+            <if test="psd != null">
+                psd,
+            </if>
+            <if test="fullname != null">
+                fullname,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="policenum != null">
+                policenum,
+            </if>
+            <if test="policeduty != null">
+                policeduty,
+            </if>
+
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="deadline != null">
+                deadline,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="prelogintime != null">
+                prelogintime,
+            </if>
+            <if test="lastlogintime != null">
+                lastlogintime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="photo != null">
+                photo,
+            </if>
+            <if test="logoncount != null">
+                logoncount,
+            </if>
+            <if test="branchcode != null">
+                branchcode,
+            </if>
+            <if test="branchname != null">
+                branchname,
+            </if>
+            <if test="createid != null">
+                createid,
+            </if>
+            <if test="lastloginerrortime != null">
+                lastloginerrortime,
+            </if>
+            <if test="loginerrorcount != null">
+                loginerrorcount,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="psd != null">
+                #{psd},
+            </if>
+            <if test="fullname != null">
+                #{fullname},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="birthday != null">
+                #{birthday},
+            </if>
+            <if test="policenum != null">
+                #{policenum},
+            </if>
+
+            <if test="policeduty != null">
+                #{policeduty},
+            </if>
+            <if test="mobile != null">
+                #{mobile},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="deadline != null">
+                #{deadline},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="ip != null">
+                #{ip},
+            </if>
+            <if test="state != null">
+                #{state},
+            </if>
+            <if test="createtime != null">
+                #{createtime},
+            </if>
+            <if test="prelogintime != null">
+                #{prelogintime},
+            </if>
+            <if test="lastlogintime != null">
+                #{lastlogintime},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="photo != null">
+                #{photo},
+            </if>
+            <if test="logoncount != null">
+                #{logoncount},
+            </if>
+            <if test="branchcode != null">
+                #{branchcode},
+            </if>
+            <if test="branchname != null">
+                #{branchname},
+            </if>
+            <if test="createid != null">
+                #{createid},
+            </if>
+            <if test="lastloginerrortime != null">
+                #{lastloginerrortime},
+            </if>
+            <if test="loginerrorcount != null">
+                #{loginerrorcount},
+            </if>
+
+        </trim>
+    </insert>
+    <!-- 根据Id修改-->
+    <update id="update" parameterType="SysUser">
+        UPDATE sys_users
+        <set>
+
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="psd != null">
+                psd = #{psd},
+            </if>
+            <if test="fullname != null">
+                fullname = #{fullname},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="policenum != null">
+                policenum = #{policenum},
+            </if>
+            <if test="policeduty != null">
+                policeduty = #{policeduty},
+            </if>
+
+            <if test="mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="ip != null">
+                ip = #{ip},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime},
+            </if>
+
+            <if test="prelogintime != null">
+                prelogintime = #{prelogintime},
+            </if>
+            <if test="lastlogintime != null">
+                lastlogintime = #{lastlogintime},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="photo != null">
+                photo = #{photo},
+            </if>
+            <if test="logoncount != null">
+                logoncount = #{logoncount},
+            </if>
+            <if test="branchcode != null">
+                branchcode = #{branchcode},
+            </if>
+            <if test="branchname != null">
+                branchname = #{branchname},
+            </if>
+            <if test="createid != null">
+                createid = #{createid},
+            </if>
+            <if test="lastloginerrortime != null">
+                lastloginerrortime = #{lastloginerrortime},
+            </if>
+            <if test="loginerrorcount != null">
+                loginerrorcount = #{loginerrorcount},
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+    <!--基本查询条件列-->
+    <sql id="base_condition_filed">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="username!= null  and username!=''">
+            and username = #{username}
+        </if>
+        <if test="psd != null and psd!=''">
+            and psd = #{psd}
+        </if>
+        <if test="fullname != null and fullname!=''">
+            and fullname = #{fullname}
+        </if>
+        <if test="sex != null">
+            and sex = #{sex}
+        </if>
+        <if test="birthday != null">
+            and birthday = #{birthday}
+        </if>
+        <if test="mobile != null and mobile!=''">
+            and mobile = #{mobile}
+        </if>
+        <if test="phone != null and phone!=''">
+            and phone = #{phone}
+        </if>
+        <if test="photo != null and photo!=''">
+            and photo = #{photo}
+        </if>
+        <if test="email != null and email!=''">
+            and email = #{email}
+        </if>
+        <if test="ip != null and ip!=''">
+            and ip = #{ip}
+        </if>
+        <if test="state != null">
+            and state = #{state}
+        </if>
+        <if test="createtime != null">
+            and createtime = #{createtime}
+        </if>
+        <if test="deadline != null">
+            and deadline = #{deadline}
+        </if>
+        <if test="remark != null and remark!=''">
+            and remark = #{remark}
+        </if>
+    </sql>
+
+    <!--拓展查询条件列-->
+    <sql id="query_condition">
+        <where>
+            <trim prefixOverrides="and">
+                <include refid="base_condition_filed"/>
+                <if test="usernameFuzzy!= null and usernameFuzzy!=''">
+                    and username like concat('%', #{usernameFuzzy}, '%')
+                </if>
+                <if test="fullnameFuzzy!= null and fullnameFuzzy!=''">
+                    and fullname like concat('%', #{fullnameFuzzy}, '%')
+                </if>
+                <if test="branchcodeFuzzy != null and branchcodeFuzzy !=''">
+                    and branchcode like concat(#{branchcode} , '%')
+                </if>
+                <if test="birthdayStart!= null and birthdayStart!=''">
+                    <![CDATA[ and  birthday>=str_to_date('${birthdayStart}', '%Y-%m-%d') ]]>
+                </if>
+                <if test="birthdayEnd!= null and birthdayEnd!=''">
+                    <![CDATA[ and  birthday< date_sub(str_to_date('${birthdayEnd}','%Y-%m-%d'),interval -1 day) ]]>
+                </if>
+                <if test="mobileFuzzy!= null  and mobileFuzzy!=''">
+                    and mobile like concat('%', #{mobileFuzzy}, '%')
+                </if>
+                <if test="phoneFuzzy!= null  and phoneFuzzy!=''">
+                    and phone like concat('%', #{phoneFuzzy}, '%')
+                </if>
+                <if test="emailFuzzy!= null  and emailFuzzy!=''">
+                    and email like concat('%', #{emailFuzzy}, '%')
+                </if>
+                <if test="ipFuzzy!= null  and ipFuzzy!=''">
+                    and ip like concat('%', #{ipFuzzy}, '%')
+                </if>
+                <if test="photoFuzzy!= null  and photoFuzzy!=''">
+                    and photo like concat('%', #{photoFuzzy}, '%')
+                </if>
+                <if test="createtimeStart!= null and createtimeStart!=''">
+                    <![CDATA[ and  createtime>=str_to_date('${createtimeStart}', '%Y-%m-%d') ]]>
+                </if>
+                <if test="createtimeEnd!= null and createtimeEnd!=''">
+                    <![CDATA[ and  createtime< date_sub(str_to_date('${createtimeEnd}','%Y-%m-%d'),interval -1 day) ]]>
+                </if>
+                <if test="lasttimeStart!= null and lasttimeStart!=''">
+                    <![CDATA[ and  lasttime>=str_to_date('${lasttimeStart}', '%Y-%m-%d') ]]>
+                </if>
+                <if test="lasttimeEnd!= null and lasttimeEnd!=''">
+                    <![CDATA[ and  lasttime< date_sub(str_to_date('${lasttimeEnd}','%Y-%m-%d'),interval -1 day) ]]>
+                </if>
+                <if test="remarkFuzzy!= null  and remarkFuzzy!=''">
+                    and remark like concat('%', #{remarkFuzzy}, '%')
+                </if>
+                <if test="excludeId!=null and excludeId!=''">
+                    and id != #{excludeId}
+                </if>
+                <if test="roleid != null and roleid!=''">
+                    and id IN (
+                    SELECT userid FROM sys_userroles
+                    WHERE roleid = #{roleid}
+                    )
+                </if>
+                <if test="notInRole != null and notInRole.size > 0">
+                    and user.id IN
+                    (
+                    SELECT sysuser.id FROM sys_userroles as userrole RIGHT JOIN sys_users as sysuser on
+                    sysuser.id=userrole.userid
+                    WHERE userrole.roleid NOT IN
+                    <foreach collection="notInRole" item="item" index="index" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                    or userrole.roleid is NULL
+                    )
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 查询数量-->
+    <select id="selectRowCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM sys_users user
+        <include refid="query_condition"/>
+        <if test="orderBy!=null">
+            order by user.${orderBy}
+        </if>
+    </select>
+
+
+    <select id="selectUser" resultType="SysUser">
+        SELECT
+        <include refid="base_column_list"/>
+        from sys_users
+        <include refid="query_condition"/>
+    </select>
+
+    <!-- 关联查询-->
+    <select id="selectList" resultType="SysUser">
+        SELECT
+        user.id,user.username,user.psd,user.fullname,user.sex,user.birthday,user.policenum,user.policeduty,user.mobile,user.phone,user.email,user.deadline,user.ip,user.state,
+        user.createtime,user.prelogintime,user.lastlogintime,user.remark,user.photo,
+        user.logoncount,user.branchcode,departments.dname as
+        branchname,user.createid,user.lastloginerrortime,user.loginerrorcount FROM sys_users as user LEFT JOIN
+        sys_departments as departments on `user`.branchcode=departments.dcode
+        WHERE user.state!=-1
+        <if test="fullname!= null  and fullname!=''">
+            and user.fullname like concat('%', #{fullname}, '%')
+        </if>
+        <if test="username!= null  and username!=''">
+            and user.username like concat('%', #{username}, '%')
+        </if>
+        <if test="state != null">
+            and user.state = #{state}
+        </if>
+        <if test="notInRole != null and notInRole.size > 0">
+            and user.id IN
+            (
+            SELECT sysuser.id FROM sys_userroles as userrole RIGHT JOIN sys_users as sysuser on
+            sysuser.id=userrole.userid
+            WHERE userrole.roleid NOT IN
+            <foreach collection="notInRole" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            or userrole.roleid is NULL
+            )
+        </if>
+        <if test="orderBy!=null">
+            order by user.${orderBy}
+        </if>
+
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+</mapper>

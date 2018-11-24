@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<div class="padding" data-layout-fragment="renderBody">
+
+    <blockquote class="layui-elem-quote">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <span class="layui-btn" onclick="backup();">备份数据库</span>
+            </div>
+        </form>
+    </blockquote>
+    <div class="clearfix"></div>
+    <div id="list" style="min-height: 500px;">
+        <div class="table-wrapper">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th width="30%">文件名</th>
+                    <th width="50%">文件夹路径</th>
+                    <th width="10%">文件大小</th>
+                    <th width="10%">文件时间</th>
+                </tr>
+                </thead>
+                <tbody style="display:none" data-bind="visible: true">
+                <!-- ko foreach: items() -->
+                <tr class="CurrentRow">
+                    <td data-bind="text:fileName" style="display: table-cell; vertical-align: middle;"></td>
+                    <td data-bind="text:filePath" style="display: table-cell; vertical-align: middle;"></td>
+                    <td data-bind="text:fileSize" style="display: table-cell; vertical-align: middle;"></td>
+                    <td data-bind="text:fileLastModifiedTime" style="display: table-cell; vertical-align: middle;"></td>
+                </tr>
+                <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    var model = function () {
+        this.items = ko.observableArray([]);
+        this.totalCount = ko.observable(0);
+    };
+
+    var viewModel = new model();
+    $(function () {
+        ko.applyBindings(viewModel, $("#list")[0]);
+
+        getBackupFiles();
+
+    });
+
+    function getBackupFiles() {
+        $.getJSON('/getBackupFiles', function (data) {
+            if (data.state) {
+                viewModel.items(data.model);
+                dialog.loaded("#list");
+            }
+        })
+    }
+
+    function backup() {
+        dialog.confirm('确认备份系统数据库吗？', function () {
+            $.getJSON('/backupByShell', function (result) {
+                if (result.state) {
+                    dialog.success(result.message);
+                    getBackupFiles();
+                    dialog.closeAll(true);
+                } else {
+                    dialog.error(result.message);
+                }
+            });
+        });
+    }
+</script>
+</html>

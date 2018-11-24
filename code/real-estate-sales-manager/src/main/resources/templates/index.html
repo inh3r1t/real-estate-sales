@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<head>
+    <title th:text="${SYSTEM_NAME}"></title>
+</head>
+<body class="self-skin">
+<div class="layui-layout layui-layout-admin kit-layout-admin" data-layout-fragment="renderBody">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <div class="logo-mini">
+                <img alt="logo" th:src="@{/images/logo.png}"/>
+            </div>
+            <div class="logo-lg">
+                <img alt="logo" th:src="@{/images/logo-lg.png}"/>
+            </div>
+        </div>
+        <div class="layui-banner">
+            <span style="padding-left:15px;font-size: 20px;color: #fff;">Java Web 管理后台模板</span>
+        </div>
+        <ul class="layui-nav layui-layout-right kit-nav ">
+            <li class="layui-nav-item dropdown user user-menu">
+                <a class="white clickable">
+                    <img onerror=src="/images/defalut.png" th:src="@{${(currentUserLogin.user.photo==null||currentUserLogin.user.photo=='')?'/images/avatar.png':currentUserLogin.user.photo}}"
+                         class="layui-nav-img">
+                    <span th:text="${currentUserLogin.realname}" class="layui-hide-xs margin-left-15"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header">
+                        <img onerror=src="/images/defalut.png" th:src="@{${(currentUserLogin.user.photo==null||currentUserLogin.user.photo=='')?'/images/avatar.png':currentUserLogin.user.photo}}"
+                             class="layui-nav-img">
+                        <p>
+                            <span th:text="${currentUserLogin.realname}"></span> - <span
+                                th:text="${currentUserLogin.rolenames}"></span>
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                        <div class="layui-row">
+                            <div class="layui-col-xs6 text-center">
+                                <a class="clickable" onclick="personalData()">个人资料</a>
+                            </div>
+                            <div class="layui-col-xs6 text-center">
+                                <a class="clickable" id="changePwd" onclick="changePassword()">修改密码</a>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </li>
+                    <!--Menu Footer-->
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a class="layui-btn layui-btn-primary"
+                               th:onclick="'lockScreen(\''+${currentUserLogin.username}+'\',\''+${currentUserLogin.realname}+'\',\''
+                               +@{${(currentUserLogin.user.photo==null||currentUserLogin.user.photo=='')?'/images/avatar.png':currentUserLogin.user.photo}}+'\')'">
+                                <i class="fa fa-lock fa-fw"></i>
+                                锁屏
+                            </a>
+                        </div>
+                        <div class="pull-right">
+                            <a class="layui-btn layui-btn-primary" onclick="logout()">
+                                <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+                                注销
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li class="layui-nav-item">
+                <a class="white clickable" onclick="logout()">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    注销
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black kit-side self-skin-blue">
+        <div id="mainMenu" class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul id="navTree" class="layui-nav layui-nav-tree" lay-filter="kitNavbar"
+                kit-navbar>
+                <li class="layui-nav-item">
+                    <a href="javascript:" class="first-level" data-url="/dashboard"  kit-target="" data-id="-1">
+                        <i class="fa fa-home fa-fw" aria-hidden="true"></i>
+                        <span>系统首页</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item" th:each="item:${treeList}">
+                    <a href="javascript:" class="first-level">
+                        <i th:class="'fa fa-fw margin-right-5 fa-'+${item.img}" aria-hidden="true"></i>
+                        <span th:text="${item.text}"/>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd th:each="child:${item.childNodes}">
+                            <a th:if="${child.extra.murl=='无'} == false" href="javascript:"
+                               class="padding-left-10 second-level" onclick="toggle(this)"
+                               th:attr="data-title=${child.text},data-url=${child.extra.murl},data-id=${child.id}"
+                               data-icon="&#xe614;" kit-target>
+                                <i th:class="'fa fa-fw margin-right-5 fa-'+${child.img}"></i><span
+                                    th:text="${child.text}"></span></a>
+                            <a th:if="${child.extra.murl=='无'} == true" href="javascript:"
+                               class="padding-left-10 second-level" onclick="toggle(this)"
+                               data-icon="&#xe614;">
+                                <i th:class="'fa fa-fw margin-right-5 fa-'+${child.img}"></i><span
+                                    th:text="${child.text}"></span></a>
+                            <dl class="layui-nav-child-child">
+                                <dd th:each="subChild:${child.childNodes}">
+                                    <a href="javascript:" class="padding-left-10 third-level"
+                                       th:attr="data-title=${subChild.text},data-url=${subChild.extra.murl},data-id=${subChild.id}"
+                                       data-icon="&#xe614;" kit-target>
+                                        <i th:class="'fa fa-fw margin-right-5 fa-'+${subChild.img}"></i><span
+                                            th:text="${subChild.text}"></span></a>
+                                </dd>
+
+                            </dl>
+                        </dd>
+
+                    </dl>
+                </li>
+            </ul>
+            <div id="toggle-kit-side" class="kit-side-fold copyright"><i class="fa fa-navicon" aria-hidden="true"></i>
+            </div>
+
+        </div>
+    </div>
+    <div class="layui-body" id="container">
+        <!-- 内容主体区域 -->
+        <div class="text-center">
+
+        </div>
+    </div>
+
+    <!--<div class="layui-footer text-center">-->
+    <!--&lt;!&ndash; 底部固定区域 &ndash;&gt;-->
+    <!--<span th:text="${#dates.year(#dates.createToday())}"></span> &copy;-->
+    <!--中新网安-->
+    <!--</div>-->
+</div>
+
+<!--/*/<th:block data-layout-fragment="renderScripts">/*/-->
+<script th:src="@{/js/sockjs.js}"></script>
+<script th:src="@{/js/stomp.js}"></script>
+<script th:src="@{/js/wsclient.js}"></script>
+<script th:inline="javascript">
+    var message;
+    layui.config({
+        base: '/plugins/layui/js/'
+    }).use(['app', 'message'], function () {
+        var app = layui.app,
+            $ = layui.jquery,
+            layer = layui.layer;
+        //将message设置为全局以便子页面调用
+        message = layui.message;
+        //主入口
+        app.set({
+            type: 'iframe'
+        }).init();
+    });
+    $('body').on('click', '.kit-tab ul.layui-tab-title li', function () {
+        var i = $(this).attr("lay-id");
+        $.cookie('_ctid', i, {path: '/'});
+    });
+    $('body').on('click', '#navTree a[data-id]', function () {
+        var i = $(this).attr("data-id");
+        $.cookie('_ctid', i, {path: '/'});
+    });
+    $('body').on('mouseover', '.layui-show', function () {
+        var i = $('.layui-tab-title li.layui-this').attr("lay-id");
+        $.cookie('_ctid', i, {path: '/'});
+    });
+
+    $('body').on('click', '.kit-nav li.user-menu', function () {
+        if ($('.kit-nav li.user-menu').hasClass('open')) {
+            $('.kit-nav li.user-menu').removeClass('open');
+            $('.kit-nav li.user-menu .dropdown-menu').removeClass('animated flipInY');
+        } else {
+            $('.kit-nav li.user-menu').addClass('open');
+            $('.kit-nav li.user-menu .dropdown-menu').addClass('animated flipInY');
+        }
+    });
+
+
+    //修改密码
+    function changePassword() {
+        dialog.iframe("/user/password", {
+            title: "修改密码",
+            closeBtn: false,
+            size: [400, 350]
+        });
+    }
+
+    //个人资料
+    function personalData() {
+        dialog.iframe("/user/personalData", {
+            title: "个人资料",
+            closeBtn: false,
+            size: [700, 560]
+        });
+    }
+
+    //一级菜单操作
+    $('#navTree li.layui-nav-item').on('click', function (obj) {
+        var pNode = $(obj.target.closest('li.layui-nav-item'));
+        pNode.siblings().removeClass('layui-nav-itemed');
+    });
+
+    //二级菜单操作
+    function toggle($this) {
+        var pNode = $($this).parent('dd');
+        if (!pNode.hasClass('active')) {
+            pNode.find('dd').removeClass('active');
+            pNode.addClass('active');
+            pNode.siblings().removeClass('active');
+        }
+    }
+
+    //三级菜单处理
+    $('.third-level').parent('dd').on('click', function () {
+        var $this = this;
+        if (!$($this).hasClass('active')) {
+            $($this).addClass('active');
+            $($this).siblings().removeClass('active');
+        }
+    });
+
+
+    //退出登录
+    function logout() {
+        dialog.confirm('确认退出系统吗？', function () {
+            $.getJSON('/logout', function (result) {
+                if (result.state) {
+                    dialog.success(result.message);
+                    location.href = '/login';
+                } else {
+                    dialog.error(result.message);
+                }
+
+            });
+        });
+    }
+
+    //********* 锁屏 ***************************
+    function lockScreen(username, realname, logo) {
+        $.getJSON('/logout', function (result) {
+            if (!result.state) {
+                return false;
+            }
+        });
+        var lockDiv = document.getElementById("lockScreen");
+        if (lockDiv != null) {
+            lockDiv.style.display = "block";
+        } else {
+            //创建新的锁屏DIV,并执行锁屏
+            var tabframe = document.createElement("div");
+            tabframe.id = "lockScreen";
+            tabframe.name = "lockScreen";
+            tabframe.className = 'lock-screen';
+            document.body.appendChild(tabframe);
+
+            var html = '<div class="lock-screen-wrapper">' +
+                '<div class="lock-screen-banner">' +
+                '    <span>' + [[${SYSTEM_NAME}]] + '</span>' +
+                '</div>' +
+                '<div class="lock-screen-logo">' +
+                '    <img src="' + logo + '">' +
+                '</div>' +
+                '<div class="lock-screen-name">' +
+                '   <span>' + realname + '</span>' +
+                '</div>' +
+                '<div class="lock-screen-form">' +
+                '    <input type="password" id="lock-password" value="" placeholder="请输入登录密码" autocomplete="off"/>' +
+                '    <i id="lock-password-btn" class="fa fa-arrow-right fa-fw" title="解锁" onclick="unlockScreen(\'' + username + '\')"></i>' +
+                '    <label></label>' +
+                '</div>' +
+                '<div class="lock-screen-tip">' +
+                '<span id="lockTip"></span>' +
+                '</div>' +
+                '</div>';
+            tabframe.innerHTML = html;
+        }
+    }
+
+    //********* 解屏 ***************************
+    function unlockScreen(username) {
+        $('#lockTip').text('');
+        var lockPassword = $('#lock-password').val();
+        if (lockPassword !== null && lockPassword !== '') {
+            $.post('/loginSubmit', {username: username, password: $.md5(lockPassword)}, function (result) {
+                if (result.state) {
+                    var lockDiv = document.getElementById("lockScreen");
+                    if (lockDiv !== null) {
+                        lockDiv.style.display = "none";
+                    }
+                } else {
+                    $('#lockTip').text(result.message);
+                }
+            });
+        } else {
+            $('#lockTip').text("密码不能为空");
+        }
+    }
+
+    $('body').on('keydown', '#lock-password', function () {
+        if (event.keyCode == 13) {
+            $('#lock-password-btn').click();
+        }
+    });
+    $('body').on('focus', '#lock-password', function () {
+        $('#lockTip').text('');
+    });
+
+
+    var wsClient = new WSClient([[${webSocketUrl}]]);
+    wsClient.connect();
+
+</script>
+<!--/*/</th:block>/*/-->
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <style type="text/css">
+        #cList ul {
+            width: 100%;
+            border-radius: 1px;
+        }
+
+        #cList ul li {
+            line-height: 39px;
+            width: 100%;
+        }
+
+        #cList ul li:first-child a {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        #cList ul li:last-child a {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        #cList ul li a {
+            border: 1px solid #dddddd;
+            display: block;
+            margin-bottom: -1px;
+            width: 100%;
+            height: 100%;
+            color: black;
+            text-indent: 50px;
+        }
+
+        #cList ul li a:hover {
+            background-color: #efefef;
+            cursor: pointer;
+        }
+
+        #cList ul li.layui-this a {
+            background-color: #23262e;
+            border-color: #23262e;
+        }
+
+        #cList ul li.layui-this a:hover {
+            background-color: #23262e;
+            border-color: #23262e;
+        }
+
+        #cList ul li.layui-this a {
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+<div class="padding" data-layout-fragment="renderBody">
+    <div class="layui-row">
+        <div id="cList" class="layui-col-xs2" style="padding-right: 25px;">
+            <ul class="cListul">
+                <li class="cListli" th:each="category:${CategoryType}">
+                    <a onclick="SelectGroup(this)" th:value="${category.getValue()}"
+                       th:text="${category}"><span>默认分类</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-col-xs10">
+            <blockquote class="layui-elem-quote">
+                <form id="searchForm" class="layui-form">
+                    <div class="layui-inline">
+                    <span class="layui-btn layui-btn-normal" onclick="viewModel.add()"><i
+                            class="fa fa-plus"></i> 新增</span>
+                    </div>
+                </form>
+            </blockquote>
+            <div class="tree-list ">
+                <div class="layui-row row header">
+                    <div class="layui-col-xs4">名称</div>
+                    <div class="layui-col-xs6">备注</div>
+                    <div class="layui-col-xs2 text-center">操作</div>
+                </div>
+                <div data-bind="template: {name: 'node-template', foreach: items}"></div>
+                <script type="text/html" id="node-template">
+                    <div class="layui-row row" data-bind="attr: {id: 'node_' + code,'data-code':value}">
+                        <div class="layui-col-xs4">
+                            <div class="indent">
+                                <a data-bind="visible: childNodes.length > 0,click: $root.toggleChildren">
+                                    <i class="fa fa-fw fa-angle-down"></i>
+                                </a>
+                                <span data-bind="html:text"></span>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs6" data-bind="text:extra.remark==''?'无':extra.remark"></div>
+                        <div class="layui-col-xs2 text-center">
+                            <a data-bind="click: $root.add" title="新增" data-toggle="tooltip" data-placement="top"><i
+                                    class="fa fa-plus"></i></a>
+                            <a data-bind="click: $root.edit" title="编辑" data-toggle="tooltip" data-placement="top"><i
+                                    class="fa fa-edit"></i> </a>
+                            <a data-bind="click: $root.delete" title="删除" data-toggle="tooltip" data-placement="top"><i
+                                    class="fa fa-trash-o"></i></a>
+                        </div>
+                    </div>
+                    <div class="child"
+                         data-bind="attr: {id: 'children_' + code }, template: {name: 'node-template', foreach: childNodes} ">
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    layui.config({
+        base: '/dist/js/'
+    });
+
+    function ViewModel() {
+        $("#cList ul li:first").addClass("layui-this");
+        var self = this;
+        self.items = ko.observableArray([]);
+        //self.selectedItem = ko.observable({ text: '' });
+        self.toggleChildren = function (item) {
+            var subEle = $('#children_' + item.code);
+            var nodeEle = $('#node_' + item.code);
+            var expand = subEle.is(':visible');
+            if (expand) {
+                nodeEle.find('.fa-angle-down').removeClass('fa-angle-down').addClass('fa-angle-right');
+            } else {
+                nodeEle.find('.fa-angle-right').removeClass('fa-angle-right').addClass('fa-angle-down');
+            }
+            subEle.slideToggle();
+        };
+        //新增
+        self.add = function (item) {
+            var cCode = "";
+            var cName = "";
+            if (item != undefined) {
+                cCode = item.code;
+                cName = item.text;
+            }
+            dialog.iframe('/category/edit?parentCode=' + cCode + '&cname=' + encodeURIComponent(encodeURIComponent(cName)) + "&categoryType=" + $("#cList .layui-this a").text(), {
+                title: "新增分类",
+                size: [700, 450]
+            }, function (result) {
+                if (result) {
+                    viewModel.reload();
+                }
+            });
+        };
+        //编辑
+        self.edit = function (item) {
+            dialog.iframe('/category/edit?id=' + item.id + "&categoryType=" + $("#cList .layui-this a").text(), {
+                title: "编辑分类",
+                size: [700, 450]
+            }, function (result) {
+                if (result) {
+                    viewModel.reload();
+                }
+            });
+        };
+        //删除
+        self.delete = function (item, obj) {
+            dialog.confirm('确认删除\'' + item.text + '\'分类吗？', function () {
+                $.getJSON('/category/delete?id=' + item.id, function (data) {
+                    dialog.closeAll();
+                    if (data.state) {
+                        dialog.success(data.message);
+                        viewModel.reload();
+                    } else {
+                        dialog.error(data.message);
+                    }
+                });
+            });
+        };
+
+        self.reload = function () {
+            $.getJSON("/category/treeJson" + "?categoryType=" + $("#cList .layui-this a").text(), function (data) {
+                viewModel.items(data);
+            });
+        }
+    }
+
+    //绑定数据
+    var viewModel = new ViewModel();
+    $.getJSON("/category/treeJson", function (data) {
+        viewModel.items(data);
+    });
+    ko.applyBindings(viewModel);
+
+    function SelectGroup(e) {
+        $this = $(e);
+        if ($this.parent().hasClass("layui-this")) {
+            return;
+        } else {
+            $("#cList ul li").removeClass("layui-this");
+            $this.parent().addClass("layui-this")
+            viewModel.reload();
+        }
+    }
+</script>
+</body>
+</html>

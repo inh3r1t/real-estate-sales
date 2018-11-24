@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>角色管理</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <blockquote class="layui-elem-quote">
+        <form id="searchForm" class="layui-form ">
+            <div class="layui-inline">
+                <label>角色名</label>
+                <div class="layui-input-inline">
+                    <input type="hidden"/>
+                    <input type="text" style="display: none"/>
+                    <input type="text" id="q" name="name" placeholder="请输入角色名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn" onclick="searchList()"><i class="fa fa-search"></i> 检索</span>
+                <span class="layui-btn layui-btn-normal" onclick="edit()"><i class="fa fa-plus"></i> 新增</span>
+            </div>
+        </form>
+    </blockquote>
+    <div class="table-wrapper">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>角色名</th>
+                <th>备注</th>
+                <th style="text-align:center;width: 200px;">操作</th>
+            </tr>
+            </thead>
+            <tbody style="display:none" data-bind="visible: true">
+            <!-- ko foreach: Items() -->
+            <tr>
+                <td>
+                    <span data-bind="text:name"></span>
+                </td>
+                <td>
+                    <span data-bind="text:remark"></span>
+                </td>
+                <td class="text-center">
+                    <a title="编辑" data-toggle="tooltip" data-placement="top" data-bind="click:edit.bind($data,id())">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a title="删除" data-toggle="tooltip" data-placement="top" data-bind="click:deleteRole">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a title="权限" data-toggle="tooltip" data-placement="top"
+                       data-bind="click:setModulePower.bind($data),style:{visibility:isadmin()?'hidden':'visible'}">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                </td>
+            </tr>
+            <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+    <ko-pager-state params="model: $data"></ko-pager-state>
+    <ko-pager params="model: $data"></ko-pager>
+</div>
+
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    var viewModel = new PagerModel("/role/getList");
+    $(function () {
+        ko.applyBindings(viewModel, $("#container")[0]);
+    });
+
+    function edit(id) {
+        dialog.iframe('/role/edit?id=' + (id == undefined ? "" : id), {
+            title: id != undefined ? '编辑角色' : '添加角色',
+            size: [500, 360]
+        }, function (result) {
+            if (result) {
+                viewModel.Reload();
+            }
+        });
+    }
+
+    function deleteRole(item) {
+        dialog.confirm('确认删除\'' + item.name() + '\'角色吗？', function () {
+            $.post('/role/delete', {id: item.id()}, function (result) {
+                dialog.closeAll();
+                if (result.state) {
+                    dialog.success(result.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(result.message);
+                }
+            }, 'json');
+        });
+    }
+
+    function setModulePower(item) {
+        dialog.iframe('/role/power_module?id=' + (item.id() == undefined ? "" : item.id()) + '&rolename=' + item.name(), {
+            title: '菜单分配',
+            size: [600, 600]
+        }, function (result) {
+            if (result) {
+                viewModel.Reload();
+            }
+        });
+    }
+
+    function searchList() {
+        var q = $('#q').val();
+        viewModel.Reload('name=' + q);
+    }
+
+</script>
+</html>

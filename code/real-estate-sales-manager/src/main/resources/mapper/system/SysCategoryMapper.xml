@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zx.system.dao.SysCategoryDao">
+
+    <!--实体映射-->
+    <resultMap id="base_result_map" type="SysCategory">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="nameother" property="nameother"/>
+        <result column="createrid" property="createrid"/>
+        <result column="type" property="type"/>
+        <result column="createtime" property="createtime"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_column_list">
+		 id,code,name,nameother,createrid,type,createtime,state,remark
+	</sql>
+
+    <sql id="base_condition_filed">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="code != null and code!=''">
+            and code = #{code}
+        </if>
+        <if test="name != null and name!=''">
+            and name = #{name}
+        </if>
+        <if test="nameother != null and nameother!=''">
+            and nameother = #{nameother}
+        </if>
+        <if test="createrid != null">
+            and createrid = #{createrid}
+        </if>
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        <if test="createtime != null">
+            and createtime = #{createtime}
+        </if>
+        <if test="state != null">
+            and state = #{state}
+        </if>
+        <if test="remark != null and remark!=''">
+            and remark = #{remark}
+        </if>
+    </sql>
+
+    <!-- 通用查询条件列-->
+    <sql id="query_condition">
+        <where>
+            <trim prefixOverrides="and">
+                <include refid="base_condition_filed"/>
+                <if test="codeFuzzy!= null  and codeFuzzy!=''">
+                    and code like concat('%', #{codeFuzzy}, '%')
+                </if>
+                <if test="nameFuzzy!= null  and nameFuzzy!=''">
+                    and name like concat('%', #{nameFuzzy}, '%')
+                </if>
+                <if test="nameotherFuzzy!= null  and nameotherFuzzy!=''">
+                    and nameother like concat('%', #{nameotherFuzzy}, '%')
+                </if>
+                <if test="remarkFuzzy!= null  and remarkFuzzy!=''">
+                    and remark like concat('%', #{remarkFuzzy}, '%')
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 查询集合-->
+    <select id="selectList" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM sys_categories
+        <include refid="query_condition"/>
+        <if test="orderBy!=null">
+            order by ${orderBy}
+        </if>
+        <if test="page!=null">
+            limit #{page.start},#{page.end}
+        </if>
+    </select>
+    <!-- 根据type查找分组-->
+    <select id="selectListByType" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM sys_categories where type=#{type}
+    </select>
+
+    <!-- 查询数量-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_categories
+        <include refid="query_condition"/>
+    </select>
+
+    <!-- 插入 （匹配有值的字段）-->
+    <insert id="insert" parameterType="SysCategory">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO sys_categories
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="nameother != null">
+                nameother,
+            </if>
+            <if test="createrid != null">
+                createrid,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code!=null">
+                #{code},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="nameother!=null">
+                #{nameother},
+            </if>
+            <if test="createrid!=null">
+                #{createrid},
+            </if>
+            <if test="type!=null">
+                #{type},
+            </if>
+            <if test="createtime!=null">
+                #{createtime},
+            </if>
+            <if test="state!=null">
+                #{state},
+            </if>
+            <if test="remark!=null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 插入或者更新 （匹配有值的字段）-->
+    <insert id="insertOrUpdate" parameterType="SysCategory">
+        INSERT INTO sys_categories
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="nameother != null">
+                nameother,
+            </if>
+            <if test="createrid != null">
+                createrid,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="code!=null">
+                #{code},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="nameother!=null">
+                #{nameother},
+            </if>
+            <if test="createrid!=null">
+                #{createrid},
+            </if>
+            <if test="type!=null">
+                #{type},
+            </if>
+            <if test="createtime!=null">
+                #{createtime},
+            </if>
+            <if test="state!=null">
+                #{state},
+            </if>
+            <if test="remark!=null">
+                #{remark},
+            </if>
+        </trim>
+        on DUPLICATE key
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="code!=null">
+                code = VALUES(code),
+            </if>
+            <if test="name!=null">
+                name = VALUES(name),
+            </if>
+            <if test="nameother!=null">
+                nameother = VALUES(nameother),
+            </if>
+            <if test="createrid!=null">
+                createrid = VALUES(createrid),
+            </if>
+            <if test="type!=null">
+                type = VALUES(type),
+            </if>
+            <if test="createtime!=null">
+                createtime = VALUES(createtime),
+            </if>
+            <if test="state!=null">
+                state = VALUES(state),
+            </if>
+            <if test="remark!=null">
+                remark = VALUES(remark),
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 添加 （批量插入）-->
+    <insert id="insertBatch" parameterType="SysCategory">
+        INSERT INTO sys_categories(code,name,nameother,createrid,type,createtime,state,remark)values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.code},#{item.name},#{item.nameother},#{item.createrid},#{item.type},#{item.createtime},#{item.state},#{item.remark}
+            )
+        </foreach>
+    </insert>
+
+
+    <!-- 根据Id删除-->
+    <delete id="deleteById">
+		delete from sys_categories where id=#{id}
+	</delete>
+
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectById" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from sys_categories where id=#{id}
+    </select>
+
+    <!-- 根据Code修改-->
+    <update id="update" parameterType="SysCategory">
+        UPDATE sys_categories
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="nameother != null">
+                nameother = #{nameother},
+            </if>
+            <if test="createrid != null">
+                createrid = #{createrid},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where code=#{code}
+    </update>
+
+    <!-- 根据Code删除-->
+    <delete id="deleteByCode">
+		delete from sys_categories where code=#{code}
+	</delete>
+
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectByCode" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from sys_categories where code=#{code} and state=0
+    </select>
+
+    <!-- 根据code获取所有子集-->
+    <select id="getSubsetsBranchByCode" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from sys_categories WHERE state=0 AND code LIKE concat(#{code}, '%') and type =#{type} order by code
+    </select>
+
+    <!-- 判断分组名称-->
+    <select id="isExisted" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM sys_categories where name=#{name} and id !=#{id} and state !=-1 limit 1
+    </select>
+
+    <!-- 根据code获取一级子集-->
+    <select id="getSubCategories" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from sys_categories where code LIKE concat(#{code}, '%')
+        AND LENGTH(code) = LENGTH(#{code})+3 AND state!=-1;
+    </select>
+
+   <!-- 逻辑删除code及其子集-->
+    <update id="deleteListByCode" parameterType="java.lang.String">
+        UPDATE sys_categories set state = -1 where code like concat(#{code}, '%');
+    </update>
+
+</mapper>

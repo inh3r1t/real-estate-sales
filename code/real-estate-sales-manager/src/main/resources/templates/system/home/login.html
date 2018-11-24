@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<head>
+
+    <style>
+        .page-login {
+            background: url("/images/bg_login.jpg") no-repeat;
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .page-login .header {
+            max-width: 254px;
+            margin: 0 auto;
+        }
+
+        .page-login .header .logo-text {
+            max-width: 440px;
+            margin-top: 10px;
+        }
+
+        .page-login .header .logo-text img {
+            max-width: 440px;
+            width: 98%;
+        }
+
+        .page-login .header .logo-text span {
+            color: #fff;
+            text-shadow: 2px 2px #777;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .page-login .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -240px 0 0 -240px;
+            width: 480px;
+        }
+
+        #myform {
+            max-width: 440px;
+            margin: 60px auto;
+        }
+
+        #myform .form-container {
+            padding: 30px;
+            /*background: #ffffff;*/
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -ms-border-radius: 4px;
+            border-radius: 4px;
+            text-align: left;
+            border: 1px solid #384e5d;
+        }
+
+        #myform .layui-input-block {
+            margin-left: 0;
+        }
+
+        #myform .layui-form-item i {
+            position: absolute;
+            margin-top: 10px;
+            margin-left: 15px;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        #myform .layui-form-item input {
+            padding-left: 50px;
+            border-color: #384e5d;
+            background: #393d49;
+            color: #fff;
+        }
+
+        #myform .layui-form-item input:focus,
+        #myform .layui-form-item input:hover {
+            padding-left: 50px;
+            border-color: #507088 !important;
+        }
+
+        #myform button.layui-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #myform label.error {
+            color: #ef392b;
+            font-size: 12px;
+            position: absolute;
+            right: 5px;
+            top: 10px;
+        }
+
+        .page-login .social-login {
+            margin-top: 35px;
+        }
+
+        .page-login .description {
+            margin: 20px 0 10px 0;
+        }
+
+        .page-login .description p {
+            color: #384e5d;
+        }
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #393d49 inset !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+<div class="page-login" data-layout-fragment="renderBody">
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">
+                <img th:src="@{/images/logo-lg.png}"/>
+                <!--<span th:text="${SYSTEM_NAME}"></span>-->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <form class="layui-form" id="myform" method="post" action="/loginSubmit">
+            <input type="hidden" name="_f_token" th:value="${_f_token}" />
+            <div class="form-container">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <i class="fa fa-user"></i>
+
+                        <input type="text" name="username" id="username"
+                               autocomplete="off"
+                               placeholder="请输入用户名"
+                               class="layui-input required form-loginId"
+                               value=""
+                               rangelength="2,20"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="pwd" placeholder="********" autocomplete="off"
+                               class="layui-input required" value="" rangelength="6,20"/>
+                        <input type="password" name="password" id="password" placeholder="********" autocomplete="off"
+                               class="layui-input hidden"/>
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${isCaptcha}">
+                    <div class="layui-input-block">
+                        <div class="layui-row">
+                            <div class="layui-col-xs7">
+                                <!--<i class="fa fa-eye" style="z-index: 1"></i>-->
+                                <input style="padding-left: 10px;" type="text" id="VerificationCode"
+                                       name="VerificationCode"
+                                       placeholder="请输入验证码"
+                                       autocomplete="off"
+                                       class="layui-input layui-input-block required" value=""/>
+                            </div>
+                            <div class="layui-col-xs5">
+                                <img id="KaptchaImage" class="" title="看不清楚,换一张？"
+                                     src="/getKaptchaImage" style="width: 133px;margin-top: 1px;margin-left: 24px;"
+                                     onclick="this.src='/getKaptchaImage?'+Math.random()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="layui-btn" id="btlogin">登 录</button>
+            </div>
+
+            <div class="social-login text text-center">
+                <div class="description">
+                    <p>&copy; 中新网安 版权所有 2002-<span th:text="${#dates.year(#dates.createToday())}"></span>
+                        <th:block th:text="${SYSTEM_NAME}"></th:block>
+                        <span th:text="${SYSTEM_VERSION}"></span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script data-layout-fragment="renderScripts">
+    $("#username").focus();
+    $('#myform').initForm({
+        ajaxLoading: false,
+        ajaxBefore: function (form) {
+            var pwd = $(form).find("input[name=password]");
+            pwd.val($.md5($('#pwd').val()));
+        },
+        ajaxSuccessHandler: function (data) {
+            if (data.state) {
+                setTimeout(function () {
+                    window.location.href = '/';
+                }, 1000);
+                $("#btlogin").attr("disabled", "disabled");
+                $("#btlogin").html("登录成功，正在加载数据...");
+            } else {
+                $('#password').val('');
+                dialog.error(data.message);
+                $("#btlogin").html("登  录");
+                $("#btlogin").removeAttrs("disabled");
+                $("#btlogin").attr("style", "opacity:1");
+
+                document.getElementById("KaptchaImage").src = '/getKaptchaImage?' + Math.random();
+                document.getElementById("VerificationCode").value = "";
+
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

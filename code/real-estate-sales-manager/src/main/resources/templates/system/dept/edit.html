@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<body>
+<div class="form-body" data-layout-fragment="renderBody">
+    <form id="form" th:method="post" class="layui-form  layui-form-pane" th:action="@{/dept/submit}">
+        <input type="hidden" name="_f_token" th:value="${_f_token}" />
+        <input type="hidden" name="id" th:value="${sysDepartment.id}"/>
+        <input type="hidden" name="dcode" th:value="${sysDepartment.dcode}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级部门</label>
+            <div class="layui-input-block">
+                <select name="parentCode" lay-search="" th:disabled="${sysDepartment.id==null?false:true}">
+                    <option value="">无</option>
+                    <div th:each="dept:${list}">
+                        <option th:value="${dept.dcode}" th:text="${dept.dname}"
+                                th:selected="${dept.dcode==parentCode?true:false}">--
+                        </option>
+                    </div>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="dname" placeholder="请输入部门名称" maxlength="50" autocomplete="off"
+                       class="layui-input required form-stringCheck"
+                       th:value="${sysDepartment.dname}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-xs6">
+                <label class="layui-form-label">部门别名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dnameother" placeholder="请输入部门别名" maxlength="50" autocomplete="off"
+                           class="layui-input form-stringCheck"
+                           th:value="${sysDepartment.dnameother}">
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <label class="layui-form-label">显示排序</label>
+                <div class="layui-input-block">
+                    <input name="displayorder" placeholder="" autocomplete="off"
+                           class="layui-input required" rangelength="1,5" type="number"
+                           th:value="${sysDepartment.displayorder}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea type="text" name="remark" placeholder="请输入备注" maxlength="100" autocomplete="off"
+                          class="layui-textarea"
+                          th:text="${sysDepartment.remark}" rows="3" cols="3"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item form-footer">
+            <button class="layui-btn" lay-submit lay-filter="formedit" id="btnSubmit" type="submit">保存</button>
+            <span class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.close();">关闭</span>
+        </div>
+
+    </form>
+</div>
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    //表单验证提交
+    $('#form').initForm();
+
+    function ViewModel() {
+        var self = this;
+        self.items = ko.observableArray([]);
+        self.reload = function () {
+            $.getJSON("/dept/treeJson", function (data) {
+                viewModel.items(data);
+            });
+        }
+    }
+
+    //绑定数据
+    var viewModel = new ViewModel();
+    $.getJSON("/dept/treeJson", function (data) {
+        viewModel.items(data);
+    });
+    ko.applyBindings(viewModel);
+</script>
+</body>
+</html>

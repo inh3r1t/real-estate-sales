@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <style>
+        #showContent .fileDetail:hover .file-tools i {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/plugins/disk-manage/css/global.css}">
+    <link rel="stylesheet" th:href="@{/plugins/disk-manage/css/disk.css}">
+</head>
+<body>
+<div class="form-body" data-layout-fragment="renderBody">
+    <div class="disk_all">
+        <input type="hidden" id="frameName" name="frameName" th:value="${frameName}">
+        <div id="disk_content">
+            <div id="disk_left">
+                <div id="disk_path">
+                    <a href="javascript:void(0);" class="location_show clickMe"
+                       id="file_root_dir"><span>根目录</span><input
+                            type="hidden" value="/"></a>
+                    <div id="prevPath"></div>
+                    <div id="currentPath" style="float: right; word-break: break-all;"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="showContent">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item form-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" id="btnSubmit">确认</button>
+            <span class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.close();">取消</span>
+        </div>
+    </div>
+</div>
+<!--/*/<th:block data-layout-fragment="renderScripts">/*/-->
+<script th:src="@{/plugins/disk-manage/js/disk.js}"></script>
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    var selectedList = new Array();
+    $(function () {
+        $('#file_root_dir').click();
+        $('body').on('mouseover', '.form-body', function () {
+            initSelected();
+        });
+    });
+    $('#btnSubmit').click(function () {
+        var frameName = $('#frameName').val();
+        if (parent.frames[frameName]) {
+            parent.frames[frameName].fileList.selectServerFiles(selectedList);
+            dialog.close();
+        }
+    });
+
+    function initSelected() {
+        var list = $(".fileDetail a:not(.clickMe)");
+        $.each(list, function () {
+            var $this = $(this);
+            var file = $this.find('img').next().attr('title');
+            if ($('#currentPath input').length > 0)
+                file = $('#currentPath input').val() + file;
+            if (checkSelected(file)) {
+                $this.addClass("selected");
+            } else {
+                $this.removeClass("selected");
+            }
+        });
+    }
+
+    $('#showContent').on("click", ".fileDetail a:not(.clickMe)", function () {
+        var $this = $(this);
+        var file = $this.find('img').next().attr('title');
+        if ($('#currentPath input').length > 0)
+            file = $('#currentPath input').val() + file;
+        if (!checkSelected(file)) {
+            selectedList.push(file);
+            $this.addClass("selected");
+        } else {
+            selectedList.splice($.inArray(file, selectedList), 1);
+            $this.removeClass("selected");
+        }
+    });
+
+    //判断是否已被选中
+    function checkSelected(path) {
+        if ($.inArray(path, selectedList) < 0) {
+            return false;
+        } else
+            return true;
+    }
+</script>
+<!--/*/</th:block>/*/-->
+</body>
+</html>

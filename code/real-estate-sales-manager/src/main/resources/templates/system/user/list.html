@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>用户管理</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <blockquote class="layui-elem-quote">
+        <form id="searchForm" class="layui-form ">
+            <div class="layui-inline">
+                <label>登录名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="username" name="username" placeholder="请输入登录名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="fullname" name="fullname" placeholder="请输入姓名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>状态</label>
+                <div class="layui-input-inline">
+                    <select id="state" name="state">
+                        <option value="">所有</option>
+                        <option value="0">正常</option>
+                        <option value="1">禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn" onclick="btn_Search()"><i class="fa fa-search"></i> 检索</span>
+
+                <span class="layui-btn layui-btn-normal" onclick="btn_add()"><i class="fa fa-plus"></i> 新增</span>
+            </div>
+        </form>
+    </blockquote>
+
+    <div class="table-wrapper">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>头像</th>
+                <th>登录名</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>到期时间</th>
+                <th>组织单位</th>
+                <th>所属角色</th>
+                <th style="text-align:center">状态</th>
+                <th style="text-align:center">创建时间</th>
+                <th style="text-align:center;width: 140px">操作</th>
+            </tr>
+            </thead>
+            <tbody style="display:none" data-bind="visible: true">
+            <!-- ko foreach: Items() -->
+            <tr class="CurrentRow">
+                <td>
+                    <img class="layui-nav-img" data-bind="attr:{src:photo()? photo:'/images/avatar.png'},text:photo" />
+                </td>
+                <td data-bind="text:username"></td>
+                <td data-bind="text:fullname"></td>
+                <td data-bind="text:sex()=='1'?'男':(sex()=='2'?'女':(sex()=='3'?'保密':''))"></td>
+                <td data-bind="text:deadline()?moment(deadline()).format('YYYY-MM-DD HH:mm:ss'):''"></td>
+                <td data-bind="text:branchname"></td>
+                <td><span class="text-ellipsis-200" data-bind="text:toRoleName(sysRoles())"></span></td>
+                <td class="text-center">
+                    <span data-bind="text:state()=='0'?'正常':(state()=='1'?'禁用':'删除'),attr:{'class':state()=='0'?'normal-bg':(state()=='1'? 'disable-bg':'delete-bg')}"></span>
+                </td>
+                <td class="text-center" data-bind="text:moment(createtime()).format('YYYY-MM-DD HH:mm:ss')"></td>
+                <td class="text-center">
+                    <a data-bind="click:btn_edit.bind()" title="编辑用户" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-edit"></i> </a>
+                    <a data-bind="click: btn_resetpwd.bind()" title="重置密码" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-repeat"></i></a>
+                    <a data-bind="click: btn_role.bind($data)" title="角色分配" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-gears"></i></a>
+                    <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-trash-o"></i> </a>
+                    <a th:inline="text"
+                       data-bind="visible:$('#LoginId').val()!=id(),click: btn_stop.bind(),attr:{'title':state() == 0?'禁用':'启用'}">
+                        <i data-bind="attr:{'class':state() == 0?'fa fa-ban':'fa fa-ban red'}"
+                           data-toggle="tooltip" data-placement="top" class="fa fa-ban"></i>
+                    </a>
+                    <a data-bind="visible:isLocked($data), click:btn_unLock.bind()" title="解锁" data-toggle="tooltip"
+                       data-placement="top">
+                        <i class="fa fa-lock"></i> </a>
+                </td>
+            </tr>
+            <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+    <ko-pager-state params="model: $data"></ko-pager-state>
+    <ko-pager params="model: $data"></ko-pager>
+    <input type="hidden" id="LoginId" th:value="${LoginId}">
+</div>
+
+<script data-layout-fragment="renderScripts">
+    var viewModel = new PagerModel("/user/getList");
+    $(function () {
+        ko.applyBindings(viewModel, $("#container")[0]);
+    });
+
+    function btn_Search() {
+        viewModel.Reload($('#searchForm').serialize());
+    }
+    ///是否被锁定
+    function isLocked(model) {
+        if (model.lastloginerrortime() != null && model.loginerrorcount() != null && model.lastloginerrortime() != undefined && model.loginerrorcount() != undefined) {
+            var loginerrorcount = Number(model.loginerrorcount());
+            var lastloginerrortime = moment(model.lastloginerrortime());
+            if (loginerrorcount >= 5 && lastloginerrortime.format('YYYY-MM-DD') == moment().format('YYYY-MM-DD')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    ///解锁
+    function btn_unLock(model) {
+        dialog.confirm('确认解锁‘' + model.fullname() + '’用户吗？', function () {
+            $.getJSON('/user/unLock?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+    //新增
+    function btn_add() {
+        dialog.iframe('/user/edit', {
+            title: "新增用户",
+            size: [700, 550]
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+    }
+
+    //修改
+    function btn_edit(model) {
+        dialog.iframe('/user/edit?id=' + model.id(), {
+            title: "编辑用户",
+            size: [700, 550]
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+    }
+
+    //删除
+    function btn_del(model) {
+        dialog.confirm('确认删除‘' + model.fullname() + '’用户吗？', function () {
+            $.getJSON('/user/delete?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+
+    //重置密码
+    function btn_resetpwd(model) {
+        dialog.confirm('确认重置‘' + model.fullname() + '’用户的密码为000000吗？', function () {
+            $.getJSON('/user/resetpwd?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+    ;
+
+    //启用警用
+    function btn_stop(model) {
+        var self = model;
+        var oldState = self.state();
+        var newState = oldState === 0 ? 1 : 0;
+        var currentOp = oldState === 0 ? "禁用" : "启用";
+        dialog.confirm('确认' + currentOp + '‘' + model.fullname() + '’用户吗？', function () {
+            $.getJSON('/user/changeState?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+
+    //用户角色分配
+    function btn_role(model) {
+        dialog.iframe("/user/role?id=" + model.id(), {
+            size: [600, 500],
+            title: "用户-角色分配"
+        }, function (result) {
+            if (result) {
+                viewModel.Reload();
+            }
+        });
+    }
+
+    function toRoleName(roles) {
+        if (roles && roles.length > 0) {
+            var roleName = "";
+            for (var i = 0; i < roles.length; i++) {
+                roleName += roles[i].name() + ",";
+            }
+            return roleName.substring(0, roleName.lastIndexOf(","));
+        }
+        return "";
+    }
+</script>
+
+</html>

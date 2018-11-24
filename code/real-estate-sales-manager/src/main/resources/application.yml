@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: dev  # 通过指定启动参数使用不同的profile
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+    content-type: text/html
+  http:
+    multipart:
+      max-file-size: 50MB  # Single file max size
+      max-request-size: 50MB
+mybatis:
+  mapper-locations: /mapper/system/*Mapper.xml
+  type-aliases-package: com.zx.system.model
+
+logging:
+  level:
+    root: info
+
+#Custom configuration
+custom:
+  system-name: real-estate-sales-manager
+  version: V1.1.0320.1
+  page-size: 15
+  captcha: 1  # 是否使用登录验证码 0:不使用 1:使用
+  file-extension: jpg|png|gif|bmp|jpeg|txt|doc|xls|docx|xlsx|pdf|mp3|mp4|ppt|pptx|rtf|zip|rar|gz|7z|gzip

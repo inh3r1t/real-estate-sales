@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zx.system.dao.SysUserRoleDao">
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="base_column_list">
+		 id,userid,roleid,createtime
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="id != null">
+				 and  id = #{id}
+			</if>
+			<if test="userid != null and userid!=''">
+				 and  userid = #{userid}
+			</if>
+			<if test="roleid != null and roleid!=''">
+				 and  roleid = #{roleid}
+			</if>
+			<if test="createtime != null">
+				 and  createtime = #{createtime}
+			</if>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	<where>
+		<trim prefixOverrides="and">
+			<include refid="base_condition_filed" />
+			<if test="useridFuzzy!= null  and useridFuzzy!=''">
+				 and  userid like concat('%', #{useridFuzzy}, '%')
+			</if>
+			<if test="roleidFuzzy!= null  and roleidFuzzy!=''">
+				 and  roleid like concat('%', #{roleidFuzzy}, '%')
+			</if>
+		</trim>
+	 </where>
+	</sql>
+
+
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="SysUserrole">
+		 INSERT INTO sys_userroles
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="userid != null">
+				 userid,
+			</if>
+			<if test="roleid != null">
+				 roleid,
+			</if>
+			<if test="createtime != null">
+				 createtime,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="userid!=null">
+				 #{userid},
+			</if>
+			<if test="roleid!=null">
+				 #{roleid},
+			</if>
+			<if test="createtime!=null">
+				 #{createtime},
+			</if>
+		 </trim>
+		 on DUPLICATE key
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="userid!=null">
+				 userid = VALUES(userid),
+			</if>
+			<if test="roleid!=null">
+				 roleid = VALUES(roleid),
+			</if>
+			<if test="createtime!=null">
+				 createtime = VALUES(createtime),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+		<insert id="insertBatch" parameterType="SysUserrole">
+		 INSERT INTO sys_userroles(userid,roleid,createtime)values
+			 <foreach collection="list" item="item" separator=",">
+			 (
+			 #{item.userid},#{item.roleid},#{item.createtime}
+			 )
+			 </foreach>
+		</insert>
+
+	<!-- 根据Id修改-->
+	<update id="update" parameterType="SysUserrole">
+		 UPDATE sys_userroles
+ 		 <set> 
+			<if test="userid != null">
+				 userid = #{userid},
+			</if>
+			<if test="roleid != null">
+				 roleid = #{roleid},
+			</if>
+			<if test="createtime != null">
+				 createtime = #{createtime},
+			</if>
+ 		 </set>
+ 		 where id=#{id}
+	</update>
+
+	<!-- 根据用户Id删除-->
+	<delete id="deleteByUserId">
+		delete from sys_userroles where userid=#{id}
+	</delete>
+
+
+</mapper>

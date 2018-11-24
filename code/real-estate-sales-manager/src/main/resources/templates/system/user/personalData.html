@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>用户信息</title>
+
+</head>
+
+<div data-layout-fragment="renderBody">
+    <div class="form-body">
+        <form id="editForm" class="layui-form layui-form-pane" th:method="post" th:action="@{/user/submit}">
+            <input type="hidden" name="_f_token" th:value="${_f_token}" />
+            <input type="hidden" name="id" th:value="${userinfo.id}"/>
+            <input type="hidden" name="createid" th:value="${userinfo.createid}"/>
+            <div class="layui-form-item" th:switch="${type}">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline" onclick="btn_avatar()">
+                        <div style="margin-left: 266px" onclick=""><img class="layui-upload-img" th:src="${userinfo.photo}"
+                                                                        style="height: 80px">
+                            <p>点击上传头像</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">登录名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${userinfo.username}" readonly="readonly" name="username" id="username"
+                               placeholder="请输入登录名"
+                               autocomplete="off"
+                               class="layui-input required form-loginId"
+                               rangelength="2,20"/>
+                    </div>
+                </div>
+                <div class="layui-inline" th:case="'edit'">
+                    <label class="layui-form-label">用户姓名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${userinfo.fullname}" name="fullname"
+                               placeholder="请输入姓名"
+                               autocomplete="off"
+                               class="layui-input required"
+                               maxlength="25">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属部门</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control required form-notBlank" disabled="disabled" name="branchcode">
+                            <option value="">请选择部门</option>
+                            <option th:each="list:${deptList}"
+                                    th:selected="${list.dcode ==userinfo.branchcode}"
+                                    th:value="${list.dcode}"
+                                    th:text="${list.dname }">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline" th:switch="${type}" th:case="'edit'">
+                    <label class="layui-form-label">使用期限</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input date-single" name="deadTime" disabled="disabled"
+                               th:value="${#dates.format(userinfo.deadline,'yyyy-MM-dd HH:mm:ss')}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label">用户性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex"
+                           th:each="item:${sexList}"
+                           th:value="${item.Value}"
+                           th:title="${item.Text}"
+                           th:checked="${item.Value==userinfo.sex+''}" />
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" placeholder="" class="layui-textarea" th:text="${userinfo.remark}"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item form-footer">
+                <button class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.close();">关闭</button>
+                <button class="layui-btn pull-right" type="submit" id="btnSubmit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script data-layout-fragment="renderScripts">
+    //修改
+    function btn_avatar() {
+        dialog.iframe('/user/avatar', {
+            title: "上传头像",
+            size: [750, 600]
+        }, function (result) {
+
+            location.reload()
+        });
+    }
+    $("#editForm").initForm({
+        rules: {
+            username: {
+                required: true,
+                remote: {
+                    type: "GET",
+                    url: "/user/checkSameLoginName",
+                    data: {
+                        userId: function () {
+                            var id = $('input[name="id"]').val();
+                            if (id)
+                                return id;
+                            else
+                                return ""
+                        }
+                    }
+                }
+            }
+        },
+        messages: {
+            username: {
+                remote: '已存在相同的登录名'
+            }
+        }
+    })
+
+</script>
+
+</html>

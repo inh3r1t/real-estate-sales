@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <link rel="stylesheet" th:href="@{/plugins/disk-manage/css/global.css}">
+    <link rel="stylesheet" th:href="@{/plugins/disk-manage/css/disk.css}">
+</head>
+<body>
+<div class="padding" data-layout-fragment="renderBody">
+    <div class="disk_all">
+        <div id="disk_content">
+            <div id="disk_left">
+                <div id="disk_path">
+                    <a href="javascript:void(0);" class="location_show clickMe"
+                       id="file_root_dir"><span>根目录</span><input
+                            type="hidden" value="/"></a>
+                    <div id="prevPath"></div>
+                    <div id="currentPath"></div>
+                    <div class="pull-right" style="position: absolute;right: 0;top: 0;">
+                        <div style="float: left; margin-right: 15px;">
+                            <span>
+                                存储状态：可用<i th:text="${freeSpace}"></i>
+                                /
+                                共<i th:text="${totalSpace}"></i>
+                            </span>
+                        </div>
+                        <span class="location_show clickable" id="createDir"><i class="fa fa-folder-o"></i> 新建文件夹</span>
+                        <span class="location_show clickable" id="uploadFiles"><i class="fa fa-upload"></i> 上传文件</span>
+                    </div>
+                </div>
+                <div class="clearfix" style="background-color: #1aa194;height: 2px;"></div>
+                <div id="showContent">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<!--/*/<th:block data-layout-fragment="renderScripts">/*/-->
+<script th:src="@{/plugins/disk-manage/js/disk.js}"></script>
+<script th:inline="javascript">
+    $(function () {
+        $('#file_root_dir').click();
+        $('#createDir').click(function () {
+            var cPath = $('#currentPath input').val();
+            dialog.iframe('/file/editDir?path=' + cPath, {
+                title: "编辑文件夹",
+                size: [400, 200]
+            }, function (result) {
+                if (result) {
+                    $('#currentPath a').click();
+                }
+            });
+        });
+
+        $('#uploadFiles').click(function () {
+            var cPath = $('#currentPath input').val();
+            dialog.iframe('/file/uploadPage?path=' + cPath, {
+                title: "文件上传",
+                size: [800, 600]
+            }, function (result) {
+                if (result) {
+                    $('#currentPath a').click();
+                }
+            });
+        });
+    });
+
+    function download(path) {
+        ajaxDownload("/file/download?path=" + encodeURIComponent(encodeURIComponent(path)));
+    }
+
+    function deleteFile(path) {
+        dialog.confirm('确认删除该文件吗？', function () {
+            $.getJSON('/file/deleteFile?path=' + encodeURIComponent(encodeURIComponent(path)), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    $('#currentPath a').click();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+
+    function deleteDir(path) {
+        dialog.confirm('确定要永久删除该文件夹（包含子文件夹及文件）吗？', function () {
+            $.getJSON('/file/deleteDir?path=' + encodeURIComponent(encodeURIComponent(path)), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    $('#currentPath a').click();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+</script>
+<!--/*/</th:block>/*/-->
+</body>
+</html>

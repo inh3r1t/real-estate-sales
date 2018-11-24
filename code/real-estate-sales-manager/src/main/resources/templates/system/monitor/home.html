@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<head>
+    <title>在线用户</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <div class="table-wrapper">
+        <table class="layui-table" lay-skin="row">
+            <thead>
+            <tr>
+                <th>头像</th>
+                <th style="width: 20%">用户名</th>
+                <th style="width: 20%">姓名</th>
+                <th>所属角色</th>
+                <th style="width: 25%">上线时间</th>
+                <th style="width: 25%">登录IP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- ko foreach: viewModel.pagerModel.Items() -->
+            <tr>
+                <td>
+                    <img data-bind="attr:{src:loginphoto() ? loginphoto:'/images/avatar.png'}" class="layui-nav-img">
+                </td>
+                <td data-bind="text:username()"></td>
+                <td data-bind="text:realname()"></td>
+                <td data-bind="text:rolenames()"></td>
+                <td data-bind="text:toTime(createtime())"></td>
+                <td data-bind="text:clientip()"></td>
+            </tr>
+            <!--/ko -->
+            </tbody>
+        </table>
+        <ko-pager-state params="model: viewModel.pagerModel"></ko-pager-state>
+        <ko-pager params="model: viewModel.pagerModel"></ko-pager>
+    </div>
+</div>
+
+<script data-layout-fragment="renderScripts" th:inline="javascript">
+    (function (window) {
+        window.ViewModel = function () {
+            var self = this;
+            self.onLine = true;
+            self.pagerModel = new PagerModel("/monitor/list");
+
+            if (window.parent && window.parent.wsClient) {
+                parent.wsClient.registerOnline(function (message) {
+                    setTimeout(function () {
+                        var json = $.parseJSON(message.body);
+                        var extra = json ? $.parseJSON(json.extra) : null;
+                        if (extra && extra.type === "Online") {
+                            var html = "<div class='layui-row'>";
+                            if (extra.loginPhoto && extra.loginPhoto !== 'null') {
+                                html += "<div class='layui-col-xs6'><img src='" + extra.loginPhoto + "' class='layui-nav-img'/></div>";
+                                html += "<div class='layui-col-xs6'><b>" + extra.username + "</b>上线了</div>";
+                            } else {
+                                html += "<div class='layui-col-xs12'><b>" + extra.username + "</b>上线了</div>";
+                            }
+                            html += "</div>";
+                            dialog.success(html);
+                        }
+                    }, 3000);
+                })
+            }
+            return self;
+        };
+
+    }(window));
+
+    var viewModel = new ViewModel();
+    $(function () {
+        ko.applyBindings(viewModel.pagerModel);
+    })
+</script>
+
+</html>

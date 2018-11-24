@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>系统日志</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+<blockquote class="layui-elem-quote">
+    <form id="queryForm" class="layui-form">
+        <input type="hidden" th:value="20" th:name="pageSize"/>
+        <input type="hidden" th:name="showAllUser" th:id="showAllUser"/>
+
+        <div class="layui-inline ">
+            <button class="layui-btn-sm layui-btn-primary " th:id="toggleSourceType"
+                    style="width:110px;text-align:center;padding:5px;" type="button"
+                    onclick="viewModel.toggleUserMode(true)">
+                <i class="fa fa-square-o"></i>
+                <i class="fa fa-check-square-o" style="display:none"></i>
+                所有用户
+            </button>
+        </div>
+        <div class="layui-inline ">
+            <label>功能模块</label>
+            <div class="layui-input-inline" style="width: 200px">
+                <select name="module" lay-search>
+                    <option value="">所有功能模块</option>
+                    <option th:each="sysModule:${SysModules}" th:text="${sysModule.getMname()}"
+                            th:value="${sysModule.getMcode()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline ">
+            <label>操作类型</label>
+            <div class="layui-input-inline" style="width: 200px">
+                <select name="logType" id="logType">
+                    <option value="">所有操作类型</option>
+                    <option th:each="logtype:${LogTypes}" th:text="${logtype}"
+                            th:value="${logtype.getValue()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline ">
+            <label>日志类型</label>
+            <div class="layui-input-inline" style="width: 200px">
+                <select name="logLevel" id="logLevel">
+                    <option value="">所有日志类型</option>
+                    <option th:each="loglevel:${LogLevels}" th:text="${loglevel}"
+                            th:value="${loglevel.getValue()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline ">
+            <label>记录时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input date-range" name="time" id="time" lay-verify="timeRange"
+                       placeholder="请选择时间段" value=""/>
+            </div>
+        </div>
+        <div class="layui-inline ">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="formSubmit"><i class="fa fa-search"></i>
+                搜索
+            </button>
+            <button type="button" class="layui-btn layui-btn layui-btn-warm" th:hidden="${!UserLevel}"
+                    onclick="viewModel.clear()"><i class="fa fa-trash"></i>
+                清空
+            </button>
+        </div>
+    </form>
+</blockquote>
+<table class="layui-table" lay-even>
+    <colgroup>
+        <col width="150"/>
+        <col width="150"/>
+        <col width="250"/>
+        <col width="100"/>
+        <col width="100"/>
+        <col width="100"/>
+        <col width="200"/>
+        <col width="75"/>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>时间</th>
+        <th>相关模块</th>
+        <th>描述</th>
+        <th>操作类型</th>
+        <th>日志类型</th>
+        <th>相关用户</th>
+        <th>客户端信息</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- ko foreach: Items() -->
+    <tr>
+        <td data-bind="text:moment(createtime()).format('YYYY-MM-DD HH:mm:ss')"></td>
+        <td data-bind="text:mname()==''?'其他模块':mname(),attr:{'title':mname()==''?'其他模块':mname()}"
+            class="layui-elip"></td>
+        <td data-bind="text:description()" class="layui-elip"></td>
+        <td data-bind="text:logtypename()"></td>
+        <td data-bind="text:loglevelname()"></td>
+        <td data-bind="text:creater(),attr:{'title':creater()}" class="layui-elip"></td>
+        <td>
+            <span data-bind="text: clientip"></span> |
+            <span data-bind="text: clientos"></span> |
+            <span data-bind="text: clientbrowser"></span>
+        </td>
+        <td>
+            <a class="clickable" title="查看详细" data-bind="click: viewModel.viewDetail.bind($data)"
+               data-toggle="tooltip"
+               data-placement="top"><i class="fa fa-search"></i> </a>
+        </td>
+    </tr>
+    <!-- /ko -->
+    </tbody>
+</table>
+<ko-pager-state params="model: $data"></ko-pager-state>
+<ko-pager params="model: $data"></ko-pager>
+</div>
+
+<script data-layout-fragment="renderScripts" th:inline="javascript">
+    (function (t) {
+        t.pagerModel = new PagerModel("/log/getList", $('#queryForm').serialize());
+        ko.applyBindings(t.pagerModel);
+
+        function ViewModel() {
+            var self = this;
+            var showAllUsers = false;
+
+            var $hiddenIpt = $('#showAllUser');
+            $hiddenIpt.val(showAllUsers);
+
+            var onCheck = function (checked) {
+                var $toggleBtn = $('#toggleSourceType');
+                if (checked) {
+                    $toggleBtn.find("i").length > 1 && $toggleBtn.find("i:eq(1)").show();
+                    $toggleBtn.find("i").length > 0 && $toggleBtn.find("i:eq(0)").hide();
+                } else {
+                    $toggleBtn.find("i").length > 1 && $toggleBtn.find("i:eq(1)").hide();
+                    $toggleBtn.find("i").length > 0 && $toggleBtn.find("i:eq(0)").show();
+                }
+            };
+
+            self.toggleUserMode = function (refresh) {
+                showAllUsers = !showAllUsers;
+                onCheck(showAllUsers);
+                $hiddenIpt.val(showAllUsers);
+                refresh && self.refresh();
+            };
+
+            self.refresh = function () {
+                t.pagerModel.Reload($('#queryForm').serialize());
+            };
+
+            self.clear = function () {
+                dialog.confirm('确认删除清空日志吗？', function () {
+                    dialog.closeAll();
+                    $.ajax({
+                        url: '/log/clear',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        success: function (rps) {
+                            if (rps.state) {
+                                dialog.success(rps.message);
+                                self.refresh();
+                            } else {
+                                dialog.error("清空失败");
+                            }
+                        }, error: function () {
+                            dialog.error("清空失败");
+                        }
+                    })
+                });
+            };
+
+            self.viewDetail = function (item) {
+                var id = item.id();
+                if (id) {
+                    dialog.iframe('/log/detail?id=' + id, {
+                        title: "查看详细",
+                        size: [600, 400]
+                    });
+                }
+            };
+
+        }
+
+        t.viewModel = new ViewModel();
+    })(window);
+
+</script>
+
+</html>

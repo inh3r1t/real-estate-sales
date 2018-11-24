@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zx.system.dao.SysLogDao">
+
+    <!--实体映射-->
+    <resultMap id="base_result_map" type="SysLog">
+        <id column="id" property="id"/>
+        <result column="createrid" property="createrid"/>
+        <result column="creater" property="creater"/>
+        <result column="loglevel" property="loglevel"/>
+        <result column="description" property="description"/>
+        <result column="logargs" property="logargs"/>
+        <result column="url" property="url"/>
+        <result column="clientip" property="clientip"/>
+        <result column="clientbrowser" property="clientbrowser"/>
+        <result column="clientos" property="clientos"/>
+        <result column="createtime" property="createtime"/>
+        <result column="mcode" property="mcode"/>
+        <result column="logtype" property="logtype"/>
+        <result column="details" property="details"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_column_list">
+		 id,createrid,creater,loglevel,description,logargs,url,clientip,clientbrowser,clientos,createtime,mcode,logtype,details
+	</sql>
+
+    <sql id="base_condition_filed">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="createrid != null and createrid!=''">
+            and createrid = #{createrid}
+        </if>
+        <if test="creater != null and creater!=''">
+            and creater = #{creater}
+        </if>
+        <if test="loglevel != null">
+            and loglevel = #{loglevel}
+        </if>
+        <if test="description != null and description!=''">
+            and description = #{description}
+        </if>
+        <if test="logargs != null and logargs!=''">
+            and logargs = #{logargs}
+        </if>
+        <if test="url != null and url!=''">
+            and url = #{url}
+        </if>
+        <if test="clientip != null and clientip!=''">
+            and clientip = #{clientip}
+        </if>
+        <if test="clientbrowser != null and clientbrowser!=''">
+            and clientbrowser = #{clientbrowser}
+        </if>
+        <if test="clientos != null and clientos!=''">
+            and clientos = #{clientos}
+        </if>
+        <if test="createtime != null">
+            and createtime = #{createtime}
+        </if>
+        <if test="mcode != null and mcode!=''">
+            and mcode = #{mcode}
+        </if>
+        <if test="logtype != null">
+            and logtype = #{logtype}
+        </if>
+        <if test="details != null and details!=''">
+            and details = #{details}
+        </if>
+        <if test="startDateTime != null">
+            <![CDATA[ createtime >= startDateTime  ]]>
+        </if>
+        <if test="endDateTime != null">
+            <![CDATA[ createtime <= endDateTime  ]]>
+        </if>
+
+    </sql>
+
+    <!-- 通用查询条件列-->
+    <sql id="query_condition">
+        <where>
+            <trim prefixOverrides="and">
+                <include refid="base_condition_filed"/>
+                <if test="createridFuzzy!= null  and createridFuzzy!=''">
+                    and createrid like concat('%', #{createridFuzzy}, '%')
+                </if>
+                <if test="createrFuzzy!= null  and createrFuzzy!=''">
+                    and creater like concat('%', #{createrFuzzy}, '%')
+                </if>
+                <if test="loglevelFuzzy!= null  and loglevelFuzzy!=''">
+                    and loglevel like concat('%', #{loglevelFuzzy}, '%')
+                </if>
+                <if test="descriptionFuzzy!= null  and descriptionFuzzy!=''">
+                    and description like concat('%', #{descriptionFuzzy}, '%')
+                </if>
+                <if test="logargsFuzzy!= null  and logargsFuzzy!=''">
+                    and logargs like concat('%', #{logargsFuzzy}, '%')
+                </if>
+                <if test="urlFuzzy!= null  and urlFuzzy!=''">
+                    and url like concat('%', #{urlFuzzy}, '%')
+                </if>
+                <if test="clientipFuzzy!= null  and clientipFuzzy!=''">
+                    and clientip like concat('%', #{clientipFuzzy}, '%')
+                </if>
+                <if test="clientbrowserFuzzy!= null  and clientbrowserFuzzy!=''">
+                    and clientbrowser like concat('%', #{clientbrowserFuzzy}, '%')
+                </if>
+                <if test="clientosFuzzy!= null  and clientosFuzzy!=''">
+                    and clientos like concat('%', #{clientosFuzzy}, '%')
+                </if>
+                <if test="mcodeFuzzy!= null  and mcodeFuzzy!=''">
+                    and mcode like concat('%', #{mcodeFuzzy}, '%')
+                </if>
+                <if test="logtypeFuzzy!= null  and logtypeFuzzy!=''">
+                    and logtype like concat('%', #{logtypeFuzzy}, '%')
+                </if>
+                <if test="detailsFuzzy!= null  and detailsFuzzy!=''">
+                    and details like concat('%', #{detailsFuzzy}, '%')
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 查询集合-->
+    <select id="selectList" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM sys_logs
+        <include refid="query_condition"/>
+        <if test="orderBy!=null">
+            order by ${orderBy}
+        </if>
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <!-- 查询数量-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_logs
+        <include refid="query_condition"/>
+    </select>
+
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectById" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from sys_logs where id=#{id}
+    </select>
+
+    <!-- 插入 （匹配有值的字段）-->
+    <insert id="insert" parameterType="SysLog">
+        <selectKey keyProperty="id" resultType="BigInteger" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO sys_logs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createrid != null">
+                createrid,
+            </if>
+            <if test="creater != null">
+                creater,
+            </if>
+            <if test="loglevel != null">
+                loglevel,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="logargs != null">
+                logargs,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="clientip != null">
+                clientip,
+            </if>
+            <if test="clientbrowser != null">
+                clientbrowser,
+            </if>
+            <if test="clientos != null">
+                clientos,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="mcode != null">
+                mcode,
+            </if>
+            <if test="logtype != null">
+                logtype,
+            </if>
+            <if test="details != null">
+                details,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createrid!=null">
+                #{createrid},
+            </if>
+            <if test="creater!=null">
+                #{creater},
+            </if>
+            <if test="loglevel!=null">
+                #{loglevel},
+            </if>
+            <if test="description!=null">
+                #{description},
+            </if>
+            <if test="logargs!=null">
+                #{logargs},
+            </if>
+            <if test="url!=null">
+                #{url},
+            </if>
+            <if test="clientip!=null">
+                #{clientip},
+            </if>
+            <if test="clientbrowser!=null">
+                #{clientbrowser},
+            </if>
+            <if test="clientos!=null">
+                #{clientos},
+            </if>
+            <if test="createtime!=null">
+                #{createtime},
+            </if>
+            <if test="mcode!=null">
+                #{mcode},
+            </if>
+            <if test="logtype!=null">
+                #{logtype},
+            </if>
+            <if test="details!=null">
+                #{details},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 插入或者更新 （匹配有值的字段）-->
+    <insert id="insertOrUpdate" parameterType="SysLog">
+        INSERT INTO sys_logs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="createrid != null">
+                createrid,
+            </if>
+            <if test="creater != null">
+                creater,
+            </if>
+            <if test="loglevel != null">
+                loglevel,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="logargs != null">
+                logargs,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="clientip != null">
+                clientip,
+            </if>
+            <if test="clientbrowser != null">
+                clientbrowser,
+            </if>
+            <if test="clientos != null">
+                clientos,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="mcode != null">
+                mcode,
+            </if>
+            <if test="logtype != null">
+                logtype,
+            </if>
+            <if test="details != null">
+                details,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="createrid!=null">
+                #{createrid},
+            </if>
+            <if test="creater!=null">
+                #{creater},
+            </if>
+            <if test="loglevel!=null">
+                #{loglevel},
+            </if>
+            <if test="description!=null">
+                #{description},
+            </if>
+            <if test="logargs!=null">
+                #{logargs},
+            </if>
+            <if test="url!=null">
+                #{url},
+            </if>
+            <if test="clientip!=null">
+                #{clientip},
+            </if>
+            <if test="clientbrowser!=null">
+                #{clientbrowser},
+            </if>
+            <if test="clientos!=null">
+                #{clientos},
+            </if>
+            <if test="createtime!=null">
+                #{createtime},
+            </if>
+            <if test="mcode!=null">
+                #{mcode},
+            </if>
+            <if test="logtype!=null">
+                #{logtype},
+            </if>
+            <if test="details!=null">
+                #{details},
+            </if>
+        </trim>
+        on DUPLICATE key
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="createrid!=null">
+                createrid = VALUES(createrid),
+            </if>
+            <if test="creater!=null">
+                creater = VALUES(creater),
+            </if>
+            <if test="loglevel!=null">
+                loglevel = VALUES(loglevel),
+            </if>
+            <if test="description!=null">
+                description = VALUES(description),
+            </if>
+            <if test="logargs!=null">
+                logargs = VALUES(logargs),
+            </if>
+            <if test="url!=null">
+                url = VALUES(url),
+            </if>
+            <if test="clientip!=null">
+                clientip = VALUES(clientip),
+            </if>
+            <if test="clientbrowser!=null">
+                clientbrowser = VALUES(clientbrowser),
+            </if>
+            <if test="clientos!=null">
+                clientos = VALUES(clientos),
+            </if>
+            <if test="createtime!=null">
+                createtime = VALUES(createtime),
+            </if>
+            <if test="mcode!=null">
+                mcode = VALUES(mcode),
+            </if>
+            <if test="logtype!=null">
+                logtype = VALUES(logtype),
+            </if>
+            <if test="details!=null">
+                details = VALUES(details),
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据Id修改-->
+    <update id="update" parameterType="SysLog">
+        UPDATE sys_logs
+        <set>
+            <if test="createrid != null">
+                createrid = #{createrid},
+            </if>
+            <if test="creater != null">
+                creater = #{creater},
+            </if>
+            <if test="loglevel != null">
+                loglevel = #{loglevel},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="logargs != null">
+                logargs = #{logargs},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="clientip != null">
+                clientip = #{clientip},
+            </if>
+            <if test="clientbrowser != null">
+                clientbrowser = #{clientbrowser},
+            </if>
+            <if test="clientos != null">
+                clientos = #{clientos},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime},
+            </if>
+            <if test="mcode != null">
+                mcode = #{mcode},
+            </if>
+            <if test="logtype != null">
+                logtype = #{logtype},
+            </if>
+            <if test="details != null">
+                details = #{details},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteById">
+		delete from sys_logs where id=#{id}
+	</delete>
+
+    <!-- 清空 -->
+    <delete id="deleteAll">
+        DELETE FROM sys_logs
+    </delete>
+
+</mapper>

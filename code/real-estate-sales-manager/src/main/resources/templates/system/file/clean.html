@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<body>
+<div class="padding" data-layout-fragment="renderBody">
+    <blockquote class="layui-elem-quote layui-col-xs5">白名单：加入白名单的文件将不在被扫描！</blockquote>
+    <div class="pull-right">
+        <button class="layui-btn" onclick="scanDisk();">扫描未使用文件</button>
+        <button class="layui-btn" onclick="cleanFiles();">清理未使用文件</button>
+    </div>
+    <div class="clearfix"></div>
+    <div id="list" style="min-height: 500px;">
+        <div class="table-wrapper">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th width="30%">文件名</th>
+                    <th width="40%">文件夹路径</th>
+                    <th width="10%">文件大小</th>
+                    <th width="10%">最后编辑时间</th>
+                    <th width="10%" class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody style="display:none" data-bind="visible: true">
+                <!-- ko foreach: items() -->
+                <tr class="CurrentRow">
+                    <td data-bind="text:fileName" style="display: table-cell; vertical-align: middle;"></td>
+                    <td data-bind="text:filePath" style="display: table-cell; vertical-align: middle;"></td>
+                    <td data-bind="text:fileSize" style="display: table-cell; vertical-align: middle;"></td>
+                    <td data-bind="text:fileLastModifiedTime" style="display: table-cell; vertical-align: middle;"></td>
+                    <td class="text-center" style="display: table-cell; vertical-align: middle">
+                        <a class="clickable" data-bind="click:addWhiteList.bind()" title="加入白名单"><i
+                                class="fa fa-plus"></i> 加入白名单</a>
+                    </td>
+                </tr>
+                <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    var model = function () {
+        this.items = ko.observableArray([]);
+        this.totalCount = ko.observable(0);
+    };
+
+    var viewModel = new model();
+    $(function () {
+        ko.applyBindings(viewModel, $("#list")[0]);
+    });
+
+    function scanDisk() {
+        viewModel.items(null);
+        dialog.loading("#list", {
+            text: '正在扫描中...'
+        });
+        setTimeout(function () {
+            $.getJSON('/file/scanDisk', function (data) {
+                if (data.state) {
+                    viewModel.items(data.model);
+                    dialog.loaded("#list");
+                }
+            })
+        }, 1000);
+
+    }
+
+    function cleanFiles() {
+        dialog.loading("#list", {
+            text: '正在删除中...'
+        });
+        setTimeout(function () {
+            $.getJSON('/file/cleanDisk', function (data) {
+                if (data.state) {
+                    dialog.alert(data.message);
+                    dialog.loaded("#list");
+                    viewModel.items(null);
+                }
+            })
+        }, 1000);
+    }
+
+    function addWhiteList(obj) {
+        var $this = $(obj.target);
+        dialog.confirm('确认将该文件《' + obj.fileName + '》加入白名单吗？', function () {
+            $.getJSON('/file/addWhiteList?path=' + obj.filePath + "&name=" + obj.fileName, function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    $this.closest("tr.CurrentRow").addClass("white-list-file");
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>
