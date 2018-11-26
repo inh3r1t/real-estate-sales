@@ -10,7 +10,7 @@ spring:
       max-file-size: 50MB  # Single file max size
       max-request-size: 50MB
 mybatis:
-  mapper-locations: /mapper/system/*Mapper.xml
+  mapper-locations: /mapper/**/*Mapper.xml
   type-aliases-package: com.zx.system.model
 
 logging:
