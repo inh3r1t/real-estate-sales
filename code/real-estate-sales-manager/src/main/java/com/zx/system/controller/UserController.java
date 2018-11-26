@@ -7,18 +7,14 @@ import com.zx.base.enums.TypeEnums;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ReturnModel;
 import com.zx.lib.utils.DateUtil;
-import com.zx.lib.utils.StringUtil;
 import com.zx.lib.utils.encrypt.Md5Util;
 import com.zx.system.model.*;
 import com.zx.system.service.RoleService;
 import com.zx.system.service.UserRoleService;
 import com.zx.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.sl.draw.geom.Guide;
-import org.apache.tomcat.jni.Directory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,11 +23,8 @@ import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
-import java.awt.*;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * 用户管理业务逻辑类
