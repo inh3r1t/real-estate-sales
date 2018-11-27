@@ -1,13 +1,34 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" />
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="estate-recommend">
+  <view class="estate-recommend-title">
+    <view class='estate-recommend-title-icon'></view>
+    <view class='estate-recommend-title-name'>
+      推荐楼盘
+    </view>
+    <navigator class='estate-recommend-title-more'>查看更多>></navigator>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+  <block wx:if="{{recommendEstates}}">
+    <view class="estate-recommend-item" wx:for="{{recommendEstates}}" wx:key="index">
+      <view class="thumb" data-id="{{item.id}}">
+        <image src="{{item.thumb}}"></image>
+      </view>
+      <view class="details" data-id="{{item.id}}">
+        <view class="estate-name">{{item.housename}}</view>
+        <view class="estate-address">
+          <image src='/images/navi.png'></image>
+          {{item.houseaddress}}
+        </view>
+          <view class='summary text-ellipsis-300'>简介：{{item.summary}}</view>
+
+      </view>
+    </view>
+  </block>
 </view>

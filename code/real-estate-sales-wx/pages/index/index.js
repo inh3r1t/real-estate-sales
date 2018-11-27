@@ -4,6 +4,60 @@ const app = getApp()
 
 Page({
   data: {
+    recommendEstates: [{
+      id: 1,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
+      houseprice: '10000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      houseprice: '10000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      houseprice: '10000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      houseprice: '10000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      houseprice: '10000'
+
+    }],
+    imgUrls: [
+      '/images/banner_02.png',
+      '/images/banner_01.png',
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -15,13 +69,13 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function() {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
