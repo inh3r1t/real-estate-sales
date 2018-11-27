@@ -4,14 +4,14 @@ const app = getApp()
 
 Page({
   data: {
-    recommendEstates: [{
+    recommendbuildings: [{
       id: 1,
       thumb: '/images/house1.png',
       housename: '滁州万科城市中心',
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -20,7 +20,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -29,7 +29,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -38,7 +38,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -47,7 +47,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }],
     imgUrls: [

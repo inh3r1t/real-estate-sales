@@ -1,13 +1,16 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/building/list",
+    "pages/company/profile"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "德信安居",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#eeeeee"
   },
   "tabBar": {
     "list": [
@@ -24,7 +27,7 @@
         "selectedIconPath": "images/customer.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/company/profile",
         "text": "公司简介",
         "iconPath": "images/company.png",
         "selectedIconPath": "images/company.png"

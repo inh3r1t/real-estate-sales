@@ -1,0 +1,15 @@
+<!--pages/building/list.wxml-->
+<view class="building-item" wx:for="{{list}}" wx:key="index">
+  <view class="thumb" data-id="{{item.id}}">
+    <image src="{{item.thumb}}"></image>
+  </view>
+  <view class="details" data-id="{{item.id}}">
+    <view class="building-name">{{item.housename}}</view>
+    <view class="building-address">
+      <image src='/images/navi.png'></image>
+      {{item.houseaddress}}
+    </view>
+    <view class='summary text-ellipsis-300'>简介：{{item.summary}}</view>
+
+  </view>
+</view>

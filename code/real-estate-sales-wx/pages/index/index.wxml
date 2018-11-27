@@ -1,32 +1,35 @@
 <!--index.wxml-->
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{imgUrls}}">
+  <block wx:for="{{imgUrls}}" wx:key="index">
     <swiper-item>
       <image src="{{item}}" class="slide-image" />
     </swiper-item>
   </block>
 </swiper>
 
-<view class="estate-recommend">
-  <view class="estate-recommend-title">
-    <view class='estate-recommend-title-icon'></view>
-    <view class='estate-recommend-title-name'>
+<view class="building-recommend">
+  <view class="building-recommend-title">
+    <view class='building-recommend-title-icon'></view>
+    <view class='building-recommend-title-name'>
       推荐楼盘
     </view>
-    <navigator class='estate-recommend-title-more'>查看更多>></navigator>
+    <view class='building-recommend-title-more'>
+      <navigator url='/pages/building/list'> 查看更多>></navigator>
+    </view>
   </view>
-  <block wx:if="{{recommendEstates}}">
-    <view class="estate-recommend-item" wx:for="{{recommendEstates}}" wx:key="index">
+  <block wx:if="{{recommendbuildings}}">
+    <view class="building-item" wx:for="{{recommendbuildings}}" wx:key="index">
+      <text class='building-commission'>{{item.commission}}</text>
       <view class="thumb" data-id="{{item.id}}">
         <image src="{{item.thumb}}"></image>
       </view>
       <view class="details" data-id="{{item.id}}">
-        <view class="estate-name">{{item.housename}}</view>
-        <view class="estate-address">
+        <view class="building-name">{{item.housename}}</view>
+        <view class="building-address">
           <image src='/images/navi.png'></image>
           {{item.houseaddress}}
         </view>
-          <view class='summary text-ellipsis-300'>简介：{{item.summary}}</view>
+        <text class='summary text-ellipsis-300'>简介：{{item.summary}}</text>
 
       </view>
     </view>

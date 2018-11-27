@@ -1,4 +1,5 @@
 /**app.wxss**/
+
 .container {
   height: 100%;
   display: flex;
@@ -7,24 +8,123 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
-
+}
 
 .text-ellipsis {
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .text-ellipsis-300 {
-    width: 400rpx;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
+  width: 400rpx;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.building-item {
+  display: flex;
+  flex-direction: row;
+  width: 720rpx;
+  margin: 0 auto;
+  border-bottom: 1px solid #efefef;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.building-item .building-commission {
+  position: absolute;
+  font-size: 20rpx;
+  background-color: #ff3510;
+  border-radius: 10rpx;
+  margin: 10rpx 0 0 10rpx;
+  padding: 0 10rpx;
+  color: #fff;
+}
+
+.building-item .thumb {
+  width: 35%;
+  height: 160rpx;
+  line-height: 160rpx;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.building-item .thumb image {
+  width: 260rpx;
+  height: 160rpx;
+}
+
+.building-item .details {
+  width: 65%;
+  padding-left: 5%;
+  text-align: left;
+  font-size: 0.7rem;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150rpx;
+}
+
+.building-item .details .building-name {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+}
+
+.building-item .details .building-address {
+  height: 50rpx;
+  line-height: 50rpx;
+  color: #979797;
+}
+
+.building-item .details .building-address image {
+  height: 20rpx;
+  width: 18rpx;
+  line-height: 20rpx;
+  color: #979797;
+}
+
+.building-item .details .summary {
+  text-align: left;
+  font-size: 0.7rem;
+  color: #6a6a6a;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 50rpx;
+  line-height: 50rpx;
+  align-self: baseline;
+  width: 400rpx;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* .building-recommend .building-item .details .summary {
+  padding: 10rpx 15rpx;
+  border-radius: 3rpx;
+  margin-right: 5rpx;
+  height: 20rpx;
+  line-height: 20rpx;
+  color: #77af6e;
+  background: #f7f5f6; 
+} */
+
+.building-item .details .tags .money {
+  color: #d65408;
+  font-weight: bold;
+  font-size: 1rem;
+  padding-right: 10rpx;
 }

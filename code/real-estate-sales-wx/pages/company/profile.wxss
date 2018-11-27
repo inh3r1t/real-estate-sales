@@ -1,0 +1,28 @@
+/* pages/company/profile.wxss */
+
+.company {
+  display: flex;
+  flex-direction: column;
+}
+
+.company-img {
+  width: 100%;
+  height: 340rpx;
+}
+
+.company-name {
+  padding: 20rpx 20rpx 0 20rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.company-admin {
+  padding: 20rpx 20rpx 0 20rpx;
+  font-size: 30rpx;
+}
+
+.company-info {
+  padding: 20rpx 20rpx 0 20rpx;
+  font-size: 30rpx;
+  line-height: 45rpx;
+}
