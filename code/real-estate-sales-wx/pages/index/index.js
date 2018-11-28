@@ -20,7 +20,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
+      commission: '1.5%'
 
     }, {
       id: 2,
@@ -38,7 +38,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
+      commission: '12000'
 
     }, {
       id: 2,
@@ -47,7 +47,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
+      commission: '1%'
 
     }],
     imgUrls: [
@@ -103,6 +103,17 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  toMore: function (a) {
+    wx.navigateTo({
+      url: '/pages/building/list',
+    })
+  },
+  toDetail: function (a) {
+    var id = a.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/building/detail/detail',
     })
   }
 })

@@ -14,16 +14,16 @@
       推荐楼盘
     </view>
     <view class='building-recommend-title-more'>
-      <navigator url='/pages/building/list'> 查看更多>></navigator>
+      <text bindtap="toMore"> 查看更多>></text>
     </view>
   </view>
   <block wx:if="{{recommendbuildings}}">
-    <view class="building-item" wx:for="{{recommendbuildings}}" wx:key="index">
+    <view bindtap='toDetail' class="building-item" data-id="{{item.id}}" wx:for="{{recommendbuildings}}" wx:key="index">
       <text class='building-commission'>{{item.commission}}</text>
-      <view class="thumb" data-id="{{item.id}}">
+      <view class="thumb">
         <image src="{{item.thumb}}"></image>
       </view>
-      <view class="details" data-id="{{item.id}}">
+      <view class="details">
         <view class="building-name">{{item.housename}}</view>
         <view class="building-address">
           <image src='/images/navi.png'></image>

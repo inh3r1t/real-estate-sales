@@ -15,7 +15,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -24,7 +24,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%'
 
     }, {
       id: 2,
@@ -33,7 +33,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -42,7 +42,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '12000'
 
     }, {
       id: 2,
@@ -51,7 +51,16 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1%'
+
+    }, {
+      id: 1,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -60,7 +69,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%'
 
     }, {
       id: 2,
@@ -69,7 +78,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1.5%+12000'
 
     }, {
       id: 2,
@@ -78,7 +87,7 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '12000'
 
     }, {
       id: 2,
@@ -87,11 +96,72 @@ Page({
       companyname: '万科',
       houseaddress: '滁州万科城市中心',
       summary: '32层挑高超大户型，依山傍水',
-      houseprice: '10000'
+      commission: '1%'
+
+    }],
+    list2: [{
+      id: 1,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
+      commission: '1.5%+12000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      commission: '1.5%'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      commission: '1.5%+12000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      commission: '12000'
+
+    }, {
+      id: 2,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水',
+      commission: '1%'
+
+    }, {
+      id: 1,
+      thumb: '/images/house1.png',
+      housename: '滁州万科城市中心',
+      companyname: '万科',
+      houseaddress: '滁州万科城市中心',
+      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
+      commission: '1.5%+12000'
 
     }]
-  },
 
+  },
+  toDetail: function(a) {
+    var id = a.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/building/detail/detail',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -172,10 +242,9 @@ Page({
       console.log("==> [ERROR]", err)
     }).then(() => {
       this.loading = false
-      const articles = this.data.list
       this.setData({
         page: pageNo, //当前的页号
-        list: override ? articles : this.data.list.concat(articles)
+        list: override ? this.data.list : this.data.list.concat(this.data.list2)
       })
       // 隐藏加载框
       wx.hideLoading();
