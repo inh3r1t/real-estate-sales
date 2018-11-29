@@ -1,0 +1,13 @@
+<view class="login">
+  <view>
+    <image class='login-logo' src='/images/avatar.jpg'>
+    </image>
+  </view>
+  <view>
+    <button class='login-wechat'>微信快捷登录</button>
+  </view>
+  <view>
+    <button class='login-phone'>手机号登录</button>
+  </view>
+  <text class='register' bindtap='register'>立即注册</text>
+</view>

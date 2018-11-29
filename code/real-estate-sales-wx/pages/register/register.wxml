@@ -1,0 +1,27 @@
+<!--pages/register/register.wxml-->
+<form class="form" reportSubmit bindsubmit="savepubinfo">
+  <view class="form-body">
+    <view class="item">
+      请填写您的个人信息
+    </view>
+    <view class="item">
+      <text class="form-lable">姓 名</text>
+      <input class='form-input' name="name" placeholder="请输入姓名" type="text"></input>
+    </view>
+    <view class="item">
+      <text class="form-lable">手机号</text>
+      <input class='form-input' name="name" placeholder="请输入手机号" type="text"></input>
+    </view>
+    <view class="item">
+      <text class="form-lable">密 码</text>
+      <input class='form-input' name="name" placeholder="6-12位数字和字母的组合" type="text" password='true'></input>
+    </view>
+    <view class="item">
+      <text class="form-lable">注册码</text>
+      <input class='form-input' name="name" placeholder="请输入注册码" type="text"></input>
+    </view>
+  </view>
+  <view class="form-footer">
+    <button formType="submit">立即注册</button>
+  </view>
+</form>

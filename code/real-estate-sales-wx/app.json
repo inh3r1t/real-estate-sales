@@ -4,7 +4,11 @@
     "pages/logs/logs",
     "pages/building/list",
     "pages/company/profile",
-    "pages/building/detail/detail"
+    "pages/building/detail/detail",
+    "pages/register/register",
+    "pages/login/index",
+    "pages/login/phone",
+    "pages/building/report/report"
   ],
   "window": {
     "backgroundTextStyle": "light",
