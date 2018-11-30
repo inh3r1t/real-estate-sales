@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.business.dao.BusUserMapper">
+    <resultMap id="BaseResultMap" type="com.zx.business.model.BusUser">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="phone_num" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="poll_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_name, passwd, phone_num, poll_code, role_id, create_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bus_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from bus_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.zx.business.model.BusUser">
+        insert into bus_user (id, user_name, passwd,
+        phone_num, poll_code, role_id,
+        create_time)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+        #{phoneNum,jdbcType=VARCHAR}, #{pollCode,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.zx.business.model.BusUser">
+        insert into bus_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="passwd != null">
+                passwd,
+            </if>
+            <if test="phoneNum != null">
+                phone_num,
+            </if>
+            <if test="pollCode != null">
+                poll_code,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNum != null">
+                #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="pollCode != null">
+                #{pollCode,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zx.business.model.BusUser">
+        update bus_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                passwd = #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNum != null">
+                phone_num = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="pollCode != null">
+                poll_code = #{pollCode,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.zx.business.model.BusUser">
+        update bus_user
+        set user_name = #{userName,jdbcType=VARCHAR},
+        passwd = #{passwd,jdbcType=VARCHAR},
+        phone_num = #{phoneNum,jdbcType=VARCHAR},
+        poll_code = #{pollCode,jdbcType=VARCHAR},
+        role_id = #{roleId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPage" parameterType="com.zx.base.model.PageCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from bus_real_estate
+        <if test="orderField != null">
+            order by ${orderField}
+        </if>
+        <if test="orderType != null">
+            ${orderType}
+        </if>
+        <if test="pageSize != null and start != null">
+            limit #{start}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="selectByModel" parameterType="com.zx.business.model.BusUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bus_user
+        where 1=1
+        <if test="id != null">id = #{id}</if>
+        <if test="user_name != null">user_name = #{user_name}</if>
+        <if test="passwd != null">passwd = #{passwd}</if>
+        <if test="phone_num != null">phone_num = #{phone_num}</if>
+        <if test="poll_code != null">poll_code = #{poll_code}</if>
+        <if test="role_id != null">role_id = #{role_id}</if>
+    </select>
+
+    <select id="countByModel" parameterType="com.zx.business.model.BusUser" resultType="java.lang.Long">
+        select
+        count(1)
+        from bus_user
+        where 1=1
+        <if test="id != null">id = #{id}</if>
+        <if test="user_name != null">user_name = #{user_name}</if>
+        <if test="passwd != null">passwd = #{passwd}</if>
+        <if test="phone_num != null">phone_num = #{phone_num}</if>
+        <if test="poll_code != null">poll_code = #{poll_code}</if>
+        <if test="role_id != null">role_id = #{role_id}</if>
+    </select>
+</mapper>
