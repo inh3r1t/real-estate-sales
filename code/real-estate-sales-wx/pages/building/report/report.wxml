@@ -66,11 +66,13 @@
         </view>
       </view>
     </view>
+    <view>
+      <view class='building-add'>+ 添加楼盘</view>
+    </view>
   </view>
   <view class='nav-footer'>
     <view class="form-footer">
-      <view class='building-add'>+ 添加楼盘</view>
-      <button formType="submit">立即注册</button>
+      <button formType="submit">立即报备</button>
     </view>
   </view>
 </form>

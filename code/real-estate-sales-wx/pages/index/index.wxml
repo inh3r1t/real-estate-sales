@@ -29,8 +29,7 @@
           <image src='/images/navi.png'></image>
           {{item.houseaddress}}
         </view>
-        <text class='summary text-ellipsis-300'>简介：{{item.summary}}</text>
-
+        <text class='summary text-ellipsis'>简介：{{item.summary}}</text>
       </view>
     </view>
   </block>

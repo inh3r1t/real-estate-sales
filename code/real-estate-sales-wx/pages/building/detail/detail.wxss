@@ -15,7 +15,7 @@ swiper .slide-image {
   flex-direction: column;
   padding: 20rpx;
   line-height: 50rpx;
-  margin-bottom: 100rpx;
+  padding-bottom: 120rpx;
 }
 
 .building .building-title {

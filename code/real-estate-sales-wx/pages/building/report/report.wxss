@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   font-size: 30rpx;
-  margin-bottom: 200rpx;
+  /* margin-bottom: 200rpx; */
+  padding-bottom: 150rpx;
 }
 
 .form .form-body .item {
@@ -55,7 +56,7 @@
   width: 100%;
   bottom: 0rpx;
   background-color: #fff;
-  padding-bottom: 20rpx;
+  /* padding-bottom: 20rpx; */
 }
 
 .form .form-footer {
@@ -63,23 +64,25 @@
   display: flex;
   flex-direction: column;
   padding: 0 60rpx;
+  height: 120rpx;
+  line-height: 120rpx;
 }
 
-.form .form-footer .building-add {
-  margin-left: 140rpx;
-  margin-top: 10rpx;
+.form .building-add {
+  margin-left: 200rpx;
   font-size: 30rpx;
+  font-weight: bold;
 }
 
 .form .form-footer button {
-  margin-top: 50rpx;
   width: 100%;
-  background-color: #e6f1fc;
-  color: #1989fa;
+  background-color: #70b71e;
+  color: #fff;
   height: 80rpx;
   line-height: 80rpx;
-  border: 1rpx solid #a3d0fd;
+  border: 1rpx solid #7cae53;
   font-size: 30rpx;
+  font-weight: bold;
 }
 
 .form-body .item radio-group {
