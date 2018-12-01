@@ -1,0 +1,27 @@
+<form class="form">
+  <view class="form-body">
+    <view class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
+      <text class='building-commission'>{{item.commission}}</text>
+      <view class="thumb">
+        <image src="{{item.thumb}}"></image>
+      </view>
+      <view class="details">
+        <view class="building-name">{{item.housename}}</view>
+        <view class="building-address">
+          <image src='/images/navi.png'></image>
+          {{item.houseaddress}}
+        </view>
+        <text class='summary text-ellipsis-200'>简介：{{item.summary}}</text>
+
+      </view>
+      <view class='building-select'>
+        <radio value='{{item.id}}'></radio>
+      </view>
+    </view>
+  </view>
+  <view class='nav-footer'>
+    <view class="form-footer">
+      <button formType="submit">确 定</button>
+    </view>
+  </view>
+</form>

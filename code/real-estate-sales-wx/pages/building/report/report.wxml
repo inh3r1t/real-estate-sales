@@ -1,0 +1,78 @@
+<!--pages/register/register.wxml-->
+<form class="form" reportSubmit bindsubmit="savepubinfo">
+  <view class="form-body">
+    <view class="item">
+      <view class="form-lable">客户姓名</view>
+      <input class='form-input' name="name" placeholder="请输入姓名" type="text"></input>
+    </view>
+    <view class="item">
+      <radio-group bindchange="checkboxChangehouse">
+        <label class="radio">
+          <radio checked="checked" name="sex" value="先生"></radio>先生
+        </label>
+        <label class="radio">
+          <radio checked="" name="sex" value="女士"></radio>女士
+        </label>
+      </radio-group>
+    </view>
+    <view class="item">
+      <text class="form-lable">联系方式</text>
+      <input class='form-input' name="name" placeholder="请输入手机号" type="text"></input>
+    </view>
+    <view class="item-report">
+      <text class="form-lable">报备楼盘</text>
+      <view class='form-input buiding-list'>
+        <view class="buiding-item">
+          <text>滁州森林院子三期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子三期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+        <view class="buiding-item">
+          <text>滁州森林院子四期</text>
+        </view>
+      </view>
+    </view>
+    <view>
+      <view class='building-add'>+ 添加楼盘</view>
+    </view>
+  </view>
+  <view class='nav-footer'>
+    <view class="form-footer">
+      <button formType="submit">立即报备</button>
+    </view>
+  </view>
+</form>

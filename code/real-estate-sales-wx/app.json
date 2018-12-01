@@ -1,40 +1,51 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/building/list",
+    "pages/company/profile",
+    "pages/building/detail/detail",
+    "pages/register/register",
+    "pages/login/index",
+    "pages/login/phone",
+    "pages/building/report/report",
+    "pages/building/select/index",
+    "pages/member/member"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "德信安居",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#eeeeee"
   },
   "tabBar": {
     "list": [
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "images/home.png",
+        "iconPath": "images/home1.png",
         "selectedIconPath": "images/home.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "我的客户",
-        "iconPath": "images/customer.png",
+        "iconPath": "images/customer1.png",
         "selectedIconPath": "images/customer.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/company/profile",
         "text": "公司简介",
-        "iconPath": "images/company.png",
+        "iconPath": "images/company1.png",
         "selectedIconPath": "images/company.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/member/member",
         "text": "个人中心",
-        "iconPath": "images/personal.png",
+        "iconPath": "images/personal1.png",
         "selectedIconPath": "images/personal.png"
       }
-    ]
+    ],
+    "color": "#8D8D8D"
   }
 }
