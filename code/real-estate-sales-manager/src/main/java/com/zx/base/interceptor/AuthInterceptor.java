@@ -57,7 +57,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             }
         }
         //验证菜单是否有权限
-        if (this.allModules.contains(request.getServletPath())) {
+        if (this.allModules != null && this.allModules.contains(request.getServletPath())) {
             if (userLogin.getIssuper()) {
                 return true;
             } else if (!userLogin.getModules().stream().anyMatch(l ->

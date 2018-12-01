@@ -174,25 +174,10 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByPage" parameterType="com.zx.base.model.PageCondition" resultMap="BaseResultMap">
+  <select id="selectByPage" parameterType="com.zx.business.model.BusRealEstate" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from bus_real_estate
-    <if test="orderField != null">
-      order by ${orderField}
-    </if>
-    <if test="orderType != null">
-      ${orderType}
-    </if>
-    <if test="pageSize != null and start != null">
-      limit #{start}, #{pageSize}
-    </if>
-  </select>
-
-  <select id="selectByModel" parameterType="com.zx.business.model.BusRealEstate" resultType="java.lang.Long">
-    select
-    <include refid="Base_Column_List" />
-    from bus_user
     where 1=1
     <if test="id != null">id = #{id}</if>
     <if test="summery != null">summery = #{summery}</if>
@@ -203,6 +188,15 @@
     <if test="detail != null">detail = #{detail}</if>
     <if test="is_top_recommend != null">is_top_recommend = #{is_top_recommend}</if>
     <if test="is_list_recommend != null">is_list_recommend = #{is_list_recommend}</if>
+    <if test="orderField != null">
+      order by ${orderField}
+    </if>
+    <if test="orderType != null">
+      ${orderType}
+    </if>
+    <if test="start != null and pageSize != null">
+      limit #{start}, #{size}
+    </if>
   </select>
 
   <select id="countByModel" parameterType="com.zx.business.model.BusRealEstate" resultType="java.lang.Long">

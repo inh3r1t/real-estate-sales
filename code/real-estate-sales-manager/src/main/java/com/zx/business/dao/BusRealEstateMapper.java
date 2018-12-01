@@ -1,7 +1,7 @@
 package com.zx.business.dao;
 
-import com.zx.base.model.PageCondition;
 import com.zx.business.model.BusRealEstate;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -54,7 +54,8 @@ public interface BusRealEstateMapper {
      */
     int updateByPrimaryKey(BusRealEstate record);
 
-    List<BusRealEstate> selectByPage(PageCondition condition);
+    List<BusRealEstate> selectByPage(@Param("start") Integer start, @Param("size") Integer size, @Param("orderField") String orderField,
+                                     @Param("orderType") String orderType, BusRealEstate busRealEstate);
 
     Long countByModel(BusRealEstate model);
 }

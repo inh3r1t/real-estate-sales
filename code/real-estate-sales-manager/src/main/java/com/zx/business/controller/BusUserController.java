@@ -48,6 +48,9 @@ public class BusUserController extends BaseController {
         return resultData;
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    @AuthorizeIgnore
     public ResultData login(@RequestBody BusUser busUser) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
         try {

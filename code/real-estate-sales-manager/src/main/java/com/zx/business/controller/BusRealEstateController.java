@@ -1,9 +1,9 @@
 package com.zx.business.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
-import com.zx.base.model.PageCondition;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusRealEstate;
@@ -11,9 +11,7 @@ import com.zx.business.service.BusRealEstateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,14 +28,15 @@ public class BusRealEstateController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(BusRealEstateController.class);
 
     @Resource
-    private BusRealEstateService busRealStateSevice;
+    private BusRealEstateService busRealStateService;
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData getPage(PageCondition condition) {
+    @AuthorizeIgnore
+    public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
-            PagerModel<BusRealEstate> busRealEstatePage = busRealStateSevice.getList(condition);
+            PagerModel<BusRealEstate> busRealEstatePage = busRealStateService.getPage(page, pageSize, busRealEstate);
             resultData.setData(JSON.toJSONString(busRealEstatePage));
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
@@ -47,11 +46,29 @@ public class BusRealEstateController extends BaseController {
         return resultData;
     }
 
-    @RequestMapping(value = "getById", method = RequestMethod.POST)
-    public ResultData getById(Integer id) {
+    @RequestMapping(value = "/getList", method = RequestMethod.POST)
+    @ResponseBody
+    @AuthorizeIgnore
+    public ResultData getList(@RequestBody BusRealEstate busRealEstate) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+        try {
+            List<BusRealEstate> busRealEstates = busRealStateService.getList(busRealEstate);
+            resultData.setData(JSON.toJSONString(busRealEstates));
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取楼盘列表失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+    @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    @AuthorizeIgnore
+    public ResultData getById(@PathVariable Integer id) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘详细信息成功！");
         try {
-            BusRealEstate busRealEstate = busRealStateSevice.getById(id);
+            BusRealEstate busRealEstate = busRealStateService.getById(id);
             resultData.setData(JSON.toJSONString(busRealEstate));
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
