@@ -46,6 +46,7 @@
         "selectedIconPath": "images/personal.png"
       }
     ],
-    "color": "#8D8D8D"
+    "color": "#8D8D8D",
+    "borderStyle": "white"
   }
 }

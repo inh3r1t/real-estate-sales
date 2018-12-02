@@ -3,6 +3,7 @@
 .company {
   display: flex;
   flex-direction: column;
+  font-size: 14px;
 }
 
 .company-img {
@@ -12,17 +13,16 @@
 
 .company-name {
   padding: 20rpx 20rpx 0 20rpx;
-  font-size: 40rpx;
+  font-size: 18px;
   font-weight: bold;
+  text-align: center;
 }
 
 .company-admin {
   padding: 20rpx 20rpx 0 20rpx;
-  font-size: 30rpx;
 }
 
 .company-info {
   padding: 20rpx 20rpx 0 20rpx;
-  font-size: 30rpx;
   line-height: 45rpx;
 }

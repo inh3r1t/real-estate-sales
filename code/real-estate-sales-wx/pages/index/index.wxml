@@ -2,7 +2,7 @@
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
   <block wx:for="{{imgUrls}}" wx:key="index">
     <swiper-item>
-      <image src="{{item}}" class="slide-image" />
+      <image src="{{item}}" mode='aspectFill' class="slide-image" />
     </swiper-item>
   </block>
 </swiper>
@@ -14,7 +14,7 @@
       推荐楼盘
     </view>
     <view class='building-recommend-title-more'>
-      <text bindtap="toMore"> 查看更多>></text>
+      <text bindtap="toMore"> 查看更多>> </text>
     </view>
   </view>
   <block wx:if="{{recommendbuildings}}">

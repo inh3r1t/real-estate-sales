@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  font-size: 16px;
 }
 
 .container .header {
@@ -21,8 +22,8 @@
 .container .header image {
   width: 140rpx;
   height: 140rpx;
-  border: 2rpx solid #fff;
-  border-radius: 140rpx;
+  border: 10rpx solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
 }
 
 .container .header .username {
@@ -31,7 +32,7 @@
   width: 90%;
   text-align: center;
   color: #fff;
-  font-size: 35rpx;
+  font-size: 16px;
 }
 
 .container .header .company {
@@ -40,7 +41,6 @@
   width: 90%;
   text-align: center;
   color: #fff;
-  font-size: 30rpx;
 }
 
 .container .list {
@@ -51,7 +51,6 @@
 
 .container .list .item {
   padding: 20rpx;
-  font-size: 34rpx;
   border-bottom: 1rpx solid #efefef;
   color: #000;
 }
@@ -63,5 +62,4 @@
 .logout {
   text-align: center;
   padding: 20rpx 0;
-  font-size: 34rpx;
 }

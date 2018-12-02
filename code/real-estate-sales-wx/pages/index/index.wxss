@@ -46,7 +46,7 @@ swiper .slide-image {
   line-height: 80rpx;
   display: flex;
   /* padding: 0 5px; */
-  font-size: 30rpx;
+  font-size: 15px;
   align-content: center;
   border-bottom: 1rpx solid #efefef;
   margin: 0 auto;
@@ -73,6 +73,6 @@ swiper .slide-image {
   display: flex;
   justify-content: flex-end;
 }
-.building-recommend .building-recommend-title .building-recommend-title-more navigator{
-  padding: 0 10rpx;
+.building-recommend .building-recommend-title .building-recommend-title-more text{
+  padding: 0 20rpx;
 }

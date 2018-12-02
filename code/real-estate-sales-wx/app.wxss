@@ -32,7 +32,7 @@
 .building-item {
   display: flex;
   flex-direction: row;
-  width: 720rpx;
+  width: 100%;
   margin: 0 auto;
   border-bottom: 1px solid #efefef;
   padding-top: 10rpx;
@@ -41,7 +41,7 @@
 
 .building-item .building-commission {
   position: absolute;
-  font-size: 20rpx;
+  font-size: 14px;
   background-color: #ff3510;
   border-radius: 10rpx;
   margin: 10rpx 0 0 10rpx;
@@ -67,7 +67,7 @@
   width: 65%;
   padding-left: 5%;
   text-align: left;
-  font-size: 30rpx;
+  font-size: 16px;
   color: #000;
   display: flex;
   flex-direction: column;
@@ -78,12 +78,13 @@
 .building-item .details .building-name {
   height: 60rpx;
   line-height: 60rpx;
-  font-size: 30rpx;
+  font-size: 16px;
 }
 
 .building-item .details .building-address {
   height: 50rpx;
   line-height: 50rpx;
+  font-size: 12px;
   color: #979797;
 }
 
@@ -96,7 +97,7 @@
 
 .building-item .details .summary {
   text-align: left;
-  font-size: 26rpx;
+  font-size: 12px;
   color: #6a6a6a;
   flex-direction: row;
   justify-content: space-between;
@@ -130,4 +131,16 @@
 
 .text-center {
   text-align: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider {
+  height: 20rpx;
+  background-color: #f1f1f1;
+  box-shadow: 0 5rpx 5rpx rgba(0, 0, 0, 0.1) inset;
 }
