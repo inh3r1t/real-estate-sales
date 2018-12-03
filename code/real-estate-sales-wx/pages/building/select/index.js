@@ -1,4 +1,3 @@
-// pages/building/select/index.js
 Page({
 
   /**

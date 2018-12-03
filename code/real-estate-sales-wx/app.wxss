@@ -19,16 +19,6 @@
   display: inline-block;
 }
 
-.text-ellipsis-300 {
-  width: 200rpx;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: inline-block;
-}
-
 .building-item {
   display: flex;
   flex-direction: row;
@@ -41,7 +31,7 @@
 
 .building-item .building-commission {
   position: absolute;
-  font-size: 14px;
+  font-size: 10px;
   background-color: #ff3510;
   border-radius: 10rpx;
   margin: 10rpx 0 0 10rpx;
@@ -143,4 +133,42 @@
   height: 20rpx;
   background-color: #f1f1f1;
   box-shadow: 0 5rpx 5rpx rgba(0, 0, 0, 0.1) inset;
+}
+
+.divider-line {
+  border-bottom: 1rpx dashed #eee;
+  margin: 5rpx 0;
+}
+
+.form .form-body .form-item {
+  display: flex;
+  flex-direction: row;
+  line-height: 100rpx;
+  height: 100rpx;
+  font-size: 14px;
+  box-sizing: border-box;
+  padding: 0 60rpx;
+  border-bottom: 5rpx solid #f1f1f1;
+  background-color: #fff;
+  border-top: 5rpx solid #f1f1f1;
+  margin-top: 20rpx;
+}
+
+/* 
+.form .form-body .form-item:nth-child(1) {
+  border-top: 5rpx solid #f1f1f1;
+} */
+
+.form .form-body .form-item .form-lable {
+  width: 120rpx;
+}
+
+.form .form-body .form-item .form-input {
+  flex-grow: 1;
+  color: #808080;
+  font-size: 14px;
+  line-height: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
 }

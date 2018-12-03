@@ -1,5 +1,5 @@
 <view bindtap='toDetail' class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
-  <text class='building-commission'>{{item.commission}}</text>
+  <text class='building-commission' hidden="{{!isLogin}}">{{item.commission}}</text>
   <view class="thumb">
     <image src="{{item.thumb}}"></image>
   </view>

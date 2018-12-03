@@ -1,5 +1,5 @@
-// pages/building/list.js
 const util = require('../../utils/util.js')
+var app = getApp()
 Page({
 
   /**
@@ -7,6 +7,7 @@ Page({
    */
   data: {
     loading: false,
+    isLogin: false,
     page: 1,
     list: [{
       id: 1,
@@ -180,7 +181,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    debugger
+    this.setData({
+      isLogin: app.isLogin()
+    })
   },
 
   /**

@@ -10,7 +10,9 @@
     "pages/login/phone",
     "pages/building/report/report",
     "pages/building/select/index",
-    "pages/member/member"
+    "pages/member/member",
+    "pages/message/message",
+    "pages/password/password"
   ],
   "window": {
     "backgroundTextStyle": "light",

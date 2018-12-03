@@ -1,0 +1,5 @@
+<view class="card" wx:for="{{list}}" wx:key="index">
+  <view class='card-title'>{{item.title}} <text class='unread-tip' wx:if="{{!item.isread}}"></text></view>
+  <view class='card-content'>{{item.content}}</view>
+  <view class='card-time'>{{item.time}}</view>
+</view>

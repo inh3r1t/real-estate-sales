@@ -72,7 +72,9 @@ swiper .slide-image {
   /* padding-right: 15px; */
   display: flex;
   justify-content: flex-end;
+  font-size: 14px;
 }
-.building-recommend .building-recommend-title .building-recommend-title-more text{
+
+.building-recommend .building-recommend-title .building-recommend-title-more text {
   padding: 0 20rpx;
 }
