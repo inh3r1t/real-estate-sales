@@ -352,8 +352,92 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <insert id="batchInsertSelective">
-
-
+  <insert id="batchInsert">
+    insert into bus_deal (id, real_estate_id, real_estate_name,
+                          state, customer_id, customer_phone,
+                          customer_name, report_user_id, report_user_phone,
+                          report_company, appointment_time, subscribe_time,
+                          manager_id, manager_phone, arrive_certify_photo_path,
+                          subscribe_money, subscribe_commision, subscribe_photo_pahts,
+                          appointment_operate_time, report_operate_time,
+                          arrive_operate_time, subscribe_operate_time,
+                          create_time, update_time)
+    values
+    <foreach collection="busDealList" item="item" separator=",">
+      (#{item.id,jdbcType=INTEGER}, #{item.realEstateId,jdbcType=INTEGER}, #{item.realEstateName,jdbcType=VARCHAR},
+      #{item.state,jdbcType=INTEGER}, #{item.customerId,jdbcType=INTEGER}, #{item.customerPhone,jdbcType=VARCHAR},
+      #{item.customerName,jdbcType=VARCHAR}, #{item.reportUserId,jdbcType=INTEGER}, #{item.reportUserPhone,jdbcType=VARCHAR},
+      #{item.reportCompany,jdbcType=VARCHAR}, #{item.appointmentTime,jdbcType=TIMESTAMP}, #{item.subscribeTime,jdbcType=TIMESTAMP},
+      #{item.managerId,jdbcType=INTEGER}, #{item.managerPhone,jdbcType=VARCHAR}, #{item.arriveCertifyPhotoPath,jdbcType=VARCHAR},
+      #{item.subscribeMoney,jdbcType=VARCHAR}, #{item.subscribeCommision,jdbcType=VARCHAR}, #{item.subscribePhotoPahts,jdbcType=VARCHAR},
+      #{item.appointmentOperateTime,jdbcType=TIMESTAMP}, #{item.reportOperateTime,jdbcType=TIMESTAMP},
+      #{item.arriveOperateTime,jdbcType=TIMESTAMP}, #{item.subscribeOperateTime,jdbcType=TIMESTAMP},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
   </insert>
+
+  <select id="selectByPage" parameterType="com.zx.business.model.BusDeal" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bus_real_estate
+    where 1=1
+    <if test="appointmentTime != null">appointment_time = #{appointmentTime}</if>
+    <if test="appointmentOperateTime != null">appointment_operate_time = #{appointmentOperateTime}</if>
+    <if test="subscribeCommision != null">subscribe_commision = #{subscribeCommision}</if>
+    <if test="customerPhone != null">customer_phone = #{customerPhone}</if>
+    <if test="arriveOperateTime != null">arrive_operate_time = #{arriveOperateTime}</if>
+    <if test="subscribeTime != null">subscribe_time = #{subscribeTime}</if>
+    <if test="subscribePhotoPahts != null">subscribe_photo_pahts = #{subscribePhotoPahts}</if>
+    <if test="managerPhone != null">manager_phone = #{managerPhone}</if>
+    <if test="arriveCertifyPhotoPath != null">arrive_certify_photo_path = #{arriveCertifyPhotoPath}</if>
+    <if test="realEstateName != null">real_estate_name = #{realEstateName}</if>
+    <if test="managerId != null">manager_id = #{managerId}</if>
+    <if test="reportUserPhone != null">report_user_phone = #{reportUserPhone}</if>
+    <if test="reportCompany != null">report_company = #{reportCompany}</if>
+    <if test="subscribeMoney != null">subscribe_money = #{subscribeMoney}</if>
+    <if test="reportOperateTime != null">report_operate_time = #{reportOperateTime}</if>
+    <if test="id != null">id = #{id}</if>
+    <if test="state != null">state = #{state}</if>
+    <if test="customerName != null">customer_name = #{customerName}</if>
+    <if test="customerId != null">customer_id = #{customerId}</if>
+    <if test="reportUserId != null">report_user_id = #{reportUserId}</if>
+    <if test="realEstateId != null">real_estate_id = #{realEstateId}</if>
+    <if test="orderField != null">
+      order by ${orderField}
+    </if>
+    <if test="orderType != null">
+      ${orderType}
+    </if>
+    <if test="start != null and pageSize != null">
+      limit #{start}, #{size}
+    </if>
+  </select>
+
+  <select id="countByModel" parameterType="com.zx.business.model.BusCustomer" resultType="java.lang.Long">
+    select
+    count(1)
+    from bus_user
+    where 1=1
+    <if test="appointmentTime != null">appointment_time = #{appointmentTime}</if>
+    <if test="appointmentOperateTime != null">appointment_operate_time = #{appointmentOperateTime}</if>
+    <if test="subscribeCommision != null">subscribe_commision = #{subscribeCommision}</if>
+    <if test="customerPhone != null">customer_phone = #{customerPhone}</if>
+    <if test="arriveOperateTime != null">arrive_operate_time = #{arriveOperateTime}</if>
+    <if test="subscribeTime != null">subscribe_time = #{subscribeTime}</if>
+    <if test="subscribePhotoPahts != null">subscribe_photo_pahts = #{subscribePhotoPahts}</if>
+    <if test="managerPhone != null">manager_phone = #{managerPhone}</if>
+    <if test="arriveCertifyPhotoPath != null">arrive_certify_photo_path = #{arriveCertifyPhotoPath}</if>
+    <if test="realEstateName != null">real_estate_name = #{realEstateName}</if>
+    <if test="managerId != null">manager_id = #{managerId}</if>
+    <if test="reportUserPhone != null">report_user_phone = #{reportUserPhone}</if>
+    <if test="reportCompany != null">report_company = #{reportCompany}</if>
+    <if test="subscribeMoney != null">subscribe_money = #{subscribeMoney}</if>
+    <if test="reportOperateTime != null">report_operate_time = #{reportOperateTime}</if>
+    <if test="id != null">id = #{id}</if>
+    <if test="state != null">state = #{state}</if>
+    <if test="customerName != null">customer_name = #{customerName}</if>
+    <if test="customerId != null">customer_id = #{customerId}</if>
+    <if test="reportUserId != null">report_user_id = #{reportUserId}</if>
+    <if test="realEstateId != null">real_estate_id = #{realEstateId}</if>
+  </select>
 </mapper>

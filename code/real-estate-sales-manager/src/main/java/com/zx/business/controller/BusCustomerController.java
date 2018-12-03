@@ -33,13 +33,13 @@ public class BusCustomerController {
     @ResponseBody
     @AuthorizeIgnore
     public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusCustomer busCustomer) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             PagerModel<BusCustomer> busCustomerPage = busCustomerService.getPage(page, pageSize, busCustomer);
             resultData.setData(JSON.toJSONString(busCustomerPage));
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取楼盘列表失败！");
+            resultData.setMsg("获取客户列表失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -49,13 +49,13 @@ public class BusCustomerController {
     @ResponseBody
     @AuthorizeIgnore
     public ResultData getList(@RequestBody BusCustomer busCustomer) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             List<BusCustomer> busCustomers = busCustomerService.getList(busCustomer);
             resultData.setData(JSON.toJSONString(busCustomers));
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取楼盘列表失败！");
+            resultData.setMsg("获取客户列表失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;

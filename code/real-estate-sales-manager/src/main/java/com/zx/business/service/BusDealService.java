@@ -1,5 +1,6 @@
 package com.zx.business.service;
 
+import com.zx.base.model.PagerModel;
 import com.zx.business.common.BusinessCons;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
@@ -34,6 +35,17 @@ public class BusDealService {
         return busDealMapper.selectByPrimaryKey(id);
     }
 
+    public PagerModel<BusDeal> getPage(Integer page, Integer pageSize, BusDeal busDeal) {
+        Long count = busDealMapper.countByModel(busDeal);
+        int start = (page + 1) * pageSize;
+        List<BusDeal> busDeals = busDealMapper.selectByPage(start, pageSize, null, null, busDeal);
+        return new PagerModel<>(page, pageSize, count.intValue(), busDeals);
+    }
+
+    public List<BusDeal> getList(BusDeal busDeal) {
+        return busDealMapper.selectByPage(null, null, null, null, busDeal);
+    }
+
     @Transactional
     public void report(BusDealVO busDealVO) {
         Integer agentId = busDealVO.getReportUserId();
@@ -65,6 +77,30 @@ public class BusDealService {
             busDealList.add(busDeal);
         }
 
-        busDealMapper.batchInsertSelective(busDealList); // TODO
+        busDealMapper.batchInsert(busDealList);
+    }
+
+    public void appointment(BusDeal busDeal) {
+        BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setAppointmentTime(busDeal.getAppointmentTime());
+        execBusDeal.setAppointmentOperateTime(new Date());
+        execBusDeal.setUpdateTime(new Date());
+        busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+    }
+
+    public void arrive(BusDeal busDeal) { // TODO
+        BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setArriveOperateTime(new Date());
+        execBusDeal.setUpdateTime(new Date());
+        busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+    }
+
+    public void subscribe(BusDeal busDeal) { // TODO
+        BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setSubscribeTime(busDeal.getSubscribeTime());
+        execBusDeal.setSubscribeMoney(busDeal.getSubscribeMoney());
+        execBusDeal.setSubscribeOperateTime(new Date());
+        execBusDeal.setUpdateTime(new Date());
+        busDealMapper.updateByPrimaryKeySelective(execBusDeal);
     }
 }

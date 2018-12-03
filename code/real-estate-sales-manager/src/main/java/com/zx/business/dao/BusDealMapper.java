@@ -54,5 +54,9 @@ public interface BusDealMapper {
      */
     int updateByPrimaryKey(BusDeal record);
 
-    void batchInsertSelective(@Param("busDealList") List<BusDeal> busDealList);
+    void batchInsert(@Param("busDealList") List<BusDeal> busDealList);
+
+    Long countByModel(BusDeal busDeal);
+
+    List<BusDeal> selectByPage(Integer start, Integer pageSize, String orderField, String orderType, BusDeal busDeal);
 }

@@ -3,20 +3,18 @@ package com.zx.business.controller;
 import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.Const;
+import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusDeal;
-import com.zx.business.model.BusRealEstate;
 import com.zx.business.service.BusDealService;
 import com.zx.business.vo.BusDealVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RequestMapping("/busDeal")
@@ -26,6 +24,38 @@ public class BusDealController {
 
     @Resource
     private BusDealService busDealService;
+
+    @RequestMapping(value = "/getPage", method = RequestMethod.POST)
+    @ResponseBody
+    @AuthorizeIgnore
+    public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusDeal busDeal) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
+        try {
+            PagerModel<BusDeal> busDealPage = busDealService.getPage(page, pageSize, busDeal);
+            resultData.setData(JSON.toJSONString(busDealPage));
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取客户列表失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+    @RequestMapping(value = "/getList", method = RequestMethod.POST)
+    @ResponseBody
+    @AuthorizeIgnore
+    public ResultData getList(@RequestBody BusDeal busDeal) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
+        try {
+            List<BusDeal> busDealList = busDealService.getList(busDeal);
+            resultData.setData(JSON.toJSONString(busDealList));
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取客户列表失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
 
     @RequestMapping("/getById/{id}")
     @ResponseBody
@@ -65,19 +95,19 @@ public class BusDealController {
 
     /**
      * 预约
-     * @param busDealVO
+     * @param BusDeal
      * @return
      */
     @RequestMapping("/appointment")
     @ResponseBody
     @AuthorizeIgnore
-    public ResultData appointment(@RequestBody BusDealVO busDealVO) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
+    public ResultData appointment(@RequestBody BusDeal BusDeal) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "订单预约成功！");
         try {
-            resultData.setData(JSON.toJSONString(""));
+            busDealService.appointment(BusDeal);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取订单详细信息失败！");
+            resultData.setMsg("订单预约失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -85,19 +115,19 @@ public class BusDealController {
 
     /**
      * 到访
-     * @param busDealVO
+     * @param busDeal
      * @return
      */
     @RequestMapping("/arrive")
     @ResponseBody
     @AuthorizeIgnore
-    public ResultData arrive(@RequestBody BusDealVO busDealVO) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
+    public ResultData arrive(@RequestBody BusDeal busDeal) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "客户到访成功！");
         try {
-            resultData.setData(JSON.toJSONString(""));
+            busDealService.arrive(busDeal);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取订单详细信息失败！");
+            resultData.setMsg("客户到访失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -105,19 +135,19 @@ public class BusDealController {
 
     /**
      * 认购
-     * @param busDealVO
+     * @param busDeal
      * @return
      */
     @RequestMapping("/subscribe")
     @ResponseBody
     @AuthorizeIgnore
-    public ResultData subscribe(@RequestBody BusDealVO busDealVO) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
+    public ResultData subscribe(@RequestBody BusDeal busDeal) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "认购成功！");
         try {
-            resultData.setData(JSON.toJSONString(""));
+            busDealService.subscribe(busDeal);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取订单详细信息失败！");
+            resultData.setMsg("认购失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;

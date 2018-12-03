@@ -4,11 +4,20 @@ import java.io.Serializable;
 
 public class BusDealVO implements Serializable {
 
+    private Integer dealId; // 订单id
     private String realEstateIds; // 楼盘ids,用","隔开
     private Integer reportUserId; // 报备人id - 中介
     private String customerName; // 客户名称
     private String customerPhone; // 客户电话
     private Integer customerSex; // 客户性别 0-男,1-女
+
+    public Integer getDealId() {
+        return dealId;
+    }
+
+    public void setDealId(Integer dealId) {
+        this.dealId = dealId;
+    }
 
     public Integer getCustomerSex() {
         return customerSex;

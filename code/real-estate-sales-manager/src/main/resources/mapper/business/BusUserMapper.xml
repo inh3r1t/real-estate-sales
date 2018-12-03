@@ -185,21 +185,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByPage" parameterType="com.zx.base.model.PageCondition" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from bus_real_estate
-    <if test="orderField != null">
-      order by ${orderField}
-    </if>
-    <if test="orderType != null">
-      ${orderType}
-    </if>
-    <if test="pageSize != null and start != null">
-      limit #{start}, #{pageSize}
-    </if>
-  </select>
-
   <select id="selectByModel" parameterType="com.zx.business.model.BusUser" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
