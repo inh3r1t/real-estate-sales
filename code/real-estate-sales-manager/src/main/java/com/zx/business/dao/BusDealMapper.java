@@ -1,6 +1,9 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusDeal;
+import org.nutz.mvc.annotation.Param;
+
+import java.util.List;
 
 public interface BusDealMapper {
     /**
@@ -50,4 +53,6 @@ public interface BusDealMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(BusDeal record);
+
+    void batchInsertSelective(@Param("busDealList") List<BusDeal> busDealList);
 }
