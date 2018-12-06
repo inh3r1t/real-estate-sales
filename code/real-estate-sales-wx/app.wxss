@@ -132,7 +132,7 @@
 .divider {
   height: 20rpx;
   background-color: #f1f1f1;
-  box-shadow: 0 5rpx 5rpx rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1rpx 1rpx rgba(0, 0, 0, 0.1) inset;
 }
 
 .divider-line {

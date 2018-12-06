@@ -1,0 +1,128 @@
+<view class="customer">
+  <view class="customer-tabs">
+    <view class="customer-tab-item active">
+      <text>全部</text>
+      <text class="tab-item-count">265</text>
+    </view>
+    <view class="customer-tab-item">
+      <text>报备</text>
+      <text class="tab-item-count">352</text>
+    </view>
+    <view class="customer-tab-item">
+      <text>到访</text>
+      <text class="tab-item-count">25</text>
+    </view>
+    <view class="customer-tab-item">
+      <text>认购</text>
+      <text class="tab-item-count">1</text>
+    </view>
+  </view>
+  <view class='customer-list'>
+    <view class='customer-item flow-step-1' bindtap='toDetail'>
+      <view class='item-base'>
+        <view class='item-info'>
+          <view class='item-name'>客户姓名：阿旭</view>
+          <view class='item-phone'>客户号码：183****9985</view>
+          <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
+        </view>
+        <view class='item-tools'>
+          <text class='item-opt' catchtap='confirm'>客户认购</text>
+          <text class="item-share iconfont icon-fenxiang" catchtap='share'></text>
+        </view>
+      </view>
+      <view class='item-flows'>
+        <view class='flow-item'>
+          <text>报备</text>
+          <text class="iconfont icon-baxin"></text>
+          <text>2018.11.21 21:00</text>
+        </view>
+        <view class='flow-item'>
+          <text>到访</text>
+          <text class="iconfont icon-baxin"></text>
+        </view>
+        <view class='flow-item'>
+          <text>认购</text>
+          <text class="iconfont icon-baxin"></text>
+        </view>
+      </view>
+      <view class='flow-line'>
+        <view class='flow-line-after'></view>
+        <view class='flow-line-before'></view>
+      </view>
+      <view class='divider'></view>
+    </view>
+    <view class='customer-item flow-step-2'>
+      <view class='item-base'>
+        <view class='item-info'>
+          <view class='item-name'>客户姓名：阿旭</view>
+          <view class='item-phone'>客户号码：183****9985</view>
+          <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
+        </view>
+        <view class='item-tools'>
+          <text class='item-opt'>客户认购</text>
+          <text class="item-share iconfont icon-fenxiang"></text>
+        </view>
+      </view>
+      <view class='item-flows'>
+        <view class='flow-item'>
+          <text>报备</text>
+          <text class="iconfont icon-baxin"></text>
+          <text>2018.11.21 21:00</text>
+        </view>
+        <view class='flow-item'>
+          <text>到访</text>
+          <text class="iconfont icon-baxin"></text>
+        </view>
+        <view class='flow-item'>
+          <text>认购</text>
+          <text class="iconfont icon-baxin"></text>
+        </view>
+      </view>
+      <view class='flow-line'>
+        <view class='flow-line-after'></view>
+        <view class='flow-line-before'></view>
+      </view>
+      <view class='divider'></view>
+    </view>
+    <view class='customer-item flow-step-3'>
+      <view class='item-base'>
+        <view class='item-info'>
+          <view class='item-name'>客户姓名：阿旭</view>
+          <view class='item-phone'>客户号码：183****9985</view>
+          <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
+        </view>
+        <view class='item-tools'>
+          <text class='item-opt'>客户认购</text>
+          <text class="item-share iconfont icon-fenxiang"></text>
+        </view>
+      </view>
+      <view class='item-flows'>
+        <view class='flow-item'>
+          <text>报备</text>
+          <text class="iconfont icon-baxin"></text>
+          <text>2018.11.21 21:00</text>
+        </view>
+        <view class='flow-item'>
+          <text>到访</text>
+          <text class="iconfont icon-baxin"></text>
+        </view>
+        <view class='flow-item'>
+          <text>认购</text>
+          <text class="iconfont icon-baxin"></text>
+        </view>
+
+      </view>
+      <view class='flow-line'>
+        <view class='flow-line-after'></view>
+        <view class='flow-line-before'></view>
+      </view>
+      <view class='divider'></view>
+    </view>
+
+  </view>
+
+</view>
+
+<modal title="请确认分享内容" hidden="{{!showShareModal}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+  <view>{{shareData}}</view>
+</modal>

@@ -1,0 +1,73 @@
+@import "../../../iconfont.wxss";
+
+.form .form-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+}
+
+.form .form-item-area {
+  font-size: 14px;
+  box-sizing: border-box;
+  padding: 0 60rpx;
+  background-color: #fff;
+  margin-top: 20rpx;
+  display: flex;
+}
+
+.form .form-item-area .form-lable {
+  width: 120rpx;
+}
+
+.form .form-footer {
+  justify-content: center;
+  display: flex;
+  margin-top: 200rpx;
+}
+
+.form .form-footer button {
+  width: 100%;
+  margin: 0 60rpx;
+  background-color: #70b71e;
+  color: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  border: 1rpx solid #70b71e;
+  font-size: 14px;
+}
+
+.form .form-upload {
+  border: 1rpx solid #ccc;
+  display: flex;
+  height: 200rpx;
+  width: 200rpx;
+  margin-left: 100rpx;
+  background-color: #fafafa;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form .form-upload text {
+  line-height: 80rpx;
+}
+
+.form-picker {
+  grid-row: 1;
+  display: flex;
+  /* width: 100%; */
+  justify-content: space-between;
+}
+
+.form-picker .form-picker-txt {
+  width: 400rpx;
+  display: block;
+  line-height: 100rpx;
+  height: 100rpx;
+  margin-left: 100rpx;
+}
+
+.item-time {
+  position: absolute;
+  right: 150rpx;
+}

@@ -1,0 +1,52 @@
+@import "../../../iconfont.wxss";
+
+.order {
+  display: flex;
+  flex-direction: column;
+  padding: 0rpx 40rpx 20rpx;
+}
+
+.order-step {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.order-step view {
+  margin-top: 20rpx;
+}
+
+.order-step .item-title {
+  margin: 30rpx 0 10rpx 0;
+  font-size: 18px;
+  color: #e51c23;
+  display: flex;
+}
+
+.order-step .item-title .item-step-num {
+  display: block;
+  width: 40rpx;
+  height: 40rpx;
+  border: 1rpx solid #e51c23;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 14px;
+  margin-right: 20rpx;
+}
+
+.order-step .item-user .iconfont {
+  margin-left: 20rpx;
+}
+
+.order-step .item-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-step .item-image image {
+  margin: 10rpx 0;
+  flex-shrink: 0;
+  width: 80%;
+  flex-grow: 1;
+}

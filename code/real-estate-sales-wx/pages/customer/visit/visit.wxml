@@ -1,0 +1,21 @@
+<form class="form" reportSubmit bindsubmit="savepubinfo">
+  <view class="form-body">
+    <view class="form-item">
+      <text class="form-lable">到访时间</text>
+      <picker class='form-picker' mode="time" value='{{time}}' start="09:01" end="21:01" bindchange="bindTimeChange">
+        <text class="item-time iconfont icon-rili"></text>
+        <input class='form-picker-txt' name="time" value='{{time}}'></input>
+      </picker>
+    </view>
+    <view class="form-item-area">
+      <text class="form-lable">到访照片</text>
+      <view class='form-upload'>
+        <text class="iconfont icon-jia1" bindtap='selectImage'></text>
+        <text>上传照片</text>
+      </view>
+    </view>
+  </view>
+  <view class="form-footer">
+    <button formType="submit">确认到访</button>
+  </view>
+</form>
