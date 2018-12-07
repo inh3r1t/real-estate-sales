@@ -1,9 +1,11 @@
 //index.js
 //获取应用实例
 const app = getApp()
+var API = require('../../utils/api.js')
 
 Page({
   data: {
+    list: [],
     recommendbuildings: [{
       id: 1,
       thumb: '/images/house1.png',
@@ -59,6 +61,17 @@ Page({
     interval: 3000,
     duration: 1000,
     isLogin: false
+  },
+  onLoad: function() {
+    debugger
+    // 使用 Mock
+    API.ajax('', res => {
+      //这里既可以获取模拟的res
+      console.log(res)
+      this.setData({
+        list: res.data
+      })
+    });
   },
   onShow: function() {
     this.setData({
