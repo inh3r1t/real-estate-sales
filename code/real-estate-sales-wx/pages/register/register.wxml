@@ -19,6 +19,6 @@
     </view>
   </view>
   <view class="form-footer">
-    <button formType="submit">立即注册</button>
+    <button class='btn btn-primary' formType="submit">立即注册</button>
   </view>
 </form>

@@ -24,15 +24,14 @@ swiper .slide-image {
   font-weight: bold;
 }
 
-.building .building-summary {
-}
-
 .building .building-commission {
   color: red;
+  font-weight: bold;
 }
 
 .building .building-principal {
   color: red;
+  font-weight: bold;
 }
 
 .building .building-detail {
@@ -58,8 +57,7 @@ swiper .slide-image {
   text-align: center;
   background-color: #1aad19;
   color: #fff;
-  font-weight: bold;
-  padding: 16px;
+  padding: 20rpx;
 }
 
 .handle-btn .handle-report:hover {

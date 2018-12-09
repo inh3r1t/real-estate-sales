@@ -124,5 +124,5 @@
 </view>
 
 <modal title="请确认分享内容" hidden="{{!showShareModal}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
-  <view>{{shareData}}</view>
+  <rich-text nodes="{{shareData}}"></rich-text>
 </modal>

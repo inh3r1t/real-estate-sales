@@ -1,11 +1,11 @@
 <!--pages/register/register.wxml-->
 <form class="form" reportSubmit bindsubmit="savepubinfo">
   <view class="form-body">
-    <view class="item">
+    <view class="form-item">
       <view class="form-lable">客户姓名</view>
       <input class='form-input' name="name" placeholder="请输入姓名" type="text"></input>
     </view>
-    <view class="item">
+    <view class="form-item-check">
       <radio-group bindchange="checkboxChangehouse">
         <label class="radio">
           <radio checked="checked" name="sex" value="先生"></radio>先生
@@ -15,64 +15,24 @@
         </label>
       </radio-group>
     </view>
-    <view class="item">
+    <view class="form-item">
       <text class="form-lable">联系方式</text>
       <input class='form-input' name="name" placeholder="请输入手机号" type="text"></input>
     </view>
     <view class="item-report">
       <text class="form-lable">报备楼盘</text>
       <view class='form-input buiding-list'>
-        <view class="buiding-item">
-          <text>滁州森林院子三期</text>
+        <view class="buiding-item" data-id='{{item.id}}' wx:for="{{list}}" wx:key="index">
+          <text class='select-building-name'>{{item.name}}</text>
+          <text class='iconfont icon-shanchu' data-id='{{item.id}}' bindtap='delete'></text>
         </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子三期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
-        </view>
-        <view class="buiding-item">
-          <text>滁州森林院子四期</text>
+        <view class='bold' bindtap='toSelect'>
+          <text class='iconfont icon-jia'></text> 添加楼盘
         </view>
       </view>
     </view>
-    <view>
-      <view class='building-add'>+ 添加楼盘</view>
-    </view>
   </view>
-  <view class='nav-footer'>
-    <view class="form-footer">
-      <button formType="submit">立即报备</button>
-    </view>
+  <view class="form-footer nav-fix">
+    <button class='btn btn-primary' formType="submit">立即报备</button>
   </view>
 </form>

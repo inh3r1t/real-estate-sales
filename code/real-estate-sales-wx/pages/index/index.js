@@ -1,57 +1,11 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var API = require('../../utils/api.js')
+var mock = require('../../utils/api.js')
 
 Page({
   data: {
-    list: [],
-    recommendbuildings: [{
-      id: 1,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1%'
-
-    }],
+    recommendbuildings: [],
     imgUrls: [
       '/images/banner_02.png',
       '/images/banner_01.png',
@@ -63,15 +17,21 @@ Page({
     isLogin: false
   },
   onLoad: function() {
-    debugger
     // 使用 Mock
-    API.ajax('', res => {
+    mock.ajax('', res => {
       //这里既可以获取模拟的res
-      console.log(res)
+      console.log(res.data)
       this.setData({
-        list: res.data
+        recommendbuildings: res.data
       })
     });
+  },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function() {
+    this.onLoad();
+    wx.stopPullDownRefresh();
   },
   onShow: function() {
     this.setData({

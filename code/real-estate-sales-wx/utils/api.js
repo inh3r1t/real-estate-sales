@@ -7,14 +7,12 @@ function ajax(data = '', fn, method = "get", header = {}) {
     'error_msg': '',
     'data|10': [{
       'id|+1': 1,
-      'img': "@image('200x100', '#4A7BF7','#fff','pic')",
-      'title': '@ctitle(3,8)',
-      'city': "@county(true)",
-      'stock_num': '@integer(0,100)', //库存数量  
-      'marketing_start': '@datetime()',
-      'marketing_stop': '@now()',
-      'price': '@integer(100,2000)', //现价，单位：分  
-      'original_price': '@integer(100,3000)'
+      'thumb': "/images/house1.png",
+      'name': '@ctitle(5,18)',
+      'address': '@city(10,18)', 
+      'summary': '@ctitle(10,18)', 
+      'create_time': '@datetime()',
+      'commission': '@integer(100,2000)'
     }]
   })
   // 输出结果
