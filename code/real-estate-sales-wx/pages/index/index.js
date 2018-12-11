@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp()
 var mock = require('../../utils/api.js')
+var http = require('../../utils/http.js')
 
 Page({
   data: {
@@ -17,14 +18,12 @@ Page({
     isLogin: false
   },
   onLoad: function() {
-    // 使用 Mock
-    mock.ajax('', res => {
-      //这里既可以获取模拟的res
-      console.log(res.data)
-      this.setData({
-        recommendbuildings: res.data
-      })
-    });
+    http.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get")
+      .then(res => {
+        this.setData({
+          recommendbuildings: res.data
+        })
+      });
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

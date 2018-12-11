@@ -140,6 +140,21 @@
   padding-bottom: 140rpx;
 }
 
+.form .form-body .form-item-area {
+  display: flex;
+  flex-direction: row;
+  font-size: 17px;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  background-color: #fff;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+}
+
+.form .form-body .form-item-area .form-lable {
+  width: 170rpx;
+}
+
 .form .form-body .form-item {
   display: flex;
   flex-direction: row;

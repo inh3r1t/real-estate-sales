@@ -23,12 +23,11 @@
   justify-content: space-between;
 }
 
-.form-picker .form-picker-txt {
+.form-picker-txt {
   width: 400rpx;
   display: block;
   line-height: 100rpx;
   height: 100rpx;
-  margin-left: 100rpx;
 }
 
 .item-time {

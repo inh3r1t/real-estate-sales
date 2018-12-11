@@ -7,6 +7,11 @@
         <input class='form-picker-txt' name="time" value='{{time}}'></input>
       </picker>
     </view>
+    <view class="form-item">
+      <text class="form-lable">认购金额</text>
+      <text class="item-time">元</text>
+      <input class='form-picker-txt' name="time" value='{{time}}'></input>
+    </view>
     <view class="form-item-area">
       <text class="form-lable">到访照片</text>
       <view class='form-upload'>

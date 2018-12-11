@@ -1,5 +1,4 @@
 const http = require('../../../utils/http.js')
-var mock = require('../../../utils/api.js')
 var app = getApp()
 Page({
   /**
@@ -84,25 +83,21 @@ Page({
   },
   getList(pageNo, override) {
     this.loading = true
-    return http.get('').then(res => {
-      const articles = this.data.list
+    return http.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {
+      //这里既可以获取模拟的res
+      console.log(res)
       this.setData({
-        page: pageNo, //当前的页号
-        list: override ? articles : this.data.list.concat(articles)
+        list: override ? res.data : this.data.list.concat(res.data)
       })
-      console.log("==> [SUCCESS]")
+      console.log(this.data.list)
+      this.loading = false
+      // 隐藏加载框
+      wx.hideLoading();
     }).catch(err => {
       console.log("==> [ERROR]", err)
-      mock.ajax('', res => {
-        //这里既可以获取模拟的res
-        console.log(res)
-        this.setData({
-          list: override ? res.data : this.data.list.concat(res.data)
-        })
-        this.loading = false
-        // 隐藏加载框
-        wx.hideLoading();
-      });
+      this.loading = false
+      // 隐藏加载框
+      wx.hideLoading();
     })
   },
   formSubmit: function(e) {

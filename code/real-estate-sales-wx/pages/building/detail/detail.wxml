@@ -1,7 +1,7 @@
 <import src="../../../wxParse/wxParse.wxml" />
 
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{imgUrls}}" wx:key="index">
+  <block wx:for="{{building.img_urls}}" wx:key="index">
     <swiper-item>
       <image src="{{item}}" mode='aspectFill' class="slide-image" />
     </swiper-item>
@@ -12,7 +12,7 @@
   <view class='building-address'>地址：{{building.address}}</view>
   <view class='building-summary'>简介：{{building.summary}}</view>
   <view class='building-commission'>佣金：{{building.commission}}</view>
-  <view class='building-principal'>项目负责人：{{building.manager_name}} {{buliding.manager_phone}}</view>
+  <view class='building-principal'>项目负责人：{{building.manager_name}} {{buliding.phone}}</view>
   <view class='building-detail'>
     <text class='bold'>楼盘详情</text>
     <!-- <text>{{building.detail}}</text> -->
