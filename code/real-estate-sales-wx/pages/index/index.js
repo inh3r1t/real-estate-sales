@@ -1,7 +1,4 @@
-//index.js
-//获取应用实例
 const app = getApp()
-var mock = require('../../utils/api.js')
 var http = require('../../utils/http.js')
 
 Page({

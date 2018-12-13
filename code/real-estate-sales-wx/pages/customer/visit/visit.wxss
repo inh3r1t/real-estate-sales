@@ -33,5 +33,48 @@
 
 .item-time {
   position: absolute;
-  right: 150rpx;
+  right: 80rpx;
+}
+
+.placeholder {
+  margin: 10rpx;
+  padding: 0 20rpx;
+  text-align: center;
+  height: 2.3em;
+  line-height: 2.3em;
+}
+
+.icon {
+  line-height: auto;
+  width: 40rpx;
+}
+
+.icon image {
+  vertical-align: middle;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.hd {
+  text-align: center;
+  width: 120rpx;
+  margin-left: -20rpx;
+}
+
+.date {
+  position: absolute;
+  right: 220rpx;
+  width: 300rpx;
+}
+
+.line {
+  z-index: 10;
+  position: absolute;
+  right: 200rpx;
+  width: 10rpx;
+}
+
+.time {
+  position: absolute;
+  right: 100rpx;
 }

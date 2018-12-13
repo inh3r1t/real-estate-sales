@@ -2,10 +2,26 @@
   <view class="form-body">
     <view class="form-item">
       <text class="form-lable">到访时间</text>
-      <picker class='form-picker' mode="time" value='{{time}}' start="09:01" end="21:01" bindchange="bindTimeChange">
-        <text class="item-time iconfont icon-rili"></text>
-        <input class='form-picker-txt' name="time" value='{{time}}'></input>
-      </picker>
+
+      <!-- 日期选择 -->
+      <view class="placeholder date">
+        <picker mode="multiSelector" value="{{dateTime}}" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+          <view class="tui-picker-detail">
+            {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{day}}
+          </view>
+        </picker>
+      </view>
+
+      <view class='placeholder line'>|</view>
+
+      <!-- 时间选择 -->
+      <view class="placeholder time">
+        <picker mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+          <view class="picker">{{time}}</view>
+        </picker>
+      </view>
+      <text class="item-time iconfont icon-rili"></text>
+
     </view>
     <view class="form-item-area">
       <text class="form-lable">到访照片</text>
