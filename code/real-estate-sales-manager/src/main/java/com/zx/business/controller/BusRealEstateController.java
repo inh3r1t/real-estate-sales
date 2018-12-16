@@ -2,6 +2,7 @@ package com.zx.business.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
@@ -32,7 +33,7 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
@@ -48,7 +49,7 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.POST)
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getList(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
