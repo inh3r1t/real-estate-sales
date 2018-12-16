@@ -195,6 +195,15 @@
   padding-top: 20rpx;
 }
 
+.form .form-word-aux {
+  position: absolute;
+  right: 80rpx;
+}
+
+.form .form-input-placeholder {
+  margin-right: 70rpx;
+}
+
 .btn {
   position: relative;
   display: block;
@@ -213,10 +222,31 @@
   overflow: hidden;
 }
 
+.btn-default {
+  background-color: #fff;
+}
+
 .btn-primary {
   background-color: #1aad19;
 }
 
 .btn-warn {
   background-color: #e64340;
+}
+
+.nav-box-top {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 80rpx;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.nav-box-bottom {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 2;
 }

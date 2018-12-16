@@ -1,48 +1,55 @@
 <view class="customer">
-  <view class="customer-tabs">
-    <view class="customer-tab-item active">
-      <text>全部</text>
-      <text class="tab-item-count">265</text>
-    </view>
-    <view class="customer-tab-item">
-      <text>报备</text>
-      <text class="tab-item-count">352</text>
-    </view>
-    <view class="customer-tab-item">
-      <text>到访</text>
-      <text class="tab-item-count">25</text>
-    </view>
-    <view class="customer-tab-item">
-      <text>认购</text>
-      <text class="tab-item-count">1</text>
+  <view class='nav-box-top'>
+    <view class="customer-tabs">
+      <view class="customer-tab-item {{currentTab==null || currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">
+        <text>全部</text>
+        <text class="tab-item-count">{{count.total_count}}</text>
+      </view>
+      <view class="customer-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">
+        <text>报备</text>
+        <text class="tab-item-count">{{count.report_count}}</text>
+      </view>
+      <view class="customer-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">
+        <text>到访</text>
+        <text class="tab-item-count">{{count.arrive_count}}</text>
+      </view>
+      <view class="customer-tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="clickTab">
+        <text>认购</text>
+        <text class="tab-item-count">{{count.subscribe_count}}</text>
+      </view>
     </view>
   </view>
   <view class='customer-list'>
-    <view class='customer-item flow-step-1' bindtap='toDetail'>
+    <view class='customer-item flow-step-{{item.state}}' wx:for="{{list}}" wx:key="index" bindtap='toDetail' data-id="{{item.id}}">
       <view class='item-base'>
         <view class='item-info'>
-          <view class='item-name'>客户姓名：阿旭</view>
-          <view class='item-phone'>客户号码：183****9985</view>
-          <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
+          <view class='item-name'>客户姓名：{{item.customer_name}}</view>
+          <view class='item-phone'>客户号码：{{item.customer_phone}}</view>
+          <view class='item-building'>楼盘名称：{{item.real_estate_name}}</view>
         </view>
         <view class='item-tools'>
-          <text class='item-opt' catchtap='confirm'>客户认购</text>
-          <text class="item-share iconfont icon-fenxiang" catchtap='share'></text>
+          <text wx:if="{{item.state==0}}" data-state="{{0}}" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
+          <text wx:if="{{item.state==1}}" data-state="{{1}}" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
+          <text wx:if="{{item.state==2}}" data-state="{{2}}" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
+          <text wx:if="{{item.state==3}}" class='item-opt-txt'>已认购</text>
+          <text class="item-share iconfont icon-fenxiang" data-id="{{item.id}}" catchtap='share'></text>
         </view>
       </view>
       <view class='item-flows'>
         <view class='flow-item'>
           <text>报备</text>
           <text class="iconfont icon-baxin"></text>
-          <text>2018.11.21 21:00</text>
+          <text>{{item.report_operate_time}}</text>
         </view>
         <view class='flow-item'>
           <text>到访</text>
           <text class="iconfont icon-baxin"></text>
+          <text>{{item.arrive_operate_time}}</text>
         </view>
         <view class='flow-item'>
           <text>认购</text>
           <text class="iconfont icon-baxin"></text>
+          <text>{{item.subscribe_operate_time}}</text>
         </view>
       </view>
       <view class='flow-line'>
@@ -51,74 +58,6 @@
       </view>
       <view class='divider'></view>
     </view>
-    <view class='customer-item flow-step-2'>
-      <view class='item-base'>
-        <view class='item-info'>
-          <view class='item-name'>客户姓名：阿旭</view>
-          <view class='item-phone'>客户号码：183****9985</view>
-          <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
-        </view>
-        <view class='item-tools'>
-          <text class='item-opt'>客户认购</text>
-          <text class="item-share iconfont icon-fenxiang"></text>
-        </view>
-      </view>
-      <view class='item-flows'>
-        <view class='flow-item'>
-          <text>报备</text>
-          <text class="iconfont icon-baxin"></text>
-          <text>2018.11.21 21:00</text>
-        </view>
-        <view class='flow-item'>
-          <text>到访</text>
-          <text class="iconfont icon-baxin"></text>
-        </view>
-        <view class='flow-item'>
-          <text>认购</text>
-          <text class="iconfont icon-baxin"></text>
-        </view>
-      </view>
-      <view class='flow-line'>
-        <view class='flow-line-after'></view>
-        <view class='flow-line-before'></view>
-      </view>
-      <view class='divider'></view>
-    </view>
-    <view class='customer-item flow-step-3'>
-      <view class='item-base'>
-        <view class='item-info'>
-          <view class='item-name'>客户姓名：阿旭</view>
-          <view class='item-phone'>客户号码：183****9985</view>
-          <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
-        </view>
-        <view class='item-tools'>
-          <text class='item-opt'>客户认购</text>
-          <text class="item-share iconfont icon-fenxiang"></text>
-        </view>
-      </view>
-      <view class='item-flows'>
-        <view class='flow-item'>
-          <text>报备</text>
-          <text class="iconfont icon-baxin"></text>
-          <text>2018.11.21 21:00</text>
-        </view>
-        <view class='flow-item'>
-          <text>到访</text>
-          <text class="iconfont icon-baxin"></text>
-        </view>
-        <view class='flow-item'>
-          <text>认购</text>
-          <text class="iconfont icon-baxin"></text>
-        </view>
-
-      </view>
-      <view class='flow-line'>
-        <view class='flow-line-after'></view>
-        <view class='flow-line-before'></view>
-      </view>
-      <view class='divider'></view>
-    </view>
-
   </view>
 
 </view>

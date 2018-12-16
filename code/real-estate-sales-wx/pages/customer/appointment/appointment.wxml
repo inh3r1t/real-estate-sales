@@ -1,7 +1,8 @@
 <form class="form" reportSubmit bindsubmit="formSubmit">
   <view class="form-body">
     <view class="form-item">
-      <text class="form-lable">到访时间</text>
+      <text class="form-lable">预约时间</text>
+
       <!-- 日期选择 -->
       <view class="placeholder date">
         <picker mode="multiSelector" value="{{dateTime}}" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
@@ -19,18 +20,11 @@
           <view class="picker">{{time}}</view>
         </picker>
       </view>
-      <text class="form-word-aux  iconfont icon-rili"></text>
+      <text class="form-word-aux iconfont icon-rili"></text>
 
-    </view>
-    <view class="form-item-area">
-      <text class="form-lable">到访照片</text>
-      <view class='form-upload'>
-        <text class="iconfont icon-jia1" bindtap='selectImage'></text>
-        <text>上传照片</text>
-      </view>
     </view>
   </view>
   <view class="form-footer">
-    <button class='btn btn-primary' formType="submit">确认到访</button>
+    <button class='btn btn-primary' formType="submit">确认预约</button>
   </view>
 </form>

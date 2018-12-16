@@ -3,10 +3,12 @@
 .customer {
   display: flex;
   flex-direction: column;
+  background-color: #eee;
 }
 
 .customer .customer-tabs {
   display: flex;
+  height: 80rpx;
   border-top: 1rpx solid #dcdfe6;
   border-bottom: 1rpx solid #dcdfe6;
   font-size: 14px;
@@ -35,11 +37,13 @@
 }
 
 .customer .customer-list {
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   font-size: 14px;
+  margin-top: 80rpx;
 }
- 
+
 .customer .customer-list .customer-item .item-base {
   display: flex;
   padding: 20rpx 40rpx 0;
@@ -69,6 +73,20 @@
   top: 10rpx;
 }
 
+.item-opt-txt {
+  position: relative;
+  padding: 5rpx 0rpx;
+  width: 150rpx;
+  font-size: 12px;
+  line-height: 40rpx;
+  color: #7cae53;
+  text-align: center;
+  border-radius: 8rpx;
+  top: 10rpx;
+  font-weight: bold;
+  background-color: #fff;
+}
+
 .customer .customer-list .customer-item .item-base .item-tools .item-share {
   margin-top: 40rpx;
   position: relative;
@@ -89,7 +107,8 @@
   height: 120rpx;
   z-index: 1;
 }
-.item-flows .flow-item text{
+
+.item-flows .flow-item text {
   height: 40rpx;
   line-height: 40rpx;
 }
@@ -129,12 +148,20 @@
   top: -80rpx;
 }
 
+.flow-step-0 .item-flows .flow-item:nth-child(1) {
+  color: #0076ff;
+}
+
+.flow-step-0 .flow-line-before {
+  width: 0;
+}
+
 .flow-step-1 .item-flows .flow-item:nth-child(1) {
   color: #0076ff;
 }
 
 .flow-step-1 .flow-line-before {
-  width: 0;
+  width: 50%;
 }
 
 .flow-step-2 .item-flows .flow-item:nth-child(1),
