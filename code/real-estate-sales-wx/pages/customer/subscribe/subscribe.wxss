@@ -1,0 +1,76 @@
+@import "../../../iconfont.wxss";
+
+.form .form-upload {
+  border: 1rpx solid #ccc;
+  display: flex;
+  height: 200rpx;
+  width: 200rpx;
+  margin-left: 100rpx;
+  background-color: #fafafa;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form .form-upload text {
+  line-height: 80rpx;
+}
+
+.form-picker {
+  grid-row: 1;
+  display: flex;
+  /* width: 100%; */
+  justify-content: space-between;
+}
+
+.form-picker .form-picker-txt {
+  width: 400rpx;
+  display: block;
+  line-height: 100rpx;
+  height: 100rpx;
+  margin-left: 100rpx;
+}
+
+
+.placeholder {
+  margin: 10rpx;
+  padding: 0 20rpx;
+  text-align: center;
+  height: 2.3em;
+  line-height: 2.3em;
+}
+
+.icon {
+  line-height: auto;
+  width: 40rpx;
+}
+
+.icon image {
+  vertical-align: middle;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.hd {
+  text-align: center;
+  width: 120rpx;
+  margin-left: -20rpx;
+}
+
+.date {
+  position: absolute;
+  right: 220rpx;
+  width: 300rpx;
+}
+
+.line {
+  z-index: 10;
+  position: absolute;
+  right: 230rpx;
+  width: 10rpx;
+}
+
+.time {
+  position: absolute;
+  right: 100rpx;
+}

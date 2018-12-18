@@ -8,7 +8,7 @@
   justify-content: flex-start;
   font-size: 16px;
 }
-
+/*  open-type="getUserInfo" bindgetuserinfo="getUserInfo" open-type="getUserInfo" bindgetuserinfo="getUserInfo" open-type="getUserInfo" bindgetuserinfo="getUserInfo"                       */
 .container .header {
   width: 100%;
   height: 400rpx;
@@ -63,3 +63,5 @@
   text-align: center;
   padding: 20rpx 0;
 }
+
+

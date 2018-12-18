@@ -18,22 +18,21 @@
   margin-top: 100rpx;
   background-color: #70b71e;
   color: #fff;
-  font-weight: bold;
+  font-size: 16px;
 }
 
 .login-phone {
   margin-top: 50rpx;
   background-color: #d9d9d9;
   color: #414141;
-  font-weight: bold;
+  font-size: 16px;
 }
 
-.register {
+.login .register {
   position: fixed;
   bottom: 100rpx;
   text-align: center;
   width: 100%;
   text-decoration: underline;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 12px;
 }

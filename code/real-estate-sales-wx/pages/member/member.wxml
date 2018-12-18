@@ -1,19 +1,26 @@
 <view class="container">
-  <view class="header center">
+  <view class="header center" wx:if="{{isLogin}}">
     <view class='avator'>
       <image src="/images/personal.png"></image>
     </view>
     <view class='username'>用户名</view>
     <view class="company">合肥市中野地产中介有限公司</view>
   </view>
+  <view class="header center" wx:if="{{!isLogin}}">
+    <view class='avator'>
+      <image src="/images/personal.png"></image>
+    </view>
+    <view class='username' bindtap='login'>点击登录</view>
+  </view>
   <view class='divider'></view>
-  <view class="list">
+  <view class="list" wx:if="{{isLogin}}">
     <view class="item">
       <text class="iconfont icon-buoumaotubiao14"></text>消息中心</view>
-    <view class="item">
+    <view class="item" bindtap='toChangePassword'>
       <text class="iconfont icon-password"></text>修改密码</view>
   </view>
   <view class='divider'></view>
-  <view class='list logout'>
-    <text class="fa fa-home fa-lg"></text> 退出登录</view>
+  <view class='list logout' bindtap='logout' wx:if="{{isLogin}}">
+    退出登录
+    </view>
 </view>

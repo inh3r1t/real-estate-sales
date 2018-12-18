@@ -10,7 +10,14 @@
     "pages/login/phone",
     "pages/building/report/report",
     "pages/building/select/index",
-    "pages/member/member"
+    "pages/member/member",
+    "pages/message/message",
+    "pages/password/password",
+    "pages/customer/index/index",
+    "pages/customer/detail/detail",
+    "pages/customer/visit/visit",
+    "pages/customer/subscribe/subscribe",
+    "pages/customer/appointment/appointment"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,7 +35,7 @@
         "selectedIconPath": "images/home.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/customer/index/index",
         "text": "我的客户",
         "iconPath": "images/customer1.png",
         "selectedIconPath": "images/customer.png"

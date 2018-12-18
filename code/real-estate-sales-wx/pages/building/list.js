@@ -1,159 +1,14 @@
-// pages/building/list.js
-const util = require('../../utils/util.js')
+const http = require('../../utils/http.js')
+var app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     loading: false,
+    isLogin: false,
     page: 1,
-    list: [{
-      id: 1,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1%'
-
-    }, {
-      id: 1,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1%'
-
-    }],
-    list2: [{
-      id: 1,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '12000'
-
-    }, {
-      id: 2,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水',
-      commission: '1%'
-
-    }, {
-      id: 1,
-      thumb: '/images/house1.png',
-      housename: '滁州万科城市中心',
-      companyname: '万科',
-      houseaddress: '滁州万科城市中心',
-      summary: '32层挑高超大户型，依山傍水，32层挑高超大户型，依山傍水',
-      commission: '1.5%+12000'
-
-    }]
+    list: []
 
   },
   toDetail: function(a) {
@@ -166,7 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    this.getList(1);
   },
 
   /**
@@ -180,28 +35,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
+    this.setData({
+      isLogin: app.isLogin()
+    })
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    console.log("121111")
     if (!this.loading) {
       this.getList(1, true).then(() => {
         // 处理完成后，终止下拉刷新
@@ -231,24 +73,21 @@ Page({
   },
   getList(pageNo, override) {
     this.loading = true
-    return util.get().then(res => {
-      const articles = this.data.list
+    return http.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {
+      //这里既可以获取模拟的res
+      console.log(res)
       this.setData({
-        page: pageNo, //当前的页号
-        list: override ? articles : this.data.list.concat(articles)
+        list: override ? res.data : this.data.list.concat(res.data)
       })
-      console.log("==> [SUCCESS]")
-    }).catch(err => {
-      console.log("==> [ERROR]", err)
-    }).then(() => {
+      console.log(this.data.list)
       this.loading = false
-      this.setData({
-        page: pageNo, //当前的页号
-        list: override ? this.data.list : this.data.list.concat(this.data.list2)
-      })
       // 隐藏加载框
       wx.hideLoading();
-
+    }).catch(err => {
+      console.log("==> [ERROR]", err)
+      this.loading = false
+      // 隐藏加载框
+      wx.hideLoading();
     })
   }
 })
