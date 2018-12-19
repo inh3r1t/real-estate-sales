@@ -28,11 +28,11 @@
           <view class='item-building'>楼盘名称：{{item.real_estate_name}}</view>
         </view>
         <view class='item-tools'>
-          <text wx:if="{{item.state==0}}" data-state="{{0}}" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
-          <text wx:if="{{item.state==1}}" data-state="{{1}}" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
-          <text wx:if="{{item.state==2}}" data-state="{{2}}" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
+          <text wx:if="{{item.state==0}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
+          <text wx:if="{{item.state==1}}" data-state="1" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
+          <text wx:if="{{item.state==2}}" data-state="2" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
           <text wx:if="{{item.state==3}}" class='item-opt-txt'>已认购</text>
-          <text class="item-share iconfont icon-fenxiang" data-id="{{item.id}}" catchtap='share'></text>
+          <text class="item-share iconfont icon-fenxiang" data-index="{{index}}" catchtap='share'></text>
         </view>
       </view>
       <view class='item-flows'>
@@ -62,6 +62,21 @@
 
 </view>
 
-<modal title="请确认分享内容" hidden="{{!showShareModal}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+<!-- <modal title="请确认分享内容" hidden="{{!showShareModal}}" bindconfirm="modalConfirm" bindcancel="modalCancel">
   <rich-text nodes="{{shareData}}"></rich-text>
-</modal>
+</modal> -->
+
+<!--custom Modal-->
+<view class='modal' hidden="{{!showShareModal}}">
+  <view class="modal-mask" bindtap="hideModal"></view>
+  <view class="modal-content">
+    <view class='share-title'>请确认分享内容</view>
+    <view class='share-content'>
+      <rich-text nodes="{{shareData}}"></rich-text>
+    </view>
+    <view class='share-btns'>
+      <view class='btn btn-cancel' bindtap="modalCancel">取消</view>
+      <view class='btn btn-copy' bindtap="modalConfirm">复制</view>
+    </view>
+  </view>
+</view>
