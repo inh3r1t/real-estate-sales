@@ -1,7 +1,7 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusDeal;
-import org.nutz.mvc.annotation.Param;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
