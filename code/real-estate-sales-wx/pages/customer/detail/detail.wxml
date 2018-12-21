@@ -2,46 +2,45 @@
   <view class='order-step'>
     <view class='item-title'>
       <text class='item-step-num'>1</text>
-      <text>报备   2018.11.22 22:00</text>
+      <text>报备 {{model.report_operate_time}}</text>
     </view>
-    <view class='item-name'>客户姓名：阿旭</view>
-    <view class='item-phone'>客户号码：183****9985</view>
-    <view class='item-building'>楼盘名称：滁州碧桂园仕府公馆</view>
+    <view class='item-name'>客户姓名：{{model.customer_name}}</view>
+    <view class='item-phone'>客户号码：{{model.customer_phone}}</view>
+    <view class='item-building'>楼盘名称：{{model.real_estate_name}}</view>
     <view class='item-user'>
-      <text>报备账号：18758586969</text>
-      <text class="iconfont icon-dianhua"></text>
+      <text>报备账号：{{model.report_user}} {{model.report_user_phone}}</text>
+      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.report_user_phone}}"></text>
     </view>
-    <view class='item-company'>报备公司：合肥市野火房屋中介有限公司</view>
+    <view class='item-company'>报备公司：{{model.report_company}}</view>
   </view>
   <view class='order-step'>
     <view class='item-title'>
       <text class='item-step-num'>2</text>
-      <text>预约   2018.11.22 22:00</text>
+      <text>预约 {{model.appointment_operate_time}}</text>
     </view>
     <view class='item-user'>
-      <text>报备账号：18758586969</text>
-      <text class="iconfont icon-dianhua"></text>
+      <text>项目经理：{{model.manager}} {{model.manager_phone}}</text>
+      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.manager_phone}}"></text>
     </view>
   </view>
   <view class='order-step'>
     <view class='item-title'>
       <text class='item-step-num'>3</text>
-      <text>到访   2018.11.24 16:00</text>
+      <text>到访 {{model.arrive_operate_time}}</text>
     </view>
     <view class='item-image'>
-      <image src="/images/banner_01.png"></image>
+      <image src="{{item}}" wx:for="{{model.arrive_certify_photo_path}}" wx:key="index"></image>
     </view>
   </view>
   <view class='order-step'>
     <view class='item-title'>
       <text class='item-step-num'>4</text>
-      <text>认购   2018.11.25 16:00</text>
+      <text>认购 {{model.subscribe_operate_time}}</text>
     </view>
-    <view class='item-price'>客户姓名：阿旭</view>
-    <view class='item-commission'>客户号码：183****9985</view>
+    <view class='item-price'>客户姓名：{{model.customer_name}}</view>
+    <view class='item-commission'>客户号码：{{model.customer_phone}}</view>
     <view class='item-image'>
-      <image src="/images/banner_01.png"></image>
-      <image src="/images/banner_02.png"></image>
+      <image src="{{item}}" wx:for="{{model.subscribe_photo_pahts}}" wx:key="index"></image>
     </view>
   </view>
 </view>

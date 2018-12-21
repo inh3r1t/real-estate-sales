@@ -7,7 +7,7 @@ Page({
   data: {
     currentTab: 0,
     showShareModal: false,
-    shareData: "客户到访<br/>项目名称：山河印<br/>客户姓名：陈先生<br/>客户电话：‭130 *** 5158<br/>报备时间：2018.11.21<br/>到访时间：2018.11.21<br/>渠道公司：德信安居<br/>项目经理：13888888888",
+    shareData: "",
     page: 1,
     list: [],
     count: {
@@ -87,29 +87,39 @@ Page({
       url: url,
     })
   },
-  share: function() {
+  share: function(e) {
+    let index = e.currentTarget.dataset.index;
+    let item = this.data.list[index];
+
     this.setData({
-      showShareModal: true
+      showShareModal: true,
+      shareData: "项目名称：" + item.real_estate_name +
+        "<br/>客户姓名：" + item.customer_name +
+        "<br/>客户电话：" + item.customer_phone +
+        (item.report_operate_time != '' ? "<br/>报备时间：" + item.report_operate_time : "") +
+        (item.arrive_operate_time != '' ? "<br/>到访时间：" + item.arrive_operate_time : "")
     })
   },
-  modalCandel: function() {
+  modalCancel: function() {
     // do something
     this.setData({
       showShareModal: false
     })
   },
 
+
   /**
    *  点击确认
    */
   modalConfirm: function() {
     var data = this.data.shareData;
+    data = data.replace(/\<br\/\>/g, "\r\n")
     wx.setClipboardData({
       data: data,
       success(res) {
         wx.getClipboardData({
           success(res) {
-            console.log(res.data) // data
+            console.log(res.data)
           }
         })
       }
