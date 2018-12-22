@@ -16,7 +16,8 @@
     "pages/customer/index/index",
     "pages/customer/detail/detail",
     "pages/customer/visit/visit",
-    "pages/customer/subscribe/subscribe"
+    "pages/customer/subscribe/subscribe",
+    "pages/customer/appointment/appointment"
   ],
   "window": {
     "backgroundTextStyle": "light",

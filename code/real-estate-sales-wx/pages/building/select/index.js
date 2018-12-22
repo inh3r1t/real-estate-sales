@@ -16,14 +16,7 @@ Page({
    */
   onLoad: function(options) {
     this.getList(1);
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
+  }, 
 
   /**
    * 生命周期函数--监听页面显示
@@ -32,21 +25,7 @@ Page({
     this.setData({
       isLogin: app.isLogin()
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
+  }, 
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -75,12 +54,6 @@ Page({
   },
 
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
   getList(pageNo, override) {
     this.loading = true
     return http.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {

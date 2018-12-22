@@ -1,7 +1,6 @@
 function withData(param) {
   return param < 10 ? '0' + param : '' + param;
 }
-
 function getLoopArray(start, end, dtype) {
   var start = start || 0;
   var end = end || 1;
@@ -24,12 +23,11 @@ function getDayArray(start, end, year, month) {
   var end = end || 1;
   var array = [];
   for (var i = start; i <= end; i++) {
-    // array.push(withData(i) + getWeekday(year, month, withData(i)));
-    array.push(withData(i));
+
+    array.push(withData(i) + '日' + getWeekday(year, month, withData(i)));
   }
   return array;
 }
-
 function getWeekday(year, month, day) {
   var dt = new Date(year + '/' + month + '/' + day);
   var a = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
@@ -37,8 +35,12 @@ function getWeekday(year, month, day) {
 }
 
 function getMonthDay(year, month) {
-  var flag = year % 400 == 0 || (year % 4 == 0 && year % 100 != 0),
-    array = null;
+  debugger
+  year = year.substr(0, year.length - 1);
+  month = month.substr(0, month.length - 1);
+  //console.log(year);
+  //console.log(month);
+  var flag = year % 400 == 0 || (year % 4 == 0 && year % 100 != 0), array = null;
 
   switch (month) {
     case '01':
@@ -68,9 +70,9 @@ function getMonthDay(year, month) {
 function getNewDateArry() {
   // 当前时间的处理
   var newDate = new Date();
-  var year = withData(newDate.getFullYear()),
-    mont = withData(newDate.getMonth() + 1),
-    date = withData(newDate.getDate()),
+  var year = withData(newDate.getFullYear()) + '年',
+    mont = withData(newDate.getMonth() + 1) + '月',
+    date = withData(newDate.getDate()) + '日',
     hour = withData(newDate.getHours()),
     minu = withData(newDate.getMinutes())
   return [year, mont, date, hour, minu];
@@ -78,12 +80,7 @@ function getNewDateArry() {
 
 function dateTimePicker(startYear, endYear, date) {
   // 返回默认显示的数组和联动数组的声明
-  var dateTime = [],
-    dateTimeArray = [
-      [],
-      [],
-      []
-    ];
+  var dateTime = [], dateTimeArray = [[], [], []];
   var start = startYear || 1978;
   var end = endYear || 2100;
   // 默认开始显示数据
@@ -92,8 +89,8 @@ function dateTimePicker(startYear, endYear, date) {
   // console.log(defaultDate[2]) day
   // 处理联动列表数据
   /*年月日 时分秒*/
-  dateTimeArray[0] = getLoopArray(start, end);
-  dateTimeArray[1] = getLoopArray(1, 12);
+  dateTimeArray[0] = getLoopArray(start, end, '年');
+  dateTimeArray[1] = getLoopArray(1, 12, '月');
   dateTimeArray[2] = getMonthDay(defaultDate[0], defaultDate[1]);
   // dateTimeArray[3] = getLoopArray(0, 23);
   // dateTimeArray[4] = getLoopArray(0, 59);
@@ -112,8 +109,7 @@ function dateTimePicker(startYear, endYear, date) {
 function getTime() {
   // 获取现在的时间 time
   var d = new Date();
-  var hour = d.getHours(),
-    minu = d.getMinutes();
+  var hour = d.getHours(), minu = d.getMinutes();
   return withData(hour) + ":" + withData(minu);
 }
 
