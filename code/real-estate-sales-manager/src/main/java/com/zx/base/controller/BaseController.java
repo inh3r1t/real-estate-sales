@@ -1,5 +1,7 @@
 package com.zx.base.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sun.jndi.toolkit.url.Uri;
 import com.zx.base.common.CaptchaUtil;
 import com.zx.base.common.IterateDirUtil;
@@ -8,6 +10,8 @@ import com.zx.base.exception.BusinessException;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.model.ReturnModel;
 import com.zx.base.model.TreeJsonEntity;
+import com.zx.lib.http.common.HttpConst;
+import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.json.JsonUtil;
 import com.zx.lib.utils.DirectoryUtil;
 import com.zx.lib.utils.FileUtil;
@@ -35,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -79,6 +84,18 @@ public class BaseController {
     @Autowired
     public HttpServletResponse response;
 
+    @Value("${custom.wechat.openid.api.url}")
+    String openIdApiUrl;
+
+    @Value("${custom.wechat.appid}")
+    String appid;
+
+    @Value("${custom.wechat.secret}")
+    String secret;
+
+    @Value("${custom.wechat.grant_type}")
+    String grant_type;
+
 
     @Resource
     public RoleService roleService;
@@ -97,7 +114,6 @@ public class BaseController {
     @Resource
     public UserRoleService userRoleService;
 
-
     /**
      * 当前用户的登录信息
      *
@@ -107,9 +123,9 @@ public class BaseController {
         SysUserlogin current = (SysUserlogin) session.getAttribute("currentUserLogin");
         return current;
     }
+
     /**
      * 获取文件的绝对路径
-     *
      */
     public String getAbsolutePath(String path) throws UnsupportedEncodingException {
         path = path.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
@@ -301,6 +317,7 @@ public class BaseController {
 
     /**
      * 根据文件路径获取文件名
+     *
      * @param pathAndName
      * @return
      */
@@ -552,7 +569,7 @@ public class BaseController {
     public List<SysDepartment> getDepartmentListIsOffSet(String code) {
         List<SysDepartment> list = deptService.getSubsetsBranchByCode(code);
         for (SysDepartment sysDepartment : list
-                ) {
+        ) {
             int leave = sysDepartment.getDcode().length() / 3;
             String dName = sysDepartment.getDname();
             if (leave > 1) {
@@ -640,7 +657,7 @@ public class BaseController {
     public List<SysCategory> getCategoryListIsOffSet(String code, TypeEnums.CategoryType categoryType) {
         List<SysCategory> list = sysCategoryService.getSubsetsBranchByCode(code, categoryType.getValue());
         for (SysCategory sysCategory : list
-                ) {
+        ) {
             int leave = sysCategory.getCode().length() / 3;
             String dName = sysCategory.getName();
             if (leave > 1) {
@@ -691,13 +708,12 @@ public class BaseController {
     @GetMapping("/getKaptchaImage")
     public void getKaptchaImage(HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
-
         new CaptchaUtil().getRandcode(request, response);
     }
 
-
     /**
      * 判断当前用户是否在线
+     *
      * @return
      */
     public boolean isOnline() {
@@ -712,5 +728,30 @@ public class BaseController {
             }
         }
         return false;
+    }
+
+    /**
+     * 根据js_code获取openid
+     * @param request
+     * @return
+     */
+    public String getOpenid(HttpServletRequest request) {
+            String js_code = request.getHeader("js_code");
+            if (js_code == null || js_code.equals(""))
+                throw new BusinessException("js_code不能为空！");
+        try {
+            Map<String, String> header = new HashMap<>();
+            header.put(HttpConst.CONTENT_TYPE, "application/json");
+            JSONObject data = new JSONObject();
+            data.put("appid", appid);
+            data.put("secret", secret);
+            data.put("js_code", js_code);
+            data.put("grant_type", grant_type);
+            String text = HttpKit.post(openIdApiUrl, null, data.toJSONString(), header, Charset.defaultCharset()).getHtml();
+            String openid = JSON.parseObject(text).get("openid").toString();
+            return openid;
+        } catch (Exception e) {
+            throw new BusinessException("获取openid失败！");
+        }
     }
 }
