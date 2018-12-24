@@ -35,10 +35,10 @@ public class BusUserController extends BaseController {
     @WechatAuthorize
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData register(@RequestBody BusUser busUser, HttpServletRequest request) {
+    public ResultData register(@RequestBody BusUser busUser, String js_code) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户注册成功！");
         try {
-            String openid = getOpenid(request);
+            String openid = getOpenid(js_code);
             busUser.setOpenId(openid);
             int id = busUserService.addBusUser(busUser);
             resultData.setData(JSON.toJSONString(id));
@@ -52,11 +52,12 @@ public class BusUserController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
+    @CrossOrigin
     @AuthorizeIgnore
-    public ResultData login(HttpServletRequest request) {
+    public ResultData login(String js_code) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
         try {
-            String openid = getOpenid(request);
+            String openid = getOpenid(js_code);
             String token = busUserService.login(openid);
             resultData.setData(JSON.toJSONString(token));
         } catch (Exception e) {
