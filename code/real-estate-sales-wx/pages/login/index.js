@@ -1,4 +1,3 @@
-var http = require("../../utils/http.js")
 var app = getApp();
 Page({
 
@@ -32,7 +31,7 @@ Page({
             success: res_login => {
               if (res_login.code) {
                 //获取用户的openId
-                http.get("/api/login", {
+                app.get("/api/login", {
                   code: res_login.code
                 }).then((res) => {
                   console.log(res);

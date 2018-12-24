@@ -1,5 +1,4 @@
-<!--pages/register/register.wxml-->
-<form class="form" reportSubmit bindsubmit="savepubinfo">
+<form class="form" bindsubmit="formSubmit">
   <view class="form-body">
     <view class="form-item">
       <view class="form-lable">客户姓名</view>
@@ -17,7 +16,7 @@
     </view>
     <view class="form-item">
       <text class="form-lable">联系方式</text>
-      <input class='form-input' name="name" placeholder="请输入手机号" type="text"></input>
+      <input class='form-input' name="phone" placeholder="请输入手机号" type="number"></input>
     </view>
     <view class="item-report">
       <text class="form-lable">报备楼盘</text>
