@@ -25,7 +25,8 @@ public class BusUserService {
     }
 
     public BusUser getBusUser(BusUser busUser) {
-        return busUserMapper.selectByModel(busUser).get(0);
+        List<BusUser> busUsers = busUserMapper.selectByModel(busUser);
+        return busUsers != null && busUsers.size() > 0 ? busUsers.get(0) : null;
     }
 
     public String login(String openid) {

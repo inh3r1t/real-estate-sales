@@ -39,10 +39,7 @@ public class BusUserController extends BaseController {
     public ResultData register(@RequestBody BusUser busUser) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户注册成功！");
         try {
-            // String openid = getOpenid(js_code);
-            // busUser.setOpenId(openid);
             // 验证手机号是否注册
-
             BusUser searchUser = new BusUser();
             searchUser.setPhoneNum(busUser.getPhoneNum());
             searchUser = busUserService.getBusUser(searchUser);

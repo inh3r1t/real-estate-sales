@@ -20,18 +20,20 @@ public class BusRoleServiceTest extends BaseTest {
 
     @Test
     public void test1() {
-//        BusRole busRole = new BusRole();
-//        busRole.setName("testRoleName1");
-//        busRole.setType("1");
-//        int id = busRoleService.add(busRole);
-//
-//        System.out.println(id);
 
         BusRole condition = new BusRole();
         condition.setName("testRoleName1");
         final BusRole busRole1 = busRoleService.getBusRole(condition);
         System.out.println(busRole1);
+    }
 
+    @Test
+    public void test2() {
+        BusRole busRole = new BusRole();
+        busRole.setName("testRoleName2");
+        busRole.setType("2");
+        int i = busRoleService.add(busRole);
 
+        System.out.println(busRole.getId());
     }
 }
