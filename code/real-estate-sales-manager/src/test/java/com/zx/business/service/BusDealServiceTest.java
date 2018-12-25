@@ -40,9 +40,6 @@ public class BusDealServiceTest extends BaseTest {
         busDeal.setRealEstateName("碧春园");
         busDeal.setReportCompany("testCompany");
         final int id = busDealMapper.insertSelective(busDeal);
-
-        final List<BusDeal> busDeals = busDealMapper.selectByPage(null, null, null, null, busDeal);
-        System.out.println(busDeals);
     }
 
     @Test
@@ -50,10 +47,6 @@ public class BusDealServiceTest extends BaseTest {
         BusDeal busDeal = new BusDeal();
         busDeal.setRealEstateId(2);
         busDeal.setSubscribeMoney("100");
-        busDeal.setSubscribeTime(new Date());
-        busDeal.setSubscribeOperateTime(new Date());
-        busDeal.setArriveOperateTime(new Date());
-        busDeal.setAppointmentOperateTime(new Date());
         busDeal.setCustomerId(3);
         busDeal.setCustomerPhone("132423421223");
         busDeal.setCustomerName("Tony");

@@ -32,7 +32,7 @@ public class BusUserController extends BaseController {
      * @date 2018/11/28 11:36
      * @throws
      */
-    @WechatAuthorize
+    @AuthorizeIgnore
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public ResultData register(@RequestBody BusUser busUser, String js_code) {
