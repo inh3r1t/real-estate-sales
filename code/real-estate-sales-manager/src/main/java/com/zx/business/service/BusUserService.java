@@ -25,21 +25,39 @@ public class BusUserService {
     }
 
     public BusUser getBusUser(BusUser busUser) {
-        return busUserMapper.selectByModel(busUser).get(0);
+        List<BusUser> busUsers = busUserMapper.selectByModel(busUser);
+        if (busUsers == null || busUsers.size() == 0)
+            return null;
+        return busUsers.get(0);
     }
 
-    public String login(String openid) {
-        BusUser busUser = new BusUser();
-        busUser.setOpenId(openid);
-        List<BusUser> busUsers = busUserMapper.selectByModel(busUser);
+    public String loginByWechat(String openid) {
+        BusUser condition = new BusUser();
+        condition.setOpenId(openid);
+        BusUser busUser = getBusUser(condition);
 
-        if (busUsers != null && busUsers.size() > 0) {
-            // 生成token
-            String token = JWT.create().withAudience(String.valueOf(busUser.getId()))
-                    .sign(Algorithm.HMAC256(busUser.getPasswd()));
-            DataStore.getInstance().expireInfo.put(busUser.getId(), System.currentTimeMillis());
-            return token;
+        if (busUser != null) {
+            return getToken(busUser);
         } else
             throw new BusinessException("该用户未注册，请先注册再登录！");
+    }
+
+    public String loginByAccount(String phoneNum, String passwd) {
+        BusUser condition = new BusUser();
+        condition.setPhoneNum(phoneNum);
+        condition.setPasswd(Md5Util.getMd5(passwd));
+        BusUser busUser = getBusUser(condition);
+        if (busUser != null) {
+            return getToken(busUser);
+        } else
+            throw new BusinessException("该用户未注册，请先注册再登录！");
+    }
+
+    private String getToken(BusUser busUser) {
+        // 生成token
+        String token = JWT.create().withAudience(String.valueOf(busUser.getId()))
+                .sign(Algorithm.HMAC256(busUser.getPasswd()));
+        DataStore.getInstance().expireInfo.put(busUser.getId(), System.currentTimeMillis());
+        return token;
     }
 }
