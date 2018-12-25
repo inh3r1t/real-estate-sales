@@ -90,25 +90,26 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             }
 
             /******退出的时候记得清除cookie中的内容,如果用户已经登录********/
-        }
-        if (this.allModules == null) {
-            try {
-                this.allModules = (List<String>) session.getAttribute("allModules");
-            } catch (Exception ex) {
-                response.getWriter().write("<script>top.location.href='/login'</script>");
+            if (this.allModules == null) {
+                try {
+                    this.allModules = (List<String>) session.getAttribute("allModules");
+                } catch (Exception ex) {
+                    response.getWriter().write("<script>top.location.href='/login'</script>");
+                }
+            }
+            //验证菜单是否有权限
+            if (this.allModules != null && this.allModules.contains(request.getServletPath())) {
+                if (userLogin.getIssuper()) {
+                    return true;
+                } else if (!userLogin.getModules().stream().anyMatch(l ->
+                        l.getMurl().contains(request.getServletPath()))) {
+                    //没有权限
+                    response.sendRedirect(request.getContextPath() + "/error");
+                    return false;
+                }
             }
         }
-        //验证菜单是否有权限
-        if (this.allModules != null && this.allModules.contains(request.getServletPath())) {
-            if (userLogin.getIssuper()) {
-                return true;
-            } else if (!userLogin.getModules().stream().anyMatch(l ->
-                    l.getMurl().contains(request.getServletPath()))) {
-                //没有权限
-                response.sendRedirect(request.getContextPath() + "/error");
-                return false;
-            }
-        }
+
         return false;
     }
 

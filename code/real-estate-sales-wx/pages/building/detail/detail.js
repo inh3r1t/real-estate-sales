@@ -1,5 +1,5 @@
 var WxParse = require('../../../wxParse/wxParse.js');
-const http = require('../../../utils/http.js')
+var app = getApp()
 Page({
 
   /**
@@ -22,7 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    http.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildingById").then(res => {
+    app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildingById").then(res => {
       this.setData({
         building: res.data
       })

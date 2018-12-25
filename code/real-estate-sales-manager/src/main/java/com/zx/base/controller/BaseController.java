@@ -569,7 +569,7 @@ public class BaseController {
     public List<SysDepartment> getDepartmentListIsOffSet(String code) {
         List<SysDepartment> list = deptService.getSubsetsBranchByCode(code);
         for (SysDepartment sysDepartment : list
-        ) {
+                ) {
             int leave = sysDepartment.getDcode().length() / 3;
             String dName = sysDepartment.getDname();
             if (leave > 1) {
@@ -657,7 +657,7 @@ public class BaseController {
     public List<SysCategory> getCategoryListIsOffSet(String code, TypeEnums.CategoryType categoryType) {
         List<SysCategory> list = sysCategoryService.getSubsetsBranchByCode(code, categoryType.getValue());
         for (SysCategory sysCategory : list
-        ) {
+                ) {
             int leave = sysCategory.getCode().length() / 3;
             String dName = sysCategory.getName();
             if (leave > 1) {
@@ -732,22 +732,21 @@ public class BaseController {
 
     /**
      * 根据js_code获取openid
-     * @param request
+     *
      * @return
      */
-    public String getOpenid(HttpServletRequest request) {
-            String js_code = request.getHeader("js_code");
-            if (js_code == null || js_code.equals(""))
-                throw new BusinessException("js_code不能为空！");
+    public String getOpenid(String js_code) {
+        if (js_code == null || js_code.equals(""))
+            throw new BusinessException("js_code不能为空！");
         try {
             Map<String, String> header = new HashMap<>();
             header.put(HttpConst.CONTENT_TYPE, "application/json");
-            JSONObject data = new JSONObject();
+            Map<String, String> data = new HashMap<>();
             data.put("appid", appid);
             data.put("secret", secret);
             data.put("js_code", js_code);
             data.put("grant_type", grant_type);
-            String text = HttpKit.post(openIdApiUrl, null, data.toJSONString(), header, Charset.defaultCharset()).getHtml();
+            String text = HttpKit.get(openIdApiUrl, data, Charset.defaultCharset()).getHtml();
             String openid = JSON.parseObject(text).get("openid").toString();
             return openid;
         } catch (Exception e) {

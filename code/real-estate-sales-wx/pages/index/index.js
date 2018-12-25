@@ -1,6 +1,4 @@
 const app = getApp()
-var http = require('../../utils/http.js')
-
 Page({
   data: {
     recommendbuildings: [],
@@ -15,7 +13,8 @@ Page({
     isLogin: false
   },
   onLoad: function() {
-    http.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get")
+    debugger
+    app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get")
       .then(res => {
         this.setData({
           recommendbuildings: res.data

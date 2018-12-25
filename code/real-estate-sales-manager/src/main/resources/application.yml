@@ -25,7 +25,7 @@ custom:
   captcha: 1  # 是否使用登录验证码 0:不使用 1:使用
   file-extension: jpg|png|gif|bmp|jpeg|txt|doc|xls|docx|xlsx|pdf|mp3|mp4|ppt|pptx|rtf|zip|rar|gz|7z|gzip
 
-  wechat.openid.api.url: https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+  wechat.openid.api.url: https://api.weixin.qq.com/sns/jscode2session
   wechat.appid: wx4476c55348a31df8
   wechat.secret: 26754ef3189b3ef8a18d9b5e05d3bb23
   wechat.grant_type: authorization_code

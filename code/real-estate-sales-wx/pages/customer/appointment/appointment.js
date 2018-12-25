@@ -1,5 +1,5 @@
 var dateTimePicker = require('../../../utils/dateTimePicker.js');
-var http = require('../../../utils/http.js')
+var app = getApp();
 Page({
 
   /**
@@ -75,7 +75,7 @@ Page({
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 预约提交
-    http.post("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/operate", {
+    app.post("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/operate", {
         state: 0
       })
       .then(res => {

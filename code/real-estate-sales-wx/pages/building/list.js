@@ -1,4 +1,3 @@
-const http = require('../../utils/http.js')
 var app = getApp()
 Page({
   /**
@@ -73,7 +72,7 @@ Page({
   },
   getList(pageNo, override) {
     this.loading = true
-    return http.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {
+    return app.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {
       //这里既可以获取模拟的res
       console.log(res)
       this.setData({

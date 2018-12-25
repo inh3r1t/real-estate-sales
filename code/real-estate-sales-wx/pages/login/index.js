@@ -1,4 +1,3 @@
-var http = require("../../utils/http.js")
 var app = getApp();
 Page({
 
@@ -32,8 +31,8 @@ Page({
             success: res_login => {
               if (res_login.code) {
                 //获取用户的openId
-                http.get("/api/login", {
-                  code: res_login.code
+                app.post("http://127.0.0.1:8080/busUser/login", {
+                  js_code: res_login.code
                 }).then((res) => {
                   console.log(res);
                   //1.存用户信息到本地存储
