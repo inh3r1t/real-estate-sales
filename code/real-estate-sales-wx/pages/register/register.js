@@ -38,10 +38,10 @@ Page({
       }
     }, {
       userName: {
-        required: '请填写您的姓名',
+        required: '请输入姓名',
       },
       phoneNum: {
-        required: '请填写您的手机号',
+        required: '请输入手机号',
       },
       passwd: {
         required: '请输入密码',

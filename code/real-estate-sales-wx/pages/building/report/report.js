@@ -23,7 +23,7 @@ Page({
         required: '请输入客户名称',
       },
       phone: {
-        required: '请填写您的手机号',
+        required: '请输入手机号',
       }
     })
 

@@ -20,6 +20,11 @@ Page({
           recommendbuildings: res.data
         })
       });
+
+    app.post("http://127.0.0.1:8080/busRealEstate/getPage?page=1&pageSize=10").then(res=>{
+      debugger
+      console.log(res);
+    })
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

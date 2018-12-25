@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    phoneNum: '18715512332',
+    passwd: '123456'
   },
 
   /**
@@ -13,21 +14,21 @@ Page({
    */
   onLoad: function(options) {
     this.WxValidate = app.WxValidate({
-      phone: {
+      phoneNum: {
         required: true,
         tel: true,
       },
-      password: {
+      passwd: {
         required: true,
         minlength: 6,
         maxlength: 20,
       }
     }, {
-      password: {
+      passwd: {
         required: '请输入密码',
       },
-      phone: {
-        required: '请填写您的手机号',
+      phoneNum: {
+        required: '请输入手机号',
       }
     })
   },
@@ -49,17 +50,32 @@ Page({
       })
       return false
     }
-    wx.showModal({
-      content: '恭喜您，登录成功',
-      showCancel: false,
-      confirmText: "立即登录",
-      success(res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: '/pages/login/index',
+    //获取用户的openId
+    this.setData({
+      phoneNum: params.phoneNum,
+      passwd: params.passwd,
+    });
+    app.post("http://127.0.0.1:8080/busUser/login", this.data).then((res) => {
+      console.log(res);
+      debugger
+      //1.存用户信息到本地存储
+      wx.setStorageSync('token', res.data);
+      //2.存用户信息到全局变量
+      app.globalData.token = res.data;
+      wx.showToast({
+        title: '登录成功',
+        icon: 'success',
+        success: function() {
+          wx.switchTab({
+            url: '/pages/index/index',
           })
         }
-      }
-    })
+      })
+    }).catch((res) => {
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
+    });
   }
 })
