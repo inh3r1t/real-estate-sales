@@ -5,9 +5,12 @@ import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
+import com.zx.base.exception.BusinessException;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusUserService;
+import com.zx.business.vo.BusUserVO;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -62,11 +65,17 @@ public class BusUserController extends BaseController {
     @ResponseBody
     @CrossOrigin
     @AuthorizeIgnore
-    public ResultData login(String js_code) {
+    public ResultData login(@RequestBody BusUserVO busUserVO) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
         try {
-            String openid = getOpenid(js_code);
-            String token = busUserService.login(openid);
+            String token = null;
+            if (StringUtils.isNotEmpty(busUserVO.getJs_code())) {
+                String openid = getOpenid(busUserVO.getJs_code());
+                token = busUserService.loginByWechat(openid);
+            } else if (StringUtils.isNotEmpty(busUserVO.getPhoneNum()) && StringUtils.isNotEmpty(busUserVO.getPasswd())) {
+                token = busUserService.loginByAccount(busUserVO.getPhoneNum(), busUserVO.getPasswd());
+            } else
+                throw new BusinessException("用户登录失败！");
             resultData.setData(JSON.toJSONString(token));
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
