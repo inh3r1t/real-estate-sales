@@ -6,10 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name: "",
-    phone: "",
-    password: "",
-    code: ""
+    userName: "卫义",
+    phoneNum: "18715512332",
+    passwd: "123456",
+    pollCode: "123456"
   },
 
   /**
@@ -17,43 +17,39 @@ Page({
    */
   onLoad: function(options) {
     this.WxValidate = app.WxValidate({
-      name: {
+      userName: {
         required: true,
         minlength: 2,
         maxlength: 10,
       },
-      phone: {
+      phoneNum: {
         required: true,
-        telfuzzy: true,
+        tel: true,
       },
-      password: {
+      passwd: {
         required: true,
         minlength: 6,
         maxlength: 20,
       },
-      code: {
+      pollCode: {
         required: true,
         minlength: 2,
         maxlength: 100,
       }
     }, {
-      name: {
+      userName: {
         required: '请填写您的姓名',
       },
-      phone: {
+      phoneNum: {
         required: '请填写您的手机号',
       },
-      password: {
+      passwd: {
         required: '请输入密码',
       },
-      code: {
+      pollCode: {
         required: '请输入注册码',
       }
     })
-    // 自定义验证规则
-    this.WxValidate.addMethod('telfuzzy', (value, param) => {
-      return this.WxValidate.optional(value) || /^1[345789][0-9]\*{4}\d{4}$/.test(value)
-    }, '请输入手机号码，中间4位隐藏')
   },
 
   /**
@@ -63,7 +59,6 @@ Page({
 
   },
   formSubmit: function(e) {
-    //提交错误描述
     const params = e.detail.value
     if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0]
@@ -75,27 +70,33 @@ Page({
       })
       return false
     }
-    wx.showModal({
-      content: '恭喜您，注册成功',
-      showCancel: false,
-      confirmText: "立即登录",
-      success(res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: '/pages/login/index',
-          })
+    //获取用户的openId
+    this.setData({
+      userName: params.userName,
+      phoneNum: params.phoneNum,
+      passwd: params.passwd,
+      pollCode: params.pollCode
+    });
+    app.post("http://127.0.0.1:8080/busUser/register", this.data).then((res) => {
+      console.log(res);
+      wx.showModal({
+        content: '恭喜您，注册成功',
+        showCancel: false,
+        confirmText: "立即登录",
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/login/index',
+            })
+          }
         }
-      }
-    })
-  },
-  handlePhone: function(e) {
-    const value = e.detail.value
-    if (value.length === 11) {
-      debugger
-      return value.replace(/(\d{3})[\s\S]{4}(\d{4})/, '$1****$2');
-    } else if (value.length > 11) {
-      debugger
-      return value.substring(0, 11).replace(/(\d{3})[\s\S]{4}(\d{4})/, '$1****$2');
-    }
+      })
+    }).catch((res) => {
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
+    });
+
   }
 })

@@ -32,16 +32,27 @@ public class BusUserController extends BaseController {
      * @date 2018/11/28 11:36
      * @throws
      */
-    @WechatAuthorize
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData register(@RequestBody BusUser busUser, String js_code) {
+    @CrossOrigin
+    @AuthorizeIgnore
+    public ResultData register(@RequestBody BusUser busUser) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户注册成功！");
         try {
-            String openid = getOpenid(js_code);
-            busUser.setOpenId(openid);
-            int id = busUserService.addBusUser(busUser);
-            resultData.setData(JSON.toJSONString(id));
+            // String openid = getOpenid(js_code);
+            // busUser.setOpenId(openid);
+            // 验证手机号是否注册
+
+            BusUser searchUser = new BusUser();
+            searchUser.setPhoneNum(busUser.getPhoneNum());
+            searchUser = busUserService.getBusUser(searchUser);
+            if (searchUser != null) {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("该手机号已经被注册！");
+            } else {
+                int id = busUserService.addBusUser(busUser);
+                resultData.setData(JSON.toJSONString(id));
+            }
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("用户注册失败！");
