@@ -6,6 +6,7 @@ import com.zx.base.exception.BusinessException;
 import com.zx.business.common.DataStore;
 import com.zx.business.dao.BusUserMapper;
 import com.zx.business.model.BusUser;
+import com.zx.lib.utils.encrypt.Md5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ public class BusUserService {
     private BusUserMapper busUserMapper;
 
     public int addBusUser(BusUser busUser) {
-        busUser.setPasswd(UUID.fromString(busUser.getPasswd()).toString());
+        busUser.setPasswd(Md5Util.getMd5(busUser.getPasswd()));
         return busUserMapper.insertSelective(busUser);
     }
 

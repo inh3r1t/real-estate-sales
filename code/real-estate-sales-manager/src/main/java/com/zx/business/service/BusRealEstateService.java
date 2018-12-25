@@ -35,4 +35,8 @@ public class BusRealEstateService {
         List<BusRealEstate> busRealEstates = busRealEstateMapper.selectByPage(null, null, null, null, busRealEstate);
         return busRealEstates;
     }
+
+    public int add(BusRealEstate busRealEstate) {
+        return busRealEstateMapper.insertSelective(busRealEstate);
+    }
 }

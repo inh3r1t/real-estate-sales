@@ -50,4 +50,6 @@ public interface BusRoleMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(BusRole record);
+
+    BusRole selectByModel(BusRole busRole);
 }

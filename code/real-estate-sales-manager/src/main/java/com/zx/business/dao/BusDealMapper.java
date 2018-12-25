@@ -58,5 +58,7 @@ public interface BusDealMapper {
 
     Long countByModel(BusDeal busDeal);
 
-    List<BusDeal> selectByPage(Integer start, Integer pageSize, String orderField, String orderType, BusDeal busDeal);
+    List<BusDeal> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer pageSize,
+                               @Param("orderField") String orderField, @Param("orderType") String orderType,
+                               @Param("busDeal") BusDeal busDeal);
 }

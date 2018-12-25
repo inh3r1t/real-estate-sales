@@ -1,11 +1,13 @@
 package com.zx.business.service;
 
+import com.zx.business.model.BusRealEstate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: ytxu3
@@ -20,8 +22,19 @@ public class BusRealEstateServiceTest {
     private BusRealEstateService busRealEstateService;
 
     @Test
-    public void getList() {
-//        final PagerModel<BusRealEstate> list = busRealEstateService.getList();
-//        System.out.println(list);
+    public void test1() {
+        BusRealEstate busRealEstate = new BusRealEstate();
+        busRealEstate.setName("testBusRealEstateName3");
+        busRealEstate.setManagerId(11131);
+        int id = busRealEstateService.add(busRealEstate);
+        System.out.println(id);
+    }
+
+    @Test
+    public void test2() {
+        BusRealEstate busRealEstate = new BusRealEstate();
+        busRealEstate.setName("testBusRealEstateName3");
+        final List<BusRealEstate> list = busRealEstateService.getList(busRealEstate);
+        System.out.println(list);
     }
 }

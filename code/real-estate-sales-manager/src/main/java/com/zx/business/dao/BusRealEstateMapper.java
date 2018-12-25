@@ -55,7 +55,7 @@ public interface BusRealEstateMapper {
     int updateByPrimaryKey(BusRealEstate record);
 
     List<BusRealEstate> selectByPage(@Param("start") Integer start, @Param("size") Integer size, @Param("orderField") String orderField,
-                                     @Param("orderType") String orderType, BusRealEstate busRealEstate);
+                                     @Param("orderType") String orderType, @Param("busRealEstate") BusRealEstate busRealEstate);
 
     Long countByModel(BusRealEstate model);
 }
