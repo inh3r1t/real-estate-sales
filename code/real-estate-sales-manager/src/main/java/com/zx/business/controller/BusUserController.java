@@ -44,7 +44,7 @@ public class BusUserController extends BaseController {
             String openid = getOpenid(js_code);
             busUser.setOpenId(openid);
             int id = busUserService.addBusUser(busUser);
-            resultData.setData(JSON.toJSONString(id));
+            resultData.setData(id);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("用户注册失败！");
@@ -60,7 +60,7 @@ public class BusUserController extends BaseController {
     public ResultData login(@RequestBody BusUserVO busUserVO) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
         try {
-            String token = null;
+            String token;
             if (StringUtils.isNotEmpty(busUserVO.getJs_code())) {
                 String openid = getOpenid(busUserVO.getJs_code());
                 token = busUserService.loginByWechat(openid);
@@ -68,7 +68,7 @@ public class BusUserController extends BaseController {
                 token = busUserService.loginByAccount(busUserVO.getPhoneNum(), busUserVO.getPasswd());
             } else
                 throw new BusinessException("用户登录失败！");
-            resultData.setData(JSON.toJSONString(token));
+            resultData.setData(token);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("用户登录失败！");

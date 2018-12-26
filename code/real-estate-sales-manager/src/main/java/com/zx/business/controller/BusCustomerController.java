@@ -36,7 +36,7 @@ public class BusCustomerController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             PagerModel<BusCustomer> busCustomerPage = busCustomerService.getPage(page, pageSize, busCustomer);
-            resultData.setData(JSON.toJSONString(busCustomerPage));
+            resultData.setData(busCustomerPage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取客户列表失败！");
@@ -52,7 +52,7 @@ public class BusCustomerController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             List<BusCustomer> busCustomers = busCustomerService.getList(busCustomer);
-            resultData.setData(JSON.toJSONString(busCustomers));
+            resultData.setData(busCustomers);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取客户列表失败！");

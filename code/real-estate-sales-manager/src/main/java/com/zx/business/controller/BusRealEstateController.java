@@ -38,7 +38,7 @@ public class BusRealEstateController extends BaseController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
             PagerModel<BusRealEstate> busRealEstatePage = busRealStateService.getPage(page, pageSize, busRealEstate);
-            resultData.setData(JSON.toJSONString(busRealEstatePage));
+            resultData.setData(busRealEstatePage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取楼盘列表失败！");
@@ -54,7 +54,7 @@ public class BusRealEstateController extends BaseController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
             List<BusRealEstate> busRealEstates = busRealStateService.getList(busRealEstate);
-            resultData.setData(JSON.toJSONString(busRealEstates));
+            resultData.setData(busRealEstates);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取楼盘列表失败！");
@@ -70,7 +70,7 @@ public class BusRealEstateController extends BaseController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘详细信息成功！");
         try {
             BusRealEstate busRealEstate = busRealStateService.getById(id);
-            resultData.setData(JSON.toJSONString(busRealEstate));
+            resultData.setData(busRealEstate);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取楼盘详细信息失败！");
@@ -83,7 +83,7 @@ public class BusRealEstateController extends BaseController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "新增楼盘信息成功！");
         try {
             int id = busRealStateService.add(busRealEstate);
-            resultData.setData(JSON.toJSONString(busRealEstate));
+            resultData.setData(busRealEstate);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("新增楼盘信息失败！");

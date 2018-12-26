@@ -32,7 +32,7 @@ public class BusDealController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             PagerModel<BusDeal> busDealPage = busDealService.getPage(page, pageSize, busDeal);
-            resultData.setData(JSON.toJSONString(busDealPage));
+            resultData.setData(busDealPage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取客户列表失败！");
@@ -48,7 +48,7 @@ public class BusDealController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             List<BusDeal> busDealList = busDealService.getList(busDeal);
-            resultData.setData(JSON.toJSONString(busDealList));
+            resultData.setData(busDealList);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取客户列表失败！");
@@ -64,7 +64,7 @@ public class BusDealController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
         try {
             BusDeal busDeal = busDealService.getById(id);
-            resultData.setData(JSON.toJSONString(busDeal));
+            resultData.setData(busDeal);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取订单详细信息失败！");
