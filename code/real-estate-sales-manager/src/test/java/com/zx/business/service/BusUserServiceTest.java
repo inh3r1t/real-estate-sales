@@ -5,16 +5,21 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.zx.base.common.BaseTest;
+import com.zx.business.dao.BusUserMapper;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusUserService;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 public class BusUserServiceTest extends BaseTest {
 
     @Resource
     private BusUserService busUserService;
+
+    @Resource
+    private BusUserMapper busUserMapper;
 
     @Test
     public void test1() {
@@ -45,5 +50,19 @@ public class BusUserServiceTest extends BaseTest {
         BusUser busUser1 = busUserService.getBusUser(condition);
         System.out.println(busUser1);
 
+    }
+
+    @Test
+    public void test3() {
+
+
+        BusUser busUser = new BusUser();
+        busUser.setUserName("testUserName1");
+
+//        final long l = busUserMapper.countByModel(busUser);
+//        System.out.println(l);
+
+        final List<BusUser> busUsers = busUserMapper.selectByPage(0, 4, null, null, busUser);
+        System.out.println(busUsers);
     }
 }

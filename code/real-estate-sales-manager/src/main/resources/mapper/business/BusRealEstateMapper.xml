@@ -220,24 +220,24 @@
     <include refid="Base_Column_List" />
     from bus_real_estate
     where 1=1
-    <if test="busRealEstate.isTopRecommend != null"> and isTopRecommend = #{busRealEstate.isTopRecommend}</if>
+    <if test="busRealEstate.isTopRecommend != null"> and is_top_recommend = #{busRealEstate.isTopRecommend}</if>
+    <if test="busRealEstate.managerName != null"> and manager_name = #{busRealEstate.managerName}</if>
     <if test="busRealEstate.address != null"> and address = #{busRealEstate.address}</if>
+    <if test="busRealEstate.isListRecommend != null"> and is_list_recommend = #{busRealEstate.isListRecommend}</if>
+    <if test="busRealEstate.managerId != null"> and manager_id = #{busRealEstate.managerId}</if>
     <if test="busRealEstate.name != null"> and name = #{busRealEstate.name}</if>
     <if test="busRealEstate.commission != null"> and commission = #{busRealEstate.commission}</if>
-    <if test="busRealEstate.isListRecommend != null"> and isListRecommend = #{busRealEstate.isListRecommend}</if>
     <if test="busRealEstate.id != null"> and id = #{busRealEstate.id}</if>
-    <if test="busRealEstate.managerId != null"> and managerId = #{busRealEstate.managerId}</if>
     <if test="busRealEstate.detail != null"> and detail = #{busRealEstate.detail}</if>
     <if test="busRealEstate.summery != null"> and summery = #{busRealEstate.summery}</if>
-    <if test="busRealEstate.managerName != null"> and managerName = #{busRealEstate.managerName}</if>
     <if test="orderField != null">
       order by ${orderField}
     </if>
     <if test="orderType != null">
       ${orderType}
     </if>
-    <if test="start != null and size != null">
-      limit #{start}, #{size}
+    <if test="start != null and pageSize != null">
+      limit #{start}, #{pageSize}
     </if>
   </select>
 
@@ -246,15 +246,15 @@
     count(1)
     from bus_real_estate
     where 1=1
-    <if test="busRealEstate.isTopRecommend != null"> and isTopRecommend = #{busRealEstate.isTopRecommend}</if>
-    <if test="busRealEstate.address != null"> and address = #{busRealEstate.address}</if>
-    <if test="busRealEstate.name != null"> and name = #{busRealEstate.name}</if>
-    <if test="busRealEstate.commission != null"> and commission = #{busRealEstate.commission}</if>
-    <if test="busRealEstate.isListRecommend != null"> and isListRecommend = #{busRealEstate.isListRecommend}</if>
-    <if test="busRealEstate.id != null"> and id = #{busRealEstate.id}</if>
-    <if test="busRealEstate.managerId != null"> and managerId = #{busRealEstate.managerId}</if>
-    <if test="busRealEstate.detail != null"> and detail = #{busRealEstate.detail}</if>
-    <if test="busRealEstate.summery != null"> and summery = #{busRealEstate.summery}</if>
-    <if test="busRealEstate.managerName != null"> and managerName = #{busRealEstate.managerName}</if>
+    <if test="isTopRecommend != null"> and is_top_recommend = #{isTopRecommend}</if>
+    <if test="managerName != null"> and manager_name = #{managerName}</if>
+    <if test="address != null"> and address = #{address}</if>
+    <if test="isListRecommend != null"> and is_list_recommend = #{isListRecommend}</if>
+    <if test="managerId != null"> and manager_id = #{managerId}</if>
+    <if test="name != null"> and name = #{name}</if>
+    <if test="commission != null"> and commission = #{commission}</if>
+    <if test="id != null"> and id = #{id}</if>
+    <if test="detail != null"> and detail = #{detail}</if>
+    <if test="summery != null"> and summery = #{summery}</if>
   </select>
 </mapper>

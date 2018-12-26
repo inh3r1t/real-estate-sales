@@ -2,6 +2,7 @@ package com.zx.business.dao;
 
 import com.zx.business.model.BusRealEstate;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public interface BusRealEstateMapper {
      */
     int updateByPrimaryKey(BusRealEstate record);
 
-    List<BusRealEstate> selectByPage(@Param("start") Integer start, @Param("size") Integer size, @Param("orderField") String orderField,
+    List<BusRealEstate> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer size, @Param("orderField") String orderField,
                                      @Param("orderType") String orderType, @Param("busRealEstate") BusRealEstate busRealEstate);
 
     Long countByModel(@Param("busRealEstate") BusRealEstate busRealEstate);

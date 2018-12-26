@@ -32,9 +32,7 @@ public class BusRealEstateController extends BaseController {
     private BusRealEstateService busRealStateService;
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
-    @ResponseBody
-    @AuthorizeIgnore
-    public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
+    @ResponseBody    @AuthorizeIgnore    public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
             PagerModel<BusRealEstate> busRealEstatePage =
@@ -49,8 +47,8 @@ public class BusRealEstateController extends BaseController {
     }
 
     @RequestMapping(value = "/getList", method = RequestMethod.POST)
-    @ResponseBody
-    @WechatAuthorize
+    @ResponseBody 
+
     public ResultData getList(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
