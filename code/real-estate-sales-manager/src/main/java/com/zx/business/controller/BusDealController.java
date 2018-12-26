@@ -28,10 +28,10 @@ public class BusDealController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @AuthorizeIgnore
-    public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusDeal busDeal) {
+    public ResultData getPage(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
-            PagerModel<BusDeal> busDealPage = busDealService.getPage(page, pageSize, busDeal);
+            PagerModel<BusDeal> busDealPage = busDealService.getPage(busDeal.getPage(), busDeal.getPageSize(), busDeal);
             resultData.setData(busDealPage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
@@ -82,7 +82,7 @@ public class BusDealController {
     @ResponseBody
     @AuthorizeIgnore
     public ResultData report(@RequestBody BusDealVO busDealVO) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "报备成功！");
         try {
             busDealService.report(busDealVO);
         } catch (Exception e) {

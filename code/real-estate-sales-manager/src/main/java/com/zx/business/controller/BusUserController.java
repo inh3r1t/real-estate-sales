@@ -76,7 +76,7 @@ public class BusUserController extends BaseController {
                 token = busUserService.loginByAccount(busUserVO.getPhoneNum(), busUserVO.getPasswd());
             } else
                 throw new BusinessException("用户登录失败！");
-            resultData.setData(JSON.toJSONString(token));
+            resultData.setData(token);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("用户登录失败！");

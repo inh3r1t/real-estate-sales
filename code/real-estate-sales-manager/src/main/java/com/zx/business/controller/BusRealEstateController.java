@@ -34,10 +34,11 @@ public class BusRealEstateController extends BaseController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
-    public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusRealEstate busRealEstate) {
+    public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
-            PagerModel<BusRealEstate> busRealEstatePage = busRealStateService.getPage(page, pageSize, busRealEstate);
+            PagerModel<BusRealEstate> busRealEstatePage =
+                    busRealStateService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
             resultData.setData(busRealEstatePage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);

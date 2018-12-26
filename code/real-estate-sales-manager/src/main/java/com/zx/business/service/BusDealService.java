@@ -51,10 +51,11 @@ public class BusDealService {
         Integer agentId = busDealVO.getReportUserId();
         BusUser agent = busUserMapper.selectByPrimaryKey(agentId);
 
+        // add customer record
         String customerName = busDealVO.getCustomerName();
         String customerPhone = busDealVO.getCustomerPhone();
         BusCustomer busCustomer = new BusCustomer(agentId, customerName, customerPhone, busDealVO.getCustomerSex());
-        int customerId = busCustomerMapper.insert(busCustomer);
+        busCustomerMapper.insert(busCustomer);
 
         String[] realEstateIds = busDealVO.getRealEstateIds().split(",");
         List<BusDeal> busDealList = new ArrayList<>();
@@ -66,7 +67,7 @@ public class BusDealService {
             busDeal.setRealEstateId(realEstateId);
             busDeal.setRealEstateName(busRealEstate.getName());
             busDeal.setState(BusinessCons.DEAL_STATE_REPORT);
-            busDeal.setCustomerId(customerId);
+            busDeal.setCustomerId(busCustomer.getId());
             busDeal.setCustomerName(customerName);
             busDeal.setCustomerPhone(customerPhone);
             busDeal.setReportUserId(agentId);

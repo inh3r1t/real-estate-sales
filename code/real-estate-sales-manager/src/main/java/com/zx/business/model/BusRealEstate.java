@@ -1,8 +1,10 @@
 package com.zx.business.model;
 
+import com.zx.business.vo.PageVO;
+
 import java.util.Date;
 
-public class BusRealEstate {
+public class BusRealEstate extends PageVO {
 
 
     /**

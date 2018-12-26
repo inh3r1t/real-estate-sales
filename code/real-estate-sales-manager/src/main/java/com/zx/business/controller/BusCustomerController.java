@@ -32,10 +32,11 @@ public class BusCustomerController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @AuthorizeIgnore
-    public ResultData getPage(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestBody BusCustomer busCustomer) {
+    public ResultData getPage(@RequestBody BusCustomer busCustomer) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
-            PagerModel<BusCustomer> busCustomerPage = busCustomerService.getPage(page, pageSize, busCustomer);
+            PagerModel<BusCustomer> busCustomerPage =
+                    busCustomerService.getPage(busCustomer.getPage(), busCustomer.getPageSize(), busCustomer);
             resultData.setData(busCustomerPage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
