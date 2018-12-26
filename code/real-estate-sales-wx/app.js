@@ -3,12 +3,7 @@ var http = require('utils/http.js')
 import WxValidate from 'utils/WxValidate.js'
 App({
   onLaunch: function() {
-    let userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
-      this.globalData.userInfo = userInfo
-    } else {
-      this.globalData.userInfo = null
-    }
+    this.isLogin();
   },
   globalData: {
     userInfo: null,

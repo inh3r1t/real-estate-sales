@@ -33,7 +33,7 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
-    @WechatAuthorize
+    @AuthorizeIgnore
     public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {

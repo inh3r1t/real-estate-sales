@@ -236,7 +236,7 @@
     <if test="orderType != null">
       ${orderType}
     </if>
-    <if test="start != null and pageSize != null">
+    <if test="start != null and size != null">
       limit #{start}, #{size}
     </if>
   </select>
@@ -244,17 +244,17 @@
   <select id="countByModel" parameterType="com.zx.business.model.BusRealEstate" resultType="java.lang.Long">
     select
     count(1)
-    from bus_user
+    from bus_real_estate
     where 1=1
-    <if test="busRealEstate.isTopRecommend != null">isTopRecommend = #{busRealEstate.isTopRecommend}</if>
-    <if test="busRealEstate.address != null">address = #{busRealEstate.address}</if>
-    <if test="busRealEstate.name != null">name = #{busRealEstate.name}</if>
-    <if test="busRealEstate.commission != null">commission = #{busRealEstate.commission}</if>
-    <if test="busRealEstate.isListRecommend != null">isListRecommend = #{busRealEstate.isListRecommend}</if>
-    <if test="busRealEstate.id != null">id = #{busRealEstate.id}</if>
-    <if test="busRealEstate.managerId != null">managerId = #{busRealEstate.managerId}</if>
-    <if test="busRealEstate.detail != null">detail = #{busRealEstate.detail}</if>
-    <if test="busRealEstate.summery != null">summery = #{busRealEstate.summery}</if>
-    <if test="busRealEstate.managerName != null">managerName = #{busRealEstate.managerName}</if>
+    <if test="busRealEstate.isTopRecommend != null"> and isTopRecommend = #{busRealEstate.isTopRecommend}</if>
+    <if test="busRealEstate.address != null"> and address = #{busRealEstate.address}</if>
+    <if test="busRealEstate.name != null"> and name = #{busRealEstate.name}</if>
+    <if test="busRealEstate.commission != null"> and commission = #{busRealEstate.commission}</if>
+    <if test="busRealEstate.isListRecommend != null"> and isListRecommend = #{busRealEstate.isListRecommend}</if>
+    <if test="busRealEstate.id != null"> and id = #{busRealEstate.id}</if>
+    <if test="busRealEstate.managerId != null"> and managerId = #{busRealEstate.managerId}</if>
+    <if test="busRealEstate.detail != null"> and detail = #{busRealEstate.detail}</if>
+    <if test="busRealEstate.summery != null"> and summery = #{busRealEstate.summery}</if>
+    <if test="busRealEstate.managerName != null"> and managerName = #{busRealEstate.managerName}</if>
   </select>
 </mapper>

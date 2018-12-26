@@ -250,3 +250,11 @@
   background-color: #fff;
   z-index: 2;
 }
+
+.no-more {
+  text-align: center;
+  font-size: 12px;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #979797;
+}

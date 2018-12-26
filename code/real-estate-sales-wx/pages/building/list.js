@@ -4,8 +4,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading: false,
     isLogin: false,
+    more: true,
     page: 1,
     list: []
 
@@ -43,25 +43,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    if (!this.loading) {
-      this.getList(1, true).then(() => {
-        // 处理完成后，终止下拉刷新
-        wx.stopPullDownRefresh()
-      })
-    }
+    this.getList(1, true).then(() => {
+      // 处理完成后，终止下拉刷新
+      wx.stopPullDownRefresh()
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    wx.showLoading({
-      title: '玩命加载中',
-    })
-    this.getList(this.data.page + 1).then(res => {
-      // 隐藏加载框
-      wx.hideLoading();
-    })
+    this.getList(this.data.page + 1)
   },
 
   /**
@@ -71,22 +63,46 @@ Page({
 
   },
   getList(pageNo, override) {
-    this.loading = true
-    return app.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {
-      //这里既可以获取模拟的res
-      console.log(res)
-      this.setData({
-        list: override ? res.data : this.data.list.concat(res.data)
+    if (this.data.more || override) {
+      wx.showLoading({
+        title: '玩命加载中',
       })
-      console.log(this.data.list)
-      this.loading = false
-      // 隐藏加载框
-      wx.hideLoading();
-    }).catch(err => {
-      console.log("==> [ERROR]", err)
-      this.loading = false
-      // 隐藏加载框
-      wx.hideLoading();
-    })
+      return app.post("http://127.0.0.1:8080/busRealEstate/getPage", {
+        page: pageNo,
+        pageSize: 10
+      }).then(res => {
+        //这里既可以获取模拟的res
+        console.log(res)
+        this.setData({
+          list: override ? res.data.Items : this.data.list.concat(res.data.Items),
+          more: res.data.Items != null && res.data.Items.length == 10
+        })
+        console.log(this.data.list)
+        this.loading = false
+        // 隐藏加载框
+        wx.hideLoading();
+      }).catch(err => {
+        console.log("==> [ERROR]", err)
+        this.loading = false
+        // 隐藏加载框
+        wx.hideLoading();
+      })
+    }
+    // return app.get('https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get').then(res => {
+    //   //这里既可以获取模拟的res
+    //   console.log(res)
+    //   this.setData({
+    //     list: override ? res.data : this.data.list.concat(res.data)
+    //   })
+    //   console.log(this.data.list)
+    //   this.loading = false
+    //   // 隐藏加载框
+    //   wx.hideLoading();
+    // }).catch(err => {
+    //   console.log("==> [ERROR]", err)
+    //   this.loading = false
+    //   // 隐藏加载框
+    //   wx.hideLoading();
+    // })
   }
 })

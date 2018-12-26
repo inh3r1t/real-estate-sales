@@ -21,7 +21,7 @@ public class BusRealEstateService {
 
     public PagerModel<BusRealEstate> getPage(Integer page, Integer pageSize, BusRealEstate busRealEstate) {
         Long count = busRealEstateMapper.countByModel(busRealEstate);
-        int start = (page + 1) * pageSize;
+        int start = (page - 1) * pageSize;
         List<BusRealEstate> busRealEstates = busRealEstateMapper.selectByPage(start, pageSize, null, null, busRealEstate);
         PagerModel<BusRealEstate> busRealEstatePage = new PagerModel<>(page, pageSize, count.intValue(), busRealEstates);
         return busRealEstatePage;

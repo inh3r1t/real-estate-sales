@@ -11,3 +11,5 @@
     <text class='summary'>简介：{{item.summary}}</text>
   </view>
 </view>
+
+<view class='no-more' hidden='{{more}}'>没有更多数据了</view>
