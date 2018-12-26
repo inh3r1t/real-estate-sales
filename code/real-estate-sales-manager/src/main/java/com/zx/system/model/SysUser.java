@@ -1,12 +1,7 @@
 package com.zx.system.model;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.nutz.dao.entity.annotation.*;
 
-import javax.management.relation.Role;
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;

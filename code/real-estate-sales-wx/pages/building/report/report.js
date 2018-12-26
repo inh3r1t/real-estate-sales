@@ -16,15 +16,21 @@ Page({
       phone: {
         required: true,
         tel: true,
+        telfuzzy: true,
       }
     }, {
       name: {
         required: '请输入客户名称',
       },
       phone: {
-        required: '请填写您的手机号',
+        required: '请输入手机号',
       }
     })
+
+    // 自定义验证规则
+    this.WxValidate.addMethod('telfuzzy', (value, param) => {
+      return this.WxValidate.optional(value) || /^1[345789][0-9]\*{4}\d{4}$/.test(value)
+    }, '请输入手机号码，中间4位隐藏')
   },
   onReady: function() {
 
@@ -75,8 +81,18 @@ Page({
       showCancel: false,
       confirmText: "立即登录",
       success(res) {
-       
+
       }
     })
+  },
+  handlePhone: function(e) {
+    const value = e.detail.value
+    if (value.length === 11) {
+      debugger
+      return value.replace(/(\d{3})[\s\S]{4}(\d{4})/, '$1****$2');
+    } else if (value.length > 11) {
+      debugger
+      return value.substring(0, 11).replace(/(\d{3})[\s\S]{4}(\d{4})/, '$1****$2');
+    }
   }
 })

@@ -11,7 +11,8 @@ App({
     }
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    token: null
   },
   isLogin: function() {
     let userInfo = wx.getStorageSync('userInfo');
