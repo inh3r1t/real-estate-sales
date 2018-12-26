@@ -1,6 +1,7 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -56,4 +57,7 @@ public interface BusUserMapper {
     List<BusUser> selectByModel(BusUser busUser);
 
     long countByModel(BusUser busUser);
+
+    List<BusUser> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer size, @Param("orderField") String orderField,
+                               @Param("orderType") String orderType, @Param("busUser") BusUser busUser);
 }

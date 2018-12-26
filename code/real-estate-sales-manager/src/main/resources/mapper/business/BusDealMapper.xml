@@ -418,7 +418,7 @@
             ${orderType}
         </if>
         <if test="start != null and pageSize != null">
-            limit #{start}, #{size}
+            limit #{start}, #{pageSize}
         </if>
     </select>
 
@@ -427,29 +427,29 @@
         count(1)
         from bus_deal
         where 1=1
-        <if test="appointmentOperateTime != null">appointment_operate_time = #{appointmentOperateTime}</if>
-        <if test="subscribeTime != null">subscribe_time = #{subscribeTime}</if>
-        <if test="subscribeOperateTime != null">subscribe_operate_time = #{subscribeOperateTime}</if>
-        <if test="managerPhone != null">manager_phone = #{managerPhone}</if>
-        <if test="arriveCertifyPhotoPath != null">arrive_certify_photo_path = #{arriveCertifyPhotoPath}</if>
-        <if test="realEstateName != null">real_estate_name = #{realEstateName}</if>
-        <if test="managerId != null">manager_id = #{managerId}</if>
-        <if test="reportUserPhone != null">report_user_phone = #{reportUserPhone}</if>
-        <if test="reportOperateTime != null">report_operate_time = #{reportOperateTime}</if>
-        <if test="id != null">id = #{id}</if>
-        <if test="state != null">state = #{state}</if>
-        <if test="reportUserId != null">report_user_id = #{reportUserId}</if>
-        <if test="realEstateId != null">real_estate_id = #{realEstateId}</if>
-        <if test="appointmentTime != null">appointment_time = #{appointmentTime}</if>
-        <if test="subscribeCommision != null">subscribe_commision = #{subscribeCommision}</if>
-        <if test="customerPhone != null">customer_phone = #{customerPhone}</if>
-        <if test="arriveOperateTime != null">arrive_operate_time = #{arriveOperateTime}</if>
-        <if test="subscribePhotoPahts != null">subscribe_photo_pahts = #{subscribePhotoPahts}</if>
-        <if test="arriveTime != null">arrive_time = #{arriveTime}</if>
-        <if test="reportTime != null">report_time = #{reportTime}</if>
-        <if test="reportCompany != null">report_company = #{reportCompany}</if>
-        <if test="subscribeMoney != null">subscribe_money = #{subscribeMoney}</if>
-        <if test="customerName != null">customer_name = #{customerName}</if>
-        <if test="customerId != null">customer_id = #{customerId}</if>
+        <if test="appointmentOperateTime != null">and appointment_operate_time = #{appointmentOperateTime}</if>
+        <if test="subscribeTime != null">and subscribe_time = #{subscribeTime}</if>
+        <if test="subscribeOperateTime != null">and subscribe_operate_time = #{subscribeOperateTime}</if>
+        <if test="managerPhone != null">and manager_phone = #{managerPhone}</if>
+        <if test="arriveCertifyPhotoPath != null">and arrive_certify_photo_path = #{arriveCertifyPhotoPath}</if>
+        <if test="realEstateName != null">and real_estate_name = #{realEstateName}</if>
+        <if test="managerId != null">and manager_id = #{managerId}</if>
+        <if test="reportUserPhone != null">and report_user_phone = #{reportUserPhone}</if>
+        <if test="reportOperateTime != null">and report_operate_time = #{reportOperateTime}</if>
+        <if test="id != null">and id = #{id}</if>
+        <if test="state != null">and state = #{state}</if>
+        <if test="reportUserId != null">and report_user_id = #{reportUserId}</if>
+        <if test="realEstateId != null">and real_estate_id = #{realEstateId}</if>
+        <if test="appointmentTime != null">and appointment_time = #{appointmentTime}</if>
+        <if test="subscribeCommision != null">and subscribe_commision = #{subscribeCommision}</if>
+        <if test="customerPhone != null">and customer_phone = #{customerPhone}</if>
+        <if test="arriveOperateTime != null">and arrive_operate_time = #{arriveOperateTime}</if>
+        <if test="subscribePhotoPahts != null">and subscribe_photo_pahts = #{subscribePhotoPahts}</if>
+        <if test="arriveTime != null">and arrive_time = #{arriveTime}</if>
+        <if test="reportTime != null">and report_time = #{reportTime}</if>
+        <if test="reportCompany != null">and report_company = #{reportCompany}</if>
+        <if test="subscribeMoney != null">and subscribe_money = #{subscribeMoney}</if>
+        <if test="customerName != null">and customer_name = #{customerName}</if>
+        <if test="customerId != null">and customer_id = #{customerId}</if>
     </select>
 </mapper>

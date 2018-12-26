@@ -21,7 +21,7 @@ public class BusCustomerService {
 
     public PagerModel<BusCustomer> getPage(Integer page, Integer pageSize, BusCustomer busCustomer) {
         Long count = busCustomerMapper.countByModel(busCustomer);
-        int start = (page + 1) * pageSize;
+        int start = (page - 1) * pageSize;
         List<BusCustomer> busCustomers = busCustomerMapper.selectByPage(start, pageSize, null, null, busCustomer);
         return new PagerModel<>(page, pageSize, count.intValue(), busCustomers);
     }

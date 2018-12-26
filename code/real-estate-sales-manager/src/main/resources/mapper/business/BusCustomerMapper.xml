@@ -172,7 +172,7 @@
       ${orderType}
     </if>
     <if test="start != null and pageSize != null">
-      limit #{start}, #{size}
+      limit #{start}, #{pageSize}
     </if>
   </select>
 

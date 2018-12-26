@@ -233,4 +233,29 @@
     <if test="phoneNum != null"> and phone_num = #{phoneNum}</if>
     <if test="id != null"> and id = #{id}</if>
   </select>
+
+  <select id="selectByPage" parameterType="com.zx.business.model.BusUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bus_user
+    where 1=1
+    <if test="busUser.companyId != null"> and company_id = #{busUser.companyId}</if>
+    <if test="busUser.openId != null"> and open_id = #{busUser.openId}</if>
+    <if test="busUser.passwd != null"> and passwd = #{busUser.passwd}</if>
+    <if test="busUser.pollCode != null"> and poll_code = #{busUser.pollCode}</if>
+    <if test="busUser.roleId != null"> and role_id = #{busUser.roleId}</if>
+    <if test="busUser.userName != null"> and user_name = #{busUser.userName}</if>
+    <if test="busUser.companyName != null"> and company_name = #{busUser.companyName}</if>
+    <if test="busUser.phoneNum != null"> and phone_num = #{busUser.phoneNum}</if>
+    <if test="busUser.id != null"> and id = #{busUser.id}</if>
+    <if test="orderField != null">
+      order by ${orderField}
+    </if>
+    <if test="orderType != null">
+      ${orderType}
+    </if>
+    <if test="start != null and pageSize != null">
+      limit #{start}, #{pageSize}
+    </if>
+  </select>
 </mapper>

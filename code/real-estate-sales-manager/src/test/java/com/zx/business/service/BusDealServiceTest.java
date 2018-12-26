@@ -56,4 +56,17 @@ public class BusDealServiceTest extends BaseTest {
         final List<BusDeal> busDeals = busDealMapper.selectByPage(null, null, null, null, busDeal);
         System.out.println(busDeals);
     }
+
+    @Test
+    public void test3() {
+        BusDeal busDeal = new BusDeal();
+        busDeal.setRealEstateName("碧春园");
+
+//        final Long aLong = busDealMapper.countByModel(busDeal);
+//        System.out.println(aLong);
+
+        final List<BusDeal> busDeals = busDealMapper.selectByPage(1, 4,null,null, busDeal);
+        System.out.println(busDeals);
+
+    }
 }
