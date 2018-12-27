@@ -8,7 +8,7 @@
     <view class="building-address">
       <text class='iconfont icon-weizhi'></text> {{item.address}}
     </view>
-    <text class='summary'>简介：{{item.summary}}</text>
+    <view class='summary'>简介：{{item.summery}}</view>
   </view>
 </view>
 

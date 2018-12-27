@@ -24,10 +24,9 @@ Page({
     app.post("http://127.0.0.1:8080/busRealEstate/getPage", {
       page: 1,
       pageSize: 10,
-      // isListRecommend: 1
+      isListRecommend: 1
     }).then(res => {
       console.log(res.data);
-      debugger
       this.setData({
         recommendbuildings: res.data.Items
       })
@@ -53,7 +52,7 @@ Page({
   toDetail: function(a) {
     var id = a.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/building/detail/detail',
+      url: '/pages/building/detail/detail?id=' + id,
     })
   }
 })
