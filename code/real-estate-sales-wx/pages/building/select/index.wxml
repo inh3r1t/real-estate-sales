@@ -14,10 +14,11 @@
           <text class='summary'>简介：{{item.summary}}</text>
         </view>
         <view class='building-select'>
-          <checkbox value='{{item.id}},{{item.name}}'></checkbox>
+          <checkbox value='{{item.id}},{{item.name}}' checked="{{item.checked}}"></checkbox>
         </view>
       </view>
     </checkbox-group>
+    <view class='no-more' hidden='{{more}}'>没有更多数据了</view>
   </view>
   <view class="form-footer nav-fix">
     <button class='btn btn-primary' formType="submit">确 定</button>

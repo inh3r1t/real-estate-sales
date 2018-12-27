@@ -62,7 +62,7 @@ Page({
   onShow: function() {   },
   report: function() {
     wx.navigateTo({
-      url: '/pages/building/report/report',
+      url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name,
     })
   }
 })
