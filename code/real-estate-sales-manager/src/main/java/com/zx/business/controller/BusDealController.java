@@ -2,6 +2,7 @@ package com.zx.business.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.model.PagerModel;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/busDeal")
@@ -31,12 +34,16 @@ public class BusDealController extends BusBaseController {
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getPage(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             PagerModel<BusDeal> busDealPage = busDealService.getPage(busDeal.getPage(), busDeal.getPageSize(), busDeal);
-            resultData.setData(busDealPage);
+            Map<String, Long> countByState = busDealService.countByState(busDeal);
+            Map<String, Object> result = new HashMap<>();
+            result.put("list", busDealPage);
+            result.put("count", countByState);
+            resultData.setData(result);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取客户列表失败！");
@@ -63,7 +70,7 @@ public class BusDealController extends BusBaseController {
 
     @RequestMapping("/getById/{id}")
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getById(@PathVariable Integer id) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
         try {
@@ -84,7 +91,7 @@ public class BusDealController extends BusBaseController {
      */
     @RequestMapping("/report")
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData report(@RequestBody BusDealVO busDealVO, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "报备成功！");
         try {
@@ -106,7 +113,7 @@ public class BusDealController extends BusBaseController {
      */
     @RequestMapping("/appointment")
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData appointment(@RequestBody BusDeal BusDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "订单预约成功！");
         try {
@@ -127,7 +134,7 @@ public class BusDealController extends BusBaseController {
      */
     @RequestMapping("/arrive")
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData arrive(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "客户到访成功！");
         try {
@@ -148,7 +155,7 @@ public class BusDealController extends BusBaseController {
      */
     @RequestMapping("/subscribe")
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData subscribe(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "认购成功！");
         try {
