@@ -23,9 +23,9 @@
     <view class='customer-item flow-step-{{item.state}}' wx:for="{{list}}" wx:key="index" bindtap='toDetail' data-id="{{item.id}}">
       <view class='item-base'>
         <view class='item-info'>
-          <view class='item-name'>客户姓名：{{item.customer_name}}</view>
-          <view class='item-phone'>客户号码：{{item.customer_phone}}</view>
-          <view class='item-building'>楼盘名称：{{item.real_estate_name}}</view>
+          <view class='item-name'>客户姓名：{{item.customerName}}</view>
+          <view class='item-phone'>客户号码：{{item.customerPhone}}</view>
+          <view class='item-building'>楼盘名称：{{item.realEstateName}}</view>
         </view>
         <view class='item-tools'>
           <text wx:if="{{item.state==0}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
@@ -39,17 +39,17 @@
         <view class='flow-item'>
           <text>报备</text>
           <text class="iconfont icon-baxin"></text>
-          <text>{{item.report_operate_time}}</text>
+          <text>{{item.reportTime || ''}}</text>
         </view>
         <view class='flow-item'>
           <text>到访</text>
           <text class="iconfont icon-baxin"></text>
-          <text>{{item.arrive_operate_time}}</text>
+          <text>{{item.arriveTime || ''}}</text>
         </view>
         <view class='flow-item'>
           <text>认购</text>
           <text class="iconfont icon-baxin"></text>
-          <text>{{item.subscribe_operate_time}}</text>
+          <text>{{item.subscribeTime || ''}}</text>
         </view>
       </view>
       <view class='flow-line'>

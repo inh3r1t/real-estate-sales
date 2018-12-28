@@ -6,8 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    date: '2018-10-01',
-    time: '12:00',
+    date: '',
+    time: '',
     dateTime: null,
     dateTimeArray: null,
     startYear: 2016,
@@ -44,26 +44,13 @@ Page({
       time: e.detail.value
     })
   },
-  changeDateTimeColumn(e) {
+  changeDateTimeColumn: function(e) {
     var arr = this.data.dateTime,
       dateArr = this.data.dateTimeArray;
 
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
     //console.log(arr);
-    this.setData({
-      dateTimeArray: dateArr,
-      dateTime: arr,
-      day: dateArr[2][arr[2]].substring(0, 3),
-    });
-  },
-  changeDateTimeColumn(e) {
-    var arr = this.data.dateTime,
-      dateArr = this.data.dateTimeArray;
-
-    arr[e.detail.column] = e.detail.value;
-    dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
-    console.log(arr);
     this.setData({
       dateTimeArray: dateArr,
       dateTime: arr,
@@ -89,22 +76,26 @@ Page({
       }
     })
   },
+  getDate: function() {
+    return this.data.dateTimeArray[0][this.data.dateTime[0]] + '-' + this.data.dateTimeArray[1][this.data.dateTime[1]] + '-' + this.data.day + ' ' + this.data.time;
+  },
   formSubmit: function() {
-    console.log('form发生了submit事件：', this.data.date + ' ' + this.data.time)
+    console.log('form发生了submit事件：', this.getDate())
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
-    // 预约提交
-    app.post("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/operate", {
-        state: 0
+    // 客户到访
+    app.post("http://127.0.0.1:8080/busDeal/arrive", {
+        id: this.data.id,
+        arriveTime: this.getDate()
       })
       .then(res => {
-        if (res.resultCode) {
-          prevPage.data.list[this.data.index].state = prevPage.data.list[this.data.index].state + 1;
+        if (res.data != null) {
+          prevPage.data.list[this.data.index] = res.data;
           prevPage.setData({
             list: prevPage.data.list
           })
-          wx.navigateBack({})
         }
+        wx.navigateBack({})
       })
   }
 })

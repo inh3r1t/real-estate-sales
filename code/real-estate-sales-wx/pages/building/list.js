@@ -77,7 +77,6 @@ Page({
           list: override ? res.data.Items : this.data.list.concat(res.data.Items),
           more: res.data.Items != null && res.data.Items.length == 10
         })
-        console.log(this.data.list)
         this.loading = false
         // 隐藏加载框
         wx.hideLoading();

@@ -19,6 +19,13 @@ App({
       return false;
     }
   },
+  checkLogin: function() {
+    if (!this.isLogin()) {
+      wx.redirectTo({
+        url: '/pages/login/index'
+      })
+    }
+  },
   get: (url, data) => http.get(url, data),
   post: (url, data) => http.post(url, data),
   WxValidate: (rules, messages) => new WxValidate(rules, messages)

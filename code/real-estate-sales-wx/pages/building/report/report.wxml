@@ -2,7 +2,7 @@
   <view class="form-body">
     <view class="form-item">
       <view class="form-lable">客户姓名</view>
-      <input class='form-input' name="name" placeholder="请输入姓名" type="text"></input>
+      <input class='form-input' name="name" placeholder="请输入姓名" type="text" value='{{name}}'></input>
     </view>
     <view class="form-item-check">
       <radio-group bindchange="checkboxChangehouse" name="sex">
@@ -16,7 +16,7 @@
     </view>
     <view class="form-item">
       <text class="form-lable">联系方式</text>
-      <input class='form-input' name="phone" bindinput="handlePhone" placeholder="请输入手机号" type="number"></input>
+      <input class='form-input' name="phone" bindinput="handlePhone" placeholder="请输入手机号" type="number" value='{{phone}}'></input>
     </view>
     <view class="item-report">
       <text class="form-lable">报备楼盘</text>

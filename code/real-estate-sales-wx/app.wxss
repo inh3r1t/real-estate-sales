@@ -67,7 +67,7 @@
   width: 65%;
 }
 
-.building-item .details view{
+.building-item .details view {
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
@@ -101,6 +101,10 @@
 
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .center {
@@ -191,7 +195,7 @@
 }
 
 .form .form-input-placeholder {
-  margin-right: 70rpx;
+  margin-right: 80rpx;
 }
 
 .btn {

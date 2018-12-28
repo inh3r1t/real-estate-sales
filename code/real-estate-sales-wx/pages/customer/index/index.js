@@ -8,6 +8,8 @@ Page({
     currentTab: 0,
     showShareModal: false,
     shareData: "",
+    isLogin: false,
+    more: true,
     page: 1,
     list: [],
     count: {
@@ -22,6 +24,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.setData({
+      isLogin: app.isLogin()
+    })
     this.getList(1);
   },
 
@@ -62,9 +67,10 @@ Page({
 
     }
   },
-  toDetail: function() {
+  toDetail: function (a) {
+    var id = a.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/customer/detail/detail',
+      url: '/pages/customer/detail/detail?id=' + id,
     })
   },
   operate: function(e) {
@@ -93,11 +99,11 @@ Page({
 
     this.setData({
       showShareModal: true,
-      shareData: "项目名称：" + item.real_estate_name +
-        "<br/>客户姓名：" + item.customer_name +
-        "<br/>客户电话：" + item.customer_phone +
-        (item.report_operate_time != '' ? "<br/>报备时间：" + item.report_operate_time : "") +
-        (item.arrive_operate_time != '' ? "<br/>到访时间：" + item.arrive_operate_time : "")
+      shareData: "项目名称：" + item.realEstateName +
+        "<br/>客户姓名：" + item.customerName +
+        "<br/>客户电话：" + item.customerPhone +
+        (item.reportTime != '' && item.reportTime != undefined ? "<br/>报备时间：" + item.reportTime : "") +
+        (item.arriveTime != '' && item.arriveTime != undefined ? "<br/>到访时间：" + item.arriveTime : "")
     })
   },
   modalCancel: function() {
@@ -130,34 +136,40 @@ Page({
 
   },
   getList(pageNo, override) {
-    wx.showLoading({
-      title: '玩命加载中',
-    })
-
-    var state = '';
-    if (this.data.currentTab == 1) {
-      state = 0;
-    }
-    if (this.data.currentTab == 2) {
-      state = 2;
-    }
-    if (this.data.currentTab == 3) {
-      state = 3;
-    }
-    return app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getCustomerFlows?state=" + state).then(res => {
-      //这里既可以获取模拟的res
-      console.log(res)
-      this.setData({
-        list: override ? res.data : this.data.list.concat(res.data),
-        count: res.count
+    if (this.data.more || override) {
+      wx.showLoading({
+        title: '玩命加载中',
       })
-      console.log(this.data.list)
-      // 隐藏加载框
-      wx.hideLoading();
-    }).catch(err => {
-      console.log("==> [ERROR]", err)
-      // 隐藏加载框
-      wx.hideLoading();
-    })
+      var state = '';
+      if (this.data.currentTab == 1) {
+        state = 0;
+      }
+      if (this.data.currentTab == 2) {
+        state = 2;
+      }
+      if (this.data.currentTab == 3) {
+        state = 3;
+      }
+      app.post("http://127.0.0.1:8080/busDeal/getPage", {
+        page: pageNo,
+        pageSize: 10,
+        state: state
+      }).then(res => {
+        //这里既可以获取模拟的res
+        console.log(res)
+        this.setData({
+          list: override ? res.data.Items : this.data.list.concat(res.data.Items),
+          more: res.data.Items != null && res.data.Items.length == 10
+        })
+        this.loading = false
+        // 隐藏加载框
+        wx.hideLoading();
+      }).catch(err => {
+        console.log("==> [ERROR]", err)
+        this.loading = false
+        // 隐藏加载框
+        wx.hideLoading();
+      })
+    }
   }
 })

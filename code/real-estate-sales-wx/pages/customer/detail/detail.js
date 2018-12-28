@@ -12,7 +12,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/customer/detail").then(res => {
+    let id = options.id || 0
+    app.get("http://127.0.0.1:8080/busDeal/getById/" + id).then(res => {
+      console.log(res)
       this.setData({
         model: res.data
       })

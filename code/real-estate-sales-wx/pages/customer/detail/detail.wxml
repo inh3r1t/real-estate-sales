@@ -1,46 +1,46 @@
 <view class='order'>
-  <view class='order-step'>
+  <view class='order-step' wx:if="{{model.state >= 0}}">
     <view class='item-title'>
       <text class='item-step-num'>1</text>
-      <text>报备 {{model.report_operate_time}}</text>
+      <text>报备 {{model.reportTime}}</text>
     </view>
-    <view class='item-name'>客户姓名：{{model.customer_name}}</view>
-    <view class='item-phone'>客户号码：{{model.customer_phone}}</view>
-    <view class='item-building'>楼盘名称：{{model.real_estate_name}}</view>
+    <view class='item-name'>客户姓名：{{model.customerName}}</view>
+    <view class='item-phone'>客户号码：{{model.customerPhone}}</view>
+    <view class='item-building'>楼盘名称：{{model.realEstateName}}</view>
     <view class='item-user'>
-      <text>报备账号：{{model.report_user}} {{model.report_user_phone}}</text>
-      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.report_user_phone}}"></text>
+      <text>报备账号：{{model.reportUserId}} {{model.reportUserPhone}}</text>
+      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.reportUserPhone}}"></text>
     </view>
-    <view class='item-company'>报备公司：{{model.report_company}}</view>
+    <view class='item-company'>报备公司：{{model.reportCompany}}</view>
   </view>
-  <view class='order-step'>
+  <view class='order-step' wx:if="{{model.state >= 1}}">
     <view class='item-title'>
       <text class='item-step-num'>2</text>
-      <text>预约 {{model.appointment_operate_time}}</text>
+      <text>预约 {{model.appointmentTime}}</text>
     </view>
     <view class='item-user'>
-      <text>项目经理：{{model.manager}} {{model.manager_phone}}</text>
-      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.manager_phone}}"></text>
+      <text>项目经理：{{model.managerId}} {{model.managerPhone}}</text>
+      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.managerPhone}}"></text>
     </view>
   </view>
-  <view class='order-step'>
+  <view class='order-step' wx:if="{{model.state >= 2}}">
     <view class='item-title'>
       <text class='item-step-num'>3</text>
-      <text>到访 {{model.arrive_operate_time}}</text>
+      <text>到访 {{model.arriveTime}}</text>
     </view>
     <view class='item-image'>
-      <image src="{{item}}" wx:for="{{model.arrive_certify_photo_path}}" wx:key="index"></image>
+      <image src="{{item}}" wx:for="{{model.arriveCertifyPhotoPath}}" wx:key="index"></image>
     </view>
   </view>
-  <view class='order-step'>
+  <view class='order-step' wx:if="{{model.state >= 3}}">
     <view class='item-title'>
       <text class='item-step-num'>4</text>
-      <text>认购 {{model.subscribe_operate_time}}</text>
+      <text>认购 {{model.subscribeTime}}</text>
     </view>
-    <view class='item-price'>客户姓名：{{model.customer_name}}</view>
-    <view class='item-commission'>客户号码：{{model.customer_phone}}</view>
+    <view class='item-price'>客户姓名：{{model.customerName}}</view>
+    <view class='item-commission'>客户号码：{{model.customerPhone}}</view>
     <view class='item-image'>
-      <image src="{{item}}" wx:for="{{model.subscribe_photo_pahts}}" wx:key="index"></image>
+      <image src="{{item}}" wx:for="{{model.subscribePhotoPahts}}" wx:key="index"></image>
     </view>
   </view>
 </view>

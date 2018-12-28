@@ -59,8 +59,8 @@ Page({
       console.log(res);
       debugger
       //1.存用户信息到本地存储
-      wx.setStorageSync('userInfo', res.data);
-      wx.setStorageSync('token', res.data);
+      wx.setStorageSync('userInfo', res.data.userInfo);
+      wx.setStorageSync('token', res.data.token);
       //2.存用户信息到全局变量
       app.globalData.token = res.data;
       wx.showToast({

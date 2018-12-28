@@ -4,9 +4,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name: "卫义",
+    phone: '1875585696',
     list: []
   },
   onLoad: function(options) {
+    app.checkLogin();
     var buildingId = options.buildingId;
     var buildingName = options.buildingName;
     this.setData({
@@ -88,17 +91,27 @@ Page({
       ids.push(this.data.list[j].id);
     }
     app.post("http://127.0.0.1:8080/busDeal/report", {
+        reportUserId: 3,
         realEstateIds: ids.toString(),
         customerName: params.name,
         customerPhone: params.phone,
         customerSex: params.sex
       })
       .then(res => {
+        debugger
         console.log(res)
-
         wx.showToast({
-          title: `恭喜您，报备成功`,
+          title: `报备成功`,
           icon: 'success',
+          duration: 2000,
+          success: function() {
+            wx.navigateBack({})
+          }
+        })
+      }).catch(res => {
+        wx.showToast({
+          title: `报备失败`,
+          icon: 'none',
           duration: 2000
         })
       })
