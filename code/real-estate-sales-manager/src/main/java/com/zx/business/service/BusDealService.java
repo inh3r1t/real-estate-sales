@@ -1,7 +1,7 @@
 package com.zx.business.service;
 
 import com.zx.base.model.PagerModel;
-import com.zx.business.common.BusinessCons;
+import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.vo.BusDealVO;
@@ -12,6 +12,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class BusDealService {
@@ -42,6 +44,14 @@ public class BusDealService {
         return new PagerModel<>(page, pageSize, count.intValue(), busDeals);
     }
 
+    public Map<String, Long> countByState(BusDeal busDeal) {
+        List<BusDeal> busDeals = busDealMapper.selectByPage(null, null, null, null, busDeal);
+        Map<String, Long> result = busDeals.stream().collect(Collectors.groupingBy(deal -> BusConstants.DEAL_STATE_INFO.get(deal.getState()),
+                Collectors.counting()));
+        result.put("total_count", Long.valueOf(busDeals.size()));
+        return result;
+    }
+
     public List<BusDeal> getList(BusDeal busDeal) {
         return busDealMapper.selectByPage(null, null, null, null, busDeal);
     }
@@ -68,7 +78,7 @@ public class BusDealService {
             BusDeal busDeal = new BusDeal();
             busDeal.setRealEstateId(realEstateId);
             busDeal.setRealEstateName(busRealEstate.getName());
-            busDeal.setState(BusinessCons.DEAL_STATE_REPORT);
+            busDeal.setState(BusConstants.DEAL_STATE_REPORT);
             busDeal.setCustomerId(busCustomer.getId());
             busDeal.setCustomerName(customerName);
             busDeal.setCustomerPhone(customerPhone);

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -106,5 +107,11 @@ public class BusDealServiceTest extends BaseTest {
         busDeal.setId(19);
         busDeal.setSubscribeTime(new Date());
         busDealService.subscribe(busDeal);
+    }
+
+    @Test
+    public void test8() {
+        final Map<String, Long> stringLongMap = busDealService.countByState(new BusDeal());
+        System.out.println(stringLongMap);
     }
 }
