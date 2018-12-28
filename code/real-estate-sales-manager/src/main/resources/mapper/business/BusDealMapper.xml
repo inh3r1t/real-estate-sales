@@ -93,6 +93,31 @@
         #{arriveOperateTime,jdbcType=TIMESTAMP}, #{subscribeOperateTime,jdbcType=TIMESTAMP},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
+    <insert id="batchInsert" parameterType="com.zx.business.model.BusDeal">
+        insert into bus_deal (id, real_estate_id, real_estate_name,
+                              state, customer_id, customer_phone,
+                              customer_name, report_user_id, report_user_phone,
+                              report_company, appointment_time, report_time,
+                              arrive_time, subscribe_time, manager_id,
+                              manager_phone, arrive_certify_photo_path, subscribe_money,
+                              subscribe_commision, subscribe_photo_pahts,
+                              appointment_operate_time, report_operate_time,
+                              arrive_operate_time, subscribe_operate_time,
+                              create_time, update_time)
+        values
+        <foreach collection="busDealList" item="item" separator=",">
+            (#{item.id,jdbcType=INTEGER}, #{item.realEstateId,jdbcType=INTEGER}, #{item.realEstateName,jdbcType=VARCHAR},
+            #{item.state,jdbcType=INTEGER}, #{item.customerId,jdbcType=INTEGER}, #{item.customerPhone,jdbcType=VARCHAR},
+            #{item.customerName,jdbcType=VARCHAR}, #{item.reportUserId,jdbcType=INTEGER}, #{item.reportUserPhone,jdbcType=VARCHAR},
+            #{item.reportCompany,jdbcType=VARCHAR}, #{item.appointmentTime,jdbcType=TIMESTAMP}, #{item.reportTime,jdbcType=TIMESTAMP},
+            #{item.arriveTime,jdbcType=TIMESTAMP}, #{item.subscribeTime,jdbcType=TIMESTAMP}, #{item.managerId,jdbcType=INTEGER},
+            #{item.managerPhone,jdbcType=VARCHAR}, #{item.arriveCertifyPhotoPath,jdbcType=VARCHAR}, #{item.subscribeMoney,jdbcType=VARCHAR},
+            #{item.subscribeCommision,jdbcType=VARCHAR}, #{item.subscribePhotoPahts,jdbcType=VARCHAR},
+            #{item.appointmentOperateTime,jdbcType=TIMESTAMP}, #{item.reportOperateTime,jdbcType=TIMESTAMP},
+            #{item.arriveOperateTime,jdbcType=TIMESTAMP}, #{item.subscribeOperateTime,jdbcType=TIMESTAMP},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
     <insert id="insertSelective" parameterType="com.zx.business.model.BusDeal">
         <!--
           WARNING - @mbg.generated

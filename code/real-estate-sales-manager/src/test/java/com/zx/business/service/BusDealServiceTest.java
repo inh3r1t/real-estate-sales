@@ -3,6 +3,7 @@ package com.zx.business.service;
 import com.zx.base.common.BaseTest;
 import com.zx.business.dao.BusDealMapper;
 import com.zx.business.model.BusDeal;
+import com.zx.business.vo.BusDealVO;
 import org.junit.Test;
 
 import javax.annotation.Resource;
@@ -68,5 +69,25 @@ public class BusDealServiceTest extends BaseTest {
         final List<BusDeal> busDeals = busDealMapper.selectByPage(1, 4,null,null, busDeal);
         System.out.println(busDeals);
 
+    }
+
+    @Test
+    public void test4() {
+        BusDealVO busDealVO = new BusDealVO();
+        busDealVO.setCustomerName("tony");
+        busDealVO.setCustomerPhone("123421231234");
+        busDealVO.setCustomerSex(1);
+        busDealVO.setRealEstateIds("1,2,3,4");
+        busDealVO.setReportUserId(4);
+        busDealService.report(busDealVO);
+    }
+
+    @Test
+    public void test5() {
+
+        BusDeal busDeal = new BusDeal();
+        busDeal.setId(7);
+        busDeal.setAppointmentTime(new Date());
+        busDealService.appointment(busDeal);
     }
 }

@@ -59,6 +59,8 @@ public class BusDealService {
 
         String[] realEstateIds = busDealVO.getRealEstateIds().split(",");
         List<BusDeal> busDealList = new ArrayList<>();
+
+        // add deal records
         for (String id : realEstateIds) {
             Integer realEstateId = Integer.valueOf(id);
             BusRealEstate busRealEstate = busRealEstateMapper.selectByPrimaryKey(realEstateId);
@@ -74,6 +76,7 @@ public class BusDealService {
             busDeal.setReportUserPhone(agent.getPhoneNum());
             busDeal.setReportCompany(agent.getCompanyName());
             busDeal.setReportOperateTime(new Date());
+            busDeal.setCreateTime(new Date());
 
             busDealList.add(busDeal);
         }
