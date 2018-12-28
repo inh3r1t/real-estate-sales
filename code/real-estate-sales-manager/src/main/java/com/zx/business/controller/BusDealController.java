@@ -110,7 +110,8 @@ public class BusDealController extends BusBaseController {
     public ResultData appointment(@RequestBody BusDeal BusDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "订单预约成功！");
         try {
-            busDealService.appointment(BusDeal);
+            final BusDeal result = busDealService.appointment(BusDeal);
+            resultData.setData(result);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("订单预约失败！");
@@ -130,7 +131,8 @@ public class BusDealController extends BusBaseController {
     public ResultData arrive(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "客户到访成功！");
         try {
-            busDealService.arrive(busDeal);
+            final BusDeal result = busDealService.arrive(busDeal);
+            resultData.setData(result);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("客户到访失败！");
@@ -150,7 +152,8 @@ public class BusDealController extends BusBaseController {
     public ResultData subscribe(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "认购成功！");
         try {
-            busDealService.subscribe(busDeal);
+            final BusDeal result = busDealService.subscribe(busDeal);
+            resultData.setData(result);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("认购失败！");

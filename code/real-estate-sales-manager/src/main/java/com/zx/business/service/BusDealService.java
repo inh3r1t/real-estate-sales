@@ -85,25 +85,27 @@ public class BusDealService {
         busDealMapper.batchInsert(busDealList);
     }
 
-    public void appointment(BusDeal busDeal) {
+    public BusDeal appointment(BusDeal busDeal) {
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
         execBusDeal.setState(1);
         execBusDeal.setAppointmentTime(busDeal.getAppointmentTime());
         execBusDeal.setAppointmentOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+        return execBusDeal;
     }
 
-    public void arrive(BusDeal busDeal) { // TODO 图片上传
+    public BusDeal arrive(BusDeal busDeal) { // TODO 图片上传
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
         execBusDeal.setState(2);
         execBusDeal.setArriveTime(busDeal.getArriveTime());
         execBusDeal.setArriveOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+        return execBusDeal;
     }
 
-    public void subscribe(BusDeal busDeal) { // TODO 图片上传
+    public BusDeal subscribe(BusDeal busDeal) { // TODO 图片上传
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
         execBusDeal.setState(3);
         execBusDeal.setSubscribeTime(busDeal.getSubscribeTime());
@@ -111,5 +113,6 @@ public class BusDealService {
         execBusDeal.setSubscribeOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+        return execBusDeal;
     }
 }
