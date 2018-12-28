@@ -67,16 +67,19 @@
   width: 65%;
 }
 
-.building-item .details .building-name {
-  height: 60rpx;
-  line-height: 60rpx;
-  font-size: 16px;
+.building-item .details view{
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
+}
+
+.building-item .details .building-name {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 16px;
 }
 
 .building-item .details .building-address {
@@ -92,21 +95,8 @@
 }
 
 .building-item .details .summary {
-  text-align: left;
   font-size: 12px;
   color: #6a6a6a;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 50rpx;
-  line-height: 50rpx;
-  align-self: baseline;
-  max-width: 100%;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: inline-block;
 }
 
 .text-center {
@@ -249,4 +239,12 @@
   bottom: 0;
   background-color: #fff;
   z-index: 2;
+}
+
+.no-more {
+  text-align: center;
+  font-size: 12px;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #979797;
 }

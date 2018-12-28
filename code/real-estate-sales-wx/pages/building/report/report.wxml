@@ -5,12 +5,12 @@
       <input class='form-input' name="name" placeholder="请输入姓名" type="text"></input>
     </view>
     <view class="form-item-check">
-      <radio-group bindchange="checkboxChangehouse">
+      <radio-group bindchange="checkboxChangehouse" name="sex">
         <label class="radio">
-          <radio checked="checked" name="sex" value="先生"></radio>先生
+          <radio checked="checked" value="0"></radio>先生
         </label>
         <label class="radio">
-          <radio checked="" name="sex" value="女士"></radio>女士
+          <radio checked="" value="1"></radio>女士
         </label>
       </radio-group>
     </view>

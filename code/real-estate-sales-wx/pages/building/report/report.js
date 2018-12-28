@@ -7,6 +7,14 @@ Page({
     list: []
   },
   onLoad: function(options) {
+    var buildingId = options.buildingId;
+    var buildingName = options.buildingName;
+    this.setData({
+      list: [{
+        id: buildingId,
+        name: buildingName,
+      }]
+    });
     this.WxValidate = app.WxValidate({
       name: {
         required: true,
@@ -15,7 +23,6 @@ Page({
       },
       phone: {
         required: true,
-        tel: true,
         telfuzzy: true,
       }
     }, {
@@ -42,7 +49,6 @@ Page({
     })
   },
   delete: function(e) {
-    debugger
     var id = e.currentTarget.dataset.id
     let item;
     for (let i = 0; i < this.data.list.length; i++) {
@@ -76,22 +82,33 @@ Page({
       })
       return false
     }
-    wx.showModal({
-      content: '恭喜您，报备成功',
-      showCancel: false,
-      confirmText: "立即登录",
-      success(res) {
+    var ids = []
+    // 报备提交
+    for (var j = 0, len = this.data.list.length; j < len; j++) {
+      ids.push(this.data.list[j].id);
+    }
+    app.post("http://127.0.0.1:8080/busDeal/report", {
+        realEstateIds: ids.toString(),
+        customerName: params.name,
+        customerPhone: params.phone,
+        customerSex: params.sex
+      })
+      .then(res => {
+        console.log(res)
 
-      }
-    })
+        wx.showToast({
+          title: `恭喜您，报备成功`,
+          icon: 'success',
+          duration: 2000
+        })
+      })
+
   },
   handlePhone: function(e) {
     const value = e.detail.value
     if (value.length === 11) {
-      debugger
       return value.replace(/(\d{3})[\s\S]{4}(\d{4})/, '$1****$2');
     } else if (value.length > 11) {
-      debugger
       return value.substring(0, 11).replace(/(\d{3})[\s\S]{4}(\d{4})/, '$1****$2');
     }
   }

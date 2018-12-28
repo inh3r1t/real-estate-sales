@@ -13,17 +13,23 @@ Page({
     isLogin: false
   },
   onLoad: function() {
-    debugger
-    app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get")
-      .then(res => {
-        this.setData({
-          recommendbuildings: res.data
-        })
-      });
+    // app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get")
+    //   .then(res => {
+    //     console.log(res)
+    //     this.setData({
+    //       recommendbuildings: res.data
+    //     })
+    //   });
 
-    app.post("http://127.0.0.1:8080/busRealEstate/getPage?page=1&pageSize=10").then(res=>{
-      debugger
-      console.log(res);
+    app.post("http://127.0.0.1:8080/busRealEstate/getPage", {
+      page: 1,
+      pageSize: 10,
+      isListRecommend: 1
+    }).then(res => {
+      console.log(res.data);
+      this.setData({
+        recommendbuildings: res.data.Items
+      })
     })
   },
   /**
@@ -46,7 +52,7 @@ Page({
   toDetail: function(a) {
     var id = a.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/building/detail/detail',
+      url: '/pages/building/detail/detail?id=' + id,
     })
   }
 })
