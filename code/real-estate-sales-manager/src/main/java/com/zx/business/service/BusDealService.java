@@ -75,6 +75,7 @@ public class BusDealService {
             busDeal.setReportUserId(agentId);
             busDeal.setReportUserPhone(agent.getPhoneNum());
             busDeal.setReportCompany(agent.getCompanyName());
+            busDeal.setReportTime(busDealVO.getReportTime());
             busDeal.setReportOperateTime(new Date());
             busDeal.setCreateTime(new Date());
 
@@ -86,21 +87,25 @@ public class BusDealService {
 
     public void appointment(BusDeal busDeal) {
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setState(1);
         execBusDeal.setAppointmentTime(busDeal.getAppointmentTime());
         execBusDeal.setAppointmentOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
     }
 
-    public void arrive(BusDeal busDeal) { // TODO
+    public void arrive(BusDeal busDeal) { // TODO 图片上传
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setState(2);
+        execBusDeal.setArriveTime(busDeal.getArriveTime());
         execBusDeal.setArriveOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
     }
 
-    public void subscribe(BusDeal busDeal) { // TODO
+    public void subscribe(BusDeal busDeal) { // TODO 图片上传
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setState(3);
         execBusDeal.setSubscribeTime(busDeal.getSubscribeTime());
         execBusDeal.setSubscribeMoney(busDeal.getSubscribeMoney());
         execBusDeal.setSubscribeOperateTime(new Date());

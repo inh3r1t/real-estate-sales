@@ -9,6 +9,11 @@ spring:
     multipart:
       max-file-size: 50MB  # Single file max size
       max-request-size: 50MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm #如果使用字符串表示，用这行设置格式
+    time-zone: GMT+8
+    serialization: false #使用时间戳，使用数值timestamp表示日期
+
 mybatis:
   mapper-locations: /mapper/**/*Mapper.xml
   type-aliases-package: com.zx.system.model

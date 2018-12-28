@@ -77,8 +77,9 @@ public class BusDealServiceTest extends BaseTest {
         busDealVO.setCustomerName("tony");
         busDealVO.setCustomerPhone("123421231234");
         busDealVO.setCustomerSex(1);
-        busDealVO.setRealEstateIds("1,2,3,4");
+        busDealVO.setRealEstateIds("1,2");
         busDealVO.setReportUserId(4);
+        busDealVO.setReportTime(new Date());
         busDealService.report(busDealVO);
     }
 
@@ -86,8 +87,24 @@ public class BusDealServiceTest extends BaseTest {
     public void test5() {
 
         BusDeal busDeal = new BusDeal();
-        busDeal.setId(7);
+        busDeal.setId(19);
         busDeal.setAppointmentTime(new Date());
         busDealService.appointment(busDeal);
+    }
+
+    @Test
+    public void test6() {
+        BusDeal busDeal = new BusDeal();
+        busDeal.setId(19);
+        busDeal.setArriveTime(new Date());
+        busDealService.arrive(busDeal);
+    }
+
+    @Test
+    public void test7() {
+        BusDeal busDeal = new BusDeal();
+        busDeal.setId(19);
+        busDeal.setSubscribeTime(new Date());
+        busDealService.subscribe(busDeal);
     }
 }

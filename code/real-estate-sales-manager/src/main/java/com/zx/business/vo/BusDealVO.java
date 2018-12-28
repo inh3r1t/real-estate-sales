@@ -1,6 +1,7 @@
 package com.zx.business.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class BusDealVO implements Serializable {
 
@@ -10,16 +11,14 @@ public class BusDealVO implements Serializable {
     private String customerName; // 客户名称
     private String customerPhone; // 客户电话
     private Integer customerSex; // 客户性别 0-男,1-女
-    private String appointmentTime; // 预约时间
-    private String arriveTime; // 到访时间
+    private Date reportTime; // 报备时间
 
-
-    public String getAppointmentTime() {
-        return appointmentTime;
+    public Date getReportTime() {
+        return reportTime;
     }
 
-    public void setAppointmentTime(String appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setReportTime(Date reportTime) {
+        this.reportTime = reportTime;
     }
 
     public Integer getDealId() {

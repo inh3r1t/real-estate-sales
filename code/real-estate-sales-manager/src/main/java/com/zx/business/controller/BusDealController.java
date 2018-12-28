@@ -3,10 +3,13 @@ package com.zx.business.controller;
 import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.Const;
+import com.zx.base.exception.BusinessException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusDeal;
+import com.zx.business.model.BusUser;
 import com.zx.business.service.BusDealService;
+import com.zx.business.service.BusUserService;
 import com.zx.business.vo.BusDealVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 @RequestMapping("/busDeal")
-public class BusDealController {
+public class BusDealController extends BusBaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BusDealController.class);
 
@@ -81,9 +85,11 @@ public class BusDealController {
     @RequestMapping("/report")
     @ResponseBody
     @AuthorizeIgnore
-    public ResultData report(@RequestBody BusDealVO busDealVO) {
+    public ResultData report(@RequestBody BusDealVO busDealVO, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "报备成功！");
         try {
+            String token = request.getHeader("token");
+            busDealVO.setReportUserId(validateToken(token).getId());
             busDealService.report(busDealVO);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);

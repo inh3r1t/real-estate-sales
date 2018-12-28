@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/busUser")
@@ -68,15 +69,15 @@ public class BusUserController extends BaseController {
     public ResultData login(@RequestBody BusUserVO busUserVO) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
         try {
-            String token = null;
+            Map<String, Object> result;
             if (StringUtils.isNotEmpty(busUserVO.getJs_code())) {
                 String openid = getOpenid(busUserVO.getJs_code());
-                token = busUserService.loginByWechat(openid);
+                result = busUserService.loginByWechat(openid);
             } else if (StringUtils.isNotEmpty(busUserVO.getPhoneNum()) && StringUtils.isNotEmpty(busUserVO.getPasswd())) {
-                token = busUserService.loginByAccount(busUserVO.getPhoneNum(), busUserVO.getPasswd());
+                result = busUserService.loginByAccount(busUserVO.getPhoneNum(), busUserVO.getPasswd());
             } else
                 throw new BusinessException("用户登录失败！");
-            resultData.setData(token);
+            resultData.setData(result);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("用户登录失败！");

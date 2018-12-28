@@ -56,19 +56,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             if (wechatAuthorize != null) {
                 // 验证token
                 String token = request.getHeader("token");
-                int id = Integer.parseInt(JWT.decode(token).getAudience().get(0));
-                BusUser model = new BusUser();
-                model.setId(id);
-                BusUser busUser = busUserService.getBusUser(model);
+                BusUser busUser = busUserService.getUserFromToken(token);
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(busUser.getPasswd())).build();
                 try {
                     jwtVerifier.verify(token);
 
                     // 检查session是否过期:5minute
-                    Long lastTime = DataStore.getInstance().expireInfo.get(id);
+                    Long lastTime = DataStore.getInstance().expireInfo.get(busUser.getId());
                     if (lastTime + 5 * 60 * 1000 < System.currentTimeMillis())
                         throw new RuntimeException("session过期！");
-                    DataStore.getInstance().expireInfo.put(id, System.currentTimeMillis());
+                    DataStore.getInstance().expireInfo.put(busUser.getId(), System.currentTimeMillis());
 
                     return true;
                 } catch (JWTVerificationException e) {

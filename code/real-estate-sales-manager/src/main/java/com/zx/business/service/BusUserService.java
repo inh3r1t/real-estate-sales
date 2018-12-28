@@ -10,8 +10,9 @@ import com.zx.lib.utils.encrypt.Md5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
 public class BusUserService {
@@ -31,24 +32,33 @@ public class BusUserService {
         return busUsers.get(0);
     }
 
-    public String loginByWechat(String openid) {
+    public Map<String, Object> loginByWechat(String openid) {
         BusUser condition = new BusUser();
         condition.setOpenId(openid);
         BusUser busUser = getBusUser(condition);
 
         if (busUser != null) {
-            return getToken(busUser);
+            String token = getToken(busUser);
+            Map<String, Object> result = new HashMap<>();
+            result.put("token", token);
+            busUser.setPasswd(null);
+            result.put("userInfo", busUser);
+            return result;
         } else
             throw new BusinessException("该用户未注册，请先注册再登录！");
     }
 
-    public String loginByAccount(String phoneNum, String passwd) {
+    public Map<String, Object> loginByAccount(String phoneNum, String passwd) {
         BusUser condition = new BusUser();
         condition.setPhoneNum(phoneNum);
         condition.setPasswd(Md5Util.getMd5(passwd));
         BusUser busUser = getBusUser(condition);
-        if (busUser != null) {
-            return getToken(busUser);
+        if (busUser != null) {String token = getToken(busUser);
+            Map<String, Object> result = new HashMap<>();
+            result.put("token", token);
+            busUser.setPasswd(null);
+            result.put("userInfo", busUser);
+            return result;
         } else
             throw new BusinessException("该用户未注册，请先注册再登录！");
     }
@@ -59,5 +69,12 @@ public class BusUserService {
                 .sign(Algorithm.HMAC256(busUser.getPasswd()));
         DataStore.getInstance().expireInfo.put(busUser.getId(), System.currentTimeMillis());
         return token;
+    }
+
+    public BusUser getUserFromToken(String token) {
+        int id = Integer.parseInt(JWT.decode(token).getAudience().get(0));
+        BusUser model = new BusUser();
+        model.setId(id);
+        return getBusUser(model);
     }
 }
