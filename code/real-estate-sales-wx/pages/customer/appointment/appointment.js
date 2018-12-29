@@ -65,7 +65,7 @@ Page({
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 预约提交
-    app.post("http://127.0.0.1:8080/busDeal/appointment", {
+    app.post("/busDeal/appointment", {
         id: this.data.id,
         appointmentTime: this.getDate()
       })

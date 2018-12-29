@@ -51,7 +51,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    app.post("http://127.0.0.1:8080/busUser/update", {
+    app.post("/busUser/update", {
       passwd: params.passwd
     }).then((res) => {
       wx.showToast({

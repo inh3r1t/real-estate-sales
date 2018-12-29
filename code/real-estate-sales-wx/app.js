@@ -7,7 +7,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    token: null
+    token: null,
+    _baseUrl: 'http://127.0.0.1:8080'
   },
   isLogin: function() {
     let userInfo = wx.getStorageSync('userInfo');
@@ -29,8 +30,12 @@ App({
       })
     }
   },
-  get: (url, data) => http.get(url, data),
-  post: (url, data) => http.post(url, data),
+  get: function (url, data) {
+    return http.get(this.globalData._baseUrl + url, data)
+  },
+  post: function (url, data) {
+    return http.post(this.globalData._baseUrl + url, data)
+  },
   WxValidate: (rules, messages) => new WxValidate(rules, messages)
 
 })

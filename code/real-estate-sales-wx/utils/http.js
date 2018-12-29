@@ -1,4 +1,3 @@
-var _baseUrl = "";
 
 function get(url, data) {
   return request(url, "GET", data);
@@ -13,7 +12,7 @@ function request(url, method, postData) {
     //网络请求
     postData = JSON.stringify(postData);
     wx.request({
-      url: _baseUrl + url,
+      url: url,
       data: postData,
       method: method,
       header: {

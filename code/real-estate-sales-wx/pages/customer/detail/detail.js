@@ -13,7 +13,7 @@ Page({
    */
   onLoad: function(options) {
     let id = options.id || 0
-    app.get("http://127.0.0.1:8080/busDeal/getById/" + id).then(res => {
+    app.get("/busDeal/getById/" + id).then(res => {
       console.log(res)
       this.setData({
         model: res.data

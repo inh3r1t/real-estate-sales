@@ -150,7 +150,7 @@ Page({
       if (this.data.currentTab == 3) {
         state = 3;
       }
-      app.post("http://127.0.0.1:8080/busDeal/getPage", {
+      app.post("/busDeal/getPage", {
         page: pageNo,
         pageSize: 10,
         state: state

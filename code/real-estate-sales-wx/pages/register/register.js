@@ -77,7 +77,7 @@ Page({
       passwd: params.passwd,
       pollCode: params.pollCode
     });
-    app.post("http://127.0.0.1:8080/busUser/register", this.data).then((res) => {
+    app.post("/busUser/register", this.data).then((res) => {
       console.log(res);
       wx.showModal({
         content: '恭喜您，注册成功',

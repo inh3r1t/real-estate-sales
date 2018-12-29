@@ -55,7 +55,7 @@ Page({
       phoneNum: params.phoneNum,
       passwd: params.passwd,
     });
-    app.post("http://127.0.0.1:8080/busUser/login", this.data).then((res) => {
+    app.post("/busUser/login", this.data).then((res) => {
       console.log(res);
       debugger
       //1.存用户信息到本地存储

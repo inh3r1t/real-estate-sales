@@ -24,7 +24,7 @@ Page({
   onLoad: function(options) {
     var id = options.id;
     if (id != undefined && id > 0) {
-      app.get("http://127.0.0.1:8080/busRealEstate/getById/" + id).then(res => {
+      app.get("/busRealEstate/getById/" + id).then(res => {
         console.log(res);
         this.setData({
           building: res.data

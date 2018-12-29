@@ -59,7 +59,7 @@ Page({
       content: '确定解除微信快捷登录吗？',
       success: res => {
         if (res.confirm) {
-          app.post("http://127.0.0.1:8080/busUser/update", {
+          app.post("/busUser/update", {
             js_code: ''
           }).then((res) => {
             debugger
@@ -96,7 +96,7 @@ Page({
                 wx.login({
                   success: res_login => {
                     if (res_login.code) {
-                      app.post("http://127.0.0.1:8080/busUser/update", {
+                      app.post("/busUser/update", {
                         js_code: res_login.code
                       }).then((res) => {
                         wx.showToast({

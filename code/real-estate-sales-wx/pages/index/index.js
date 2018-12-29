@@ -1,6 +1,7 @@
 const app = getApp()
 Page({
   data: {
+    topList: [],
     recommendbuildings: [],
     imgUrls: [
       '/images/banner_02.png',
@@ -13,15 +14,17 @@ Page({
     isLogin: false
   },
   onLoad: function() {
-    // app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildings#!method=get")
-    //   .then(res => {
-    //     console.log(res)
-    //     this.setData({
-    //       recommendbuildings: res.data
-    //     })
-    //   });
-
-    app.post("http://127.0.0.1:8080/busRealEstate/getPage", {
+    app.post("/busRealEstate/getPage", {
+      page: 1,
+      pageSize: 10,
+      isTopRecommend: 1
+    }).then(res => {
+      console.log(res.data);
+      this.setData({
+        topList: res.data.Items
+      })
+    })
+    app.post("/busRealEstate/getPage", {
       page: 1,
       pageSize: 10,
       isListRecommend: 1
@@ -31,6 +34,7 @@ Page({
         recommendbuildings: res.data.Items
       })
     })
+
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

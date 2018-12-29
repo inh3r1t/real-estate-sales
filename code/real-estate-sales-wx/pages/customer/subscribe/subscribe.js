@@ -97,7 +97,7 @@ Page({
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 客户到访
-    app.post("http://127.0.0.1:8080/busDeal/subscribe", {
+    app.post("/busDeal/subscribe", {
         id: this.data.id,
         subscribeTime: this.getDate()
       })

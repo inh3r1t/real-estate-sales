@@ -54,9 +54,9 @@ Page({
   getList(pageNo, override) {
     if (this.data.more || override) {
       wx.showLoading({
-        title: '玩命加载中',
+        title: '加载中',
       })
-      return app.post("http://127.0.0.1:8080/busRealEstate/getPage", {
+      return app.post("/busRealEstate/getPage", {
         page: pageNo,
         pageSize: 10
       }).then(res => {

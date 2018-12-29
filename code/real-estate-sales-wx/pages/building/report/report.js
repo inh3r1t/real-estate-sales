@@ -90,7 +90,7 @@ Page({
     for (var j = 0, len = this.data.list.length; j < len; j++) {
       ids.push(this.data.list[j].id);
     }
-    app.post("http://127.0.0.1:8080/busDeal/report", {
+    app.post("/busDeal/report", {
         reportUserId: 3,
         realEstateIds: ids.toString(),
         customerName: params.name,

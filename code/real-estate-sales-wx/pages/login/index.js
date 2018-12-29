@@ -30,7 +30,7 @@ Page({
             success: res_login => {
               if (res_login.code) {
                 //获取用户的openId
-                app.post("http://127.0.0.1:8080/busUser/login", {
+                app.post("/busUser/login", {
                   js_code: res_login.code
                 }).then((res) => {
                   wx.setStorageSync('wxUserInfo', e.detail.userInfo);
