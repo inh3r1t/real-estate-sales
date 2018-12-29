@@ -16,16 +16,15 @@ Page({
   },
   getUserInfo: function(e) {
     // 获取用户信息
+    debugger
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权
-          //开启loading框
           wx.showLoading({
             title: '正在登录...',
             mask: true
           });
-          console.log(e.detail.userInfo)
           //调登录api
           wx.login({
             success: res_login => {
@@ -34,24 +33,22 @@ Page({
                 app.post("http://127.0.0.1:8080/busUser/login", {
                   js_code: res_login.code
                 }).then((res) => {
-                  console.log(res);
+                  wx.setStorageSync('wxUserInfo', e.detail.userInfo);
                   //1.存用户信息到本地存储
-                  wx.setStorageSync('userInfo', e.detail.userInfo)
+                  wx.setStorageSync('userInfo', res.data.userInfo);
+                  wx.setStorageSync('token', res.data.token);
                   //2.存用户信息到全局变量
-                  var app = getApp();
-                  app.globalData.userInfo = e.detail.userInfo
-                  //隐藏loading框
+                  app.globalData.userInfo = res.data.userInfo;
+                  app.globalData.token = res.data.token;
                   wx.hideLoading();
                 }).catch((res) => {
-                  console.log(res);
-                  wx.setStorageSync('userInfo', e.detail.userInfo)
-                  var app = getApp();
-                  app.globalData.userInfo = e.detail.userInfo
                   wx.showToast({
-                    title: '登录失败',
+                    title: '微信快捷登录失败',
                     icon: 'none'
                   })
-                  wx.navigateBack();
+                  wx.navigateTo({
+                    url: '/pages/login/phone',
+                  })
                 });
 
               }

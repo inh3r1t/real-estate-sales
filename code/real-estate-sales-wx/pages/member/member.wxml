@@ -1,16 +1,11 @@
 <view class="container">
   <view class="header center" wx:if="{{isLogin}}">
-    <view class='avator'>
-      <image src="/images/personal.png"></image>
+    <view class='avatar'>
+      <image src="{{avatar}}"></image>
     </view>
-    <view class='username'>用户名</view>
-    <view class="company">合肥市中野地产中介有限公司</view>
-  </view>
-  <view class="header center" wx:if="{{!isLogin}}">
-    <view class='avator'>
-      <image src="/images/personal.png"></image>
-    </view>
-    <view class='username' bindtap='login'>点击登录</view>
+    <view class='username' wx:if="{{isLogin}}">{{username}}</view>
+    <view class="company" wx:if="{{isLogin}}">{{company}}</view>
+    <view class='username' bindtap='login' wx:if="{{!isLogin}}">点击登录</view>
   </view>
   <view class='divider'></view>
   <view class="list" wx:if="{{isLogin}}">

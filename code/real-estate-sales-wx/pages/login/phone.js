@@ -62,7 +62,8 @@ Page({
       wx.setStorageSync('userInfo', res.data.userInfo);
       wx.setStorageSync('token', res.data.token);
       //2.存用户信息到全局变量
-      app.globalData.token = res.data;
+      app.globalData.userInfo = res.data.userInfo;
+      app.globalData.token = res.data.token;
       wx.showToast({
         title: '登录成功',
         icon: 'success',

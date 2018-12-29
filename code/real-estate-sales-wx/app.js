@@ -11,11 +11,14 @@ App({
   },
   isLogin: function() {
     let userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
+    let token = wx.getStorageSync('token');
+    if (userInfo && token) {
       this.globalData.userInfo = userInfo;
+      this.globalData.token = token;
       return true;
     } else {
       this.globalData.userInfo = null;
+      this.globalData.token = null;
       return false;
     }
   },

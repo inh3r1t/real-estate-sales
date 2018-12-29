@@ -7,7 +7,9 @@ Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isLogin: false,
-    isBindWechat: false
+    isBindWechat: false,
+    username: '用户名',
+    company: ''
   },
 
   /**
@@ -21,7 +23,10 @@ Page({
     app.checkLogin();
     this.setData({
       isLogin: app.isLogin(),
-      isBindWechat: wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != ''
+      isBindWechat: wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != '',
+      username: wx.getStorageSync('userInfo').userName,
+      company: wx.getStorageSync('userInfo').companyName || '',
+      avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/personal.png'
     })
   },
   login: function() {
@@ -52,17 +57,19 @@ Page({
     wx.showModal({
       title: '提示',
       content: '确定解除微信快捷登录吗？',
-      success(res) {
+      success: res => {
         if (res.confirm) {
           app.post("http://127.0.0.1:8080/busUser/update", {
             js_code: ''
           }).then((res) => {
+            debugger
             wx.showToast({
               title: '微信解除绑定成功',
               icon: 'success'
             })
             this.setData({
-              isBindWechat: false
+              isBindWechat: false,
+              avatar: '/images/personal.png'
             })
             wx.setStorageSync('userInfo', res.data)
             app.globalData.userInfo = res.data
@@ -78,33 +85,49 @@ Page({
     })
   },
   toBindWechat: function() {
-    wx.getSetting({
+    wx.showModal({
+      title: '提示',
+      content: '确定绑定微信快捷登录吗？',
       success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.login({
-            success: res_login => {
-              if (res_login.code) {
-                app.post("http://127.0.0.1:8080/busUser/update", {
-                  js_code: res_login.code
-                }).then((res) => {
-                  wx.showToast({
-                    title: '微信绑定成功',
-                    icon: 'success'
-                  })
-                  wx.setStorageSync('userInfo', res.data)
-                  app.globalData.userInfo = res.data
-                }).catch((res) => {
-                  wx.showToast({
-                    title: '微信绑定失败',
-                    icon: 'none'
-                  })
-                });
-
+        if (res.confirm) {
+          wx.getSetting({
+            success: res => {
+              if (res.authSetting['scope.userInfo']) {
+                wx.login({
+                  success: res_login => {
+                    if (res_login.code) {
+                      app.post("http://127.0.0.1:8080/busUser/update", {
+                        js_code: res_login.code
+                      }).then((res) => {
+                        wx.showToast({
+                          title: '微信绑定成功',
+                          icon: 'success'
+                        })
+                        wx.getUserInfo({
+                          success(result) {
+                            wx.setStorageSync('wxUserInfo', result.userInfo)
+                          }
+                        })
+                        wx.setStorageSync('userInfo', res.data)
+                        app.globalData.userInfo = res.data
+                        this.setData({
+                          avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/personal.png'
+                        })
+                      }).catch((res) => {
+                        wx.showToast({
+                          title: '微信绑定失败',
+                          icon: 'none'
+                        })
+                      });
+                    }
+                  }
+                })
               }
             }
           })
         }
       }
     })
+
   }
 })
