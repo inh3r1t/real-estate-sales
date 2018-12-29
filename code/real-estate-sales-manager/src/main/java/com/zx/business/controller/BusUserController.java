@@ -10,6 +10,7 @@ import com.zx.base.model.ResultData;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusUserService;
 import com.zx.business.vo.BusUserVO;
+import com.zx.lib.utils.encrypt.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/busUser")
-public class BusUserController extends BaseController {
+public class BusUserController extends BusBaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BusUserController.class);
 
@@ -81,6 +82,38 @@ public class BusUserController extends BaseController {
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("用户登录失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+
+    @AuthorizeIgnore
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    @CrossOrigin
+    public ResultData update(@RequestBody BusUserVO busUserVO) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "操作成功！");
+        try {
+            // 验证手机号是否注册
+            BusUser busUser = new BusUser();
+            String token = request.getHeader("token");
+            busUser.setId(validateToken(token).getId());
+            busUser = busUserService.getBusUser(busUser);
+            if (StringUtils.isNotEmpty(busUserVO.getJs_code())) {
+                String openid = getOpenid(busUserVO.getJs_code());
+                busUser.setOpenId(openid);
+            } else if (StringUtils.isEmpty(busUserVO.getPasswd())) {
+                busUser.setOpenId("");
+            }
+            if (StringUtils.isNotEmpty(busUserVO.getPasswd())) {
+                busUser.setPasswd(Md5Util.getMd5(busUserVO.getPasswd()));
+            }
+            busUserService.updateByPrimaryKeySelective(busUser);
+            resultData.setData(busUser);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("操作失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;

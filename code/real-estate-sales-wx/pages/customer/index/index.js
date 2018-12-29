@@ -67,7 +67,7 @@ Page({
 
     }
   },
-  toDetail: function (a) {
+  toDetail: function(a) {
     var id = a.currentTarget.dataset.id;
     wx.navigateTo({
       url: '/pages/customer/detail/detail?id=' + id,
@@ -158,8 +158,9 @@ Page({
         //这里既可以获取模拟的res
         console.log(res)
         this.setData({
-          list: override ? res.data.Items : this.data.list.concat(res.data.Items),
-          more: res.data.Items != null && res.data.Items.length == 10
+          list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
+          more: res.data.list.Items != null && res.data.list.Items.length == 10,
+          count: res.data.count
         })
         this.loading = false
         // 隐藏加载框

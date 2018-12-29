@@ -35,6 +35,7 @@ public class BusDealController extends BusBaseController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
+    @AuthorizeIgnore
     public ResultData getPage(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
@@ -71,6 +72,7 @@ public class BusDealController extends BusBaseController {
     @RequestMapping("/getById/{id}")
     @ResponseBody
     @WechatAuthorize
+    @AuthorizeIgnore
     public ResultData getById(@PathVariable Integer id) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
         try {

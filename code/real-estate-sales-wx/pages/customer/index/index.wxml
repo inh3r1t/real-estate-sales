@@ -3,19 +3,19 @@
     <view class="customer-tabs">
       <view class="customer-tab-item {{currentTab==null || currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">
         <text>全部</text>
-        <text class="tab-item-count">{{count.total_count}}</text>
+        <text class="tab-item-count">{{count.total_count||0}}</text>
       </view>
       <view class="customer-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">
         <text>报备</text>
-        <text class="tab-item-count">{{count.report_count}}</text>
+        <text class="tab-item-count">{{count.report_count||0}}</text>
       </view>
       <view class="customer-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">
         <text>到访</text>
-        <text class="tab-item-count">{{count.arrive_count}}</text>
+        <text class="tab-item-count">{{count.arrive_count||0}}</text>
       </view>
       <view class="customer-tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="clickTab">
         <text>认购</text>
-        <text class="tab-item-count">{{count.subscribe_count}}</text>
+        <text class="tab-item-count">{{count.subscribe_count||0}}</text>
       </view>
     </view>
   </view>

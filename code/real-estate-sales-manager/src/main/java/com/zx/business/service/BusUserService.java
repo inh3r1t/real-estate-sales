@@ -25,6 +25,10 @@ public class BusUserService {
         return busUserMapper.insertSelective(busUser);
     }
 
+    public int updateByPrimaryKeySelective(BusUser busUser){
+        return busUserMapper.updateByPrimaryKeySelective(busUser);
+    }
+
     public BusUser getBusUser(BusUser busUser) {
         List<BusUser> busUsers = busUserMapper.selectByModel(busUser);
         if (busUsers == null || busUsers.size() == 0)
