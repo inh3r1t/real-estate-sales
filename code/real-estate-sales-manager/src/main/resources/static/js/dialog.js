@@ -3,6 +3,7 @@
     (function (d) {
         var Dialog;
         alertify.defaults = {
+            fullScreen: false,
             autoReset: true,
             basic: false,
             closable: true,
@@ -190,6 +191,8 @@
                             return self.setDialogResult(null);
                         }
                     });
+                    if (options.fullScreen)
+                        parent.layer.full(index);
                 };
             })(this);
             self.loading = function (selector, options) {

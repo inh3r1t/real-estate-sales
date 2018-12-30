@@ -94,7 +94,6 @@ a {
     margin-left: 15px !important;
 }
 
-
 .form-footer {
     position: fixed;
     bottom: 0;
@@ -108,7 +107,6 @@ a {
     z-index: 1;
     box-shadow: 0 0 7px #cccccc;
 }
-
 
 .clickable {
     cursor: pointer;
@@ -959,12 +957,19 @@ input.date-range {
 }
 
 .upload-thumbnail .delete-cover {
-    margin-bottom: 5px;
     width: 120px;
     height: 80px;
     border: 1px solid #c8c8c8;
     box-sizing: border-box;
+    position: relative;
+    margin-top: 10px;
 }
+
+.upload-thumbnail .images {
+    display: flex;
+    margin-top: 10px;
+}
+
 
 .upload-thumbnail .delete-cover:hover .icon-cover {
     display: block;

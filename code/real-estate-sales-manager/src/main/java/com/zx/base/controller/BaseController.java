@@ -95,6 +95,11 @@ public class BaseController {
     //图片上传绝对路径的基础地址
     @Value("${custom.system-url}")
     public String SYSTEM_URL;
+    /**
+     * 上传的个根目录
+     */
+    @Value("${custom.upload-node}")
+    public String UPLOAD_NODE;
 
     @Resource
     public RoleService roleService;
@@ -130,9 +135,9 @@ public class BaseController {
      */
     public String getBasePath() {
         if (StringUtil.isEmpty(basePath)) {
-            return (this.getClass().getClassLoader().getResource("").getPath() + "static").substring(1);
+            return (this.getClass().getClassLoader().getResource("").getPath() + "static").substring(1) + "/" + UPLOAD_NODE;
         } else {
-            return basePath;
+            return basePath + "/" + UPLOAD_NODE;
         }
     }
 
@@ -163,11 +168,11 @@ public class BaseController {
             String path = "/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd") + "/";
             String destPath = getAbsolutePath(path);
             String fileName = file.getOriginalFilename();
-            FileInfo f = uploadFile(file, destPath + fileName);
-            if (f != null) {
+            String realPath = uploadFileRealPath(file, destPath + fileName);
+            if (StringUtil.isNotEmpty(realPath)) {
                 msg.setState(true);
                 msg.setMessage("上传成功");
-                msg.setModel(SYSTEM_URL + f.getPath());
+                msg.setModel(realPath);
             } else {
                 msg.setState(false);
                 msg.setMessage("上传失败");
@@ -178,6 +183,36 @@ public class BaseController {
             throw new BusinessException(e);
         }
         return msg;
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param file
+     * @param path
+     * @return
+     * @throws IOException
+     */
+    public String uploadFileRealPath(MultipartFile file, String path) throws IOException {
+        String fileName = file.getOriginalFilename();
+        File tempFile = new File(path);
+        if (!tempFile.getParentFile().exists()) {
+            tempFile.getParentFile().mkdirs();
+        }
+        if (tempFile.exists()) {
+            tempFile.delete();
+        }
+
+        tempFile.createNewFile();
+
+        file.transferTo(tempFile);
+
+        String relativePath = path.replace("\\", "/");
+        if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
+            relativePath = relativePath.substring(getBasePath().length());
+        }
+
+        return SYSTEM_URL + "/" + UPLOAD_NODE + relativePath;
     }
 
     /**

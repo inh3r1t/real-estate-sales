@@ -51,4 +51,6 @@ public interface FileInfoDao {
     Integer update(FileInfo fileInfo);
 
     int deleteByGroupId(Integer groupid);
+
+    int insertBatch(List<FileInfo> fileInfos);
 }

@@ -68,6 +68,13 @@
                     </select>
                 </div>
             </div>
+            <!--<div class="layui-col-xs4">-->
+                <!--<label class="layui-form-label">排序</label>-->
+                <!--<div class="layui-input-block">-->
+                    <!--<input type="text" name="address" th:value="${model.address}" lay-verify="required" placeholder="请输入地址"-->
+                           <!--autocomplete="off" class="layui-input required">-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">佣金</label>
@@ -95,20 +102,42 @@
         <div class="layui-form-item">
             <label class="layui-form-label">缩略图</label>
             <div class="layui-input-block upload-thumbnail">
+                <button type="button" class="layui-btn layui-btn-danger" id="uploadImage">
+                    <i class="layui-icon"></i>上传图片
+                </button>
                 <div class="delete-cover">
                     <img id="img" th:class="${model.thumbnail!=''&&model.thumbnail!=null?'':'hidden'}"
                          th:src="${model.thumbnail}"/>
-                    <input type="hidden" id="imageUrl" name="icon" th:value="${model.thumbnail}"/>
+                    <input type="hidden" id="imageUrl" name="thumbnail" th:value="${model.thumbnail}"/>
                     <div id="deleteImageBtn"
                          th:class="'icon-cover '+${model.thumbnail!=''&&model.thumbnail!=null?'':'hidden'}">
                     <span th:title="删除缩列图" onclick="deleteImage();" class="cover-center fa fa-trash"
                           style=""></span>
                     </div>
                 </div>
-                <button type="button" class="layui-btn layui-btn-danger" id="uploadImage">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">滚动图片</label>
+            <div class="layui-input-block upload-thumbnail">
+                <button type="button" class="layui-btn layui-btn-danger" id="uploadImages">
                     <i class="layui-icon"></i>上传图片
                 </button>
+
+                <div id="imageUrls" class="images">
+                    <div class="delete-cover" th:each="item:${model.images}">
+                        <img id="imgs" th:class="${item!=''&&item!=null?'':'hidden'}"
+                             th:src="${item}"/>
+                        <input type="hidden" name="images" th:value="${item}"/>
+                        <div id="deleteImageBtns"
+                             th:class="'icon-cover '+${item!=''&&item!=null?'':'hidden'}">
+                    <span th:title="删除" onclick="deleteImages(this);" class="cover-center fa fa-trash"
+                          style=""></span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">简介</label>
@@ -154,6 +183,7 @@
             , url: '/upload'
             , size: 5000 //限制文件大小，单位 KB
             , done: function (res) {
+                debugger
                 if (res.state) {
                     dialog.msg(res.message);
                     $("#img").attr('src', res.model);
@@ -164,6 +194,24 @@
                 else {
                     dialog.msg(res.message);
                 }
+            }
+        });
+
+        layui.upload.render({
+            elem: '#uploadImages'
+            , url: '/upload'
+            , multiple: true
+            , size: 5000 //限制文件大小，单位 KB
+            , done: function (res) {
+                console.log(res);
+                var html = '  <div class="delete-cover" >\n' +
+                    '           <img src="' + res.model + '"/>\n' +
+                    '           <input type="hidden" name="images" value="' + res.model + '"/>\n' +
+                    '           <div class="icon-cover">\n' +
+                    '              <span title="删除" onclick="deleteImages(this);" class="cover-center fa fa-trash"></span>\n' +
+                    '           </div>\n' +
+                    '       </div>';
+                $('#imageUrls').append(html);
             }
         });
     });
@@ -190,6 +238,10 @@
         $("#img").addClass('hidden');
         $('#deleteImageBtn').addClass('hidden');
         $("#imageUrl").val("");
+    }
+
+    function deleteImages(obj) {
+        $(obj).closest('.delete-cover').remove();
     }
 </script>
 </body>

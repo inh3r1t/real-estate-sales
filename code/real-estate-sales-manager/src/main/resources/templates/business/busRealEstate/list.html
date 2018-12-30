@@ -44,16 +44,15 @@
                 <td class="text-ellipsis-300" data-bind="text:name"></td>
                 <td data-bind="text:commission"></td>
                 <td data-bind="text:managerName"></td>
-                <td class="text-center" data-bind="text:isListRecommend?'已推荐':''"></td>
-                <td class="text-center" data-bind="text:isTopRecommend?'已置顶':''"></td>
+
+                <td class="text-center" data-bind="text:isListRecommend()?'已推荐':''"></td>
+                <td class="text-center" data-bind="text:isTopRecommend()?'已置顶':''"></td>
                 <td class="text-center" data-bind="text:createTime"></td>
                 <td class="text-center">
-                    <a data-bind="click:btn_top.bind()" title="置顶" data-toggle="tooltip" data-placement="top">
-                        <i class="fa fa-arrow-up"> 置顶</i></a>
-                    <a data-bind="click:btn_recommend.bind()" title="推荐" data-toggle="tooltip" data-placement="top">
-                        <i class="fa fa-star-o"> 推荐</i></a>
-                    <a data-bind="click:btn_view.bind()" title="查看" data-toggle="tooltip" data-placement="top">
-                        <i class="fa fa-search"> 查看</i></a>
+                    <!--<a data-bind="click:btn_top.bind()" title="置顶" data-toggle="tooltip" data-placement="top">-->
+                        <!--<i class="fa fa-arrow-up"> 置顶</i></a>-->
+                    <!--<a data-bind="click:btn_recommend.bind()" title="推荐" data-toggle="tooltip" data-placement="top">-->
+                        <!--<i class="fa fa-star-o"> 推荐</i></a>-->
                     <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-edit"> 编辑</i></a>
                     <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">

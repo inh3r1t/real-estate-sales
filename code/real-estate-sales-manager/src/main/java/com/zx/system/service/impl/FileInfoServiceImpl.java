@@ -48,4 +48,9 @@ public class FileInfoServiceImpl implements FileInfoService {
     public int deleteByGroupId(Integer id) {
         return fileInfoDao.deleteByGroupId(id);
     }
+
+    @Override
+    public int insertBatch(List<FileInfo> fileInfos) {
+        return fileInfoDao.insertBatch(fileInfos);
+    }
 }

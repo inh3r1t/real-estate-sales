@@ -6,11 +6,15 @@ import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
+import com.zx.business.enums.PhotoType;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusRealEstateService;
+import com.zx.business.service.BusUserService;
 import com.zx.lib.utils.DateUtil;
+import com.zx.lib.utils.StringUtil;
 import com.zx.lib.web.HtmlUtil;
+import com.zx.system.model.FileInfo;
 import com.zx.system.model.SysLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +39,8 @@ public class BusRealEstateController extends BaseController {
 
     @Resource
     private BusRealEstateService busRealStateService;
+    @Resource
+    private BusUserService busUserService;
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
@@ -113,6 +119,7 @@ public class BusRealEstateController extends BaseController {
         } else {
         }
         List<BusUser> managerList = new ArrayList<>();
+        managerList = busUserService.getListByRoleType(0);
         model.addAttribute("model", estate);
         model.addAttribute("managerList", managerList);
         return "business/busRealEstate/edit";
@@ -132,9 +139,31 @@ public class BusRealEstateController extends BaseController {
             } else {
                 busRealStateService.update(estate);
                 fileInfoService.deleteByGroupId(estate.getId());
-
             }
             //处理图片
+            List<FileInfo> fileInfos = new ArrayList<>();
+            FileInfo fileInfo;
+            if (estate.getImages() != null) {
+                for (String url : estate.getImages()) {
+                    fileInfo = new FileInfo();
+                    fileInfo.setGroupid(estate.getId());
+                    fileInfo.setPath(url);
+                    fileInfo.setRemark(PhotoType.DETAIL_TOP.code());
+                    fileInfo.setState(0);
+                    fileInfos.add(fileInfo);
+                }
+            }
+            if (StringUtil.isNotEmpty(estate.getThumbnail())) {
+                fileInfo = new FileInfo();
+                fileInfo.setGroupid(estate.getId());
+                fileInfo.setPath(estate.getThumbnail());
+                fileInfo.setRemark(PhotoType.THUMBNAIL.code());
+                fileInfo.setState(0);
+                fileInfos.add(fileInfo);
+            }
+            if (fileInfos.size() > 0) {
+                fileInfoService.insertBatch(fileInfos);
+            }
             addLogInfo(String.format("%s楼盘%s成功", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改);
             return new ReturnModel(true, String.format("%s成功", actionName));
         } catch (Exception e) {

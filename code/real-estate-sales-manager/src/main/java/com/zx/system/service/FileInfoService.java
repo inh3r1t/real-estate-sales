@@ -49,4 +49,6 @@ public interface FileInfoService {
     Integer update(FileInfo fileInfo);
 
     int deleteByGroupId(Integer id);
+
+    int insertBatch(List<FileInfo> fileInfos);
 }
