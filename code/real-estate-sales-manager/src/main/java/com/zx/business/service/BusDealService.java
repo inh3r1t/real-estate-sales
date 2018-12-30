@@ -41,7 +41,7 @@ public class BusDealService {
         Long count = busDealMapper.countByModel(busDeal);
         int start = (page - 1) * pageSize;
         List<BusDeal> busDeals = busDealMapper.selectByPage(start, pageSize, null, null, busDeal);
-        return new PagerModel<>(page, pageSize, count.intValue(), busDeals);
+        return new PagerModel<>(pageSize, page, count.intValue(), busDeals);
     }
 
     public Map<String, Long> countByState(int busUserId) {
