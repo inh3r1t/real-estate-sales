@@ -107,7 +107,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        return false;
+        return true;
     }
 
 }

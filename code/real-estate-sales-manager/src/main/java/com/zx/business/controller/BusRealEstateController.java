@@ -7,11 +7,15 @@ import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
+import com.zx.base.model.ReturnModel;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.service.BusRealEstateService;
+import com.zx.lib.utils.DateUtil;
+import com.zx.system.model.SysLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -90,5 +94,38 @@ public class BusRealEstateController extends BaseController {
             logger.error(e.getMessage(), e);
         }
         return resultData;
+    }
+
+    @RequestMapping("/edit")
+    public String edit(Model model, Integer id) {
+        BusRealEstate estate = new BusRealEstate();
+        if (id != null && !id.equals(0)) {
+            estate = busRealStateService.getById(id);
+        } else {
+        }
+        model.addAttribute("model", estate);
+        return "business/busRealEstate/edit";
+    }
+
+    @RequestMapping(value = "/submit")
+    @ResponseBody
+    public Object submit(BusRealEstate estate) {
+
+        boolean insertAction = estate.getId() == null || estate.getId() == 0;
+
+        String actionName = insertAction ? "添加" : "修改";
+        if (insertAction) {
+            estate.setCreateTime(DateUtil.getDateNow());
+            busRealStateService.add(estate);
+        } else {
+            busRealStateService.update(estate);
+        }
+        try {
+            addLogInfo(String.format("%s活动%s成功", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改);
+            return new ReturnModel(true, String.format("%s成功", actionName));
+        } catch (Exception e) {
+            addLogError(String.format("%s活动%s失败", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改, e, estate);
+            return new ReturnModel(false, String.format("%s失败", actionName));
+        }
     }
 }

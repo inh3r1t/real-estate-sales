@@ -46,7 +46,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    app.post("/busRealEstate/getPage", {
+      page: 1,
+      pageSize: 10,
+      isTopRecommend: 1
+    }).then(res => {
+      console.log(res.data);
+      this.setData({
+        list: res.data.Items
+      })
+    })
   },
 
   /**

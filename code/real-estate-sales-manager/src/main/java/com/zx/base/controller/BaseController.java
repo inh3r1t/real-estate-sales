@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sun.jndi.toolkit.url.Uri;
 import com.zx.base.common.CaptchaUtil;
 import com.zx.base.common.IterateDirUtil;
+import com.zx.base.common.UploadUtil;
 import com.zx.base.enums.TypeEnums;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.annotation.AuthorizeIgnore;
@@ -13,10 +14,7 @@ import com.zx.base.model.TreeJsonEntity;
 import com.zx.lib.http.common.HttpConst;
 import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.json.JsonUtil;
-import com.zx.lib.utils.DirectoryUtil;
-import com.zx.lib.utils.FileUtil;
-import com.zx.lib.utils.LogUtil;
-import com.zx.lib.utils.StringUtil;
+import com.zx.lib.utils.*;
 import com.zx.lib.utils.encrypt.Md5Util;
 import com.zx.lib.web.CookieUtil;
 import com.zx.system.model.*;
@@ -81,7 +79,6 @@ public class BaseController {
     public HttpSession session;
     @Autowired
     public HttpServletRequest request;
-    @Autowired
     public HttpServletResponse response;
 
     @Value("${custom.wechat.openid.api.url}")
@@ -95,7 +92,9 @@ public class BaseController {
 
     @Value("${custom.wechat.grant_type}")
     String grant_type;
-
+    //图片上传绝对路径的基础地址
+    @Value("${custom.system-url}")
+    public String SYSTEM_URL;
 
     @Resource
     public RoleService roleService;
@@ -129,8 +128,7 @@ public class BaseController {
      */
     public String getAbsolutePath(String path) throws UnsupportedEncodingException {
         path = path.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
-        path = URLDecoder.decode(path, "UTF-8");
-        return basePath + path;
+        return URLDecoder.decode(basePath + path, "UTF-8");
     }
 
 
@@ -204,6 +202,37 @@ public class BaseController {
         fileInfo.setSuffix(IterateDirUtil.getFileType(fileName));
         fileInfoService.insert(fileInfo);
         return fileInfo;
+    }
+
+    /**
+     * ckeditor图片上传
+     *
+     * @param request
+     * @param response
+     * @Title imageUpload
+     */
+    @RequestMapping("/uploadImageByCK")
+    @ResponseBody
+    public Object uploadImageByCK(HttpServletRequest request, HttpServletResponse response) {
+        String json = "";
+        try {
+            String path = "/images/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd");
+            String fileName = UploadUtil.upload(request, basePath + path);
+            //上传成功后，我们还需要返回Json格式的响应
+            json = "{\n" +
+                    "    \"uploaded\": 1,\n" +
+                    "    \"fileName\": \"" + fileName + "\",\n" +
+                    "    \"url\": \"" + SYSTEM_URL + path + "/" + fileName + "\"\n" +
+                    "}";
+        } catch (Exception e) {
+            json = "{\n" +
+                    "    \"uploaded\": 0,\n" +
+                    "    \"error\": {\n" +
+                    "        \"message\": \"上传失败，请重新上传\"\n" +
+                    "    }\n" +
+                    "}";
+        }
+        return json;
     }
 
     /**

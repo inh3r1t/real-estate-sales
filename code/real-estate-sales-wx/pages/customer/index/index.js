@@ -42,7 +42,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.getList(1, true).then(() => {
+    this.getList(1, true).then(res => {
       // 处理完成后，终止下拉刷新
       wx.stopPullDownRefresh()
     })
@@ -150,24 +150,22 @@ Page({
       if (this.data.currentTab == 3) {
         state = 3;
       }
-      app.post("/busDeal/getPage", {
+      return app.post("/busDeal/getPage", {
         page: pageNo,
-        pageSize: 10,
+        pageSize: 5,
         state: state
       }).then(res => {
         //这里既可以获取模拟的res
         console.log(res)
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
-          more: res.data.list.Items != null && res.data.list.Items.length == 10,
+          more: res.data.list.Items != null && res.data.list.Items.length == 5,
           count: res.data.count
         })
-        this.loading = false
         // 隐藏加载框
         wx.hideLoading();
       }).catch(err => {
         console.log("==> [ERROR]", err)
-        this.loading = false
         // 隐藏加载框
         wx.hideLoading();
       })

@@ -111,6 +111,7 @@ Page({
                         wx.setStorageSync('userInfo', res.data)
                         app.globalData.userInfo = res.data
                         this.setData({
+                          isBindWechat: true,
                           avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/personal.png'
                         })
                       }).catch((res) => {

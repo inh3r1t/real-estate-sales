@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<head>
+    <title>编辑活动</title>
+    <script th:src="@{/plugins/ckeditor/ckeditor.js}" type="text/javascript"></script>
+</head>
+<body>
+<div class="form-body" data-layout-fragment="renderBody">
+    <form id="editForm" th:method="post" class="layui-form  layui-form-pane" th:action="@{/estate/submit}">
+        <input type="hidden" name="id" th:value="${model.id}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" th:value="${model.name}" lay-verify="required" placeholder="请输入标题"
+                       autocomplete="off" class="layui-input required">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea type="text" id="info" name="info" placeholder="请输入内容" autocomplete="off"
+                          class="layui-textarea required" th:text="${model.detail}"></textarea>
+            </div>
+        </div>
+        <!--<div class="layui-form-item" style="position: absolute;top: 70px;right: 15px;">-->
+            <!--<div class="delete-cover" style="margin-bottom: 5px;width: 100px;height: 100px;border: 1px solid #c8c8c8;">-->
+                <!--<img id="img" th:class="${model.imageUrl!=''&&model.imageUrl!=null?'':'hidden'}"-->
+                     <!--th:src="${model.imageUrl}" th:width="100" th:height="100"/>-->
+                <!--<input type="hidden" id="imageUrl" name="imageUrl" th:value="${model.imageUrl}"/>-->
+                <!--<span id="deleteImageBtn" style="width: 102px;height: 102px;"-->
+                      <!--th:class="'icon-cover '+${model.imageUrl!=''&&model.imageUrl!=null?'':'hidden'}">-->
+                    <!--<span th:title="删除缩列图" onclick="deleteImage();" class="cover-center fa fa-trash"-->
+                          <!--style="top:40px"></span>-->
+                <!--</span>-->
+            <!--</div>-->
+            <!--<button type="button" class="layui-btn layui-btn-danger" id="uploadImage" style="width: 100px;padding: 0;">-->
+                <!--<i class="layui-icon"></i>缩列图-->
+            <!--</button>-->
+
+        <!--</div>-->
+        <div class="layui-form-item form-footer">
+            <button class="layui-btn" lay-submit lay-filter="formedit" id="btnSubmit" type="submit">保存</button>
+            <span class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.close();">关闭</span>
+        </div>
+
+    </form>
+</div>
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    layui.use(['layer', 'laydate', 'upload'], function () {
+        //设定文件大小限制
+        // layui.upload.render({
+        //     elem: '#uploadImage'
+        //     , url: '/uploadimage'
+        //     , size: 5000 //限制文件大小，单位 KB
+        //     , done: function (res) {
+        //         if (res.state) {
+        //             dialog.msg(res.message);
+        //             $("#img").attr('src', res.model);
+        //             $("#img").removeClass('hidden');
+        //             $('#deleteImageBtn').removeClass('hidden');
+        //             $("#imageUrl").val(res.model);
+        //         }
+        //         else {
+        //             dialog.msg(res.message);
+        //         }
+        //     }
+        // });
+    });
+
+
+    CKEDITOR.replace('info');
+
+    $("#editForm").initForm({
+        ajaxBefore: function () {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            if ($.trim(CKEDITOR.instances.info.getData()) === '') {
+                dialog.msg("活动内容不能为空");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    });
+
+    function deleteImage() {
+        $("#img").attr('src', "");
+        $("#img").addClass('hidden');
+        $('#deleteImageBtn').addClass('hidden');
+        $("#imageUrl").val("");
+    }
+</script>
+</body>
+</html>

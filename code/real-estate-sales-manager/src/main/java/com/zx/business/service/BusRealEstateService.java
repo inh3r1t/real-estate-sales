@@ -39,4 +39,8 @@ public class BusRealEstateService {
     public int add(BusRealEstate busRealEstate) {
         return busRealEstateMapper.insertSelective(busRealEstate);
     }
+
+    public int update(BusRealEstate busRealEstate) {
+        return busRealEstateMapper.updateByPrimaryKeySelective(busRealEstate);
+    }
 }
