@@ -1,16 +1,12 @@
 package com.zx.business.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
-import com.zx.base.exception.BusinessException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusDeal;
-import com.zx.business.model.BusUser;
 import com.zx.business.service.BusDealService;
-import com.zx.business.service.BusUserService;
 import com.zx.business.vo.BusDealVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +32,11 @@ public class BusDealController extends BusBaseController {
     @ResponseBody
     @WechatAuthorize
     @AuthorizeIgnore
-    public ResultData getPage(@RequestBody BusDeal busDeal) {
+    public ResultData getPage(@RequestBody BusDeal busDeal, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             PagerModel<BusDeal> busDealPage = busDealService.getPage(busDeal.getPage(), busDeal.getPageSize(), busDeal);
-            Map<String, Long> countByState = busDealService.countByState(busDeal);
+            Map<String, Long> countByState = busDealService.countByState(getUserByToken(request.getHeader("token")).getId());
             Map<String, Object> result = new HashMap<>();
             result.put("list", busDealPage);
             result.put("count", countByState);
@@ -98,7 +94,7 @@ public class BusDealController extends BusBaseController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "报备成功！");
         try {
             String token = request.getHeader("token");
-            busDealVO.setReportUserId(validateToken(token).getId());
+            busDealVO.setReportUserId(getUserByToken(token).getId());
             busDealService.report(busDealVO);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);

@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.zx.base.common.BaseTest;
+import com.zx.business.common.DataStore;
 import com.zx.business.dao.BusUserMapper;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusUserService;
@@ -64,5 +65,17 @@ public class BusUserServiceTest extends BaseTest {
 
         final List<BusUser> busUsers = busUserMapper.selectByPage(0, 4, null, null, busUser);
         System.out.println(busUsers);
+    }
+
+    @Test
+    public void test4() {
+
+        BusUser busUser = new BusUser();
+        busUser.setId(6);
+        busUser = busUserService.getBusUser(busUser);
+        String token = JWT.create().withAudience(String.valueOf(busUser.getId()))
+                .sign(Algorithm.HMAC256(busUser.getPasswd()));
+        System.out.println(token);
+        System.out.println("---------------------------------");
     }
 }

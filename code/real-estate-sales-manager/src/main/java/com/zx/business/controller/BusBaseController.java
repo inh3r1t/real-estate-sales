@@ -17,8 +17,7 @@ public abstract class BusBaseController extends BaseController {
     @Resource
     private BusUserService busUserService;
 
-    public BusUser
-    validateToken(String token) {
+    public BusUser getUserByToken(String token) {
         if (token == null)
             throw new BusinessException("请先登录！");
         return busUserService.getUserFromToken(token);

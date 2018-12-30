@@ -1,6 +1,10 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusAgentCompany;
+import com.zx.business.model.BusDeal;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface BusAgentCompanyMapper {
     /**
@@ -50,4 +54,9 @@ public interface BusAgentCompanyMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(BusAgentCompany record);
+
+    List<BusDeal> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer pageSize,
+                               @Param("orderField") String orderField, @Param("orderType") String orderType,
+                               @Param("busAgentCompany")BusAgentCompany busAgentCompany);
+
 }

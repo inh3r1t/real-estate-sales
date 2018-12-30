@@ -1,10 +1,7 @@
 package com.zx.business.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
-import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
-import com.zx.base.controller.BaseController;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusUser;
@@ -17,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -98,7 +94,7 @@ public class BusUserController extends BusBaseController {
             // 验证手机号是否注册
             BusUser busUser = new BusUser();
             String token = request.getHeader("token");
-            busUser.setId(validateToken(token).getId());
+            busUser.setId(getUserByToken(token).getId());
             busUser = busUserService.getBusUser(busUser);
             if (StringUtils.isNotEmpty(busUserVO.getJs_code())) {
                 String openid = getOpenid(busUserVO.getJs_code());
