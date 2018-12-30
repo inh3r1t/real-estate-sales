@@ -448,27 +448,4 @@ public class BusRealEstate extends PageVO {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-
-    /**
-     * 缩略图
-     */
-    private String thumbnail;
-    private List<String> images;
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
 }
