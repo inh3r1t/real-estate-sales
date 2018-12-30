@@ -31,10 +31,11 @@ public class BusRealEstateServiceTest {
     @Test
     public void test1() {
         BusRealEstate busRealEstate = new BusRealEstate();
-        busRealEstate.setName("testBusRealEstateName3");
-        busRealEstate.setManagerId(11131);
-        int id = busRealEstateService.add(busRealEstate);
-        System.out.println(id);
+//        busRealEstate.setName("testBusRealEstateName3");
+//        busRealEstate.setManagerId(11131);
+        busRealEstate.setId(1);
+        final List<BusRealEstate> list = busRealEstateService.getList(busRealEstate);
+        System.out.println(list);
     }
 
     @Test
