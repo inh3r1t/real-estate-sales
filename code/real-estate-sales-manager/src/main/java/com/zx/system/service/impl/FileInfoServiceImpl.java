@@ -43,4 +43,9 @@ public class FileInfoServiceImpl implements FileInfoService {
     public Integer update(FileInfo fileInfo) {
         return fileInfoDao.update(fileInfo);
     }
+
+    @Override
+    public int deleteByGroupId(Integer id) {
+        return fileInfoDao.deleteByGroupId(id);
+    }
 }

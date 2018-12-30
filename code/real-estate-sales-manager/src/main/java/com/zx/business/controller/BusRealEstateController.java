@@ -1,8 +1,6 @@
 package com.zx.business.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
-import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
@@ -133,7 +131,10 @@ public class BusRealEstateController extends BaseController {
                 busRealStateService.add(estate);
             } else {
                 busRealStateService.update(estate);
+                fileInfoService.deleteByGroupId(estate.getId());
+
             }
+            //处理图片
             addLogInfo(String.format("%s楼盘%s成功", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改);
             return new ReturnModel(true, String.format("%s成功", actionName));
         } catch (Exception e) {

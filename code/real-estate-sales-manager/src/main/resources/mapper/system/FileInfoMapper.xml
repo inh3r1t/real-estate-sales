@@ -1,344 +1,352 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zx.system.dao.FileInfoDao">
 
-	<!--实体映射-->
-	<resultMap id="base_result_map" type="FileInfo">
-		<id column="id" property="id"  />
-		<result column="name" property="name"  />
-		<result column="groupid" property="groupid"  />
-		<result column="suffix" property="suffix"  />
-		<result column="size" property="size"  />
-		<result column="path" property="path"  />
-		<result column="md5" property="md5"  />
-		<result column="createrid" property="createrid"  />
-		<result column="createtime" property="createtime"  />
-		<result column="state" property="state"  />
-		<result column="remark" property="remark"  />
-	</resultMap>
+    <!--实体映射-->
+    <resultMap id="base_result_map" type="FileInfo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="groupid" property="groupid"/>
+        <result column="suffix" property="suffix"/>
+        <result column="size" property="size"/>
+        <result column="path" property="path"/>
+        <result column="md5" property="md5"/>
+        <result column="createrid" property="createrid"/>
+        <result column="createtime" property="createtime"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
 
 
-	<!-- 通用查询结果列 -->
-	<sql id="base_column_list">
+    <!-- 通用查询结果列 -->
+    <sql id="base_column_list">
 		 id,name,groupid,suffix,`size`,path,md5,createrid,createtime,state,remark
 	</sql>
 
-	<sql id="base_condition_filed">
-			<if test="id != null">
-				 and  id = #{id}
-			</if>
-			<if test="name != null and name!=''">
-				 and  name = #{name}
-			</if>
-			<if test="groupid != null">
-				 and  groupid = #{groupid}
-			</if>
-			<if test="suffix != null and suffix!=''">
-				 and  suffix = #{suffix}
-			</if>
-			<if test="size != null">
-				 and  size = #{size}
-			</if>
-			<if test="path != null and path!=''">
-				 and  path = #{path}
-			</if>
-			<if test="md5 != null and md5!=''">
-				 and  md5 = #{md5}
-			</if>
-			<if test="createrid != null">
-				 and  createrid = #{createrid}
-			</if>
-			<if test="createtime != null">
-				 and  createtime = #{createtime}
-			</if>
-			<if test="state != null">
-				 and  state = #{state}
-			</if>
-			<if test="remark != null and remark!=''">
-				 and  remark = #{remark}
-			</if>
-	</sql>
+    <sql id="base_condition_filed">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="name != null and name!=''">
+            and name = #{name}
+        </if>
+        <if test="groupid != null">
+            and groupid = #{groupid}
+        </if>
+        <if test="suffix != null and suffix!=''">
+            and suffix = #{suffix}
+        </if>
+        <if test="size != null">
+            and size = #{size}
+        </if>
+        <if test="path != null and path!=''">
+            and path = #{path}
+        </if>
+        <if test="md5 != null and md5!=''">
+            and md5 = #{md5}
+        </if>
+        <if test="createrid != null">
+            and createrid = #{createrid}
+        </if>
+        <if test="createtime != null">
+            and createtime = #{createtime}
+        </if>
+        <if test="state != null">
+            and state = #{state}
+        </if>
+        <if test="remark != null and remark!=''">
+            and remark = #{remark}
+        </if>
+    </sql>
 
-	<!-- 通用查询条件列-->
-	<sql id="query_condition">
-	<where>
-		<trim prefixOverrides="and">
-			<include refid="base_condition_filed" />
-			<if test="nameFuzzy!= null  and nameFuzzy!=''">
-				 and  name like concat('%', #{nameFuzzy}, '%')
-			</if>
-			<if test="suffixFuzzy!= null  and suffixFuzzy!=''">
-				 and  suffix like concat('%', #{suffixFuzzy}, '%')
-			</if>
-			<if test="pathFuzzy!= null  and pathFuzzy!=''">
-				 and  path like concat('%', #{pathFuzzy}, '%')
-			</if>
-			<if test="md5Fuzzy!= null  and md5Fuzzy!=''">
-				 and  md5 like concat('%', #{md5Fuzzy}, '%')
-			</if>
-			<if test="remarkFuzzy!= null  and remarkFuzzy!=''">
-				 and  remark like concat('%', #{remarkFuzzy}, '%')
-			</if>
-		</trim>
-	 </where>
-	</sql>
+    <!-- 通用查询条件列-->
+    <sql id="query_condition">
+        <where>
+            <trim prefixOverrides="and">
+                <include refid="base_condition_filed"/>
+                <if test="nameFuzzy!= null  and nameFuzzy!=''">
+                    and name like concat('%', #{nameFuzzy}, '%')
+                </if>
+                <if test="suffixFuzzy!= null  and suffixFuzzy!=''">
+                    and suffix like concat('%', #{suffixFuzzy}, '%')
+                </if>
+                <if test="pathFuzzy!= null  and pathFuzzy!=''">
+                    and path like concat('%', #{pathFuzzy}, '%')
+                </if>
+                <if test="md5Fuzzy!= null  and md5Fuzzy!=''">
+                    and md5 like concat('%', #{md5Fuzzy}, '%')
+                </if>
+                <if test="remarkFuzzy!= null  and remarkFuzzy!=''">
+                    and remark like concat('%', #{remarkFuzzy}, '%')
+                </if>
+            </trim>
+        </where>
+    </sql>
 
-	<!-- 查询集合-->
-	<select id="selectList" resultMap="base_result_map" >
-		 SELECT <include refid="base_column_list" /> FROM file_infos <include refid="query_condition" />
-		 <if test="orderBy!=null">
-			 order by ${orderBy}
-		 </if>
-		 <if test="page!=null">
-			 limit #{page.start},#{page.end}
-		 </if>
-	</select>
+    <!-- 查询集合-->
+    <select id="selectList" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM file_infos
+        <include refid="query_condition"/>
+        <if test="orderBy!=null">
+            order by ${orderBy}
+        </if>
+        <if test="page!=null">
+            limit #{page.start},#{page.end}
+        </if>
+    </select>
 
-	<!-- 查询数量-->
-	<select id="selectCount" resultType="java.lang.Integer" >
-		 SELECT count(1) FROM file_infos <include refid="query_condition" />
-	</select>
+    <!-- 查询数量-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM file_infos
+        <include refid="query_condition"/>
+    </select>
 
-	<!-- 插入 （匹配有值的字段）-->
-	<insert id="insert" parameterType="FileInfo">
-		<selectKey keyProperty="id" resultType="Integer" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		 INSERT INTO file_infos
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="name != null">
-				 name,
-			</if>
-			<if test="groupid != null">
-				 groupid,
-			</if>
-			<if test="suffix != null">
-				 suffix,
-			</if>
-			<if test="size != null">
-				`size`,
-			</if>
-			<if test="path != null">
-				 path,
-			</if>
-			<if test="md5 != null">
-				 md5,
-			</if>
-			<if test="createrid != null">
-				 createrid,
-			</if>
-			<if test="createtime != null">
-				 createtime,
-			</if>
-			<if test="state != null">
-				 state,
-			</if>
-			<if test="remark != null">
-				 remark,
-			</if>
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="name!=null">
-				 #{name},
-			</if>
-			<if test="groupid!=null">
-				 #{groupid},
-			</if>
-			<if test="suffix!=null">
-				 #{suffix},
-			</if>
-			<if test="size!=null">
-				 #{size},
-			</if>
-			<if test="path!=null">
-				 #{path},
-			</if>
-			<if test="md5!=null">
-				 #{md5},
-			</if>
-			<if test="createrid!=null">
-				 #{createrid},
-			</if>
-			<if test="createtime!=null">
-				 #{createtime},
-			</if>
-			<if test="state!=null">
-				 #{state},
-			</if>
-			<if test="remark!=null">
-				 #{remark},
-			</if>
-		 </trim>
-	</insert>
+    <!-- 插入 （匹配有值的字段）-->
+    <insert id="insert" parameterType="FileInfo">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO file_infos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="groupid != null">
+                groupid,
+            </if>
+            <if test="suffix != null">
+                suffix,
+            </if>
+            <if test="size != null">
+                `size`,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="md5 != null">
+                md5,
+            </if>
+            <if test="createrid != null">
+                createrid,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="groupid!=null">
+                #{groupid},
+            </if>
+            <if test="suffix!=null">
+                #{suffix},
+            </if>
+            <if test="size!=null">
+                #{size},
+            </if>
+            <if test="path!=null">
+                #{path},
+            </if>
+            <if test="md5!=null">
+                #{md5},
+            </if>
+            <if test="createrid!=null">
+                #{createrid},
+            </if>
+            <if test="createtime!=null">
+                #{createtime},
+            </if>
+            <if test="state!=null">
+                #{state},
+            </if>
+            <if test="remark!=null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 插入或者更新 （匹配有值的字段）-->
-	<insert id="insertOrUpdate" parameterType="FileInfo">
-		 INSERT INTO file_infos
-		 <trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				 id,
-			</if>
-			<if test="name != null">
-				 name,
-			</if>
-			<if test="groupid != null">
-				 groupid,
-			</if>
-			<if test="suffix != null">
-				 suffix,
-			</if>
-			<if test="size != null">
-				 size,
-			</if>
-			<if test="path != null">
-				 path,
-			</if>
-			<if test="md5 != null">
-				 md5,
-			</if>
-			<if test="createrid != null">
-				 createrid,
-			</if>
-			<if test="createtime != null">
-				 createtime,
-			</if>
-			<if test="state != null">
-				 state,
-			</if>
-			<if test="remark != null">
-				 remark,
-			</if>
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id!=null">
-				 #{id},
-			</if>
-			<if test="name!=null">
-				 #{name},
-			</if>
-			<if test="groupid!=null">
-				 #{groupid},
-			</if>
-			<if test="suffix!=null">
-				 #{suffix},
-			</if>
-			<if test="size!=null">
-				 #{size},
-			</if>
-			<if test="path!=null">
-				 #{path},
-			</if>
-			<if test="md5!=null">
-				 #{md5},
-			</if>
-			<if test="createrid!=null">
-				 #{createrid},
-			</if>
-			<if test="createtime!=null">
-				 #{createtime},
-			</if>
-			<if test="state!=null">
-				 #{state},
-			</if>
-			<if test="remark!=null">
-				 #{remark},
-			</if>
-		 </trim>
-		 on DUPLICATE key
-		 <trim prefix="" suffix="" suffixOverrides=",">
-			<if test="name!=null">
-				 name = VALUES(name),
-			</if>
-			<if test="groupid!=null">
-				 groupid = VALUES(groupid),
-			</if>
-			<if test="suffix!=null">
-				 suffix = VALUES(suffix),
-			</if>
-			<if test="size!=null">
-				 size = VALUES(size),
-			</if>
-			<if test="path!=null">
-				 path = VALUES(path),
-			</if>
-			<if test="md5!=null">
-				 md5 = VALUES(md5),
-			</if>
-			<if test="createrid!=null">
-				 createrid = VALUES(createrid),
-			</if>
-			<if test="createtime!=null">
-				 createtime = VALUES(createtime),
-			</if>
-			<if test="state!=null">
-				 state = VALUES(state),
-			</if>
-			<if test="remark!=null">
-				 remark = VALUES(remark),
-			</if>
-		 </trim>
-	</insert>
+    <!-- 插入或者更新 （匹配有值的字段）-->
+    <insert id="insertOrUpdate" parameterType="FileInfo">
+        INSERT INTO file_infos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="groupid != null">
+                groupid,
+            </if>
+            <if test="suffix != null">
+                suffix,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="md5 != null">
+                md5,
+            </if>
+            <if test="createrid != null">
+                createrid,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="groupid!=null">
+                #{groupid},
+            </if>
+            <if test="suffix!=null">
+                #{suffix},
+            </if>
+            <if test="size!=null">
+                #{size},
+            </if>
+            <if test="path!=null">
+                #{path},
+            </if>
+            <if test="md5!=null">
+                #{md5},
+            </if>
+            <if test="createrid!=null">
+                #{createrid},
+            </if>
+            <if test="createtime!=null">
+                #{createtime},
+            </if>
+            <if test="state!=null">
+                #{state},
+            </if>
+            <if test="remark!=null">
+                #{remark},
+            </if>
+        </trim>
+        on DUPLICATE key
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="name!=null">
+                name = VALUES(name),
+            </if>
+            <if test="groupid!=null">
+                groupid = VALUES(groupid),
+            </if>
+            <if test="suffix!=null">
+                suffix = VALUES(suffix),
+            </if>
+            <if test="size!=null">
+                size = VALUES(size),
+            </if>
+            <if test="path!=null">
+                path = VALUES(path),
+            </if>
+            <if test="md5!=null">
+                md5 = VALUES(md5),
+            </if>
+            <if test="createrid!=null">
+                createrid = VALUES(createrid),
+            </if>
+            <if test="createtime!=null">
+                createtime = VALUES(createtime),
+            </if>
+            <if test="state!=null">
+                state = VALUES(state),
+            </if>
+            <if test="remark!=null">
+                remark = VALUES(remark),
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 添加 （批量插入）-->
-		<insert id="insertBatch" parameterType="FileInfo">
-		 INSERT INTO file_infos(name,groupid,suffix,size,path,md5,createrid,createtime,state,remark)values
-			 <foreach collection="list" item="item" separator=",">
-			 (
-			 #{item.name},#{item.groupid},#{item.suffix},#{item.size},#{item.path},#{item.md5},#{item.createrid},#{item.createtime},#{item.state},#{item.remark}
-			 )
-			 </foreach>
-		</insert>
+    <!-- 添加 （批量插入）-->
+    <insert id="insertBatch" parameterType="FileInfo">
+        INSERT INTO file_infos(name,groupid,suffix,size,path,md5,createrid,createtime,state,remark)values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.name},#{item.groupid},#{item.suffix},#{item.size},#{item.path},#{item.md5},#{item.createrid},#{item.createtime},#{item.state},#{item.remark}
+            )
+        </foreach>
+    </insert>
 
-	<!-- 根据Id修改-->
-	<update id="update" parameterType="FileInfo">
-		 UPDATE file_infos
- 		 <set> 
-			<if test="name != null">
-				 name = #{name},
-			</if>
-			<if test="groupid != null">
-				 groupid = #{groupid},
-			</if>
-			<if test="suffix != null">
-				 suffix = #{suffix},
-			</if>
-			<if test="size != null">
-				 size = #{size},
-			</if>
-			<if test="path != null">
-				 path = #{path},
-			</if>
-			<if test="md5 != null">
-				 md5 = #{md5},
-			</if>
-			<if test="createrid != null">
-				 createrid = #{createrid},
-			</if>
-			<if test="createtime != null">
-				 createtime = #{createtime},
-			</if>
-			<if test="state != null">
-				 state = #{state},
-			</if>
-			<if test="remark != null">
-				 remark = #{remark},
-			</if>
- 		 </set>
- 		 where id=#{id}
-	</update>
+    <!-- 根据Id修改-->
+    <update id="update" parameterType="FileInfo">
+        UPDATE file_infos
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="groupid != null">
+                groupid = #{groupid},
+            </if>
+            <if test="suffix != null">
+                suffix = #{suffix},
+            </if>
+            <if test="size != null">
+                size = #{size},
+            </if>
+            <if test="path != null">
+                path = #{path},
+            </if>
+            <if test="md5 != null">
+                md5 = #{md5},
+            </if>
+            <if test="createrid != null">
+                createrid = #{createrid},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
-	<!-- 根据Id删除-->
-	<delete id="deleteById">
+    <!-- 根据Id删除-->
+    <delete id="deleteById">
 		delete from file_infos where id=#{id}
 	</delete>
+    <delete id="deleteByGroupId">
+			delete from file_infos where groupid=#{groupid}
+	</delete>
 
-	<!-- 根据PrimaryKey获取对象-->
-	<select id="selectById" resultMap="base_result_map" >
-		select <include refid="base_column_list" />  from file_infos where id=#{id}
-	</select>
-
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectById" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from file_infos where id=#{id}
+    </select>
 
 
 </mapper>

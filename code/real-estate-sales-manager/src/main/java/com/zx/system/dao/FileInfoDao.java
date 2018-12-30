@@ -49,4 +49,6 @@ public interface FileInfoDao {
      * @return
      */
     Integer update(FileInfo fileInfo);
+
+    int deleteByGroupId(Integer groupid);
 }

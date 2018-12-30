@@ -47,4 +47,6 @@ public interface FileInfoService {
      * @return
      */
     Integer update(FileInfo fileInfo);
+
+    int deleteByGroupId(Integer id);
 }
