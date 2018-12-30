@@ -50,7 +50,7 @@ public class BaseController {
      * 文件管理的根目录
      */
     @Value("${custom.directory-path}")
-    public String basePath;
+    private String basePath;
     private static final String ENCODING = "utf-8";
     /**
      * 分页的每页条数
@@ -113,6 +113,29 @@ public class BaseController {
     @Resource
     public UserRoleService userRoleService;
 
+
+    /**
+     * 文件管理的根目录
+     */
+    // public String BASE_PATH;
+
+
+    /**
+     * 获取文件管理的根目录
+     * <p>
+     * 开发环境：this.getClass().getClassLoader().getResource("").getPath() + "static" -- 供开发展示效果
+     * 正式环境：BASE_PATH -- 使用与文件管理存放文件路径一致
+     *
+     * @return
+     */
+    public String getBasePath() {
+        if (StringUtil.isEmpty(basePath)) {
+            return (this.getClass().getClassLoader().getResource("").getPath() + "static").substring(1);
+        } else {
+            return basePath;
+        }
+    }
+
     /**
      * 当前用户的登录信息
      *
@@ -128,7 +151,7 @@ public class BaseController {
      */
     public String getAbsolutePath(String path) throws UnsupportedEncodingException {
         path = path.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
-        return URLDecoder.decode(basePath + path, "UTF-8");
+        return URLDecoder.decode(getBasePath() + path, "UTF-8");
     }
 
 
@@ -186,8 +209,8 @@ public class BaseController {
         file.transferTo(tempFile);
 
         String relativePath = path.replace("\\", "/");
-        if (relativePath.startsWith(basePath)) {
-            relativePath = relativePath.substring(basePath.length());
+        if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
+            relativePath = relativePath.substring(getBasePath().length());
         }
 
         FileInfo fileInfo = new FileInfo();
@@ -217,7 +240,7 @@ public class BaseController {
         String json = "";
         try {
             String path = "/images/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd");
-            String fileName = UploadUtil.upload(request, basePath + path);
+            String fileName = UploadUtil.upload(request, getBasePath() + path);
             //上传成功后，我们还需要返回Json格式的响应
             json = "{\n" +
                     "    \"uploaded\": 1,\n" +

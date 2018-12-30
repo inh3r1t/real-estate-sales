@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: dev  # 通过指定启动参数使用不同的profile
   thymeleaf:
     cache: false
     mode: LEGACYHTML5
@@ -13,6 +11,14 @@ spring:
     date-format: yyyy-MM-dd HH:mm #如果使用字符串表示，用这行设置格式
     time-zone: GMT+8
     serialization: false #使用时间戳，使用数值timestamp表示日期
+  datasource:
+    url: jdbc:mysql://47.106.143.175:3306/real-estate-sales?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  devtools:
+    restart:
+      enabled: true
 
 mybatis:
   mapper-locations: /mapper/**/*Mapper.xml
@@ -22,15 +28,17 @@ logging:
   level:
     root: debug
 
+server:
+  port: 8080
 #Custom configuration
 custom:
   system-url: http://localhost:8080
   system-name: real-estate-sales-manager
   version: V1.1.0320.1
   page-size: 15
-  captcha: 1  # 是否使用登录验证码 0:不使用 1:使用
+  captcha: 0  # 是否使用登录验证码 0:不使用 1:使用
   file-extension: jpg|png|gif|bmp|jpeg|txt|doc|xls|docx|xlsx|pdf|mp3|mp4|ppt|pptx|rtf|zip|rar|gz|7z|gzip
-
+  directory-path:
   wechat.openid.api.url: https://api.weixin.qq.com/sns/jscode2session
   wechat.appid: wx4476c55348a31df8
   wechat.secret: 26754ef3189b3ef8a18d9b5e05d3bb23

@@ -123,7 +123,7 @@ public class HomeController extends BaseController {
                     && user.getLoginerrorcount() != null
                     && user.getLoginerrorcount() >= 5
                     && user.getLastloginerrortime() != null
-                    && DateUtil.isSameDay(user.getLastloginerrortime(),now  )) {
+                    && DateUtil.isSameDay(user.getLastloginerrortime(), now)) {
                 //当天登录错误超过五次
                 rm.setInfo(false, "今日密码错误超过5次,请明天再试或联系管理员解锁!");
                 return rm;
@@ -235,7 +235,7 @@ public class HomeController extends BaseController {
         ReturnModel rm = new ReturnModel();
         List<FileBean> list = new ArrayList<>();
         try {
-            DirBean dirBean = IterateDirUtil.getFiles(path + "/backup", basePath);
+            DirBean dirBean = IterateDirUtil.getFiles(path + "/backup", getBasePath());
             list = dirBean.getFiles();
             //排序 ： 最后编辑倒序
             Collections.sort(list, (o1, o2) -> {

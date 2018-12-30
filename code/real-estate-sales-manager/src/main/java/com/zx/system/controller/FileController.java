@@ -46,7 +46,7 @@ public class FileController extends BaseController {
      */
     @RequestMapping("/index")
     public String index(Model model) throws Exception {
-        File file = new File(basePath);
+        File file = new File(getBasePath());
 
         double total = file.getTotalSpace() / (double) (1024 * 1024 * 1024);
         double usedSpace = (file.getTotalSpace() - file.getFreeSpace()) / (double) (1024 * 1024 * 1024);
@@ -94,7 +94,7 @@ public class FileController extends BaseController {
         }
         if (!StringUtil.isEmpty(path) && !StringUtil.isEmpty(name)) {
             try {
-                String p = basePath + path;
+                String p = getBasePath() + path;
                 if (!p.endsWith(("/"))) {
                     p = p + "/";
                 }
@@ -146,7 +146,7 @@ public class FileController extends BaseController {
         response.setHeader("Content-type", "text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         if (!StringUtil.isEmpty(requestPath)) {
-            String nowPath = basePath + requestPath;
+            String nowPath = getBasePath() + requestPath;
             if (!DirectoryUtil.isExsit(nowPath)) {
                 DirectoryUtil.create(nowPath);
             }
@@ -154,7 +154,7 @@ public class FileController extends BaseController {
                 nowPath = nowPath.substring(0, nowPath.length() - 1);
             }
             try {
-                DirBean dirBean = IterateDirUtil.getFiles(nowPath, basePath);
+                DirBean dirBean = IterateDirUtil.getFiles(nowPath, getBasePath());
                 String jsonArray = JsonUtil.getJsonString(dirBean);
                 PrintWriter out = response.getWriter();
                 out.print(jsonArray);
