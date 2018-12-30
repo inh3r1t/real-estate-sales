@@ -92,19 +92,6 @@ public class BusRealEstateController extends BaseController {
         return resultData;
     }
 
-    public ResultData add(BusRealEstate busRealEstate) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "新增楼盘信息成功！");
-        try {
-            int id = busRealStateService.add(busRealEstate);
-            resultData.setData(busRealEstate);
-        } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("新增楼盘信息失败！");
-            logger.error(e.getMessage(), e);
-        }
-        return resultData;
-    }
-
     @RequestMapping("/list")
     public String list() {
         return "business/busRealEstate/list";

@@ -37,7 +37,6 @@ public class BusUserController extends BusBaseController {
     @AuthorizeIgnore
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    @CrossOrigin
     public ResultData register(@RequestBody BusUser busUser) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户注册成功！");
         try {
@@ -62,7 +61,6 @@ public class BusUserController extends BusBaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    @CrossOrigin
     @AuthorizeIgnore
     public ResultData login(@RequestBody BusUserVO busUserVO) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
@@ -88,7 +86,6 @@ public class BusUserController extends BusBaseController {
     @AuthorizeIgnore
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    @CrossOrigin
     public ResultData update(@RequestBody BusUserVO busUserVO) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "操作成功！");
         try {
@@ -116,7 +113,8 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
-    @RequestMapping
+    @RequestMapping(value = "getListByRoleId", method = RequestMethod.POST)
+    @ResponseBody
     public ResultData getListByRoleId(@RequestBody Integer roleType) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "用户登录成功！");
         try {

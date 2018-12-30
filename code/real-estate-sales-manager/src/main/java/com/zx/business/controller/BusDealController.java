@@ -3,6 +3,7 @@ package com.zx.business.controller;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
+import com.zx.base.exception.WechatAuthException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusDeal;
@@ -32,18 +33,27 @@ public class BusDealController extends BusBaseController {
     @ResponseBody
     @WechatAuthorize
     @AuthorizeIgnore
-    public ResultData getPage(@RequestBody BusDeal busDeal, HttpServletRequest request) {
+    public ResultData getPage(HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
+            wechatAuthCheck(request);
+
+            Integer busUserId = getUserByToken(request.getHeader("token")).getId();
+            BusDeal busDeal = new BusDeal();
+            busDeal.setReportUserId(busUserId);
             PagerModel<BusDeal> busDealPage = busDealService.getPage(busDeal.getPage(), busDeal.getPageSize(), busDeal);
-            Map<String, Long> countByState = busDealService.countByState(getUserByToken(request.getHeader("token")).getId());
+            Map<String, Long> countByState = busDealService.countByState(busDeal);
             Map<String, Object> result = new HashMap<>();
             result.put("list", busDealPage);
             result.put("count", countByState);
             resultData.setData(result);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取客户列表失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("获取客户列表失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -93,12 +103,18 @@ public class BusDealController extends BusBaseController {
     public ResultData report(@RequestBody BusDealVO busDealVO, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "报备成功！");
         try {
+            wechatAuthCheck(request);
+
             String token = request.getHeader("token");
             busDealVO.setReportUserId(getUserByToken(token).getId());
             busDealService.report(busDealVO);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取订单详细信息失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("获取订单详细信息失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -115,11 +131,17 @@ public class BusDealController extends BusBaseController {
     public ResultData appointment(@RequestBody BusDeal BusDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "订单预约成功！");
         try {
+            wechatAuthCheck(request);
+
             final BusDeal result = busDealService.appointment(BusDeal);
             resultData.setData(result);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("订单预约失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("订单预约失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -136,11 +158,17 @@ public class BusDealController extends BusBaseController {
     public ResultData arrive(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "客户到访成功！");
         try {
+            wechatAuthCheck(request);
+
             final BusDeal result = busDealService.arrive(busDeal);
             resultData.setData(result);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("客户到访失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("客户到访失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -157,11 +185,17 @@ public class BusDealController extends BusBaseController {
     public ResultData subscribe(@RequestBody BusDeal busDeal) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "认购成功！");
         try {
+            wechatAuthCheck(request);
+
             final BusDeal result = busDealService.subscribe(busDeal);
             resultData.setData(result);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("认购失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("认购失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;

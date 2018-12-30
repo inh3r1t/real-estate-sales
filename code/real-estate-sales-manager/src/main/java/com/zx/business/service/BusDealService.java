@@ -30,9 +30,6 @@ public class BusDealService {
     @Resource
     private BusUserMapper busUserMapper;
 
-    @Resource
-    private BusAgentCompanyMapper busAgentCompanyMapper;
-
     public BusDeal getById(Integer id) {
         return busDealMapper.selectByPrimaryKey(id);
     }
@@ -44,9 +41,7 @@ public class BusDealService {
         return new PagerModel<>(pageSize, page, count.intValue(), busDeals);
     }
 
-    public Map<String, Long> countByState(int busUserId) {
-        BusDeal busDeal = new BusDeal();
-        busDeal.setManagerId(busUserId);
+    public Map<String, Long> countByState(BusDeal busDeal) {
         List<BusDeal> busDeals = busDealMapper.selectByPage(null, null, null, null, busDeal);
         Map<String, Long> result = busDeals.stream().collect(Collectors.groupingBy(deal -> BusConstants.DEAL_STATE_INFO.get(deal.getState()),
                 Collectors.counting()));

@@ -59,5 +59,5 @@ public interface BusAgentCompanyMapper {
                                @Param("orderField") String orderField, @Param("orderType") String orderType,
                                @Param("busAgentCompany")BusAgentCompany busAgentCompany);
 
-    BusAgentCompany selectByModel(BusAgentCompany condition);
+    List<BusAgentCompany> selectByModel(BusAgentCompany condition);
 }

@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Verification;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.annotation.WechatAuthorize;
+import com.zx.base.common.Const;
 import com.zx.business.common.DataStore;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusUserService;
@@ -55,21 +56,29 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             WechatAuthorize wechatAuthorize = ((HandlerMethod) handler).getMethodAnnotation(WechatAuthorize.class);
             if (wechatAuthorize != null) {
                 // 验证token
-                String token = request.getHeader("token");
-                BusUser busUser = busUserService.getUserFromToken(token);
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(busUser.getPasswd())).build();
                 try {
+                    String token = request.getHeader("token");
+                    if (token == null) {
+                        request.setAttribute("ERROR_CODE", Const.TOKEN_NULL);
+                        return true;
+                    }
+                    BusUser busUser = busUserService.getUserFromToken(token);
+                    if (busUser == null) {
+                        request.setAttribute("ERROR_CODE", Const.NO_EXIST_USER);
+                        return true;
+                    }
+                    JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(busUser.getPasswd())).build();
                     jwtVerifier.verify(token);
 
-                    // 检查session是否过期:5minute
+                    // 检查session是否过期:7days
                     Long lastTime = DataStore.getInstance().expireInfo.get(busUser.getId());
-                    if (lastTime + 5 * 60 * 1000 < System.currentTimeMillis())
-                        throw new RuntimeException("session过期！");
+                    if (lastTime + 7 * 24 * 60 * 60 * 1000 < System.currentTimeMillis())
+                        request.setAttribute("ERROR_CODE", Const.SESSION_EXPIRE);
                     DataStore.getInstance().expireInfo.put(busUser.getId(), System.currentTimeMillis());
-
-                    return true;
                 } catch (JWTVerificationException e) {
-                    throw new RuntimeException("token错误！");
+                    request.setAttribute("ERROR_CODE", Const.TOKEN_ERROR);
+                } finally {
+                    return true;
                 }
             }
 

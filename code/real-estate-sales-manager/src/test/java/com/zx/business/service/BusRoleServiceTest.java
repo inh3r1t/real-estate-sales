@@ -21,10 +21,6 @@ public class BusRoleServiceTest extends BaseTest {
     @Test
     public void test1() {
 
-        BusRole condition = new BusRole();
-        condition.setName("testRoleName1");
-        final BusRole busRole1 = busRoleService.getBusRole(condition);
-        System.out.println(busRole1);
     }
 
     @Test

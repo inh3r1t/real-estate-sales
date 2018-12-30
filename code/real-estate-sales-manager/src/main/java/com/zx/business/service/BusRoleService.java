@@ -5,6 +5,7 @@ import com.zx.business.model.BusRole;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class BusRoleService {
@@ -16,7 +17,7 @@ public class BusRoleService {
         return busRoleMapper.insertSelective(busRole);
     }
 
-    public BusRole getBusRole(BusRole busRole) {
+    public List<BusRole> getBusRole(BusRole busRole) {
         return busRoleMapper.selectByModel(busRole);
     }
 }
