@@ -10,10 +10,10 @@ Page({
     list: []
 
   },
-  toDetail: function(a) {
-    var id = a.currentTarget.dataset.id;
+  toDetail: function(e) {
+    var id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/building/detail/detail',
+      url: '/pages/building/detail/detail?id=' + id,
     })
   },
   /**

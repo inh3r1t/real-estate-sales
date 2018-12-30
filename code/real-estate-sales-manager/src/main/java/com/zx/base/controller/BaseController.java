@@ -157,26 +157,20 @@ public class BaseController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Object upload(String path, MultipartFile file) {
+    public Object upload(MultipartFile file) {
         ReturnModel msg = new ReturnModel();
         try {
+            String path = "/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd") + "/";
             String destPath = getAbsolutePath(path);
             String fileName = file.getOriginalFilename();
-            //判断是否存在
-            File tempFile = new File(destPath + fileName);
-            //如果覆盖则先删除否则直接返回
-            if (tempFile.exists()) {
-                msg.setState(false);
-                msg.setMessage("文件已存在");
+            FileInfo f = uploadFile(file, destPath + fileName);
+            if (f != null) {
+                msg.setState(true);
+                msg.setMessage("上传成功");
+                msg.setModel(SYSTEM_URL + f.getPath());
             } else {
-                FileInfo f = uploadFile(file, destPath + fileName);
-                if (f != null) {
-                    msg.setState(true);
-                    msg.setMessage("上传成功");
-                } else {
-                    msg.setState(false);
-                    msg.setMessage("上传失败");
-                }
+                msg.setState(false);
+                msg.setMessage("上传失败");
             }
         } catch (Exception e) {
             msg.setState(false);

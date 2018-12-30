@@ -67,22 +67,22 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             value = value.replaceAll("", "");
 
             // Avoid anything between script tags
-            Pattern scriptPattern = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);
+            Pattern scriptPattern = Pattern.compile("<[\\r\\n| | ]*script[\\r\\n| | ]*>(.*?)</[\\r\\n| | ]*script[\\r\\n| | ]*>", Pattern.CASE_INSENSITIVE);
             value = scriptPattern.matcher(value).replaceAll("");
 
             // Avoid anything in a src='...' type of e­xpression
-            scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\'(.*?)\\\'", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-            value = scriptPattern.matcher(value).replaceAll("");
-
-            scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\"(.*?)\\\"", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-            value = scriptPattern.matcher(value).replaceAll("");
+            // scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\'(.*?)\\\'", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            // value = scriptPattern.matcher(value).replaceAll("");
+            //
+            // scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\"(.*?)\\\"", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            // value = scriptPattern.matcher(value).replaceAll("");
 
             // Remove any lonesome </script> tag
-            scriptPattern = Pattern.compile("</script>", Pattern.CASE_INSENSITIVE);
+            scriptPattern = Pattern.compile("</[\\r\\n| | ]*script[\\r\\n| | ]*>", Pattern.CASE_INSENSITIVE);
             value = scriptPattern.matcher(value).replaceAll("");
 
             // Remove any lonesome <script ...> tag
-            scriptPattern = Pattern.compile("<script(.*?)>", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            scriptPattern = Pattern.compile("<[\\r\\n| | ]*script(.*?)[\\r\\n| | ]*>", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
             value = scriptPattern.matcher(value).replaceAll("");
 
             // Avoid eval(...) e­xpressions

@@ -9,8 +9,10 @@ import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
 import com.zx.business.model.BusRealEstate;
+import com.zx.business.model.BusUser;
 import com.zx.business.service.BusRealEstateService;
 import com.zx.lib.utils.DateUtil;
+import com.zx.lib.web.HtmlUtil;
 import com.zx.system.model.SysLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,17 +57,19 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData getList(@RequestBody BusRealEstate busRealEstate) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+    public Object getList(BusRealEstate busRealEstate) {
         try {
-            List<BusRealEstate> busRealEstates = busRealStateService.getList(busRealEstate);
-            resultData.setData(busRealEstates);
+            if (busRealEstate.getPage() == null) {
+                busRealEstate.setPage(1);
+            }
+            if (busRealEstate.getPageSize() == null) {
+                busRealEstate.setPageSize(PAGE_SIZE);
+            }
+            return busRealStateService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取楼盘列表失败！");
             logger.error(e.getMessage(), e);
+            return new PagerModel<>(busRealEstate.getPage(), busRealEstate.getPageSize(), 0, new ArrayList<>());
         }
-        return resultData;
     }
 
     @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
@@ -96,6 +101,12 @@ public class BusRealEstateController extends BaseController {
         return resultData;
     }
 
+    @RequestMapping("/list")
+    public String list() {
+        return "business/busRealEstate/list";
+    }
+
+
     @RequestMapping("/edit")
     public String edit(Model model, Integer id) {
         BusRealEstate estate = new BusRealEstate();
@@ -103,28 +114,30 @@ public class BusRealEstateController extends BaseController {
             estate = busRealStateService.getById(id);
         } else {
         }
+        List<BusUser> managerList = new ArrayList<>();
         model.addAttribute("model", estate);
+        model.addAttribute("managerList", managerList);
         return "business/busRealEstate/edit";
     }
 
     @RequestMapping(value = "/submit")
     @ResponseBody
     public Object submit(BusRealEstate estate) {
-
         boolean insertAction = estate.getId() == null || estate.getId() == 0;
-
         String actionName = insertAction ? "添加" : "修改";
-        if (insertAction) {
-            estate.setCreateTime(DateUtil.getDateNow());
-            busRealStateService.add(estate);
-        } else {
-            busRealStateService.update(estate);
-        }
+        estate.setDetail(HtmlUtil.htmlUnescape(estate.getDetail()));
+        estate.setCommission(estate.getCommission().replaceAll("%2B", "+"));
         try {
-            addLogInfo(String.format("%s活动%s成功", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改);
+            if (insertAction) {
+                estate.setCreateTime(DateUtil.getDateNow());
+                busRealStateService.add(estate);
+            } else {
+                busRealStateService.update(estate);
+            }
+            addLogInfo(String.format("%s楼盘%s成功", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改);
             return new ReturnModel(true, String.format("%s成功", actionName));
         } catch (Exception e) {
-            addLogError(String.format("%s活动%s失败", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改, e, estate);
+            addLogError(String.format("%s楼盘%s失败", actionName, estate.getName()), "", insertAction ? SysLog.LogType.新增 : SysLog.LogType.修改, e, estate);
             return new ReturnModel(false, String.format("%s失败", actionName));
         }
     }

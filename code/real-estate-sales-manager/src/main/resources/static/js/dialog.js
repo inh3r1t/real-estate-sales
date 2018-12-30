@@ -65,9 +65,22 @@
                     return window.dialog_result = result;
                 }
             };
+
             self.getDialogResult = function () {
                 var result;
                 result = parent ? parent.dialog_result : window.dialog_result;
+                return result;
+            };
+            self.setDialogResultObject = function (result) {
+                if (parent) {
+                    return parent.dialog_result_Object = result;
+                } else {
+                    return window.dialog_result_Object = result;
+                }
+            };
+            self.getDialogResultObject = function () {
+                var result;
+                result = parent ? parent.dialog_result_Object : window.dialog_result_Object;
                 return result;
             };
             self.alert = function (msg, fnCloseOrOptions) {
@@ -171,8 +184,9 @@
                         content: url,
                         end: function () {
                             if (fnClose) {
-                                fnClose(self.getDialogResult());
+                                fnClose(self.getDialogResult(), self.getDialogResultObject());
                             }
+                            self.setDialogResultObject(null);
                             return self.setDialogResult(null);
                         }
                     });
@@ -214,10 +228,13 @@
                     layer.closeAll('loading');
                 }
             };
-            self.close = function (dialogResult) {
+            self.close = function (dialogResult, obj) {
                 var index;
                 if (typeof dialogResult !== 'undefined') {
                     self.setDialogResult(dialogResult);
+                }
+                if (typeof obj !== 'undefined') {
+                    self.setDialogResultObject(obj);
                 }
                 index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
@@ -225,6 +242,7 @@
             self.closeAll = function (dialogResult) {
                 if (typeof dialogResult !== 'undefined') {
                     self.setDialogResult(dialogResult);
+                    self.setDialogResultObject(null);
                 }
                 return setTimeout(function () {
                     layer.closeAll();
@@ -234,7 +252,7 @@
             /**
              * 自定义关闭事件,增加回调避免窗口关闭导致对话框无法关闭的情况
              */
-            self.customCloseAll = function (dialogResult,afterCallBack) {
+            self.customCloseAll = function (dialogResult, afterCallBack) {
                 if (typeof dialogResult !== 'undefined') {
                     self.setDialogResult(dialogResult);
                 }

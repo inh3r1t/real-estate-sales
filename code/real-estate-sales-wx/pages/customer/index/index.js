@@ -67,8 +67,8 @@ Page({
 
     }
   },
-  toDetail: function(a) {
-    var id = a.currentTarget.dataset.id;
+  toDetail: function(e) {
+    var id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: '/pages/customer/detail/detail?id=' + id,
     })
