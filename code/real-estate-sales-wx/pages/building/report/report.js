@@ -4,8 +4,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name: "卫义",
-    phone: '1875585696',
+    name: "",
+    phone: '',
     list: []
   },
   onLoad: function(options) {

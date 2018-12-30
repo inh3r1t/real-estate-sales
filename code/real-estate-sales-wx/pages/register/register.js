@@ -6,10 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userName: "卫义",
-    phoneNum: "18715512332",
-    passwd: "123456",
-    pollCode: "123456"
+    userName: "",
+    phoneNum: "",
+    passwd: "",
+    pollCode: ""
   },
 
   /**
@@ -59,6 +59,7 @@ Page({
 
   },
   formSubmit: function(e) {
+    debugger
     const params = e.detail.value
     if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0]

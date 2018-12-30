@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="header center" wx:if="{{isLogin}}">
+  <view class="header center">
     <view class='avatar'>
       <image src="{{avatar}}"></image>
     </view>

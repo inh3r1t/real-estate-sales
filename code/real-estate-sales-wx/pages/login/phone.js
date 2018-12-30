@@ -5,8 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    phoneNum: '18715512332',
-    passwd: '123456'
+    phoneNum: '',
+    passwd: ''
   },
 
   /**

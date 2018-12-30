@@ -4,7 +4,7 @@
       <view class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
         <text class='building-commission'>{{item.commission}}</text>
         <view class="thumb">
-          <image src="{{item.thumb}}"></image>
+          <image src="{{item.thumbnail}}"></image>
         </view>
         <view class="details">
           <view class="building-name">{{item.name}}</view>
