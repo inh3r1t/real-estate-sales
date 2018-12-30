@@ -81,4 +81,9 @@ public class BusUserService {
         model.setId(id);
         return getBusUser(model);
     }
+
+    public List<BusUser> getListByRoleType(Integer roleType) {
+        List<BusUser> busUserList = busUserMapper.getListByRoleType(roleType);
+        return busUserList;
+    }
 }

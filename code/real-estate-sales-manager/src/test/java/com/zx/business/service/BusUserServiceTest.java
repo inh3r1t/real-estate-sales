@@ -5,10 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.zx.base.common.BaseTest;
-import com.zx.business.common.DataStore;
 import com.zx.business.dao.BusUserMapper;
 import com.zx.business.model.BusUser;
-import com.zx.business.service.BusUserService;
 import org.junit.Test;
 
 import javax.annotation.Resource;
@@ -77,5 +75,17 @@ public class BusUserServiceTest extends BaseTest {
                 .sign(Algorithm.HMAC256(busUser.getPasswd()));
         System.out.println(token);
         System.out.println("---------------------------------");
+    }
+
+    @Test
+    public void test5() {
+        final List<BusUser> busUsers = busUserMapper.selectByModel(new BusUser());
+        System.out.println(busUsers);
+    }
+
+    @Test
+    public void test6() {
+        final List<BusUser> listByRoleType = busUserService.getListByRoleType(0);
+        System.out.println(listByRoleType);
     }
 }

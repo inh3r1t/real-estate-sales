@@ -60,4 +60,6 @@ public interface BusUserMapper {
 
     List<BusUser> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer size, @Param("orderField") String orderField,
                                @Param("orderType") String orderType, @Param("busUser") BusUser busUser);
+
+    List<BusUser> getListByRoleType(Integer roleType);
 }

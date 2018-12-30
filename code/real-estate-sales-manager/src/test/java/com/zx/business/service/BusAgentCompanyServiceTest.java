@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import javax.annotation.Resource;
 
-import static org.junit.Assert.*;
-
 /**
  * @Author: ytxu3
  * @Description:
