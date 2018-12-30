@@ -32,7 +32,8 @@ server:
   port: 8080
 #Custom configuration
 custom:
-  system-url: http://localhost:8080
+#  system-url: http://localhost:8080
+  system-url: https://inh3rit.top/
   system-name: real-estate-sales-manager
   version: V1.1.0320.1
   page-size: 15

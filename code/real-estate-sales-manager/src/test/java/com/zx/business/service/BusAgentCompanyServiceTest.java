@@ -18,11 +18,19 @@ public class BusAgentCompanyServiceTest extends BaseTest {
 
     @Test
     public void test1() {
+//        BusAgentCompany busAgentCompany = new BusAgentCompany();
+//        busAgentCompany.setAddress("合肥市百草街110号");
+//        busAgentCompany.setChargePerson("张正东");
+//        busAgentCompany.setName("中岳地产中介");
+//        busAgentCompany.setPhone("021-88271271");
+//        busAgentCompany.setState(1);
+//        busAgentCompanyService.add(busAgentCompany);
         BusAgentCompany busAgentCompany = new BusAgentCompany();
-        busAgentCompany.setAddress("test Address 1");
-        busAgentCompany.setChargePerson("jack chen");
-        busAgentCompany.setName("Miracle");
-        busAgentCompany.setPhone("13242123421");
+        busAgentCompany.setAddress("滁州市xxx路120号");
+        busAgentCompany.setChargePerson("徐正东");
+        busAgentCompany.setName("阿里地产中介");
+        busAgentCompany.setPhone("021-98271271");
+        busAgentCompany.setState(0);
         busAgentCompanyService.addOrUpdate(busAgentCompany);
     }
 

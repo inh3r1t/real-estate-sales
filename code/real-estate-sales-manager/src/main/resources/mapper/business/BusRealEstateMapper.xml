@@ -265,10 +265,10 @@
   </select>
 
   <select id="selectThumbnail" resultType="java.lang.String">
-    select path from file_infos where groupid = #{realEstateId} and remark = '0';
+    select path from file_infos where groupid = #{realEstateId} and remark = '1';
   </select>
 
   <select id="selectImages" resultType="java.lang.String">
-    select path from file_infos where groupid = #{realEstateId} and remark = '1';
+    select path from file_infos where groupid = #{realEstateId} and remark = '2';
   </select>
 </mapper>

@@ -35,13 +35,13 @@ public class BusUserService {
         // 根据注册码设置roleId
         BusAgentCompany condition = new BusAgentCompany();
         condition.setPollCode(busUser.getPollCode());
-        BusAgentCompany busAgentCompany = busAgentCompanyMapper.selectByModel(condition);
+        BusAgentCompany busAgentCompany = busAgentCompanyMapper.selectByModel(condition).get(0);
         if (busAgentCompany == null) {
             throw new BusinessException("注册码不存在，请检查后在输入！");
         } else {
             BusRole busRole = new BusRole();
             busRole.setType(String.valueOf(busAgentCompany.getState()));
-            Integer roleId = busRoleMapper.selectByModel(busRole).getId();
+            Integer roleId = busRoleMapper.selectByModel(busRole).get(0).getId();
             busUser.setRoleId(roleId);
         }
         return busUserMapper.insertSelective(busUser);

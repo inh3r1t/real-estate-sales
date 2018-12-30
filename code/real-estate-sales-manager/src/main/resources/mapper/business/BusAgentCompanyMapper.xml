@@ -158,7 +158,7 @@
   <select id="selectByPage" parameterType="com.zx.business.model.BusAgentCompany" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from bus_deal
+    from bus_agent_company
     where 1=1
     <if test="busAgentCompany.address != null"> and address = #{busAgentCompany.address}</if>
     <if test="busAgentCompany.pollCode != null"> and poll_code = #{busAgentCompany.pollCode}</if>
@@ -181,7 +181,7 @@
   <select id="selectByModel" parameterType="com.zx.business.model.BusAgentCompany" resultMap="BaseResultMap">
   select
   <include refid="Base_Column_List"/>
-  from bus_deal
+  from bus_agent_company
   where 1=1
   <if test="address != null"> and address = #{address}</if>
   <if test="pollCode != null"> and poll_code = #{pollCode}</if>

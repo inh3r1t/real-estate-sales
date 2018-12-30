@@ -1,8 +1,6 @@
 package com.zx.business.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
-import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
@@ -83,19 +81,6 @@ public class BusRealEstateController extends BaseController {
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取楼盘详细信息失败！");
-            logger.error(e.getMessage(), e);
-        }
-        return resultData;
-    }
-
-    public ResultData add(BusRealEstate busRealEstate) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "新增楼盘信息成功！");
-        try {
-            int id = busRealStateService.add(busRealEstate);
-            resultData.setData(busRealEstate);
-        } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("新增楼盘信息失败！");
             logger.error(e.getMessage(), e);
         }
         return resultData;

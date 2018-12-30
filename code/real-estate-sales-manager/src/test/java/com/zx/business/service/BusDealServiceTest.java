@@ -111,7 +111,7 @@ public class BusDealServiceTest extends BaseTest {
 
     @Test
     public void test8() {
-        final Map<String, Long> stringLongMap = busDealService.countByState(3);
-        System.out.println(stringLongMap);
+//        final Map<String, Long> stringLongMap = busDealService.countByState(3);
+//        System.out.println(stringLongMap);
     }
 }
