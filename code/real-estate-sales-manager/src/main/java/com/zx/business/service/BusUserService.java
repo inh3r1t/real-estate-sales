@@ -4,7 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.zx.base.exception.BusinessException;
 import com.zx.business.common.DataStore;
+import com.zx.business.dao.BusAgentCompanyMapper;
+import com.zx.business.dao.BusRoleMapper;
 import com.zx.business.dao.BusUserMapper;
+import com.zx.business.model.BusAgentCompany;
+import com.zx.business.model.BusRole;
 import com.zx.business.model.BusUser;
 import com.zx.lib.utils.encrypt.Md5Util;
 import org.springframework.stereotype.Service;
@@ -20,8 +24,26 @@ public class BusUserService {
     @Resource
     private BusUserMapper busUserMapper;
 
+    @Resource
+    private BusAgentCompanyMapper busAgentCompanyMapper;
+
+    @Resource
+    private BusRoleMapper busRoleMapper;
+
     public int addBusUser(BusUser busUser) {
         busUser.setPasswd(Md5Util.getMd5(busUser.getPasswd()));
+        // 根据注册码设置roleId
+        BusAgentCompany condition = new BusAgentCompany();
+        condition.setPollCode(busUser.getPollCode());
+        BusAgentCompany busAgentCompany = busAgentCompanyMapper.selectByModel(condition);
+        if (busAgentCompany == null) {
+            throw new BusinessException("注册码不存在，请检查后在输入！");
+        } else {
+            BusRole busRole = new BusRole();
+            busRole.setType(String.valueOf(busAgentCompany.getState()));
+            Integer roleId = busRoleMapper.selectByModel(busRole).getId();
+            busUser.setRoleId(roleId);
+        }
         return busUserMapper.insertSelective(busUser);
     }
 
@@ -80,5 +102,10 @@ public class BusUserService {
         BusUser model = new BusUser();
         model.setId(id);
         return getBusUser(model);
+    }
+
+    public List<BusUser> getListByRoleType(Integer roleType) {
+        List<BusUser> busUserList = busUserMapper.getListByRoleType(roleType);
+        return busUserList;
     }
 }

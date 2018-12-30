@@ -59,4 +59,8 @@ public interface BusRealEstateMapper {
                                      @Param("orderType") String orderType, @Param("busRealEstate") BusRealEstate busRealEstate);
 
     Long countByModel(@Param("busRealEstate") BusRealEstate busRealEstate);
+
+    String selectThumbnail(String realEstateId);
+
+    List<String> selectImages(String realEstateId);
 }
