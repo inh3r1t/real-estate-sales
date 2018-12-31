@@ -28,10 +28,10 @@
           <view class='item-building'>楼盘名称：{{item.realEstateName}}</view>
         </view>
         <view class='item-tools'>
-          <text wx:if="{{item.state==0}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
-          <text wx:if="{{item.state==1}}" data-state="1" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
-          <text wx:if="{{item.state==2}}" data-state="2" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
-          <text wx:if="{{item.state==3}}" class='item-opt-txt'>已认购</text>
+          <text wx:if="{{item.state==0 && canOpt}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
+          <text wx:if="{{item.state==1 && canOpt}}" data-state="1" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
+          <text wx:if="{{item.state==2 && canOpt}}" data-state="2" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
+          <text wx:if="{{item.state==3 && canOpt}}" class='item-opt-txt'>已认购</text>
           <text class="item-share iconfont icon-fenxiang" data-index="{{index}}" catchtap='share'></text>
         </view>
       </view>

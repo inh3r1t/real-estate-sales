@@ -24,10 +24,14 @@
     </view>
     <view class="form-item-area">
       <text class="form-lable">到访照片</text>
-      <view class='form-upload'>
-        <text class="iconfont icon-jia1" bindtap='selectImage'></text>
+      <view class='form-upload' bindtap='selectImage'>
+        <text class="iconfont icon-jia1"></text>
         <text>上传照片</text>
+        <input name="file"></input>
       </view>
+    </view>
+    <view class="form-item-area form-upload-image">
+      <image src='{{item}}' wx:for="{{images}}" wx:key="index"></image>
     </view>
   </view>
   <view class="form-footer">

@@ -57,7 +57,6 @@ Page({
     });
     app.post("/busUser/login", this.data).then((res) => {
       console.log(res);
-      debugger
       //1.存用户信息到本地存储
       wx.setStorageSync('userInfo', res.data.userInfo);
       wx.setStorageSync('token', res.data.token);

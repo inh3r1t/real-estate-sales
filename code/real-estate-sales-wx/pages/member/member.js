@@ -20,13 +20,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    app.checkLogin();
     this.setData({
       isLogin: app.isLogin(),
-      isBindWechat: wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != '',
-      username: wx.getStorageSync('userInfo').userName,
-      company: wx.getStorageSync('userInfo').companyName || '',
-      avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/personal.png'
+      isBindWechat: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != '',
+      username: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').userName,
+      company: wx.getStorageSync('userInfo') &&  wx.getStorageSync('userInfo').companyName || '',
+      avatar: (wx.getStorageSync('userInfo') && wx.getStorageSync('wxUserInfo').avatarUrl) || '/images/personal.png'
     })
   },
   login: function() {
@@ -62,7 +61,6 @@ Page({
           app.post("/busUser/update", {
             js_code: ''
           }).then((res) => {
-            debugger
             wx.showToast({
               title: '微信解除绑定成功',
               icon: 'success'
@@ -74,7 +72,6 @@ Page({
             wx.setStorageSync('userInfo', res.data)
             app.globalData.userInfo = res.data
           }).catch((res) => {
-            debugger
             wx.showToast({
               title: '微信解除绑定失败',
               icon: 'none'

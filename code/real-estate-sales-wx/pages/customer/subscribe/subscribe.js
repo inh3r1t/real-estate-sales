@@ -14,7 +14,8 @@ Page({
     endYear: 2050,
     day: '',
     id: 0,
-    index: 0
+    index: 0,
+    images: []
   },
 
   /**
@@ -74,20 +75,49 @@ Page({
   },
   selectImage: function() {
     wx.chooseImage({
-      success(res) {
+      success: res => {
         const tempFilePaths = res.tempFilePaths
-        wx.uploadFile({
-          url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
-          name: 'file',
-          formData: {
-            'user': 'test'
-          },
-          success(res) {
-            const data = res.data
-            //do something
-          }
+        //启动上传等待中...  
+        wx.showToast({
+          title: '正在上传...',
+          icon: 'loading',
+          mask: true,
+          duration: 10000
         })
+        var uploadImgCount = 0;
+        for (var i = 0, h = tempFilePaths.length; i < h; i++) {
+          wx.uploadFile({
+            url: app.globalData._baseUrl + '/uploadFromWechat',
+            filePath: tempFilePaths[i],
+            name: 'file',
+            header: {
+              "Content-Type": "multipart/form-data"
+            },
+            success: res => {
+              uploadImgCount++;
+              console.log(res)
+              if (res.data) {
+                this.data.images.push(JSON.parse(res.data).data);
+                this.setData({
+                  images: this.data.images
+                });
+              }
+              //如果是最后一张,则隐藏等待中  
+              if (uploadImgCount == tempFilePaths.length) {
+                wx.hideToast();
+              }
+            },
+            fail: function(res) {
+              wx.hideToast();
+              wx.showModal({
+                title: '错误提示',
+                content: '上传图片失败',
+                showCancel: false,
+                success: function(res) {}
+              })
+            }
+          });
+        }
       }
     })
   },
@@ -101,7 +131,8 @@ Page({
     // 客户到访
     app.post("/busDeal/subscribe", {
         id: this.data.id,
-        subscribeTime: this.getDate()
+        subscribeTime: this.getDate(),
+        subscribePhotoPahts: this.data.images.toString()
       })
       .then(res => {
         if (res.data != null) {

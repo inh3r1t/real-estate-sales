@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.jndi.toolkit.url.Uri;
 import com.zx.base.common.CaptchaUtil;
+import com.zx.base.common.Const;
 import com.zx.base.common.IterateDirUtil;
 import com.zx.base.common.UploadUtil;
 import com.zx.base.enums.TypeEnums;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
 import com.zx.base.model.TreeJsonEntity;
 import com.zx.lib.http.common.HttpConst;
@@ -158,7 +160,23 @@ public class BaseController {
         path = path.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
         return URLDecoder.decode(getBasePath() + path, "UTF-8");
     }
-
+    @RequestMapping("/uploadFromWechat")
+    @AuthorizeIgnore
+    @ResponseBody
+    public Object uploadFromWechat(MultipartFile file) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "上传成功！");
+        String path = "/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd") + "/";
+        String destPath = null;
+        try {
+            destPath = getAbsolutePath(path);
+            String fileName = file.getOriginalFilename();
+            String realPath = uploadFileRealPath(file, destPath + fileName);
+            resultData.setData(realPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultData;
+    }
 
     @RequestMapping("/upload")
     @ResponseBody
