@@ -1,7 +1,7 @@
 <import src="../../../wxParse/wxParse.wxml" />
 
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{building.img_urls}}" wx:key="index">
+  <block wx:for="{{building.images}}" wx:key="index">
     <swiper-item>
       <image src="{{item}}" mode='aspectFill' class="slide-image" />
     </swiper-item>

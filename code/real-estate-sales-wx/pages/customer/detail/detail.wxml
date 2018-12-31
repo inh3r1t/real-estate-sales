@@ -29,7 +29,7 @@
       <text>到访 {{model.arriveTime}}</text>
     </view>
     <view class='item-image'>
-      <image src="{{item}}" wx:for="{{model.arriveCertifyPhotoPath}}" wx:key="index"></image>
+      <image src="{{item}}" wx:for="{{arriveCertifyPhotoPaths}}" wx:key="index"></image>
     </view>
   </view>
   <view class='order-step' wx:if="{{model.state >= 3}}">
@@ -40,7 +40,7 @@
     <view class='item-price'>客户姓名：{{model.customerName}}</view>
     <view class='item-commission'>客户号码：{{model.customerPhone}}</view>
     <view class='item-image'>
-      <image src="{{item}}" wx:for="{{model.subscribePhotoPahts}}" wx:key="index"></image>
+      <image src="{{item}}" wx:for="{{subscribePhotoPaths}}" wx:key="index"></image>
     </view>
   </view>
 </view>

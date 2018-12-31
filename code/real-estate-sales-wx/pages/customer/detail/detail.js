@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    model: {}
+    model: {},
+    arriveCertifyPhotoPaths: [],
+    subscribePhotoPaths: []
   },
 
   /**
@@ -15,8 +17,27 @@ Page({
     let id = options.id || 0
     app.get("/busDeal/getById/" + id).then(res => {
       console.log(res)
+      debugger
+      var arriveCertifyPhotoPathList = []
+      if (res.data.arriveCertifyPhotoPath != null) {
+        if (res.data.arriveCertifyPhotoPath.indexOf(',') > -1) {
+          arriveCertifyPhotoPathList = res.data.rriveCertifyPhotoPath.split(',');
+        } else {
+          arriveCertifyPhotoPathList.push(res.data.arriveCertifyPhotoPath)
+        }
+      }
+      var subscribePhotoPathsList = []
+      if (res.data.subscribePhotoPahts != null) {
+        if (res.data.subscribePhotoPahts.indexOf(',') > -1) {
+          subscribePhotoPathsList = res.data.subscribePhotoPahts.split(',');
+        } else {
+          subscribePhotoPathsList.push(res.data.subscribePhotoPahts)
+        }
+      }
       this.setData({
-        model: res.data
+        model: res.data,
+        arriveCertifyPhotoPaths: arriveCertifyPhotoPathList,
+        subscribePhotoPaths: subscribePhotoPathsList
       })
     })
   },
@@ -28,7 +49,6 @@ Page({
 
   },
   makePhoneCall: function(e) {
-    debugger
     let phone = e.currentTarget.dataset.phone
     wx.makePhoneCall({
       phoneNumber: phone

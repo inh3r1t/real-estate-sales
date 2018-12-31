@@ -17,7 +17,8 @@ Page({
       report_count: 0,
       arrive_count: 0,
       subscribe_count: 0,
-    }
+    },
+    canOpt: false
   },
 
   /**
@@ -34,7 +35,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    app.checkLogin();
+    app.checkLogin().then(res => {
+      var user = app.globalData.userInfo;
+      if (user != null) {
+        this.setData({
+          // canOpt: user.roloId == 0
+          canOpt: true
+        })
+      }
+    });
+
   },
 
 

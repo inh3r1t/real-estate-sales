@@ -8,12 +8,11 @@
   margin-left: 100rpx;
   background-color: #fafafa;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .form .form-upload text {
-  line-height: 80rpx;
+  line-height: 90rpx;
 }
 
 .form-picker {
@@ -77,4 +76,15 @@
 .time {
   position: absolute;
   right: 100rpx;
+}
+
+.form-upload-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-upload-image image {
+  height: 200rpx;
 }

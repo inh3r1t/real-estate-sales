@@ -14,16 +14,16 @@ Page({
     isLogin: false
   },
   onLoad: function() {
-    app.post("/busRealEstate/getPage", {
-      page: 1,
-      pageSize: 10,
-      isTopRecommend: 1
-    }).then(res => {
-      console.log(res.data);
-      this.setData({
-        topList: res.data.Items
-      })
-    })
+    // app.post("/busRealEstate/getPage", {
+    //   page: 1,
+    //   pageSize: 10,
+    //   isTopRecommend: 1
+    // }).then(res => {
+    //   console.log(res.data);
+    //   this.setData({
+    //     topList: res.data.Items
+    //   })
+    // })
     app.post("/busRealEstate/getPage", {
       page: 1,
       pageSize: 10,

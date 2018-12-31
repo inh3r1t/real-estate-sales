@@ -59,7 +59,6 @@ Page({
 
   },
   formSubmit: function(e) {
-    debugger
     const params = e.detail.value
     if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0]

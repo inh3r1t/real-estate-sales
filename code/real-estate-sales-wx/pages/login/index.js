@@ -16,7 +16,6 @@ Page({
   },
   getUserInfo: function(e) {
     // 获取用户信息
-    debugger
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
