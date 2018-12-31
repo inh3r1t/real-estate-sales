@@ -11,6 +11,24 @@ public class PageVO implements Serializable {
 
     private Integer page;
     private Integer pageSize;
+    private String orderField;
+    private String orderType;
+
+    public String getOrderField() {
+        return orderField;
+    }
+
+    public void setOrderField(String orderField) {
+        this.orderField = orderField;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
 
     public Integer getPage() {
         return page;

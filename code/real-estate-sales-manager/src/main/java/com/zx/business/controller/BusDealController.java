@@ -33,16 +33,15 @@ public class BusDealController extends BusBaseController {
     @ResponseBody
     @WechatAuthorize
     @AuthorizeIgnore
-    public ResultData getPage(HttpServletRequest request) {
+    public ResultData getPage(@RequestBody BusDeal condition, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {
             wechatAuthCheck(request);
 
             Integer busUserId = getUserByToken(request.getHeader("token")).getId();
-            BusDeal busDeal = new BusDeal();
-            busDeal.setReportUserId(busUserId);
-            PagerModel<BusDeal> busDealPage = busDealService.getPage(busDeal.getPage(), busDeal.getPageSize(), busDeal);
-            Map<String, Long> countByState = busDealService.countByState(busDeal);
+            condition.setReportUserId(busUserId);
+            PagerModel<BusDeal> busDealPage = busDealService.getPage(condition.getPage(), condition.getPageSize(), condition);
+            Map<String, Long> countByState = busDealService.countByState(busUserId);
             Map<String, Object> result = new HashMap<>();
             result.put("list", busDealPage);
             result.put("count", countByState);

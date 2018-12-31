@@ -102,8 +102,12 @@ public class BusRealEstate extends PageVO {
      */
     private Date updateTime;
 
+    // 缩略图
     private String thumbnail;
+    // 楼盘详情顶部图
     private List<String> images;
+
+    private Integer sortWeight;
 
     public BusRealEstate(Integer id, String name, String summery, String address, String commission, Integer managerId, String managerName, String detail, Boolean isTopRecommend, Boolean isListRecommend, Date createTime, Date updateTime, String thumbnail, List<String> images) {
         this.id = id;
@@ -120,6 +124,14 @@ public class BusRealEstate extends PageVO {
         this.updateTime = updateTime;
         this.thumbnail = thumbnail;
         this.images = images;
+    }
+
+    public Integer getSortWeight() {
+        return sortWeight;
+    }
+
+    public void setSortWeight(Integer sortWeight) {
+        this.sortWeight = sortWeight;
     }
 
     public Boolean getTopRecommend() {

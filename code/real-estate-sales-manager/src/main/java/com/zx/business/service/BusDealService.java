@@ -41,7 +41,9 @@ public class BusDealService {
         return new PagerModel<>(pageSize, page, count.intValue(), busDeals);
     }
 
-    public Map<String, Long> countByState(BusDeal busDeal) {
+    public Map<String, Long> countByState(Integer busUserId) {
+        BusDeal busDeal = new BusDeal();
+        busDeal.setReportUserId(busUserId);
         List<BusDeal> busDeals = busDealMapper.selectByPage(null, null, null, null, busDeal);
         Map<String, Long> result = busDeals.stream().collect(Collectors.groupingBy(deal -> BusConstants.DEAL_STATE_INFO.get(deal.getState()),
                 Collectors.counting()));
@@ -89,6 +91,8 @@ public class BusDealService {
             busDealList.add(busDeal);
         }
 
+        // 发送通知
+
         busDealMapper.batchInsert(busDealList);
     }
 
@@ -99,6 +103,9 @@ public class BusDealService {
         execBusDeal.setAppointmentOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+
+        // 发送通知
+
         return execBusDeal;
     }
 
@@ -109,6 +116,9 @@ public class BusDealService {
         execBusDeal.setArriveOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+
+        // 发送通知
+
         return execBusDeal;
     }
 
@@ -120,6 +130,9 @@ public class BusDealService {
         execBusDeal.setSubscribeOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+
+        // 发送通知
+
         return execBusDeal;
     }
 }

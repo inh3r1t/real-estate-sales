@@ -177,4 +177,26 @@
       receive_user_id = #{receiveUserId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByPage" parameterType="com.zx.business.model.BusNotifyMsg" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bus_notify_msg
+    where 1=1
+    <if test="busNotifyMsg.sendUserId != null"> and send_user_id = #{busNotifyMsg.sendUserId}</if>
+    <if test="busNotifyMsg.msgContent != null"> and msg_content = #{busNotifyMsg.msgContent}</if>
+    <if test="busNotifyMsg.receiveUserId != null"> and receive_user_id = #{busNotifyMsg.receiveUserId}</if>
+    <if test="busNotifyMsg.id != null"> and id = #{busNotifyMsg.id}</if>
+    <if test="busNotifyMsg.type != null"> and type = #{busNotifyMsg.type}</if>
+    <if test="busNotifyMsg.dealId != null"> and deal_id = #{busNotifyMsg.dealId}</if>
+    <if test="orderField != null">
+      order by ${orderField}
+    </if>
+    <if test="orderType != null">
+      ${orderType}
+    </if>
+    <if test="start != null and pageSize != null">
+      limit #{start}, #{pageSize}
+    </if>
+  </select>
 </mapper>
