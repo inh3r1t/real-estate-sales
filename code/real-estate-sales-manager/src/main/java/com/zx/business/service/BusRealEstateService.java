@@ -22,7 +22,8 @@ public class BusRealEstateService {
     public PagerModel<BusRealEstate> getPage(Integer page, Integer pageSize, BusRealEstate busRealEstate) {
         Long count = busRealEstateMapper.countByModel(busRealEstate);
         int start = (page - 1) * pageSize;
-        List<BusRealEstate> busRealEstates = busRealEstateMapper.selectByPage(start, pageSize, null, null, busRealEstate);
+        List<BusRealEstate> busRealEstates = busRealEstateMapper.selectByPage(start, pageSize, busRealEstate.getOrderField(),
+                busRealEstate.getOrderType(), busRealEstate);
         PagerModel<BusRealEstate> busRealEstatePage = new PagerModel<>(pageSize, page, count.intValue(), busRealEstates);
         return busRealEstatePage;
     }
@@ -37,8 +38,9 @@ public class BusRealEstateService {
     }
 
 
-    public int add(BusRealEstate busRealEstate) {
-        return busRealEstateMapper.insertSelective(busRealEstate);
+    public BusRealEstate add(BusRealEstate busRealEstate) {
+        busRealEstateMapper.insertSelective(busRealEstate);
+        return busRealEstate;
     }
 
     public int update(BusRealEstate busRealEstate) {

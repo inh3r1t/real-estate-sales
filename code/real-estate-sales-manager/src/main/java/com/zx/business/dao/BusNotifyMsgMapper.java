@@ -1,6 +1,9 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusNotifyMsg;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface BusNotifyMsgMapper {
     /**
@@ -58,4 +61,7 @@ public interface BusNotifyMsgMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(BusNotifyMsg record);
+
+    List<BusNotifyMsg> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer size, @Param("orderField") String orderField,
+                                     @Param("orderType") String orderType, @Param("busNotifyMsg") BusNotifyMsg busNotifyMsg);
 }

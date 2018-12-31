@@ -116,7 +116,7 @@ public class BusRealEstateController extends BaseController {
     @ResponseBody
     public Object submit(BusRealEstate estate) {
         boolean insertAction = estate.getId() == null || estate.getId() == 0;
-        String actionName = insertAction ? "添加" : "修改";
+        String actionName = insertAction ? "添加" : "更新";
         estate.setDetail(HtmlUtil.htmlUnescape(estate.getDetail()));
         estate.setCommission(estate.getCommission().replaceAll("%2B", "+"));
         try {

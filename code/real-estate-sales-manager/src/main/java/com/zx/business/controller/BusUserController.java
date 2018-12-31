@@ -72,10 +72,10 @@ public class BusUserController extends BusBaseController {
             } else if (StringUtils.isNotEmpty(busUserVO.getPhoneNum()) && StringUtils.isNotEmpty(busUserVO.getPasswd())) {
                 result = busUserService.loginByAccount(busUserVO.getPhoneNum(), busUserVO.getPasswd());
             } else
-                throw new BusinessException("用户登录失败！");
+                throw new BusinessException(Const.NO_EXIST_USER);
             resultData.setData(result);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setResultCode(e.getMessage());
             resultData.setMsg("用户登录失败！");
             logger.error(e.getMessage(), e);
         }

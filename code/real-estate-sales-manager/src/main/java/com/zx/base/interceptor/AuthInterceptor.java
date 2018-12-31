@@ -72,8 +72,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
                     // 检查session是否过期:7days
                     Long lastTime = DataStore.getInstance().expireInfo.get(busUser.getId());
-                    if (lastTime + 7 * 24 * 60 * 60 * 1000 < System.currentTimeMillis())
+                    if (lastTime + 7 * 24 * 60 * 60 * 1000 < System.currentTimeMillis()) {
+                        // delete expired account
+                        DataStore.getInstance().expireInfo.remove(busUser.getId());
                         request.setAttribute("ERROR_CODE", Const.SESSION_EXPIRE);
+                        return true;
+                    }
+                    // update last access time
                     DataStore.getInstance().expireInfo.put(busUser.getId(), System.currentTimeMillis());
                 } catch (JWTVerificationException e) {
                     request.setAttribute("ERROR_CODE", Const.TOKEN_ERROR);

@@ -49,11 +49,31 @@ public class BusRealEstateServiceTest {
     @Test
     public void test3() {
         BusRealEstate busRealEstate = new BusRealEstate();
-        busRealEstate.setName("高速东方天地");
+        busRealEstate.setOrderField("sort_weight");
+        busRealEstate.setOrderType("desc");
 //        final Long aLong = busRealEstateMapper.countByModel(busRealEstate);
 //        System.out.println(aLong);
 
-        final PagerModel<BusRealEstate> page = busRealEstateService.getPage(1, 3, busRealEstate);
+        final PagerModel<BusRealEstate> page = busRealEstateService.getPage(1, 100, busRealEstate);
         System.out.println(page);
+    }
+
+    @Test
+    public void test4() {
+        BusRealEstate busRealEstate = new BusRealEstate();
+        busRealEstate.setName("高速东方天地qqq111");
+        busRealEstate.setSortWeight(10);
+        final BusRealEstate add = busRealEstateService.add(busRealEstate);
+        System.out.println(add);
+    }
+
+    @Test
+    public void test5() {
+        BusRealEstate busRealEstate = new BusRealEstate();
+        busRealEstate.setId(23);
+        busRealEstate.setName("高速东方天地qq222");
+        busRealEstate.setSortWeight(12);
+        final int update = busRealEstateService.update(busRealEstate);
+        System.out.println(update);
     }
 }

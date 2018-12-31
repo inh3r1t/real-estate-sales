@@ -2,6 +2,7 @@ package com.zx.business.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
 import com.zx.business.common.DataStore;
 import com.zx.business.dao.BusAgentCompanyMapper;
@@ -71,22 +72,25 @@ public class BusUserService {
             result.put("userInfo", busUser);
             return result;
         } else
-            throw new BusinessException("该用户未注册，请先注册再登录！");
+            throw new BusinessException(Const.NO_EXIST_USER);
     }
 
     public Map<String, Object> loginByAccount(String phoneNum, String passwd) {
         BusUser condition = new BusUser();
         condition.setPhoneNum(phoneNum);
-        condition.setPasswd(Md5Util.getMd5(passwd));
         BusUser busUser = getBusUser(condition);
-        if (busUser != null) {String token = getToken(busUser);
-            Map<String, Object> result = new HashMap<>();
-            result.put("token", token);
-            busUser.setPasswd(null);
-            result.put("userInfo", busUser);
-            return result;
-        } else
-            throw new BusinessException("该用户未注册，请先注册再登录！");
+        if (busUser == null)
+            throw new BusinessException(Const.NO_EXIST_USER);
+
+        if (!busUser.getPasswd().equals(Md5Util.getMd5(passwd)))
+            throw new BusinessException(Const.PASSWORD_ERROR);
+
+        String token = getToken(busUser);
+        Map<String, Object> result = new HashMap<>();
+        result.put("token", token);
+        busUser.setPasswd(null);
+        result.put("userInfo", busUser);
+        return result;
     }
 
     private String getToken(BusUser busUser) {
