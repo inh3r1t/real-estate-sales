@@ -44,6 +44,8 @@ public class BusUserService {
             busRole.setType(String.valueOf(busAgentCompany.getState()));
             Integer roleId = busRoleMapper.selectByModel(busRole).get(0).getId();
             busUser.setRoleId(roleId);
+            busUser.setCompanyId(busAgentCompany.getId());
+            busUser.setCompanyName(busAgentCompany.getName());
         }
         return busUserMapper.insertSelective(busUser);
     }

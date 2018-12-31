@@ -7,6 +7,7 @@ import com.zx.base.exception.WechatAuthException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusDeal;
+import com.zx.business.model.BusUser;
 import com.zx.business.service.BusDealService;
 import com.zx.business.vo.BusDealVO;
 import org.slf4j.Logger;
@@ -38,10 +39,19 @@ public class BusDealController extends BusBaseController {
         try {
             wechatAuthCheck(request);
 
-            Integer busUserId = getUserByToken(request.getHeader("token")).getId();
-            condition.setReportUserId(busUserId);
+            BusUser currentUser = getUserByToken(request.getHeader("token"));
+            BusDeal busDeal = new BusDeal();
+            if (currentUser.getBusRole().getType().equals("0")) {
+                // 驻场经理
+                condition.setManagerId(currentUser.getId());
+                busDeal.setManagerId(currentUser.getId());
+            } else {
+                // 中介
+                condition.setReportUserId(currentUser.getId());
+                busDeal.setReportUserId(currentUser.getId());
+            }
             PagerModel<BusDeal> busDealPage = busDealService.getPage(condition.getPage(), condition.getPageSize(), condition);
-            Map<String, Long> countByState = busDealService.countByState(busUserId);
+            Map<String, Long> countByState = busDealService.countByState(busDeal);
             Map<String, Object> result = new HashMap<>();
             result.put("list", busDealPage);
             result.put("count", countByState);
@@ -93,6 +103,7 @@ public class BusDealController extends BusBaseController {
 
     /**
      * 报备
+     *
      * @param busDealVO
      * @return
      */
@@ -121,6 +132,7 @@ public class BusDealController extends BusBaseController {
 
     /**
      * 预约
+     *
      * @param BusDeal
      * @return
      */
@@ -148,6 +160,7 @@ public class BusDealController extends BusBaseController {
 
     /**
      * 到访
+     *
      * @param busDeal
      * @return
      */
@@ -175,6 +188,7 @@ public class BusDealController extends BusBaseController {
 
     /**
      * 认购
+     *
      * @param busDeal
      * @return
      */

@@ -25,6 +25,7 @@
   <resultMap id="ImageResultMap" type="com.zx.business.model.BusRealEstate" extends="BaseResultMap">
     <association property="thumbnail" column="id" select="selectThumbnail" javaType="java.lang.String"/>
     <association property="images" column="id" select="selectImages" javaType="java.util.List"/>
+    <association property="manager" column="manager_id" select="com.zx.business.dao.BusUserMapper.selectByPrimaryKey" javaType="com.zx.business.model.BusUser"/>
   </resultMap>
 
   <resultMap id="SortResultMap" type="com.zx.business.model.BusRealEstate" extends="ImageResultMap">

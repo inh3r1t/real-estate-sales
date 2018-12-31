@@ -5,11 +5,11 @@ import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.vo.BusDealVO;
+import com.zx.lib.utils.DateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,9 @@ public class BusDealService {
     private BusRealEstateMapper busRealEstateMapper;
 
     @Resource
+    private BusNotifyMsgMapper busNotifyMsgMapper;
+
+    @Resource
     private BusUserMapper busUserMapper;
 
     public BusDeal getById(Integer id) {
@@ -41,9 +44,7 @@ public class BusDealService {
         return new PagerModel<>(pageSize, page, count.intValue(), busDeals);
     }
 
-    public Map<String, Long> countByState(Integer busUserId) {
-        BusDeal busDeal = new BusDeal();
-        busDeal.setReportUserId(busUserId);
+    public Map<String, Long> countByState(BusDeal busDeal) {
         List<BusDeal> busDeals = busDealMapper.selectByPage(null, null, null, null, busDeal);
         Map<String, Long> result = busDeals.stream().collect(Collectors.groupingBy(deal -> BusConstants.DEAL_STATE_INFO.get(deal.getState()),
                 Collectors.counting()));
@@ -67,7 +68,6 @@ public class BusDealService {
         busCustomerMapper.insert(busCustomer);
 
         String[] realEstateIds = busDealVO.getRealEstateIds().split(",");
-        List<BusDeal> busDealList = new ArrayList<>();
 
         // add deal records
         for (String id : realEstateIds) {
@@ -84,16 +84,21 @@ public class BusDealService {
             busDeal.setReportUserId(agentId);
             busDeal.setReportUserPhone(agent.getPhoneNum());
             busDeal.setReportCompany(agent.getCompanyName());
-            busDeal.setReportTime(busDealVO.getReportTime());
+            busDeal.setReportTime(new Date());
             busDeal.setReportOperateTime(new Date());
+            busDeal.setManagerId(busRealEstate.getManagerId());
             busDeal.setCreateTime(new Date());
+            busDealMapper.insertSelective(busDeal);
 
-            busDealList.add(busDeal);
+            // add notify msg record
+            BusNotifyMsg busNotifyMsg = new BusNotifyMsg();
+            busNotifyMsg.setType(0);
+            busNotifyMsg.setReceiveUserId(busRealEstate.getManagerId());
+            busNotifyMsg.setDealId(busDeal.getId());
+            busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
+            busNotifyMsgMapper.insertSelective(busNotifyMsg);
         }
 
-        // 发送通知
-
-        busDealMapper.batchInsert(busDealList);
     }
 
     public BusDeal appointment(BusDeal busDeal) {
@@ -104,12 +109,18 @@ public class BusDealService {
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
 
-        // 发送通知
-
+        // add notify msg record
+        BusNotifyMsg busNotifyMsg = new BusNotifyMsg();
+        busNotifyMsg.setType(1);
+        busNotifyMsg.setReceiveUserId(execBusDeal.getBusRealEstate().getManagerId());
+        busNotifyMsg.setDealId(busDeal.getId());
+        busNotifyMsg.setMsgContent(appointmentMsg(execBusDeal.getBusCustomer().getName(), execBusDeal.getBusCustomer().getSex(), execBusDeal.getRealEstateName(),
+                DateUtil.toDateString(busDeal.getAppointmentTime(), "yyyy-MM-dd HH:mm")));
+        busNotifyMsgMapper.insertSelective(busNotifyMsg);
         return execBusDeal;
     }
 
-    public BusDeal arrive(BusDeal busDeal) { // TODO 图片上传
+    public BusDeal arrive(BusDeal busDeal) {
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
         execBusDeal.setState(2);
         execBusDeal.setArriveTime(busDeal.getArriveTime());
@@ -117,12 +128,10 @@ public class BusDealService {
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
 
-        // 发送通知
-
         return execBusDeal;
     }
 
-    public BusDeal subscribe(BusDeal busDeal) { // TODO 图片上传
+    public BusDeal subscribe(BusDeal busDeal) {
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
         execBusDeal.setState(3);
         execBusDeal.setSubscribeTime(busDeal.getSubscribeTime());
@@ -131,8 +140,34 @@ public class BusDealService {
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
 
-        // 发送通知
-
+        // add notify msg record
+        BusNotifyMsg busNotifyMsg = new BusNotifyMsg();
+        busNotifyMsg.setType(2);
+        busNotifyMsg.setReceiveUserId(execBusDeal.getBusRealEstate().getManagerId());
+        busNotifyMsg.setDealId(busDeal.getId());
+        busNotifyMsg.setMsgContent(subscribeMsg(execBusDeal.getReportUser().getCompanyName(), execBusDeal.getCustomerName(), execBusDeal.getBusCustomer().getSex(),
+                execBusDeal.getRealEstateName(), DateUtil.toDateString(execBusDeal.getSubscribeTime(), "yyyy-MM-dd HH:mm")));
+        busNotifyMsgMapper.insertSelective(busNotifyMsg);
         return execBusDeal;
+    }
+
+    // 报备消息通知
+    private String reportMsg(String agentCompanyName, String agentName, String realEstateName) {
+        String model = "【%s】 【%s】 报备了 【%s】 楼盘，请尽快联系处理";
+        return String.format(model, agentCompanyName, agentName, realEstateName);
+    }
+
+    // 预约消息通知
+    private String appointmentMsg(String customerName, Integer customerSex, String realEstateName, String appointmentTime) {
+        String sex = customerSex == 0 ? "先生" : "女士";
+        String model = "您报备的客户【%s】已预约 【%s】 楼盘，预约时间：【%s】";
+        return String.format(model, customerName + sex, realEstateName, appointmentTime);
+    }
+
+    // 认购消息通知
+    private String subscribeMsg(String agentCompanyName, String customerName, Integer customerSex, String realEstateName, String subscribeTime) {
+        String sex = customerSex == 0 ? "先生" : "女士";
+        String model = "【%s】 客户 【%s】已成功认购 【%s】 楼盘，认购时间：【%s】";
+        return String.format(model, agentCompanyName, customerName + sex, realEstateName, subscribeTime);
     }
 }
