@@ -24,7 +24,7 @@ Page({
       isLogin: app.isLogin(),
       isBindWechat: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != '',
       username: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').userName,
-      company: wx.getStorageSync('userInfo') &&  wx.getStorageSync('userInfo').companyName || '',
+      company: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').companyName || '',
       avatar: (wx.getStorageSync('userInfo') && wx.getStorageSync('wxUserInfo').avatarUrl) || '/images/personal.png'
     })
   },
@@ -34,13 +34,20 @@ Page({
     })
   },
   logout: function() {
-    wx.setStorageSync('userInfo', null);
-    wx.setStorageSync('token', null);
-    app.globalData.userInfo = null;
-    app.globalData.token = null;
-    this.setData({
-      isLogin: false
+    wx.showModal({
+      title: '提示',
+      content: '确定退出登录吗？',
+      success: res => {
+        wx.setStorageSync('userInfo', null);
+        wx.setStorageSync('token', null);
+        app.globalData.userInfo = null;
+        app.globalData.token = null;
+        this.setData({
+          isLogin: false
+        })
+      }
     })
+
   },
   toMessage: function() {
     wx.navigateTo({

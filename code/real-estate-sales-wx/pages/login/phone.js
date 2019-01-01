@@ -67,9 +67,24 @@ Page({
         title: '登录成功',
         icon: 'success',
         success: function() {
-          wx.switchTab({
-            url: '/pages/index/index',
-          })
+          var pages = getCurrentPages()
+          var num = pages.length
+          if (num == 0) {
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+          } else {
+            for (var i = num - 1; i >= 0; i--) {
+              console.log(i);
+              console.log(pages[i].route)
+              if (pages[i].route != 'pages/login/phone' && pages[i].route != 'pages/login/index') {
+                wx.navigateBack({
+                  delta: i
+                })
+                break;
+              }
+            }
+          }
         }
       })
     }).catch((res) => {
