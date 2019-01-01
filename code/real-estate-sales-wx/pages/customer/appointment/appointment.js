@@ -67,11 +67,6 @@ Page({
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 预约提交
-    wx.showToast({
-      title: e.detail.formId,
-      icon: 'none',
-      duration: 2000
-    })
     app.post("/busDeal/appointment", {
         id: this.data.id,
         appointmentTime: this.getDate(),

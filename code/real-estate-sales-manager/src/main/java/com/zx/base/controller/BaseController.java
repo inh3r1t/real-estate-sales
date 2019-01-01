@@ -162,6 +162,7 @@ public class BaseController {
         path = path.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
         return URLDecoder.decode(getBasePath() + path, "UTF-8");
     }
+
     @RequestMapping("/uploadFromWechat")
     @AuthorizeIgnore
     @ResponseBody
@@ -225,12 +226,13 @@ public class BaseController {
 
         tempFile.createNewFile();
         file.transferTo(tempFile);
-        //图片压缩
+        //图片压缩后路径
+        String thumPath = tempFile.getParent() + "/thumbnail." + fileName;
         Thumbnails.of(tempFile)
                 .scale(1f)
-                .outputQuality(0.25f)
-                .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-        String relativePath = path.replace("\\", "/");
+                .outputQuality(0.15f)
+                .toFile(thumPath);
+        String relativePath = thumPath.replace("\\", "/");
         if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
             relativePath = relativePath.substring(getBasePath().length());
         }

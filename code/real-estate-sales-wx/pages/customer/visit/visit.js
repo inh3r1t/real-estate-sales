@@ -111,7 +111,7 @@ Page({
   getDate: function() {
     return this.data.dateTimeArray[0][this.data.dateTime[0]] + '-' + this.data.dateTimeArray[1][this.data.dateTime[1]] + '-' + this.data.day + ' ' + this.data.time;
   },
-  formSubmit: function() {
+  formSubmit: function(e) {
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 客户到访

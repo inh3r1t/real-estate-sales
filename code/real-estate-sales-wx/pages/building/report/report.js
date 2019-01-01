@@ -42,7 +42,7 @@ Page({
       // 自定义验证规则
       this.WxValidate.addMethod('telfuzzy', (value, param) => {
         return this.WxValidate.optional(value) || /^1[345789][0-9]\*{4}\d{4}$/.test(value)
-      }, '请输入手机号码，中间4位隐藏')
+      }, '请输入正确手机号码，中间4位隐藏')
     })
   },
   onReady: function() {
