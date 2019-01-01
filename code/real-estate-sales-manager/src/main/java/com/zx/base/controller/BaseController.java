@@ -21,6 +21,8 @@ import com.zx.lib.utils.encrypt.Md5Util;
 import com.zx.lib.web.CookieUtil;
 import com.zx.system.model.*;
 import com.zx.system.service.*;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
 import nl.bitwalker.useragentutils.UserAgent;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -222,9 +224,12 @@ public class BaseController {
         }
 
         tempFile.createNewFile();
-
         file.transferTo(tempFile);
-
+        //图片压缩
+        Thumbnails.of(tempFile)
+                .scale(1f)
+                .outputQuality(0.25f)
+                .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
         String relativePath = path.replace("\\", "/");
         if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
             relativePath = relativePath.substring(getBasePath().length());

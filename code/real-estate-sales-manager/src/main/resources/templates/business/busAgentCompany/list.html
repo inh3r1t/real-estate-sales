@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>活动列表</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <blockquote class="layui-elem-quote">
+        <form id="searchForm" class="layui-form">
+            <div class="layui-inline">
+                <label>名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="keyword" name="keyword" placeholder="请输入关键词" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn" onclick="btn_Search()"><i class="fa fa-search"></i> 检索</span>
+
+                <span class="layui-btn layui-btn-normal" onclick="btn_add()"><i class="fa fa-plus"></i> 新增</span>
+            </div>
+        </form>
+    </blockquote>
+
+    <div class="table-wrapper" id="list">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <!--<th>活动编号</th>-->
+                <th>中介名称</th>
+                <th>电话</th>
+                <th>负责人</th>
+                <th>地址</th>
+                <th class="text-center" style="text-align:center">推荐码</th>
+                <th style="text-align:center;width: 340px">操作</th>
+            </tr>
+            </thead>
+            <tbody style="display:none" data-bind="visible: true">
+            <!-- ko foreach: Items() -->
+            <tr class="CurrentRow">
+                <td class="text-ellipsis-300" data-bind="text:name"></td>
+                <td data-bind="text:phone"></td>
+                <td data-bind="text:chargePerson"></td>
+
+                <td class="text-center" data-bind="text:address"></td>
+                <td class="text-center" data-bind="text:pollCode"></td>
+                <td class="text-center">
+                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-edit"> 编辑</i></a>
+                    <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-trash-o"> 删除</i></a>
+
+                </td>
+            </tr>
+            <!-- /ko -->
+            </tbody>
+        </table>
+
+        <ko-pager-state params="model: $data"></ko-pager-state>
+        <ko-pager params="model: $data"></ko-pager>
+    </div>
+</div>
+<script data-layout-fragment="renderScripts">
+
+    var viewModel = new PagerModel("/busAgentCompany/getList", $('#searchForm').serialize());
+    $(function () {
+        ko.applyBindings(viewModel, $("#list")[0]);
+    });
+
+    function btn_Search() {
+        viewModel.Reload($('#searchForm').serialize());
+    }
+
+    //新增
+    function btn_add() {
+        dialog.iframe('/busAgentCompany/edit', {
+            title: "新建中介公司",
+            size: [900, 700],
+            maxmin: true,
+            fullScreen: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+    }
+
+    //修改
+    function btn_edit(model) {
+        debugger
+        dialog.iframe('/busAgentCompany/edit?id=' + model.id(), {
+            title: "编辑中介公司",
+            size: [900, 700],
+            maxmin: true,
+            fullScreen: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+
+    }
+
+    //删除
+    function btn_del(model) {
+        dialog.confirm('确认删除[' + model.name() + ']中介公司吗？', function () {
+            $.getJSON('/busAgentCompany/delete?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+
+    function btn_view(model) {
+        dialog.iframe('/busAgentCompany/detail?id=' + model.id(), {
+            title: "中介公司详情",
+            size: [900, 700]
+        });
+    }
+
+</script>
+
+</html>

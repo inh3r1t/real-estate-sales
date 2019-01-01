@@ -39,7 +39,7 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
-      return app.post("/busNotifyMsg/getList", {
+      return app.post("/busNotifyMsg/getPage", {
         page: pageNo,
         pageSize: 10
       }).then(res => {

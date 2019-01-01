@@ -2,6 +2,7 @@ package com.zx.business.controller;
 
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.Const;
+import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusAgentCompany;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,28 +26,52 @@ import java.util.List;
  * @Date: 2018/12/30 14:03
  */
 @Controller
-@RequestMapping("busAgentCompany")
-public class BusAgentCompanyController {
+@RequestMapping("/busAgentCompany")
+public class BusAgentCompanyController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BusAgentCompanyController.class);
 
     @Resource
     private BusAgentCompanyService busAgentCompanyService;
 
+    // @RequestMapping(value = "/getList", method = RequestMethod.POST)
+    // @ResponseBody
+    // public ResultData getList(@RequestBody BusAgentCompany busAgentCompany) {
+    //     ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取中介公司列表成功！");
+    //     try {
+    //         List<BusAgentCompany> busDealList = busAgentCompanyService.getList(busAgentCompany);
+    //         resultData.setData(busDealList);
+    //     } catch (Exception e) {
+    //         resultData.setResultCode(Const.FAILED_CODE);
+    //         resultData.setMsg("获取客户列表失败！");
+    //         logger.error(e.getMessage(), e);
+    //     }
+    //     return resultData;
+    // }
+
+    @RequestMapping("/list")
+    public String list() {
+        return "business/busAgentCompany/list";
+    }
+
+
     @RequestMapping(value = "/getList", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData getList(@RequestBody BusAgentCompany busAgentCompany) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取中介公司列表成功！");
+    public Object getList(BusAgentCompany busRealEstate) {
         try {
-            List<BusAgentCompany> busDealList = busAgentCompanyService.getList(busAgentCompany);
-            resultData.setData(busDealList);
+            if (busRealEstate.getPage() == null) {
+                busRealEstate.setPage(1);
+            }
+            if (busRealEstate.getPageSize() == null) {
+                busRealEstate.setPageSize(PAGE_SIZE);
+            }
+            return busAgentCompanyService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取客户列表失败！");
             logger.error(e.getMessage(), e);
+            return new PagerModel<>(busRealEstate.getPage(), busRealEstate.getPageSize(), 0, new ArrayList<>());
         }
-        return resultData;
     }
+
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody

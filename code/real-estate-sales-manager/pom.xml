@@ -86,35 +86,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.zx.lib</groupId>
-            <artifactId>utils</artifactId>
-            <version>1.1</version>
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>ch.qos.logback</groupId>-->
-                    <!--<artifactId>logback-classic</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>ch.qos.logback</groupId>-->
-                    <!--<artifactId>logback-core</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        </dependency>
-        <dependency>
-            <groupId>com.zx.lib</groupId>
-            <artifactId>web</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zx.lib</groupId>
-            <artifactId>json</artifactId>
-            <version>1.1</version>
-        </dependency>
+
         <dependency>
             <groupId>nl.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
@@ -170,6 +142,11 @@
                     <artifactId>zookeeper</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
         </dependency>
     </dependencies>
     <build>
