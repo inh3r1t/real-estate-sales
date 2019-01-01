@@ -1,6 +1,7 @@
 package com.zx.business.service;
 
 import com.zx.base.common.BaseTest;
+import com.zx.base.model.PagerModel;
 import com.zx.business.model.BusNotifyMsg;
 import org.junit.Test;
 
@@ -37,7 +38,7 @@ public class BusNotifyMsgServiceTest extends BaseTest {
     @Test
     public void testGetPage() {
         final BusNotifyMsg condition = new BusNotifyMsg();
-        final List<BusNotifyMsg> list = busNotifyMsgService.getList(condition);
+        final PagerModel<BusNotifyMsg> list = busNotifyMsgService.getPage(1, 4, condition);
         System.out.println(list);
     }
 

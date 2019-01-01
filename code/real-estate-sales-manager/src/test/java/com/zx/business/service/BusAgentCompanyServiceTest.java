@@ -1,6 +1,7 @@
 package com.zx.business.service;
 
 import com.zx.base.common.BaseTest;
+import com.zx.base.model.PagerModel;
 import com.zx.business.model.BusAgentCompany;
 import org.junit.Test;
 
@@ -45,5 +46,12 @@ public class BusAgentCompanyServiceTest extends BaseTest {
     @Test
     public void test3() {
         busAgentCompanyService.delete(1);
+    }
+
+    @Test
+    public void test4() {
+        BusAgentCompany condition = new BusAgentCompany();
+        final PagerModel<BusAgentCompany> page = busAgentCompanyService.getPage(1, 10, condition);
+        System.out.println(page);
     }
 }
