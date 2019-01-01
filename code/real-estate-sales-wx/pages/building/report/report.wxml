@@ -1,4 +1,4 @@
-<form class="form" bindsubmit="formSubmit">
+<form class="form" bindsubmit="formSubmit" report-submit='true'>
   <view class="form-body">
     <view class="form-item">
       <view class="form-lable">客户姓名</view>
