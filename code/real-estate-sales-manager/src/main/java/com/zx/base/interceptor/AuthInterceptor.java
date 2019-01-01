@@ -45,12 +45,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession(true);
         SysUserlogin userLogin = (SysUserlogin) session.getAttribute("currentUserLogin");
         if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
-            AuthorizeIgnore authorizeIgnore = ((HandlerMethod) handler).getMethodAnnotation(AuthorizeIgnore.class);
-            //声明不验证权限
-            if (authorizeIgnore != null) {
-                return true;
-            }
-
             // 验证微信小程序接口
             WechatAuthorize wechatAuthorize = ((HandlerMethod) handler).getMethodAnnotation(WechatAuthorize.class);
             if (wechatAuthorize != null) {
@@ -84,6 +78,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 } finally {
                     return true;
                 }
+            }
+
+            AuthorizeIgnore authorizeIgnore = ((HandlerMethod) handler).getMethodAnnotation(AuthorizeIgnore.class);
+            //声明不验证权限
+            if (authorizeIgnore != null) {
+                return true;
             }
 
             if (userLogin == null) {

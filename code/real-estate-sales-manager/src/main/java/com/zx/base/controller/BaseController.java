@@ -1,19 +1,17 @@
 package com.zx.base.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.sun.jndi.toolkit.url.Uri;
+import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.CaptchaUtil;
 import com.zx.base.common.Const;
 import com.zx.base.common.IterateDirUtil;
 import com.zx.base.common.UploadUtil;
 import com.zx.base.enums.TypeEnums;
 import com.zx.base.exception.BusinessException;
-import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
 import com.zx.base.model.TreeJsonEntity;
-import com.zx.lib.http.common.HttpConst;
 import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.json.JsonUtil;
 import com.zx.lib.utils.*;
@@ -88,14 +86,18 @@ public class BaseController {
     @Value("${custom.wechat.openid.api.url}")
     String openIdApiUrl;
 
+    @Value("${custom.wechat.access_token.api.url}")
+    String accessTokenApiUrl;
+
+    @Value("${custom.wechat.send_template_message.api.url}")
+    String sendTemplateMessageApiUrl;
+
     @Value("${custom.wechat.appid}")
     String appid;
 
     @Value("${custom.wechat.secret}")
     String secret;
 
-    @Value("${custom.wechat.grant_type}")
-    String grant_type;
     //图片上传绝对路径的基础地址
     @Value("${custom.system-url}")
     public String SYSTEM_URL;
@@ -845,18 +847,21 @@ public class BaseController {
         if (js_code == null || js_code.equals(""))
             throw new BusinessException("js_code不能为空！");
         try {
-            Map<String, String> header = new HashMap<>();
-            header.put(HttpConst.CONTENT_TYPE, "application/json");
             Map<String, String> data = new HashMap<>();
             data.put("appid", appid);
             data.put("secret", secret);
             data.put("js_code", js_code);
-            data.put("grant_type", grant_type);
+            data.put("grant_type", "authorization_code");
             String text = HttpKit.get(openIdApiUrl, data, Charset.defaultCharset()).getHtml();
             String openid = JSON.parseObject(text).get("openid").toString();
             return openid;
         } catch (Exception e) {
             throw new BusinessException("获取openid失败！");
         }
+    }
+
+    public String getAccessToken() {
+        return JSON.parseObject(HttpKit.get(String.format(accessTokenApiUrl, "client_credential", appid, secret))
+                .getHtml()).get("access_token").toString();
     }
 }

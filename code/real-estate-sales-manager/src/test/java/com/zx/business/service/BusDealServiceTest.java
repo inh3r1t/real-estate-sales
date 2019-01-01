@@ -4,15 +4,15 @@ import com.zx.base.common.BaseTest;
 import com.zx.business.dao.BusDealMapper;
 import com.zx.business.model.BusDeal;
 import com.zx.business.vo.BusDealVO;
+import com.zx.lib.http.kit.HttpKit;
 import org.junit.Test;
 
 import javax.annotation.Resource;
-
+import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 /**
  * @Author: ytxu3
@@ -81,7 +81,7 @@ public class BusDealServiceTest extends BaseTest {
         busDealVO.setRealEstateIds("1,2");
         busDealVO.setReportUserId(4);
         busDealVO.setReportTime(new Date());
-        busDealService.report(busDealVO);
+        busDealService.report(busDealVO, null);
     }
 
     @Test
@@ -113,5 +113,23 @@ public class BusDealServiceTest extends BaseTest {
     public void test8() {
         final BusDeal byId = busDealService.getById(11);
         System.out.println(byId);
+    }
+
+    @Test
+    public void test9() {
+        String access_token = HttpKit.get(String.format("https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s",
+                "client_credential", "wx4476c55348a31df8", "26754ef3189b3ef8a18d9b5e05d3bb23")).getHtml();
+        System.out.println(access_token);
+        String sendMsgUrl = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + access_token;
+        Map<String, Object> params = new HashMap<>();
+        params.put("touser", "oFnXq0MuKtmlWuj3tTCh6HagZb24");
+        params.put("template_id", "h6AadLhcNf-UdHfZlw2epbxZRlpuZ7LULyDigLl65ig");
+        Map<String, String> data = new HashMap<>();
+        data.put("keyword1", "蓝光香江国际");
+        data.put("keyword2", "张三丰");
+        data.put("keyword3", "138****6789");
+        data.put("keyword4", "李四水");
+        data.put("keyword5", "链家");
+        params.put("data", data);
     }
 }

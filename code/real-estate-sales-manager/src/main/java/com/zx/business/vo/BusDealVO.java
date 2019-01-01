@@ -3,7 +3,7 @@ package com.zx.business.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class BusDealVO implements Serializable {
+public class BusDealVO extends PageVO implements Serializable {
 
     private Integer dealId; // 订单id
     private String realEstateIds; // 楼盘ids,用","隔开

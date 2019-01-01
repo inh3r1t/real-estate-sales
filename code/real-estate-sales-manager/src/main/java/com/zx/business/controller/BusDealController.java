@@ -116,7 +116,7 @@ public class BusDealController extends BusBaseController {
 
             String token = request.getHeader("token");
             busDealVO.setReportUserId(getUserByToken(token).getId());
-            busDealService.report(busDealVO);
+            busDealService.report(busDealVO, getAccessToken());
         } catch (Exception e) {
             if (e instanceof WechatAuthException) {
                 resultData.setResultCode(e.getMessage());
