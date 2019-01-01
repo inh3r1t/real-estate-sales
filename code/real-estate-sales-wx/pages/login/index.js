@@ -32,7 +32,6 @@ Page({
                 app.post("/busUser/login", {
                   js_code: res_login.code
                 }).then((res) => {
-                  debugger
                   wx.setStorageSync('wxUserInfo', e.detail.userInfo);
                   //1.存用户信息到本地存储
                   wx.setStorageSync('userInfo', res.data.userInfo);

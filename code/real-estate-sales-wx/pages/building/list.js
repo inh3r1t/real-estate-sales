@@ -78,12 +78,10 @@ Page({
           more: res.data.Items != null && res.data.Items.length == 10,
           page:pageNo
         })
-        this.loading = false
         // 隐藏加载框
         wx.hideLoading();
       }).catch(err => {
         console.log("==> [ERROR]", err)
-        this.loading = false
         // 隐藏加载框
         wx.hideLoading();
       })
