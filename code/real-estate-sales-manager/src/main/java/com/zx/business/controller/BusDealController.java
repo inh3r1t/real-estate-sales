@@ -33,7 +33,6 @@ public class BusDealController extends BusBaseController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
-    @AuthorizeIgnore
     public ResultData getPage(@RequestBody BusDeal condition, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {

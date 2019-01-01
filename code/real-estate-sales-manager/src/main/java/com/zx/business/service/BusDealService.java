@@ -40,7 +40,7 @@ public class BusDealService {
     public PagerModel<BusDeal> getPage(Integer page, Integer pageSize, BusDeal busDeal) {
         Long count = busDealMapper.countByModel(busDeal);
         int start = (page - 1) * pageSize;
-        List<BusDeal> busDeals = busDealMapper.selectByPage(start, pageSize, null, null, busDeal);
+        List<BusDeal> busDeals = busDealMapper.selectByPage(start, pageSize, "update_time", "desc", busDeal);
         return new PagerModel<>(pageSize, page, count.intValue(), busDeals);
     }
 
