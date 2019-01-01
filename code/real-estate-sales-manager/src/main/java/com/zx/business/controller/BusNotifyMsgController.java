@@ -55,13 +55,13 @@ public class BusNotifyMsgController {
     @RequestMapping(value = "getList", method = RequestMethod.POST)
     @ResponseBody
     public ResultData getList(@RequestBody BusNotifyMsg condition) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "通知删除成功！");
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取通知列表成功！");
         try {
             List<BusNotifyMsg> busNotifyMsgs = busNotifyMsgService.getList(condition);
             resultData.setData(busNotifyMsgs);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("通知删除失败！");
+            resultData.setMsg("获取通知列表失败！");
         }
         return resultData;
     }

@@ -109,6 +109,8 @@ public class BusRealEstate extends PageVO {
 
     private Integer sortWeight;
 
+    private BusUser manager;
+
     public BusRealEstate(Integer id, String name, String summery, String address, String commission, Integer managerId, String managerName, String detail, Boolean isTopRecommend, Boolean isListRecommend, Date createTime, Date updateTime, String thumbnail, List<String> images) {
         this.id = id;
         this.name = name;
@@ -132,6 +134,14 @@ public class BusRealEstate extends PageVO {
 
     public void setSortWeight(Integer sortWeight) {
         this.sortWeight = sortWeight;
+    }
+
+    public BusUser getManager() {
+        return manager;
+    }
+
+    public void setManager(BusUser manager) {
+        this.manager = manager;
     }
 
     public Boolean getTopRecommend() {
