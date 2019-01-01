@@ -14,6 +14,16 @@ public class PageVO implements Serializable {
     private String orderField;
     private String orderType;
 
+    private String formId;
+
+    public String getFormId() {
+        return formId;
+    }
+
+    public void setFormId(String formId) {
+        this.formId = formId;
+    }
+
     public String getOrderField() {
         return orderField;
     }

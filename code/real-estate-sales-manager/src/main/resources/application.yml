@@ -43,6 +43,7 @@ custom:
 #  directory-path:
   upload-node: upload_files
   wechat.openid.api.url: https://api.weixin.qq.com/sns/jscode2session
+  wechat.access_token.api.url: https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s
+  wechat.send_template_message.api.url: POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=%s
   wechat.appid: wx4476c55348a31df8
   wechat.secret: 26754ef3189b3ef8a18d9b5e05d3bb23
-  wechat.grant_type: authorization_code
