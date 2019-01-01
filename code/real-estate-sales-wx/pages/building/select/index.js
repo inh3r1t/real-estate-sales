@@ -73,7 +73,8 @@ Page({
         }
         this.setData({
           list: list,
-          more: res.data.Items != null && res.data.Items.length == 10
+          more: res.data.Items != null && res.data.Items.length == 10,
+          page: pageNo
         })
 
         console.log(this.data.list)

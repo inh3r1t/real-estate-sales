@@ -8,7 +8,7 @@
     <view class='item-phone'>客户号码：{{model.customerPhone}}</view>
     <view class='item-building'>楼盘名称：{{model.realEstateName}}</view>
     <view class='item-user'>
-      <text>报备账号：{{model.reportUserId}} {{model.reportUserPhone}}</text>
+      <text>报备账号：{{model.reportUser.userName}} {{model.reportUserPhone}}</text>
       <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.reportUserPhone}}"></text>
     </view>
     <view class='item-company'>报备公司：{{model.reportCompany}}</view>
@@ -19,7 +19,7 @@
       <text>预约 {{model.appointmentTime}}</text>
     </view>
     <view class='item-user'>
-      <text>项目经理：{{model.managerId}} {{model.managerPhone}}</text>
+      <text>项目经理：{{model.manager.userName}} {{model.managerPhone}}</text>
       <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.managerPhone}}"></text>
     </view>
   </view>

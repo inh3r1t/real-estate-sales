@@ -32,6 +32,7 @@ Page({
                 app.post("/busUser/login", {
                   js_code: res_login.code
                 }).then((res) => {
+                  debugger
                   wx.setStorageSync('wxUserInfo', e.detail.userInfo);
                   //1.存用户信息到本地存储
                   wx.setStorageSync('userInfo', res.data.userInfo);
@@ -40,6 +41,14 @@ Page({
                   app.globalData.userInfo = res.data.userInfo;
                   app.globalData.token = res.data.token;
                   wx.hideLoading();
+                  wx.showToast({
+                    title: '登录成功',
+                    icon: 'success',
+                    success: function() {
+                      wx.navigateBack({
+                      })
+                    }
+                  })
                 }).catch((res) => {
                   wx.showToast({
                     title: '微信快捷登录失败',

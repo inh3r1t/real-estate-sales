@@ -65,7 +65,7 @@ Page({
   getList(pageNo, override) {
     if (this.data.more || override) {
       wx.showLoading({
-        title: '玩命加载中',
+        title: '加载中',
       })
       return app.post("/busRealEstate/getPage", {
         page: pageNo,
@@ -75,7 +75,8 @@ Page({
         console.log(res)
         this.setData({
           list: override ? res.data.Items : this.data.list.concat(res.data.Items),
-          more: res.data.Items != null && res.data.Items.length == 10
+          more: res.data.Items != null && res.data.Items.length == 10,
+          page:pageNo
         })
         this.loading = false
         // 隐藏加载框

@@ -35,16 +35,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    app.checkLogin().then(res => {
-      var user = app.globalData.userInfo;
-      if (user != null) {
-        this.setData({
-          // canOpt: user.roloId == 0
-          canOpt: true
-        })
-      }
-    });
-
+    var user = app.globalData.userInfo;
+    if (user != null) {
+      this.setData({
+        canOpt: user.roloId == 0
+        // canOpt: true
+      })
+    }
   },
 
 
@@ -148,7 +145,7 @@ Page({
   getList(pageNo, override) {
     if (this.data.more || override) {
       wx.showLoading({
-        title: '玩命加载中',
+        title: '加载中',
       })
       var state = '';
       if (this.data.currentTab == 1) {
@@ -162,15 +159,16 @@ Page({
       }
       return app.post("/busDeal/getPage", {
         page: pageNo,
-        pageSize: 5,
+        pageSize: 10,
         state: state
       }).then(res => {
         //这里既可以获取模拟的res
         console.log(res)
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
-          more: res.data.list.Items != null && res.data.list.Items.length == 5,
-          count: res.data.count
+          more: res.data.list.Items != null && res.data.list.Items.length == 10,
+          count: res.data.count,
+          page: pageNo
         })
         // 隐藏加载框
         wx.hideLoading();
