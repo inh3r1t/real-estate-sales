@@ -2,6 +2,7 @@ package com.zx.business.controller;
 
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.Const;
+import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusAgentCompany;
 import com.zx.business.model.BusDeal;
@@ -36,8 +37,23 @@ public class BusAgentCompanyController {
     public ResultData getList(@RequestBody BusAgentCompany busAgentCompany) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取中介公司列表成功！");
         try {
-            List<BusDeal> busDealList = busAgentCompanyService.getList(busAgentCompany);
+            List<BusAgentCompany> busDealList = busAgentCompanyService.getList(busAgentCompany);
             resultData.setData(busDealList);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取客户列表失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+    @RequestMapping(value = "/getPage", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData getPage(@RequestBody BusAgentCompany busAgentCompany) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取中介公司列表成功！");
+        try {
+            PagerModel<BusAgentCompany> busDealPage = busAgentCompanyService.getPage(busAgentCompany.getPage(), busAgentCompany.getPageSize(), busAgentCompany);
+            resultData.setData(busDealPage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取客户列表失败！");

@@ -1,5 +1,6 @@
 package com.zx.business.service;
 
+import com.zx.base.model.PagerModel;
 import com.zx.business.dao.BusNotifyMsgMapper;
 import com.zx.business.model.BusNotifyMsg;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,12 @@ public class BusNotifyMsgService {
 
     public List<BusNotifyMsg> getList(BusNotifyMsg condition) {
         return busNotifyMsgMapper.selectByPage(null, null, null, null, condition);
+    }
+
+    public PagerModel<BusNotifyMsg> getPage(int page, int pageSize, BusNotifyMsg condition) {
+        Long count = busNotifyMsgMapper.countByModel(condition);
+        int start = (page - 1) * pageSize;
+        List<BusNotifyMsg> busNotifyMsgs = busNotifyMsgMapper.selectByPage(start, pageSize, "update_time", "desc", condition);
+        return new PagerModel<>(pageSize, page, count.intValue(), busNotifyMsgs);
     }
 }

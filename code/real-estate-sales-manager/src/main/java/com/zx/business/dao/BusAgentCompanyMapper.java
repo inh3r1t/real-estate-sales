@@ -55,9 +55,11 @@ public interface BusAgentCompanyMapper {
      */
     int updateByPrimaryKey(BusAgentCompany record);
 
-    List<BusDeal> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer pageSize,
+    List<BusAgentCompany> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer pageSize,
                                @Param("orderField") String orderField, @Param("orderType") String orderType,
                                @Param("busAgentCompany")BusAgentCompany busAgentCompany);
 
     List<BusAgentCompany> selectByModel(BusAgentCompany condition);
+
+    Long countByModel(BusAgentCompany busAgentCompany);
 }
