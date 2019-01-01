@@ -35,6 +35,11 @@ public class BusAgentCompanyService {
         return busAgentCompany;
     }
 
+
+    public BusAgentCompany getById(Integer id) {
+        return busAgentCompanyMapper.selectByPrimaryKey(id);
+    }
+
     public BusAgentCompany delete(Integer id) {
         busAgentCompanyMapper.deleteByPrimaryKey(id);
         return null;
@@ -45,5 +50,14 @@ public class BusAgentCompanyService {
         int start = (page - 1) * pageSize;
         List<BusAgentCompany> busAgentCompanies = busAgentCompanyMapper.selectByPage(start, pageSize, null, null, busAgentCompany);
         return new PagerModel<>(pageSize, page, count.intValue(), busAgentCompanies);
+    }
+
+    public BusAgentCompany add(BusAgentCompany busRealEstate) {
+        busAgentCompanyMapper.insertSelective(busRealEstate);
+        return busRealEstate;
+    }
+
+    public int update(BusAgentCompany busRealEstate) {
+        return busAgentCompanyMapper.updateByPrimaryKeySelective(busRealEstate);
     }
 }

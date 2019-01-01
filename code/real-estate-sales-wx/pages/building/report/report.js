@@ -98,7 +98,8 @@ Page({
         realEstateIds: ids.toString(),
         customerName: params.name,
         customerPhone: params.phone,
-        customerSex: params.sex
+        customerSex: params.sex,
+        formId: e.detail.formId
       })
       .then(res => {
         console.log(res)

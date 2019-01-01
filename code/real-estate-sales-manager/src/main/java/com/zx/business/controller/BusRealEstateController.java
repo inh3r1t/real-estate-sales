@@ -103,7 +103,6 @@ public class BusRealEstateController extends BaseController {
         BusRealEstate estate = new BusRealEstate();
         if (id != null && !id.equals(0)) {
             estate = busRealStateService.getById(id);
-        } else {
         }
         List<BusUser> managerList = new ArrayList<>();
         managerList = busUserService.getListByRoleType(0);

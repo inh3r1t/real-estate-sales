@@ -17,7 +17,6 @@ Page({
     let id = options.id || 0
     app.get("/busDeal/getById/" + id).then(res => {
       console.log(res)
-      debugger
       var arriveCertifyPhotoPathList = []
       if (res.data.arriveCertifyPhotoPath != null) {
         if (res.data.arriveCertifyPhotoPath.indexOf(',') > -1) {
