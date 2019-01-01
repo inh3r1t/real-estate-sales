@@ -1,8 +1,10 @@
 package com.zx.business.controller;
 
 import com.zx.base.common.Const;
+import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusNotifyMsg;
+import com.zx.business.model.BusUser;
 import com.zx.business.service.BusNotifyMsgService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("busNotifyMsg")
-public class BusNotifyMsgController {
+public class BusNotifyMsgController extends BusBaseController {
 
     @Resource
     private BusNotifyMsgService busNotifyMsgService;
@@ -58,6 +61,23 @@ public class BusNotifyMsgController {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取通知列表成功！");
         try {
             List<BusNotifyMsg> busNotifyMsgs = busNotifyMsgService.getList(condition);
+            resultData.setData(busNotifyMsgs);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取通知列表失败！");
+        }
+        return resultData;
+    }
+
+    @RequestMapping(value = "getPage", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData getPage(@RequestBody BusNotifyMsg condition, HttpServletRequest request) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取通知列表成功！");
+        try {
+            wechatAuthCheck(request);
+            BusUser currentUser = getUserByToken(request.getHeader("token"));
+            condition.setReceiveUserId(currentUser.getId());
+            PagerModel<BusNotifyMsg> busNotifyMsgs = busNotifyMsgService.getPage(condition.getPage(), condition.getPageSize(), condition);
             resultData.setData(busNotifyMsgs);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);

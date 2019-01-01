@@ -191,4 +191,18 @@
   <if test="id != null"> and id = #{id}</if>
   <if test="state != null"> and state = #{state}</if>
   </select>
+
+  <select id="countByModel" parameterType="com.zx.business.model.BusAgentCompany" resultType="java.lang.Long">
+    select
+    count(1)
+    from bus_agent_company
+    where 1=1
+    <if test="address != null"> and address = #{address}</if>
+    <if test="pollCode != null"> and poll_code = #{pollCode}</if>
+    <if test="phone != null"> and phone = #{phone}</if>
+    <if test="chargePerson != null"> and charge_person = #{chargePerson}</if>
+    <if test="name != null"> and name = #{name}</if>
+    <if test="id != null"> and id = #{id}</if>
+    <if test="state != null"> and state = #{state}</if>
+  </select>
 </mapper>

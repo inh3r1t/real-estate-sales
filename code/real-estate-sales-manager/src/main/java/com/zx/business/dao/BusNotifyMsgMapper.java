@@ -64,4 +64,6 @@ public interface BusNotifyMsgMapper {
 
     List<BusNotifyMsg> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer size, @Param("orderField") String orderField,
                                      @Param("orderType") String orderType, @Param("busNotifyMsg") BusNotifyMsg busNotifyMsg);
+
+    Long countByModel(BusNotifyMsg condition);
 }

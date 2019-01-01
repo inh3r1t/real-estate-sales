@@ -1,5 +1,6 @@
 package com.zx.business.service;
 
+import com.zx.base.model.PagerModel;
 import com.zx.business.dao.BusAgentCompanyMapper;
 import com.zx.business.model.BusAgentCompany;
 import com.zx.business.model.BusDeal;
@@ -20,7 +21,7 @@ public class BusAgentCompanyService {
     @Resource
     private BusAgentCompanyMapper busAgentCompanyMapper;
 
-    public List<BusDeal> getList(BusAgentCompany busAgentCompany) {
+    public List<BusAgentCompany> getList(BusAgentCompany busAgentCompany) {
         return busAgentCompanyMapper.selectByPage(null, null, null, null, busAgentCompany);
     }
 
@@ -37,5 +38,12 @@ public class BusAgentCompanyService {
     public BusAgentCompany delete(Integer id) {
         busAgentCompanyMapper.deleteByPrimaryKey(id);
         return null;
+    }
+
+    public PagerModel<BusAgentCompany> getPage(Integer page, Integer pageSize, BusAgentCompany busAgentCompany) {
+        Long count = busAgentCompanyMapper.countByModel(busAgentCompany);
+        int start = (page - 1) * pageSize;
+        List<BusAgentCompany> busAgentCompanies = busAgentCompanyMapper.selectByPage(start, pageSize, "update_time", "desc", busAgentCompany);
+        return new PagerModel<>(pageSize, page, count.intValue(), busAgentCompanies);
     }
 }
