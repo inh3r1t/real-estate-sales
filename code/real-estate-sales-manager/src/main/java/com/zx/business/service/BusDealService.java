@@ -5,6 +5,8 @@ import com.zx.base.model.PagerModel;
 import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
+import com.zx.business.notify.Notify;
+import com.zx.business.notify.model.Message;
 import com.zx.business.vo.BusDealVO;
 import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.utils.DateUtil;
@@ -41,6 +43,12 @@ public class BusDealService {
 
     @Resource
     private BusUserMapper busUserMapper;
+
+    @Resource(name = "wechatNotify")
+    private Notify notify;
+
+    @Value("wechat.appid")
+    private String appid;
 
     @Value("wechat.send_template_message.api.url")
     private String sendMsgUrl;
@@ -112,21 +120,33 @@ public class BusDealService {
 
             // send notify to user
             String openId = busRealEstate.getManager().getOpenId();
-            // 未绑定微信怎么不发送通知
+            // 未绑定微信则不发送通知
             if (openId == null)
                 return;
             Map<String, Object> params = new HashMap<>();
             params.put("touser", openId);
             params.put("formId", busDealVO.getFormId());
             params.put("template_id", "h6AadLhcNf-UdHfZlw2epbxZRlpuZ7LULyDigLl65ig");
-            Map<String, String> data = new HashMap<>();
-            data.put("keyword1", "蓝光香江国际");
-            data.put("keyword2", "张三丰");
-            data.put("keyword3", "138****6789");
-            data.put("keyword4", "李四水");
-            data.put("keyword5", "链家");
+            Map<String, Object> data = new HashMap<>();
+            data.put("keyword1", new HashMap<String, String>() {{
+                put("value", "蓝光香江国际");
+            }});
+            data.put("keyword2", new HashMap<String, String>() {{
+                put("value", "张三丰");
+            }});
+            data.put("keyword3", new HashMap<String, String>() {{
+                put("value", "138****6789");
+            }});
+            data.put("keyword4", new HashMap<String, String>() {{
+                put("value", "李四水");
+            }});
+            data.put("keyword5", new HashMap<String, String>() {{
+                put("value", "链家");
+            }});
             params.put("data", data);
-            sendNotifyMsg(access_token, params);
+            Message message = new Message();
+            message.setParams(params);
+            notify.notify(message);
         }
 
     }
@@ -199,16 +219,5 @@ public class BusDealService {
         String sex = customerSex == 0 ? "先生" : "女士";
         String model = "【%s】 客户 【%s】已成功认购 【%s】 楼盘，认购时间：【%s】";
         return String.format(model, agentCompanyName, customerName + sex, realEstateName, subscribeTime);
-    }
-
-    private void sendNotifyMsg(String access_token, Map<String, Object> params) {
-        try {
-            String sendMsgUrl = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" + access_token;
-            String result = HttpKit.post(sendMsgUrl, JSON.toJSONString(params)).getHtml();
-            logger.info("发送报备通知成功！结果：" + result);
-        } catch (Exception e) {
-            logger.error("发送报备通知失败！", e);
-        }
-
     }
 }

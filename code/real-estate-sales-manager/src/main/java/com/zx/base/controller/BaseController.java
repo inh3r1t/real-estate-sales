@@ -84,9 +84,6 @@ public class BaseController {
     @Value("${custom.wechat.openid.api.url}")
     String openIdApiUrl;
 
-    @Value("${custom.wechat.access_token.api.url}")
-    String accessTokenApiUrl;
-
     @Value("${custom.wechat.send_template_message.api.url}")
     String sendTemplateMessageApiUrl;
 
