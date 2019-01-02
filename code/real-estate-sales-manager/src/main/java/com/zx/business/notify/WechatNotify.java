@@ -29,7 +29,7 @@ public class WechatNotify implements Notify {
     @Override
     public String notify(Message message) {
         String sendMsgUrl = sendTemplateMessageUrl + getAccessToken();
-        String result = HttpKit.post(sendMsgUrl, JSON.toJSONString(message.getParams())).getHtml();
+        String result = HttpKit.post(sendMsgUrl, "").getHtml();
         return result;
     }
 

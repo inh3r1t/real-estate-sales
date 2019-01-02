@@ -6,6 +6,7 @@ import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
 import com.zx.business.notify.model.Message;
+import com.zx.business.notify.model.SmsMessage;
 import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
 import org.slf4j.Logger;
@@ -115,7 +116,7 @@ public class BusDealService {
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
 
-            Message message = new Message();
+            Message message = new SmsMessage();
             notify.notify(message);
         }
 
@@ -163,12 +164,32 @@ public class BusDealService {
         // add notify msg record
         BusNotifyMsg busNotifyMsg = new BusNotifyMsg();
         busNotifyMsg.setType(2);
-        busNotifyMsg.setReceiveUserId(execBusDeal.getBusRealEstate().getManagerId());
+        busNotifyMsg.setReceiveUserId(execBusDeal.getReportUserId());
         busNotifyMsg.setDealId(busDeal.getId());
         busNotifyMsg.setMsgContent(subscribeMsg(execBusDeal.getReportUser().getCompanyName(), execBusDeal.getCustomerName(), execBusDeal.getBusCustomer().getSex(),
                 execBusDeal.getRealEstateName(), DateUtil.toDateString(execBusDeal.getSubscribeTime(), "yyyy-MM-dd HH:mm")));
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
         return execBusDeal;
+    }
+
+    public BusDeal sign(BusDeal busDeal) {
+        BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
+        execBusDeal.setState(4);
+        execBusDeal.setSignTime(new Date());
+        execBusDeal.setSignMoney(busDeal.getSubscribeMoney());
+        execBusDeal.setSignOperateTime(new Date());
+        execBusDeal.setUpdateTime(new Date());
+        busDealMapper.updateByPrimaryKeySelective(execBusDeal);
+
+        // add notify msg record
+        BusNotifyMsg busNotifyMsg = new BusNotifyMsg();
+        busNotifyMsg.setType(3);
+        busNotifyMsg.setReceiveUserId(execBusDeal.getReportUserId());
+        busNotifyMsg.setDealId(busDeal.getId());
+        busNotifyMsg.setMsgContent(signMsg(execBusDeal.getReportUser().getCompanyName(), execBusDeal.getCustomerName(), execBusDeal.getBusCustomer().getSex(),
+                execBusDeal.getRealEstateName(), DateUtil.toDateString(execBusDeal.getSubscribeTime(), "yyyy-MM-dd HH:mm")));
+        busNotifyMsgMapper.insertSelective(busNotifyMsg);
+        return null;
     }
 
     // 报备消息通知
@@ -188,6 +209,13 @@ public class BusDealService {
     private String subscribeMsg(String agentCompanyName, String customerName, Integer customerSex, String realEstateName, String subscribeTime) {
         String sex = customerSex == 0 ? "先生" : "女士";
         String model = "【%s】 客户 【%s】已成功认购 【%s】 楼盘，认购时间：【%s】";
+        return String.format(model, agentCompanyName, customerName + sex, realEstateName, subscribeTime);
+    }
+
+    // 签约消息通知
+    private String signMsg(String agentCompanyName, String customerName, Integer customerSex, String realEstateName, String subscribeTime) {
+        String sex = customerSex == 0 ? "先生" : "女士";
+        String model = "【%s】 客户 【%s】已成功签约 【%s】 楼盘，签约时间：【%s】";
         return String.format(model, agentCompanyName, customerName + sex, realEstateName, subscribeTime);
     }
 }
