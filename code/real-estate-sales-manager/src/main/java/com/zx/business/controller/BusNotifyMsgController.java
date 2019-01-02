@@ -1,5 +1,7 @@
 package com.zx.business.controller;
 
+import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
@@ -71,6 +73,8 @@ public class BusNotifyMsgController extends BusBaseController {
 
     @RequestMapping(value = "getPage", method = RequestMethod.POST)
     @ResponseBody
+    @WechatAuthorize
+    @AuthorizeIgnore
     public ResultData getPage(@RequestBody BusNotifyMsg condition, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取通知列表成功！");
         try {

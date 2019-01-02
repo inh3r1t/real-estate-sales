@@ -32,7 +32,6 @@ Page({
                 app.post("/busUser/login", {
                   js_code: res_login.code
                 }).then((res) => {
-                  debugger
                   wx.setStorageSync('wxUserInfo', e.detail.userInfo);
                   //1.存用户信息到本地存储
                   wx.setStorageSync('userInfo', res.data.userInfo);
@@ -52,12 +51,14 @@ Page({
                           url: '/pages/index/index',
                         })
                       } else {
+                        var index = 0;
                         for (var i = num - 1; i >= 0; i--) {
+                          index++;
                           console.log(i);
                           console.log(pages[i].route)
                           if (pages[i].route != 'pages/login/phone' && pages[i].route != 'pages/login/index') {
                             wx.navigateBack({
-                              delta: i
+                              delta: index
                             })
                             break;
                           }

@@ -1,5 +1,9 @@
 <view class="card" wx:for="{{list}}" wx:key="index">
-  <view class='card-title'>{{item.title}} <text class='unread-tip' wx:if="{{!item.isread}}"></text></view>
-  <view class='card-content'>{{item.content}}</view>
-  <view class='card-time'>{{item.time}}</view>
+  <!-- <view class='card-title'>{{item.title}} <text class='unread-tip' wx:if="{{!item.isread}}"></text></view> -->
+  <view class='card-title' wx:if="{{item.type == 0}}">报备信息</view>
+  <view class='card-title' wx:if="{{item.type == 1}}">预约信息</view>
+  <view class='card-title' wx:if="{{item.type == 2}}">认购信息</view>
+  <view class='card-content'>{{item.msgContent}}</view>
+  <view class='card-time'>{{item.createTime}}</view>
 </view>
+<view class='no-more' hidden='{{more}}'>没有更多数据了</view>            

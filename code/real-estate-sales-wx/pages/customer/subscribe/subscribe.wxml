@@ -40,6 +40,6 @@
     </view>
   </view>
   <view class="form-footer">
-    <button class='btn btn-primary' formType="submit">确认到访</button>
+    <button class='btn btn-primary' formType="submit">确认认购</button>
   </view>
 </form>

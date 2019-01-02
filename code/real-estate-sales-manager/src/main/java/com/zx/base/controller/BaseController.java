@@ -19,6 +19,8 @@ import com.zx.lib.utils.encrypt.Md5Util;
 import com.zx.lib.web.CookieUtil;
 import com.zx.system.model.*;
 import com.zx.system.service.*;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
 import nl.bitwalker.useragentutils.UserAgent;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -159,6 +161,7 @@ public class BaseController {
         path = path.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
         return URLDecoder.decode(getBasePath() + path, "UTF-8");
     }
+
     @RequestMapping("/uploadFromWechat")
     @AuthorizeIgnore
     @ResponseBody
@@ -221,10 +224,14 @@ public class BaseController {
         }
 
         tempFile.createNewFile();
-
         file.transferTo(tempFile);
-
-        String relativePath = path.replace("\\", "/");
+        //图片压缩后路径
+        String thumPath = tempFile.getParent() + "/thumbnail." + fileName;
+        Thumbnails.of(tempFile)
+                .scale(1f)
+                .outputQuality(0.15f)
+                .toFile(thumPath);
+        String relativePath = thumPath.replace("\\", "/");
         if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
             relativePath = relativePath.substring(getBasePath().length());
         }

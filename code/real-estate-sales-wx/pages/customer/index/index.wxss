@@ -94,6 +94,10 @@
   font-size: 20px;
 }
 
+.customer .customer-list .customer-item:last-child .divider {
+  display: none;
+}
+
 .item-flows {
   display: flex;
   margin: 20rpx 0;

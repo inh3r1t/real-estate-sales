@@ -124,15 +124,15 @@ Page({
   getDate: function() {
     return this.data.dateTimeArray[0][this.data.dateTime[0]] + '-' + this.data.dateTimeArray[1][this.data.dateTime[1]] + '-' + this.data.day + ' ' + this.data.time;
   },
-  formSubmit: function() {
-    console.log('form发生了submit事件：', this.getDate())
+  formSubmit: function(e) {
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 客户到访
     app.post("/busDeal/subscribe", {
         id: this.data.id,
         subscribeTime: this.getDate(),
-        subscribePhotoPahts: this.data.images.toString()
+        subscribePhotoPahts: this.data.images.toString(),
+        formId: e.detail.formId
       })
       .then(res => {
         if (res.data != null) {

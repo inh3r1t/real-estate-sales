@@ -9,7 +9,7 @@
   </view>
   <view class='divider'></view>
   <view class="list" wx:if="{{isLogin}}">
-    <view class="item">
+    <view class="item" bindtap='toMessage'>
       <text class="iconfont icon-icon"></text>消息中心</view>
     <view class="item" bindtap='toChangePassword'>
       <text class="iconfont icon-xiugaimima"></text>修改密码</view>
