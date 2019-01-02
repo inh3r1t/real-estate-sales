@@ -81,7 +81,7 @@ public class BusDealServiceTest extends BaseTest {
         busDealVO.setRealEstateIds("1,2");
         busDealVO.setReportUserId(4);
         busDealVO.setReportTime(new Date());
-        busDealService.report(busDealVO, null);
+        busDealService.report(busDealVO);
     }
 
     @Test

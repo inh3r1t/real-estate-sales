@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2019/1/2 17:11
  */
 @Component("yunzhixunMessageNotify")
-public class YunzhixunMessageNotify extends MessageNotify {
+public class YunzhixunMsgNotify extends MsgNotify {
 
     @Override
     public String notify(Message message) {

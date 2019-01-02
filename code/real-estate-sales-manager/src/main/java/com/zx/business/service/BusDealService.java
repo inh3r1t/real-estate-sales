@@ -1,6 +1,5 @@
 package com.zx.business.service;
 
-import com.alibaba.fastjson.JSON;
 import com.zx.base.model.PagerModel;
 import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
@@ -8,9 +7,7 @@ import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
 import com.zx.business.notify.model.Message;
 import com.zx.business.vo.BusDealVO;
-import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.utils.DateUtil;
-import org.nutz.http.Http;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,7 +74,7 @@ public class BusDealService {
     }
 
     @Transactional
-    public void report(BusDealVO busDealVO, String access_token) {
+    public void report(BusDealVO busDealVO) {
         Integer agentId = busDealVO.getReportUserId();
         BusUser agent = busUserMapper.selectByPrimaryKey(agentId);
 
@@ -118,34 +115,7 @@ public class BusDealService {
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
 
-            // send notify to user
-            String openId = busRealEstate.getManager().getOpenId();
-            // 未绑定微信则不发送通知
-            if (openId == null)
-                return;
-            Map<String, Object> params = new HashMap<>();
-            params.put("touser", openId);
-            params.put("formId", busDealVO.getFormId());
-            params.put("template_id", "h6AadLhcNf-UdHfZlw2epbxZRlpuZ7LULyDigLl65ig");
-            Map<String, Object> data = new HashMap<>();
-            data.put("keyword1", new HashMap<String, String>() {{
-                put("value", "蓝光香江国际");
-            }});
-            data.put("keyword2", new HashMap<String, String>() {{
-                put("value", "张三丰");
-            }});
-            data.put("keyword3", new HashMap<String, String>() {{
-                put("value", "138****6789");
-            }});
-            data.put("keyword4", new HashMap<String, String>() {{
-                put("value", "李四水");
-            }});
-            data.put("keyword5", new HashMap<String, String>() {{
-                put("value", "链家");
-            }});
-            params.put("data", data);
             Message message = new Message();
-            message.setParams(params);
             notify.notify(message);
         }
 
