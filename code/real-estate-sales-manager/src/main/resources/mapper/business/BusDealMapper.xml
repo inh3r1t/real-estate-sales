@@ -21,16 +21,19 @@
             <arg column="report_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="arrive_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="subscribe_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="sign_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="manager_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
             <arg column="manager_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="arrive_certify_photo_path" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="subscribe_money" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="sign_money" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="subscribe_commision" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="subscribe_photo_pahts" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="appointment_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="report_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="arrive_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="subscribe_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="sign_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
         </constructor>
@@ -50,9 +53,9 @@
         -->
         id, real_estate_id, real_estate_name, state, customer_id, customer_phone, customer_name,
         report_user_id, report_user_phone, report_company, appointment_time, report_time,
-        arrive_time, subscribe_time, manager_id, manager_phone, arrive_certify_photo_path,
-        subscribe_money, subscribe_commision, subscribe_photo_pahts, appointment_operate_time,
-        report_operate_time, arrive_operate_time, subscribe_operate_time, create_time, update_time
+        arrive_time, subscribe_time, sign_time, manager_id, manager_phone, arrive_certify_photo_path,
+        subscribe_money,sign_money, subscribe_commision, subscribe_photo_pahts, appointment_operate_time,
+        report_operate_time, arrive_operate_time, subscribe_operate_time, sign_operate_time, create_time, update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="associateResultMap">
         <!--
@@ -84,21 +87,21 @@
         state, customer_id, customer_phone,
         customer_name, report_user_id, report_user_phone,
         report_company, appointment_time, report_time,
-        arrive_time, subscribe_time, manager_id,
-        manager_phone, arrive_certify_photo_path, subscribe_money,
+        arrive_time, subscribe_time, sign_time, manager_id,
+        manager_phone, arrive_certify_photo_path, subscribe_money,sign_money,
         subscribe_commision, subscribe_photo_pahts,
         appointment_operate_time, report_operate_time,
-        arrive_operate_time, subscribe_operate_time,
+        arrive_operate_time, subscribe_operate_time,sign_operate_time,
         create_time, update_time)
         values (#{id,jdbcType=INTEGER}, #{realEstateId,jdbcType=INTEGER}, #{realEstateName,jdbcType=VARCHAR},
         #{state,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{customerPhone,jdbcType=VARCHAR},
         #{customerName,jdbcType=VARCHAR}, #{reportUserId,jdbcType=INTEGER}, #{reportUserPhone,jdbcType=VARCHAR},
         #{reportCompany,jdbcType=VARCHAR}, #{appointmentTime,jdbcType=TIMESTAMP}, #{reportTime,jdbcType=TIMESTAMP},
-        #{arriveTime,jdbcType=TIMESTAMP}, #{subscribeTime,jdbcType=TIMESTAMP}, #{managerId,jdbcType=INTEGER},
+        #{arriveTime,jdbcType=TIMESTAMP}, #{subscribeTime,jdbcType=TIMESTAMP}, #{signTime,jdbcType=TIMESTAMP}, #{signTime,jdbcType=TIMESTAMP}, #{managerId,jdbcType=INTEGER},
         #{managerPhone,jdbcType=VARCHAR}, #{arriveCertifyPhotoPath,jdbcType=VARCHAR}, #{subscribeMoney,jdbcType=VARCHAR},
         #{subscribeCommision,jdbcType=VARCHAR}, #{subscribePhotoPahts,jdbcType=VARCHAR},
         #{appointmentOperateTime,jdbcType=TIMESTAMP}, #{reportOperateTime,jdbcType=TIMESTAMP},
-        #{arriveOperateTime,jdbcType=TIMESTAMP}, #{subscribeOperateTime,jdbcType=TIMESTAMP},
+        #{arriveOperateTime,jdbcType=TIMESTAMP}, #{subscribeOperateTime,jdbcType=TIMESTAMP}, #{signOperateTime,jdbcType=TIMESTAMP},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="batchInsert" parameterType="com.zx.business.model.BusDeal">
@@ -106,11 +109,11 @@
                               state, customer_id, customer_phone,
                               customer_name, report_user_id, report_user_phone,
                               report_company, appointment_time, report_time,
-                              arrive_time, subscribe_time, manager_id,
-                              manager_phone, arrive_certify_photo_path, subscribe_money,
+                              arrive_time, subscribe_time, sign_time, manager_id,
+                              manager_phone, arrive_certify_photo_path, subscribe_money,sign_money,
                               subscribe_commision, subscribe_photo_pahts,
                               appointment_operate_time, report_operate_time,
-                              arrive_operate_time, subscribe_operate_time,
+                              arrive_operate_time, subscribe_operate_time, sign_operate_time,
                               create_time, update_time)
         values
         <foreach collection="busDealList" item="item" separator=",">
@@ -118,11 +121,11 @@
             #{item.state,jdbcType=INTEGER}, #{item.customerId,jdbcType=INTEGER}, #{item.customerPhone,jdbcType=VARCHAR},
             #{item.customerName,jdbcType=VARCHAR}, #{item.reportUserId,jdbcType=INTEGER}, #{item.reportUserPhone,jdbcType=VARCHAR},
             #{item.reportCompany,jdbcType=VARCHAR}, #{item.appointmentTime,jdbcType=TIMESTAMP}, #{item.reportTime,jdbcType=TIMESTAMP},
-            #{item.arriveTime,jdbcType=TIMESTAMP}, #{item.subscribeTime,jdbcType=TIMESTAMP}, #{item.managerId,jdbcType=INTEGER},
-            #{item.managerPhone,jdbcType=VARCHAR}, #{item.arriveCertifyPhotoPath,jdbcType=VARCHAR}, #{item.subscribeMoney,jdbcType=VARCHAR},
+            #{item.arriveTime,jdbcType=TIMESTAMP}, #{item.subscribeTime,jdbcType=TIMESTAMP}, #{item.signTime,jdbcType=TIMESTAMP}, #{item.managerId,jdbcType=INTEGER},
+            #{item.managerPhone,jdbcType=VARCHAR}, #{item.arriveCertifyPhotoPath,jdbcType=VARCHAR}, #{item.subscribeMoney,jdbcType=VARCHAR}, #{item.signMoney,jdbcType=VARCHAR},
             #{item.subscribeCommision,jdbcType=VARCHAR}, #{item.subscribePhotoPahts,jdbcType=VARCHAR},
             #{item.appointmentOperateTime,jdbcType=TIMESTAMP}, #{item.reportOperateTime,jdbcType=TIMESTAMP},
-            #{item.arriveOperateTime,jdbcType=TIMESTAMP}, #{item.subscribeOperateTime,jdbcType=TIMESTAMP},
+            #{item.arriveOperateTime,jdbcType=TIMESTAMP}, #{item.subscribeOperateTime,jdbcType=TIMESTAMP}, #{item.signOperateTime,jdbcType=TIMESTAMP},
             #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
         </foreach>
     </insert>
@@ -178,6 +181,9 @@
             <if test="subscribeTime != null">
                 subscribe_time,
             </if>
+            <if test="signTime != null">
+                sign_time,
+            </if>
             <if test="managerId != null">
                 manager_id,
             </if>
@@ -189,6 +195,9 @@
             </if>
             <if test="subscribeMoney != null">
                 subscribe_money,
+            </if>
+            <if test="signMoney != null">
+                sign_money,
             </if>
             <if test="subscribeCommision != null">
                 subscribe_commision,
@@ -207,6 +216,9 @@
             </if>
             <if test="subscribeOperateTime != null">
                 subscribe_operate_time,
+            </if>
+            <if test="signOperateTime != null">
+                sign_operate_time,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -258,6 +270,9 @@
             <if test="subscribeTime != null">
                 #{subscribeTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="signTime != null">
+                #{signTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="managerId != null">
                 #{managerId,jdbcType=INTEGER},
             </if>
@@ -269,6 +284,9 @@
             </if>
             <if test="subscribeMoney != null">
                 #{subscribeMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="signMoney != null">
+                #{signMoney,jdbcType=VARCHAR},
             </if>
             <if test="subscribeCommision != null">
                 #{subscribeCommision,jdbcType=VARCHAR},
@@ -287,6 +305,9 @@
             </if>
             <if test="subscribeOperateTime != null">
                 #{subscribeOperateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signOperateTime != null">
+                #{signOperateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
@@ -342,6 +363,9 @@
             <if test="subscribeTime != null">
                 subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="signTime != null">
+                sign_time = #{signTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="managerId != null">
                 manager_id = #{managerId,jdbcType=INTEGER},
             </if>
@@ -353,6 +377,9 @@
             </if>
             <if test="subscribeMoney != null">
                 subscribe_money = #{subscribeMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="signMoney != null">
+                sign_money = #{signMoney,jdbcType=VARCHAR},
             </if>
             <if test="subscribeCommision != null">
                 subscribe_commision = #{subscribeCommision,jdbcType=VARCHAR},
@@ -371,6 +398,9 @@
             </if>
             <if test="subscribeOperateTime != null">
                 subscribe_operate_time = #{subscribeOperateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signOperateTime != null">
+                sign_operate_time = #{signOperateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -400,16 +430,19 @@
         report_time = #{reportTime,jdbcType=TIMESTAMP},
         arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
         subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
+        sign_time = #{signTime,jdbcType=TIMESTAMP},
         manager_id = #{managerId,jdbcType=INTEGER},
         manager_phone = #{managerPhone,jdbcType=VARCHAR},
         arrive_certify_photo_path = #{arriveCertifyPhotoPath,jdbcType=VARCHAR},
         subscribe_money = #{subscribeMoney,jdbcType=VARCHAR},
+        sign_money = #{signMoney,jdbcType=VARCHAR},
         subscribe_commision = #{subscribeCommision,jdbcType=VARCHAR},
         subscribe_photo_pahts = #{subscribePhotoPahts,jdbcType=VARCHAR},
         appointment_operate_time = #{appointmentOperateTime,jdbcType=TIMESTAMP},
         report_operate_time = #{reportOperateTime,jdbcType=TIMESTAMP},
         arrive_operate_time = #{arriveOperateTime,jdbcType=TIMESTAMP},
         subscribe_operate_time = #{subscribeOperateTime,jdbcType=TIMESTAMP},
+        sign_operate_time = #{signOperateTime,jdbcType=TIMESTAMP},
         create_time = #{createTime,jdbcType=TIMESTAMP},
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
@@ -426,9 +459,11 @@
         <if test="busDeal.customerPhone != null"> and customer_phone = #{busDeal.customerPhone}</if>
         <if test="busDeal.arriveOperateTime != null"> and arrive_operate_time = #{busDeal.arriveOperateTime}</if>
         <if test="busDeal.subscribeTime != null"> and subscribe_time = #{busDeal.subscribeTime}</if>
+        <if test="busDeal.signTime != null"> and sign_time = #{busDeal.signTime}</if>
         <if test="busDeal.subscribePhotoPahts != null"> and subscribe_photo_pahts = #{busDeal.subscribePhotoPahts}</if>
         <if test="busDeal.arriveTime != null"> and arrive_time = #{busDeal.arriveTime}</if>
         <if test="busDeal.subscribeOperateTime != null"> and subscribe_operate_time = #{busDeal.subscribeOperateTime}</if>
+        <if test="busDeal.signOperateTime != null"> and sign_operate_time = #{busDeal.signOperateTime}</if>
         <if test="busDeal.managerPhone != null"> and manager_phone = #{busDeal.managerPhone}</if>
         <if test="busDeal.arriveCertifyPhotoPath != null"> and arrive_certify_photo_path = #{busDeal.arriveCertifyPhotoPath}</if>
         <if test="busDeal.realEstateName != null"> and real_estate_name = #{busDeal.realEstateName}</if>
@@ -437,6 +472,7 @@
         <if test="busDeal.reportUserPhone != null"> and report_user_phone = #{busDeal.reportUserPhone}</if>
         <if test="busDeal.reportCompany != null"> and report_company = #{busDeal.reportCompany}</if>
         <if test="busDeal.subscribeMoney != null"> and subscribe_money = #{busDeal.subscribeMoney}</if>
+        <if test="busDeal.signMoney != null"> and sign_money = #{busDeal.signMoney}</if>
         <if test="busDeal.reportOperateTime != null"> and report_operate_time = #{busDeal.reportOperateTime}</if>
         <if test="busDeal.id != null"> and id = #{busDeal.id}</if>
         <if test="busDeal.state != null"> and state = #{busDeal.state}</if>
@@ -462,7 +498,9 @@
         where 1=1
         <if test="appointmentOperateTime != null">and appointment_operate_time = #{appointmentOperateTime}</if>
         <if test="subscribeTime != null">and subscribe_time = #{subscribeTime}</if>
+        <if test="signTime != null">and sign_time = #{signTime}</if>
         <if test="subscribeOperateTime != null">and subscribe_operate_time = #{subscribeOperateTime}</if>
+        <if test="signOperateTime != null">and sign_operate_time = #{signOperateTime}</if>
         <if test="managerPhone != null">and manager_phone = #{managerPhone}</if>
         <if test="arriveCertifyPhotoPath != null">and arrive_certify_photo_path = #{arriveCertifyPhotoPath}</if>
         <if test="realEstateName != null">and real_estate_name = #{realEstateName}</if>
@@ -482,6 +520,7 @@
         <if test="reportTime != null">and report_time = #{reportTime}</if>
         <if test="reportCompany != null">and report_company = #{reportCompany}</if>
         <if test="subscribeMoney != null">and subscribe_money = #{subscribeMoney}</if>
+        <if test="signMoney != null">and sign_money = #{signMoney}</if>
         <if test="customerName != null">and customer_name = #{customerName}</if>
         <if test="customerId != null">and customer_id = #{customerId}</if>
     </select>

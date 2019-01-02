@@ -858,9 +858,4 @@ public class BaseController {
             throw new BusinessException("获取openid失败！");
         }
     }
-
-    public String getAccessToken() {
-        return JSON.parseObject(HttpKit.get(String.format(accessTokenApiUrl, "client_credential", appid, secret))
-                .getHtml()).get("access_token").toString();
-    }
 }

@@ -116,7 +116,7 @@ public class BusDealController extends BusBaseController {
 
             String token = request.getHeader("token");
             busDealVO.setReportUserId(getUserByToken(token).getId());
-            busDealService.report(busDealVO, getAccessToken());
+            busDealService.report(busDealVO);
         } catch (Exception e) {
             if (e instanceof WechatAuthException) {
                 resultData.setResultCode(e.getMessage());
@@ -207,6 +207,34 @@ public class BusDealController extends BusBaseController {
             } else {
                 resultData.setResultCode(Const.FAILED_CODE);
                 resultData.setMsg("认购失败！");
+            }
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+    /**
+     * 认购
+     *
+     * @param busDeal
+     * @return
+     */
+    @RequestMapping("/sign")
+    @ResponseBody
+    @WechatAuthorize
+    public ResultData sign(@RequestBody BusDeal busDeal) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "签约成功！");
+        try {
+            wechatAuthCheck(request);
+
+            final BusDeal result = busDealService.sign(busDeal);
+            resultData.setData(result);
+        } catch (Exception e) {
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("签约失败！");
             }
             logger.error(e.getMessage(), e);
         }

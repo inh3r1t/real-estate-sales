@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component;
  * @Description: 短信通知渠道
  * @Date: 2019/1/2 16:56
  */
-public abstract class MessageNotify implements Notify {
+public abstract class SmsNotify implements Notify {
 }
