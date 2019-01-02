@@ -130,6 +130,7 @@ Page({
     // 客户到访
     app.post("/busDeal/subscribe", {
         id: this.data.id,
+        subscribeMoney: e.detail.value.price,
         subscribeTime: this.getDate(),
         subscribePhotoPahts: this.data.images.toString(),
         formId: e.detail.formId

@@ -21,7 +21,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     let id = options.id != undefined && options.id != '' ? parseInt(options.id) : 0
     let index = options.index != undefined && options.index != '' ? parseInt(options.index) : 0
     var obj = dateTimePicker.dateTimePicker(this.data.startYear, this.data.endYear);
@@ -39,10 +39,10 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     app.checkLogin();
   },
-  bindTimeChange: function (e) {
+  bindTimeChange: function(e) {
     this.setData({
       time: e.detail.value
     })
@@ -73,7 +73,7 @@ Page({
       day: dateArr[2][arr[2]].substring(0, 3),
     });
   },
-  selectImage: function () {
+  selectImage: function() {
     wx.chooseImage({
       success: res => {
         const tempFilePaths = res.tempFilePaths
@@ -107,13 +107,13 @@ Page({
                 wx.hideToast();
               }
             },
-            fail: function (res) {
+            fail: function(res) {
               wx.hideToast();
               wx.showModal({
                 title: '错误提示',
                 content: '上传图片失败',
                 showCancel: false,
-                success: function (res) { }
+                success: function(res) {}
               })
             }
           });
@@ -121,19 +121,20 @@ Page({
       }
     })
   },
-  getDate: function () {
+  getDate: function() {
     return this.data.dateTimeArray[0][this.data.dateTime[0]] + '-' + this.data.dateTimeArray[1][this.data.dateTime[1]] + '-' + this.data.day + ' ' + this.data.time;
   },
-  formSubmit: function (e) {
+  formSubmit: function(e) {
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 客户到访
+    debugger
     app.post("/busDeal/sign", {
-      id: this.data.id,
-      subscribeTime: this.getDate(),
-      subscribePhotoPahts: this.data.images.toString(),
-      formId: e.detail.formId
-    })
+        id: this.data.id,
+        signMoney: e.detail.value.price,
+        signTime: this.getDate(),
+        formId: e.detail.formId
+      })
       .then(res => {
         if (res.data != null) {
           prevPage.data.list[this.data.index] = res.data;

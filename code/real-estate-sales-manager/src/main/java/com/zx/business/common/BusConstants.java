@@ -17,5 +17,6 @@ public class BusConstants {
         DEAL_STATE_INFO.put(1, "appointment_count");
         DEAL_STATE_INFO.put(2, "arrive_count");
         DEAL_STATE_INFO.put(3, "subscribe_count");
+        DEAL_STATE_INFO.put(4, "sign_count");
     }
 }
