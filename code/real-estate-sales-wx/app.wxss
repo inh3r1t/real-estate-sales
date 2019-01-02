@@ -254,3 +254,7 @@
   color: #979797;
   background-color: #fff;
 }
+
+.hidden {
+  display: none;
+}

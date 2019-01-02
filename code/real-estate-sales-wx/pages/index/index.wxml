@@ -1,9 +1,9 @@
 <!--index.wxml-->
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{imgUrls}}" wx:key="index">
-    <swiper-item bindtap='toDetail'>
-      <image src="{{item}}" mode='aspectFill' class="slide-image" />
-      <text class='slide-title'>sssssssssssssssssssssssss sa  sss</text>
+  <block wx:for="{{topList}}" wx:key="index">
+    <swiper-item bindtap='toDetail' data-id="{{item.id}}">
+      <image src="{{item.thumbnail}}" mode='aspectFill' class="slide-image" />
+      <text class='slide-title'>{{item.name}}</text>
     </swiper-item>
   </block>
 </swiper>

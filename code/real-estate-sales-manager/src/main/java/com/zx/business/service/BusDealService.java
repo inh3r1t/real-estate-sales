@@ -1,6 +1,5 @@
 package com.zx.business.service;
 
-import com.alibaba.fastjson.JSON;
 import com.zx.base.model.PagerModel;
 import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
@@ -8,9 +7,7 @@ import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
 import com.zx.business.notify.model.Message;
 import com.zx.business.vo.BusDealVO;
-import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.utils.DateUtil;
-import org.nutz.http.Http;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

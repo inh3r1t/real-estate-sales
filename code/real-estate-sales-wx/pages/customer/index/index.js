@@ -95,6 +95,9 @@ Page({
     } else if (state == 2) {
       // 报备到访 -> 认购
       url = '/pages/customer/subscribe/subscribe?id=' + id + "&index=" + index
+    } else if (state == 3) {
+      // 报备到访 -> 认购
+      url = '/pages/customer/sign/sign?id=' + id + "&index=" + index
     }
     wx.navigateTo({
       url: url,
@@ -164,6 +167,9 @@ Page({
       }).then(res => {
         //这里既可以获取模拟的res
         console.log(res)
+        for (let i = 0; i < res.data.list.Items.length; i++) {
+          res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*?(\d{4})/, '$1****$2');
+        }
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
           more: res.data.list.Items != null && res.data.list.Items.length == 5,

@@ -31,23 +31,32 @@
           <text wx:if="{{item.state==0 && canOpt}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
           <text wx:if="{{item.state==1 && canOpt}}" data-state="1" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
           <text wx:if="{{item.state==2 && canOpt}}" data-state="2" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
-          <text wx:if="{{item.state==3 && canOpt}}" class='item-opt-txt'>已认购</text>
+          <text wx:if="{{item.state==3 && canOpt}}" data-state="3" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户签约</text>
+          <text wx:if="{{item.state==4 && canOpt}}" class='item-opt-txt'>已签约</text>
           <text class="item-share iconfont icon-fenxiang" data-index="{{index}}" catchtap='share'></text>
         </view>
       </view>
       <view class='item-flows'>
-        <view class='flow-item'>
+        <view class='flow-item {{item.state>=0?"active":""}}'>
           <text>报备</text>
           <text class="iconfont icon-baxin"></text>
           <text>{{item.reportTime || ''}}</text>
         </view>
-        <view class='flow-item'>
+        <view class='flow-item-middle {{item.state>=1?"active":""}}'>
+          <text>{{item.appointmentTime || ''}}</text>
+          <text>{{item.state>=1 ? '预约':''}}</text>
+        </view>
+        <view class='flow-item {{item.state>=2?"active":""}}'>
           <text>到访</text>
           <text class="iconfont icon-baxin"></text>
           <text>{{item.arriveTime || ''}}</text>
         </view>
-        <view class='flow-item'>
-          <text>认购</text>
+        <view class='flow-item-middle flow-item-middle-2 {{item.state>=3?"active":""}}'>
+          <text>{{item.subscribeTime || ''}}</text>
+          <text>{{item.state>=3 ? '认购':''}}</text>
+        </view>
+        <view class='flow-item {{item.state>=4?"active":""}}'>
+          <text>签约</text>
           <text class="iconfont icon-baxin"></text>
           <text>{{item.subscribeTime || ''}}</text>
         </view>
@@ -59,7 +68,7 @@
       <view class='divider'></view>
     </view>
   </view>
-   <view class='no-more' hidden='{{more}}'>没有更多数据了</view>
+  <view class='no-more' hidden='{{more}}'>没有更多数据了</view>
 
 </view>
 

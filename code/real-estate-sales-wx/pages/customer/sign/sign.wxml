@@ -1,7 +1,7 @@
 <form class="form" reportSubmit bindsubmit="formSubmit">
   <view class="form-body">
     <view class="form-item">
-      <text class="form-lable">认购时间</text>
+      <text class="form-lable">签约时间</text>
       <!-- 日期选择 -->
       <view class="placeholder date">
         <picker mode="multiSelector" value="{{dateTime}}" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
@@ -23,12 +23,12 @@
 
     </view>
     <view class="form-item">
-      <text class="form-lable">认购金额</text>
+      <text class="form-lable">签约金额</text>
       <text class="form-word-aux ">元</text>
       <input class="form-input form-input-placeholder text-right" name="price" type='numnumber' value=''></input>
     </view>
     <view class="form-item-area">
-      <text class="form-lable">认购照片</text>
+      <text class="form-lable">签约照片</text>
       <view class='form-upload' bindtap='selectImage'>
         <text class="iconfont icon-jia1"></text>
         <text>上传照片</text>
@@ -40,6 +40,6 @@
     </view>
   </view>
   <view class="form-footer">
-    <button class='btn btn-primary' formType="submit">确认认购</button>
+    <button class='btn btn-primary' formType="submit">确认签约</button>
   </view>
 </form>
