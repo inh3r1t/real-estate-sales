@@ -221,12 +221,13 @@ public class BusDeal extends PageVO {
     private Date signTime;
     private Date signOperateTime;
     private String signMoney;
+    private String signPhotoPaths;
 
     public BusDeal(Integer id, Integer realEstateId, String realEstateName, Integer state, Integer customerId,
                    String customerPhone, String customerName, Integer reportUserId, String reportUserPhone,
                    String reportCompany, Date appointmentTime, Date reportTime, Date arriveTime, Date subscribeTime,
                    Date signTime, Integer managerId, String managerPhone, String arriveCertifyPhotoPath, String subscribeMoney,
-                   String signMoney, String subscribeCommision, String subscribePhotoPahts, Date appointmentOperateTime,
+                   String signMoney, String subscribeCommision, String subscribePhotoPahts, String signPhotoPaths, Date appointmentOperateTime,
                    Date reportOperateTime, Date arriveOperateTime, Date subscribeOperateTime, Date signOperateTime, Date createTime,
                    Date updateTime) {
         this.id = id;
@@ -251,6 +252,7 @@ public class BusDeal extends PageVO {
         this.signMoney = signMoney;
         this.subscribeCommision = subscribeCommision;
         this.subscribePhotoPahts = subscribePhotoPahts;
+        this.signPhotoPaths = signPhotoPaths;
         this.appointmentOperateTime = appointmentOperateTime;
         this.reportOperateTime = reportOperateTime;
         this.arriveOperateTime = arriveOperateTime;
@@ -258,6 +260,14 @@ public class BusDeal extends PageVO {
         this.signOperateTime = signOperateTime;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    public String getSignPhotoPaths() {
+        return signPhotoPaths;
+    }
+
+    public void setSignPhotoPaths(String signPhotoPaths) {
+        this.signPhotoPaths = signPhotoPaths;
     }
 
     public String getSignMoney() {

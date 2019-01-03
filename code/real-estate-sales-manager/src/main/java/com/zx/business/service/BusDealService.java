@@ -5,8 +5,7 @@ import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
-import com.zx.business.notify.model.Message;
-import com.zx.business.notify.model.SmsMessage;
+import com.zx.business.notify.model.AliyunSmsMessage;
 import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,14 +40,8 @@ public class BusDealService {
     @Resource
     private BusUserMapper busUserMapper;
 
-    @Resource(name = "wechatNotify")
+    @Resource(name = "aliyunSmsNotify")
     private Notify notify;
-
-    @Value("wechat.appid")
-    private String appid;
-
-    @Value("wechat.send_template_message.api.url")
-    private String sendMsgUrl;
 
     public BusDeal getById(Integer id) {
         return busDealMapper.selectByPrimaryKey(id);
@@ -115,9 +107,6 @@ public class BusDealService {
             busNotifyMsg.setDealId(busDeal.getId());
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
-
-            Message message = new SmsMessage();
-            notify.notify(message);
         }
 
     }
@@ -138,6 +127,13 @@ public class BusDealService {
         busNotifyMsg.setMsgContent(appointmentMsg(execBusDeal.getBusCustomer().getName(), execBusDeal.getBusCustomer().getSex(), execBusDeal.getRealEstateName(),
                 DateUtil.toDateString(busDeal.getAppointmentTime(), "yyyy-MM-dd HH:mm")));
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
+
+        // send sms message
+        AliyunSmsMessage message = new AliyunSmsMessage();
+        message.setPhoneNumbers("15395158022");
+        message.setOutId("1");
+        message.setTemplateParam("{\"flowType\":\"报备\", \"phoneNum\":\"15395158002\"}");
+        notify.notify(message);
         return execBusDeal;
     }
 
@@ -145,6 +141,7 @@ public class BusDealService {
         BusDeal execBusDeal = busDealMapper.selectByPrimaryKey(busDeal.getId());
         execBusDeal.setState(2);
         execBusDeal.setArriveTime(busDeal.getArriveTime());
+        execBusDeal.setArriveCertifyPhotoPath(busDeal.getArriveCertifyPhotoPath());
         execBusDeal.setArriveOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
@@ -157,6 +154,7 @@ public class BusDealService {
         execBusDeal.setState(3);
         execBusDeal.setSubscribeTime(busDeal.getSubscribeTime());
         execBusDeal.setSubscribeMoney(busDeal.getSubscribeMoney());
+        execBusDeal.setSignPhotoPaths(busDeal.getSubscribePhotoPahts());
         execBusDeal.setSubscribeOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
@@ -177,6 +175,7 @@ public class BusDealService {
         execBusDeal.setState(4);
         execBusDeal.setSignTime(new Date());
         execBusDeal.setSignMoney(busDeal.getSubscribeMoney());
+        execBusDeal.setSignPhotoPaths(busDeal.getSignPhotoPaths());
         execBusDeal.setSignOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);

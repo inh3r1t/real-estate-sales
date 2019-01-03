@@ -5,7 +5,7 @@ package com.zx.business.notify.model;
  * @Description:
  * @Date: 2019/1/2 20:23
  */
-public class SmsMessage extends Message {
+public class YunzhixunSmsMessage extends Message {
 
     private String sid;
     private String token;

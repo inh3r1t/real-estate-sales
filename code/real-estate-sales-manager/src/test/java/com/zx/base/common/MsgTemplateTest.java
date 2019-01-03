@@ -1,11 +1,10 @@
 package com.zx.base.common;
 
 import com.alibaba.fastjson.JSON;
-import com.zx.business.notify.model.SmsMessage;
+import com.zx.business.notify.model.YunzhixunSmsMessage;
 import com.zx.lib.http.common.HttpConst;
 import com.zx.lib.http.entity.HttpEntity;
 import com.zx.lib.http.kit.HttpKit;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
@@ -29,9 +28,9 @@ public class MsgTemplateTest {
         params.put("token", "eb115ffdb7cab2c14e26f862b5be7ccd");
         params.put("appid", "95c4984c0c7240eca3684e27bf29cad7");
         params.put("type", "0");
-        params.put("template_name", "安策营销通知模板");
-        params.put("autograph", "安策营销");
-        params.put("content", "({1}) 楼盘({2}) 客户({3}) 电话({4}) 中介公司({5}) 中介人员({6}) 电话({7}) ({8})");
+        params.put("template_name", "公司内部通知模板");
+        params.put("autograph", "通知");
+        params.put("content", "你好，有一条你的${1}通知，负责人电话：${2}。");
 
         HttpEntity httpEntity = HttpKit.post(url, null, JSON.toJSONString(params), header, Charset.defaultCharset());
         System.out.println(httpEntity.getHtml());
@@ -39,7 +38,7 @@ public class MsgTemplateTest {
 
     @Test
     public void test1() {
-        SmsMessage smsMessage = new SmsMessage();
+        YunzhixunSmsMessage smsMessage = new YunzhixunSmsMessage();
         smsMessage.setAppid("appid");
         smsMessage.setMobile("12031239213");
         smsMessage.setParam("sdfasdf");

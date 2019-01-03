@@ -29,6 +29,7 @@
             <arg column="sign_money" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="subscribe_commision" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="subscribe_photo_pahts" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="sign_photo_paths" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="appointment_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="report_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="arrive_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -54,7 +55,7 @@
         id, real_estate_id, real_estate_name, state, customer_id, customer_phone, customer_name,
         report_user_id, report_user_phone, report_company, appointment_time, report_time,
         arrive_time, subscribe_time, sign_time, manager_id, manager_phone, arrive_certify_photo_path,
-        subscribe_money,sign_money, subscribe_commision, subscribe_photo_pahts, appointment_operate_time,
+        subscribe_money,sign_money, subscribe_commision, subscribe_photo_pahts, sign_photo_paths, appointment_operate_time,
         report_operate_time, arrive_operate_time, subscribe_operate_time, sign_operate_time, create_time, update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="associateResultMap">
@@ -89,7 +90,7 @@
         report_company, appointment_time, report_time,
         arrive_time, subscribe_time, sign_time, manager_id,
         manager_phone, arrive_certify_photo_path, subscribe_money,sign_money,
-        subscribe_commision, subscribe_photo_pahts,
+        subscribe_commision, subscribe_photo_pahts,sign_photo_paths,
         appointment_operate_time, report_operate_time,
         arrive_operate_time, subscribe_operate_time,sign_operate_time,
         create_time, update_time)
@@ -99,7 +100,7 @@
         #{reportCompany,jdbcType=VARCHAR}, #{appointmentTime,jdbcType=TIMESTAMP}, #{reportTime,jdbcType=TIMESTAMP},
         #{arriveTime,jdbcType=TIMESTAMP}, #{subscribeTime,jdbcType=TIMESTAMP}, #{signTime,jdbcType=TIMESTAMP}, #{signTime,jdbcType=TIMESTAMP}, #{managerId,jdbcType=INTEGER},
         #{managerPhone,jdbcType=VARCHAR}, #{arriveCertifyPhotoPath,jdbcType=VARCHAR}, #{subscribeMoney,jdbcType=VARCHAR},
-        #{subscribeCommision,jdbcType=VARCHAR}, #{subscribePhotoPahts,jdbcType=VARCHAR},
+        #{subscribeCommision,jdbcType=VARCHAR}, #{subscribePhotoPahts,jdbcType=VARCHAR},, #{signPhotoPaths,jdbcType=VARCHAR},
         #{appointmentOperateTime,jdbcType=TIMESTAMP}, #{reportOperateTime,jdbcType=TIMESTAMP},
         #{arriveOperateTime,jdbcType=TIMESTAMP}, #{subscribeOperateTime,jdbcType=TIMESTAMP}, #{signOperateTime,jdbcType=TIMESTAMP},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
@@ -111,7 +112,7 @@
                               report_company, appointment_time, report_time,
                               arrive_time, subscribe_time, sign_time, manager_id,
                               manager_phone, arrive_certify_photo_path, subscribe_money,sign_money,
-                              subscribe_commision, subscribe_photo_pahts,
+                              subscribe_commision, subscribe_photo_pahts,sign_photo_paths,
                               appointment_operate_time, report_operate_time,
                               arrive_operate_time, subscribe_operate_time, sign_operate_time,
                               create_time, update_time)
@@ -123,7 +124,7 @@
             #{item.reportCompany,jdbcType=VARCHAR}, #{item.appointmentTime,jdbcType=TIMESTAMP}, #{item.reportTime,jdbcType=TIMESTAMP},
             #{item.arriveTime,jdbcType=TIMESTAMP}, #{item.subscribeTime,jdbcType=TIMESTAMP}, #{item.signTime,jdbcType=TIMESTAMP}, #{item.managerId,jdbcType=INTEGER},
             #{item.managerPhone,jdbcType=VARCHAR}, #{item.arriveCertifyPhotoPath,jdbcType=VARCHAR}, #{item.subscribeMoney,jdbcType=VARCHAR}, #{item.signMoney,jdbcType=VARCHAR},
-            #{item.subscribeCommision,jdbcType=VARCHAR}, #{item.subscribePhotoPahts,jdbcType=VARCHAR},
+            #{item.subscribeCommision,jdbcType=VARCHAR}, #{item.subscribePhotoPahts,jdbcType=VARCHAR}, #{item.signPhotoPaths,jdbcType=VARCHAR},
             #{item.appointmentOperateTime,jdbcType=TIMESTAMP}, #{item.reportOperateTime,jdbcType=TIMESTAMP},
             #{item.arriveOperateTime,jdbcType=TIMESTAMP}, #{item.subscribeOperateTime,jdbcType=TIMESTAMP}, #{item.signOperateTime,jdbcType=TIMESTAMP},
             #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
@@ -204,6 +205,9 @@
             </if>
             <if test="subscribePhotoPahts != null">
                 subscribe_photo_pahts,
+            </if>
+            <if test="signPhotoPaths != null">
+                sign_photo_paths,
             </if>
             <if test="appointmentOperateTime != null">
                 appointment_operate_time,
@@ -293,6 +297,9 @@
             </if>
             <if test="subscribePhotoPahts != null">
                 #{subscribePhotoPahts,jdbcType=VARCHAR},
+            </if>
+            <if test="signPhotoPaths != null">
+                #{signPhotoPaths,jdbcType=VARCHAR},
             </if>
             <if test="appointmentOperateTime != null">
                 #{appointmentOperateTime,jdbcType=TIMESTAMP},
@@ -387,6 +394,9 @@
             <if test="subscribePhotoPahts != null">
                 subscribe_photo_pahts = #{subscribePhotoPahts,jdbcType=VARCHAR},
             </if>
+            <if test="signPhotoPaths != null">
+                sign_photo_paths = #{signPhotoPaths,jdbcType=VARCHAR},
+            </if>
             <if test="appointmentOperateTime != null">
                 appointment_operate_time = #{appointmentOperateTime,jdbcType=TIMESTAMP},
             </if>
@@ -438,6 +448,7 @@
         sign_money = #{signMoney,jdbcType=VARCHAR},
         subscribe_commision = #{subscribeCommision,jdbcType=VARCHAR},
         subscribe_photo_pahts = #{subscribePhotoPahts,jdbcType=VARCHAR},
+        sign_photo_paths = #{signPhotoPaths,jdbcType=VARCHAR},
         appointment_operate_time = #{appointmentOperateTime,jdbcType=TIMESTAMP},
         report_operate_time = #{reportOperateTime,jdbcType=TIMESTAMP},
         arrive_operate_time = #{arriveOperateTime,jdbcType=TIMESTAMP},
@@ -461,6 +472,7 @@
         <if test="busDeal.subscribeTime != null"> and subscribe_time = #{busDeal.subscribeTime}</if>
         <if test="busDeal.signTime != null"> and sign_time = #{busDeal.signTime}</if>
         <if test="busDeal.subscribePhotoPahts != null"> and subscribe_photo_pahts = #{busDeal.subscribePhotoPahts}</if>
+        <if test="busDeal.signPhotoPaths != null"> and sign_photo_paths = #{busDeal.signPhotoPaths}</if>
         <if test="busDeal.arriveTime != null"> and arrive_time = #{busDeal.arriveTime}</if>
         <if test="busDeal.subscribeOperateTime != null"> and subscribe_operate_time = #{busDeal.subscribeOperateTime}</if>
         <if test="busDeal.signOperateTime != null"> and sign_operate_time = #{busDeal.signOperateTime}</if>
@@ -516,6 +528,7 @@
         <if test="customerPhone != null">and customer_phone = #{customerPhone}</if>
         <if test="arriveOperateTime != null">and arrive_operate_time = #{arriveOperateTime}</if>
         <if test="subscribePhotoPahts != null">and subscribe_photo_pahts = #{subscribePhotoPahts}</if>
+        <if test="signPhotoPaths != null">and sign_photo_paths = #{signPhotoPaths}</if>
         <if test="arriveTime != null">and arrive_time = #{arriveTime}</if>
         <if test="reportTime != null">and report_time = #{reportTime}</if>
         <if test="reportCompany != null">and report_company = #{reportCompany}</if>

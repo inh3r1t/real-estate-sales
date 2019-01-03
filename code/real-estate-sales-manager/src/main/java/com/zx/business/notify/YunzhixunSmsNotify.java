@@ -2,7 +2,7 @@ package com.zx.business.notify;
 
 import com.alibaba.fastjson.JSON;
 import com.zx.business.notify.model.Message;
-import com.zx.business.notify.model.SmsMessage;
+import com.zx.business.notify.model.YunzhixunSmsMessage;
 import com.zx.lib.http.common.HttpConst;
 import com.zx.lib.http.kit.HttpKit;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class YunzhixunSmsNotify extends SmsNotify {
 
     @Override
     public String notify(Message message) {
-        SmsMessage smsMessage = (SmsMessage) message;
+        YunzhixunSmsMessage smsMessage = (YunzhixunSmsMessage) message;
         smsMessage.setUid("");
         smsMessage.setToken(token);
         smsMessage.setAppid(appid);
