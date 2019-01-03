@@ -44,6 +44,16 @@ custom:
   upload-node: upload_files
   wechat.openid.api.url: https://api.weixin.qq.com/sns/jscode2session
   wechat.access_token.api.url: https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s
-  wechat.send_template_message.api.url: POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=%s
+  wechat.send_template_message.api.url: https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=%s
   wechat.appid: wx4476c55348a31df8
   wechat.secret: 26754ef3189b3ef8a18d9b5e05d3bb23
+#  云之讯短信推送配置
+  yunzhixun.appid: 95c4984c0c7240eca3684e27bf29cad7
+  yunzhixun.sid: dc0cc5d6997208a7f0cf35f02de9c48c
+  yunzhixun.token: eb115ffdb7cab2c14e26f862b5be7ccd
+  yunzhixun.sms.send.url: https://open.ucpaas.com/ol/sms/sendsms
+  yunzhixun.sms.send.templateid: 417477
+#  阿里云短信推送配置
+  aliyun.accessKey.id: LTAIJ2EjiIWq73En
+  aliyun.accessKey.secret: KngDphy5Q2Ia1GdIo4BtnHuVS8lWBw
+  aliyun.sms.templateCode: SMS_154585158
