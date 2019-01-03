@@ -86,15 +86,20 @@ public class BusDealController extends BusBaseController {
     @RequestMapping("/getById/{id}")
     @ResponseBody
     @WechatAuthorize
-    @AuthorizeIgnore
     public ResultData getById(@PathVariable Integer id) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
         try {
+            wechatAuthCheck(request);
+
             BusDeal busDeal = busDealService.getById(id);
             resultData.setData(busDeal);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取订单详细信息失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("获取订单详细信息失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;
@@ -122,7 +127,7 @@ public class BusDealController extends BusBaseController {
                 resultData.setResultCode(e.getMessage());
             } else {
                 resultData.setResultCode(Const.FAILED_CODE);
-                resultData.setMsg("获取订单详细信息失败！");
+                resultData.setMsg("报备失败！");
             }
             logger.error(e.getMessage(), e);
         }

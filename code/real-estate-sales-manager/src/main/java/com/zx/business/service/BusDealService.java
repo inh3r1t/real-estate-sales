@@ -188,7 +188,7 @@ public class BusDealService {
         busNotifyMsg.setMsgContent(signMsg(execBusDeal.getReportUser().getCompanyName(), execBusDeal.getCustomerName(), execBusDeal.getBusCustomer().getSex(),
                 execBusDeal.getRealEstateName(), DateUtil.toDateString(execBusDeal.getSubscribeTime(), "yyyy-MM-dd HH:mm")));
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
-        return null;
+        return execBusDeal;
     }
 
     // 报备消息通知
