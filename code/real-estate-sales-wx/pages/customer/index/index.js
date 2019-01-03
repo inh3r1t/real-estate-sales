@@ -96,7 +96,7 @@ Page({
       // 报备到访 -> 认购
       url = '/pages/customer/subscribe/subscribe?id=' + id + "&index=" + index
     } else if (state == 3) {
-      // 报备到访 -> 认购
+      // 报备认购 -> 签约
       url = '/pages/customer/sign/sign?id=' + id + "&index=" + index
     }
     wx.navigateTo({
@@ -159,6 +159,9 @@ Page({
       }
       if (this.data.currentTab == 3) {
         state = 3;
+      }
+      if (this.data.currentTab == 4) {
+        state = 4;
       }
       return app.post("/busDeal/getPage", {
         page: pageNo,

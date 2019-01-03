@@ -48,7 +48,7 @@ Page({
     })
   },
   toMore: function(a) {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/building/list',
     })
   },

@@ -1,9 +1,14 @@
-<view class="card" wx:for="{{list}}" wx:key="index">
-  <!-- <view class='card-title'>{{item.title}} <text class='unread-tip' wx:if="{{!item.isread}}"></text></view> -->
-  <view class='card-title' wx:if="{{item.type == 0}}">报备信息</view>
-  <view class='card-title' wx:if="{{item.type == 1}}">预约信息</view>
-  <view class='card-title' wx:if="{{item.type == 2}}">认购信息</view>
-  <view class='card-content'>{{item.msgContent}}</view>
-  <view class='card-time'>{{item.createTime}}</view>
+<view class="card item" wx:for="{{list}}" wx:key="index">
+  <view class='wrap' style="transform:translateX({{item.x/2}}px);" data-index="{{index}}" bindtouchstart='touchstart' bindtouchmove='touchmove' bindtouchend='touchend' data-index="{{index}}">
+    <!-- <view class='card-title'>{{item.title}} <text class='unread-tip' wx:if="{{!item.isread}}"></text></view> -->
+    <view class='card-title' wx:if="{{item.type == 0}}">报备信息</view>
+    <view class='card-title' wx:if="{{item.type == 1}}">预约信息</view>
+    <view class='card-title' wx:if="{{item.type == 2}}">到访信息</view>
+    <view class='card-title' wx:if="{{item.type == 3}}">认购信息</view>
+    <view class='card-title' wx:if="{{item.type == 4}}">签约信息</view>
+    <view class='card-content'>{{item.msgContent}}</view>
+    <view class='card-time'>{{item.createTime}}</view>
+  </view>
+  <view class="delete" data-id="{{item.id}}" data-index="{{index}}" catchtap="deleteItem">删除</view>
 </view>
-<view class='no-more' hidden='{{more}}'>没有更多数据了</view>            
+<view class='no-more' hidden='{{more}}'>没有更多数据了</view>

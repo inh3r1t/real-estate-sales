@@ -133,6 +133,7 @@ Page({
         id: this.data.id,
         signMoney: e.detail.value.price,
         signTime: this.getDate(),
+        signPhotoPaths: this.data.images.toString(),
         formId: e.detail.formId
       })
       .then(res => {

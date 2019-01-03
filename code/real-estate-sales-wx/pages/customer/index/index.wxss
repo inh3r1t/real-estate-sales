@@ -193,7 +193,8 @@
   width: 50%;
 }
 
-.flow-step-3 .flow-line-before {
+.flow-step-3 .flow-line-before, 
+.flow-step-4 .flow-line-before {
   width: 100%;
 }
 

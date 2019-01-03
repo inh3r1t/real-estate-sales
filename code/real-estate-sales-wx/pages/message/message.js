@@ -7,7 +7,9 @@ Page({
   data: {
     more: true,
     page: 1,
-    list: []
+    list: [],
+    startX: 0,
+    delBtnWidth: 150 //删除按钮宽度单位（rpx）
   },
 
   /**
@@ -58,5 +60,54 @@ Page({
         wx.hideLoading();
       })
     }
+  },
+  touchstart: function(e) {
+    this.setData({
+      index: e.currentTarget.dataset.index,
+      Mstart: e.changedTouches[0].pageX
+    });
+  },
+  touchmove: function(e) {
+    //列表项数组
+    let list = this.data.list;
+    //手指在屏幕上移动的距离
+    //移动距离 = 触摸的位置 - 移动后的触摸位置
+    let move = this.data.Mstart - e.changedTouches[0].pageX;
+    // 这里就使用到我们之前记录的索引index
+    //比如你滑动第一个列表项index就是0，第二个列表项就是1，···
+    //通过index我们就可以很准确的获得当前触发的元素，当然我们需要在事前为数组list的每一项元素添加x属性
+    list[this.data.index].x = move > 0 ? -move : 0;
+    this.setData({
+      list: list
+    });
+  },
+  touchend: function(e) {
+    let list = this.data.list;
+    let move = this.data.Mstart - e.changedTouches[0].pageX;
+    list[this.data.index].x = move > 100 ? -180 : 0;
+    this.setData({
+      list: list
+    });
+  },
+  deleteItem: function(e) {
+    var id = e.currentTarget.dataset.id
+    var index = e.currentTarget.dataset.index
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该条消息吗？',
+      success: res => {
+        app.post("/busNotifyMsg/deleteById", {
+          id: id
+        }).then(res => {
+          console.log(res);
+          var history = that.data.list;
+          history.splice(index, 1);
+          that.setData({
+            list: history
+          });
+        })
+      }
+    })
   }
 })

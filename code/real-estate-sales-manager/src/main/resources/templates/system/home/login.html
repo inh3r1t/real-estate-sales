@@ -125,7 +125,7 @@
             <div class="clearfix"></div>
         </div>
         <form class="layui-form" id="myform" method="post" action="/loginSubmit">
-            <input type="hidden" name="_f_token" th:value="${_f_token}" />
+            <input type="hidden" name="_f_token" th:value="${_f_token}"/>
             <div class="form-container">
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -168,12 +168,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="layui-btn" id="btlogin">登 录</button>
+                <button type="submit" disabled="disabled" class="layui-btn" id="btlogin">登 录</button>
             </div>
 
             <div class="social-login text text-center">
                 <div class="description">
-                    <p>&copy;  版权所有 2002-<span th:text="${#dates.year(#dates.createToday())}"></span>
+                    <p>&copy; 版权所有 2018-<span th:text="${#dates.year(#dates.createToday())}"></span>
                         <th:block th:text="${SYSTEM_NAME}"></th:block>
                         <span th:text="${SYSTEM_VERSION}"></span>
                     </p>
@@ -185,6 +185,9 @@
 
 <script data-layout-fragment="renderScripts">
     $("#username").focus();
+    window.onload = function (ev) {
+        $('#btlogin').removeAttrs("disabled");
+    };
     $('#myform').initForm({
         ajaxLoading: false,
         ajaxBefore: function (form) {

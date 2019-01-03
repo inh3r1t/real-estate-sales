@@ -171,8 +171,8 @@
 .form .form-body .form-item .form-input {
   flex-grow: 1;
   color: #808080;
-  line-height: 100rpx;
-  height: 100rpx;
+  line-height: 90rpx;
+  height: 90rpx;
   border-radius: 12rpx;
   padding: 0 20rpx;
 }

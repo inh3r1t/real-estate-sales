@@ -25,7 +25,7 @@ Page({
       isBindWechat: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != '',
       username: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').userName,
       company: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').companyName || '',
-      avatar: (wx.getStorageSync('userInfo') && wx.getStorageSync('wxUserInfo').avatarUrl) || '/images/personal.png'
+      avatar: (wx.getStorageSync('userInfo') && wx.getStorageSync('wxUserInfo').avatarUrl) || '/images/avatar.jpg'
     })
   },
   login: function() {
@@ -48,6 +48,11 @@ Page({
       }
     })
 
+  },
+  toCompany: function() {
+    wx.navigateTo({
+      url: '/pages/company/profile',
+    })
   },
   toMessage: function() {
     wx.navigateTo({
@@ -74,7 +79,7 @@ Page({
             })
             this.setData({
               isBindWechat: false,
-              avatar: '/images/personal.png'
+              avatar: '/images/avatar.jpg'
             })
             wx.setStorageSync('userInfo', res.data)
             app.globalData.userInfo = res.data
@@ -116,7 +121,7 @@ Page({
                         app.globalData.userInfo = res.data
                         this.setData({
                           isBindWechat: true,
-                          avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/personal.png'
+                          avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/avatar.jpg'
                         })
                       }).catch((res) => {
                         wx.showToast({

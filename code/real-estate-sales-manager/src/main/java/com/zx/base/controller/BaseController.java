@@ -300,7 +300,7 @@ public class BaseController {
             json = "{\n" +
                     "    \"uploaded\": 1,\n" +
                     "    \"fileName\": \"" + fileName + "\",\n" +
-                    "    \"url\": \"" + SYSTEM_URL + path + "/" + fileName + "\"\n" +
+                    "    \"url\": \"" + SYSTEM_URL + "/" + UPLOAD_NODE + path + "/" + fileName + "\"\n" +
                     "}";
         } catch (Exception e) {
             json = "{\n" +

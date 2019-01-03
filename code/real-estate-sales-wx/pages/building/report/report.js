@@ -28,14 +28,17 @@ Page({
           required: true,
           minlength: 11,
           maxlength: 11,
-          telfuzzy: true,
+          // telfuzzy: true,
         }
       }, {
         name: {
           required: '请输入客户名称',
+          
         },
         phone: {
           required: '请输入手机号',
+          minlength: '请输入正确手机号码',
+          maxlength: '请输入正确手机号码',
         }
       })
 

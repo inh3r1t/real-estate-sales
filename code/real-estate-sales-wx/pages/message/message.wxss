@@ -1,7 +1,8 @@
 .card {
   display: flex;
   flex-direction: column;
-  padding: 10rpx 20rpx;
+  position: relative;
+  border-bottom: 1rpx solid #e2e2e2;
 }
 
 .card .card-title {
@@ -31,4 +32,33 @@
   background-color: #0076ff;
   border-radius: 50%;
   display: inline-block;
+}
+
+.card .wrap {
+  z-index: 2;
+  padding: 10rpx 20rpx;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  position: relative;
+  transition: transform 0.30s linear 0s;
+}
+
+.card .delete {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 180rpx;
+  text-align: center;
+  background: #fb2531;
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
