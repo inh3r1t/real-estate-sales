@@ -5,12 +5,11 @@ import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
-import com.zx.business.notify.model.AliyunSmsMessage;
+import com.zx.business.notify.model.WechatMessage;
 import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +39,7 @@ public class BusDealService {
     @Resource
     private BusUserMapper busUserMapper;
 
-    @Resource(name = "aliyunSmsNotify")
+    @Resource(name = "wechatNotify")
     private Notify notify;
 
     public BusDeal getById(Integer id) {
@@ -107,6 +106,12 @@ public class BusDealService {
             busNotifyMsg.setDealId(busDeal.getId());
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
+
+            WechatMessage wechatMessage = new WechatMessage();
+            wechatMessage.setForm_id(busDealVO.getFormId());
+            wechatMessage.setTouser(busRealEstate.getManager().getOpenId());
+            wechatMessage.setTemplate_id("QBGJDmxWv9nE16IXYHTJrArDbTSp37bUFaHKje5FC_Y");
+            notify.notify(wechatMessage);
         }
 
     }
@@ -129,11 +134,13 @@ public class BusDealService {
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
 
         // send sms message
-        AliyunSmsMessage message = new AliyunSmsMessage();
-        message.setPhoneNumbers("15395158022");
-        message.setOutId("1");
-        message.setTemplateParam("{\"flowType\":\"报备\", \"phoneNum\":\"15395158002\"}");
-        notify.notify(message);
+//        AliyunSmsMessage message = new AliyunSmsMessage();
+//        message.setPhoneNumbers("15395158022");
+//        message.setOutId("1");
+//        message.setTemplateParam("{\"flowType\":\"报备\", \"phoneNum\":\"15395158002\"}");
+//        notify.notify(message);
+
+
         return execBusDeal;
     }
 
