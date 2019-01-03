@@ -46,6 +46,7 @@ public class BusNotifyMsgController extends BusBaseController {
 
     @RequestMapping(value = "deleteById", method = RequestMethod.POST)
     @ResponseBody
+    @WechatAuthorize
     public ResultData deleteById(@RequestBody BusNotifyMsg condition) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "通知删除成功！");
         try {
