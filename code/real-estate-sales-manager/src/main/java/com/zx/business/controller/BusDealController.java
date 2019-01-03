@@ -86,7 +86,6 @@ public class BusDealController extends BusBaseController {
     @RequestMapping("/getById/{id}")
     @ResponseBody
     @WechatAuthorize
-    @AuthorizeIgnore
     public ResultData getById(@PathVariable Integer id) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取订单详细信息成功！");
         try {

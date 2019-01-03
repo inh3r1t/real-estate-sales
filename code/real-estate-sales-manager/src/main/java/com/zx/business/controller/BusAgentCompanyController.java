@@ -1,6 +1,7 @@
 package com.zx.business.controller;
 
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
@@ -103,6 +104,7 @@ public class BusAgentCompanyController extends BaseController {
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
+    @WechatAuthorize
     public ResultData getPage(@RequestBody BusAgentCompany busAgentCompany) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取中介公司列表成功！");
         try {

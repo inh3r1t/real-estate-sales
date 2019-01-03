@@ -74,7 +74,6 @@ public class BusNotifyMsgController extends BusBaseController {
     @RequestMapping(value = "getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
-    @AuthorizeIgnore
     public ResultData getPage(@RequestBody BusNotifyMsg condition, HttpServletRequest request) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取通知列表成功！");
         try {
