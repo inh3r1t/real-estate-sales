@@ -231,7 +231,7 @@ public class BaseController {
         String thumPath = tempFile.getParent() + "/thumbnail." + fileName;
         Thumbnails.of(tempFile)
                 .scale(1f)
-                .outputQuality(0.15f)
+                .outputQuality(0.5f)
                 .toFile(thumPath);
         String relativePath = thumPath.replace("\\", "/");
         if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
