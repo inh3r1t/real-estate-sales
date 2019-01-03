@@ -29,7 +29,7 @@ public class MsgTemplateTest {
         params.put("appid", "95c4984c0c7240eca3684e27bf29cad7");
         params.put("type", "0");
         params.put("template_name", "公司内部通知模板");
-        params.put("autograph", "通知");
+        params.put("autograph", "安策系统通知");
         params.put("content", "你好，有一条你的${1}通知，负责人电话：${2}。");
 
         HttpEntity httpEntity = HttpKit.post(url, null, JSON.toJSONString(params), header, Charset.defaultCharset());
