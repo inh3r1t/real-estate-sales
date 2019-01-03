@@ -15,7 +15,7 @@ Page({
   onLoad: function() {
     app.post("/busRealEstate/getPage", {
       page: 1,
-      pageSize: 10,
+      pageSize: 5,
       isTopRecommend: 1
     }).then(res => {
       console.log(res.data);

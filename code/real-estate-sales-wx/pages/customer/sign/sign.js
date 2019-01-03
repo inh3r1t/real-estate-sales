@@ -128,11 +128,11 @@ Page({
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     // 客户到访
-    app.post("/busDeal/subscribe", {
+    debugger
+    app.post("/busDeal/sign", {
         id: this.data.id,
-        subscribeMoney: e.detail.value.price,
-        subscribeTime: this.getDate(),
-        subscribePhotoPahts: this.data.images.toString(),
+        signMoney: e.detail.value.price,
+        signTime: this.getDate(),
         formId: e.detail.formId
       })
       .then(res => {

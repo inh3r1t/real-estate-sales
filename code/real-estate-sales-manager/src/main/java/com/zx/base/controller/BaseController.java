@@ -103,6 +103,8 @@ public class BaseController {
      */
     @Value("${custom.upload-node}")
     public String UPLOAD_NODE;
+    @Value("${custom.wechat.access_token.api.url}")
+    String accessTokenApiUrl;
 
     @Resource
     public RoleService roleService;
