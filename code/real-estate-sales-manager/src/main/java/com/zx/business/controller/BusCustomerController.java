@@ -2,6 +2,7 @@ package com.zx.business.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
@@ -31,7 +32,7 @@ public class BusCustomerController {
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getPage(@RequestBody BusCustomer busCustomer) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取客户列表成功！");
         try {

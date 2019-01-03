@@ -1,6 +1,7 @@
 package com.zx.business.controller;
 
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
 import com.zx.base.model.PagerModel;
@@ -44,7 +45,7 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
@@ -78,7 +79,7 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
     @ResponseBody
-    @AuthorizeIgnore
+    @WechatAuthorize
     public ResultData getById(@PathVariable Integer id) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘详细信息成功！");
         try {
