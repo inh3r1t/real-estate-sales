@@ -21,6 +21,7 @@
   font-size: 18px;
   color: #e51c23;
   display: flex;
+  line-height:44rpx;
 }
 
 .order-step .item-title .item-step-num {

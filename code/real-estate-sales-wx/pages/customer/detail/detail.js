@@ -16,7 +16,7 @@ Page({
   onLoad: function(options) {
     let id = options.id || 0
     app.get("/busDeal/getById/" + id).then(res => {
-      // console.log(res)
+      console.log(res)
       if (res.data.customerPhone != '' && res.data.customerPhone != undefined) {
         res.data.customerPhone = res.data.customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
       }

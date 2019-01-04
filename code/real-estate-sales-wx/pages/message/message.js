@@ -100,7 +100,6 @@ Page({
         app.post("/busNotifyMsg/deleteById", {
           id: id
         }).then(res => {
-          // console.log(res);
           var history = that.data.list;
           history.splice(index, 1);
           that.setData({

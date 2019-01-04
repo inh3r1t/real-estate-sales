@@ -9,7 +9,7 @@
     <view class='item-building'>楼盘名称：{{model.realEstateName}}</view>
     <view class='item-user'>
       <text>报备账号：{{model.reportUser.userName}} {{model.reportUser.phoneNum}}</text>
-      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.reportUserPhone}}"></text>
+      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.reportUser.phoneNum}}"></text>
     </view>
     <view class='item-company'>报备公司：{{model.reportCompany}}</view>
   </view>
@@ -20,7 +20,7 @@
     </view>
     <view class='item-user'>
       <text>项目经理：{{model.manager.userName}} {{model.manager.phoneNum}}</text>
-      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.managerPhone}}"></text>
+      <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{model.manager.phoneNum}}"></text>
     </view>
   </view>
   <view class='order-step' wx:if="{{model.state >= 2}}">
@@ -29,7 +29,7 @@
       <text>到访 {{model.arriveTime}}</text>
     </view>
     <view class='item-image'>
-      <image src="{{item}}" wx:for="{{arriveCertifyPhotoPaths}}" wx:key="index"></image>
+      <image src="{{item}}" wx:for="{{arriveCertifyPhotoPaths}}" wx:key="index" mode='widthFix'></image>
     </view>
   </view>
   <view class='order-step' wx:if="{{model.state >= 3}}">
@@ -37,10 +37,17 @@
       <text class='item-step-num'>4</text>
       <text>认购 {{model.subscribeTime}}</text>
     </view>
-    <view class='item-price'>客户姓名：{{model.customerName}}</view>
-    <view class='item-commission'>客户号码：{{model.customerPhone}}</view>
     <view class='item-image'>
-      <image src="{{item}}" wx:for="{{subscribePhotoPaths}}" wx:key="index"></image>
+      <image src="{{item}}" wx:for="{{subscribePhotoPaths}}" wx:key="index" mode='widthFix'></image>
+    </view>
+  </view>
+   <view class='order-step' wx:if="{{model.state >= 4}}">
+    <view class='item-title'>
+      <text class='item-step-num'>5</text>
+      <text>签约 {{model.signTime}}</text>
+    </view>
+    <view class='item-image'>
+      <image src="{{item}}" wx:for="{{signPhotoPaths}}" wx:key="index" mode='widthFix'></image>
     </view>
   </view>
 </view>
