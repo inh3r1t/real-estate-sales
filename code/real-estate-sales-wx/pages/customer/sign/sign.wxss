@@ -73,13 +73,16 @@
   right: 100rpx;
 }
 
-.form-upload-image {
+.form .form-body .form-upload-image {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
+  flex-wrap:wrap;
+
 }
 
-.form-upload-image image {
-  height: 200rpx;
+.form .form-body .form-upload-image image {
+  height: 400rpx;
+  width: 200rpx;
 }

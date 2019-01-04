@@ -7,7 +7,8 @@ Page({
   data: {
     model: {},
     arriveCertifyPhotoPaths: [],
-    subscribePhotoPaths: []
+    subscribePhotoPaths: [],
+    signPhotoPaths: []
   },
 
   /**
@@ -36,10 +37,19 @@ Page({
           subscribePhotoPathsList.push(res.data.subscribePhotoPahts)
         }
       }
+      var signPhotoPathsList = []
+      if (res.data.signPhotoPaths != null) {
+        if (res.data.signPhotoPaths.indexOf(',') > -1) {
+          signPhotoPathsList = res.data.signPhotoPaths.split(',');
+        } else {
+          signPhotoPathsList.push(res.data.signPhotoPaths)
+        }
+      }
       this.setData({
         model: res.data,
         arriveCertifyPhotoPaths: arriveCertifyPhotoPathList,
-        subscribePhotoPaths: subscribePhotoPathsList
+        subscribePhotoPaths: subscribePhotoPathsList,
+        signPhotoPaths: signPhotoPathsList
       })
     })
   },
