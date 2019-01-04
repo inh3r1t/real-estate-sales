@@ -69,11 +69,11 @@
                 </div>
             </div>
             <!--<div class="layui-col-xs4">-->
-                <!--<label class="layui-form-label">排序</label>-->
-                <!--<div class="layui-input-block">-->
-                    <!--<input type="text" name="address" th:value="${model.address}" lay-verify="required" placeholder="请输入地址"-->
-                           <!--autocomplete="off" class="layui-input required">-->
-                <!--</div>-->
+            <!--<label class="layui-form-label">排序</label>-->
+            <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="address" th:value="${model.address}" lay-verify="required" placeholder="请输入地址"-->
+            <!--autocomplete="off" class="layui-input required">-->
+            <!--</div>-->
             <!--</div>-->
         </div>
         <div class="layui-form-item">
@@ -182,6 +182,10 @@
             elem: '#uploadImage'
             , url: '/upload'
             , size: 5000 //限制文件大小，单位 KB
+            , data: {
+                "width": 130,
+                "height": 80
+            }
             , done: function (res) {
                 debugger
                 if (res.state) {

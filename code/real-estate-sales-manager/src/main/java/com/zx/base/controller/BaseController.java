@@ -167,14 +167,14 @@ public class BaseController {
     @RequestMapping("/uploadFromWechat")
     @AuthorizeIgnore
     @ResponseBody
-    public Object uploadFromWechat(MultipartFile file) {
+    public Object uploadFromWechat(MultipartFile file, Integer width, Integer height, Float quality) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "上传成功！");
         String path = "/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd") + "/";
         String destPath = null;
         try {
             destPath = getAbsolutePath(path);
             String fileName = file.getOriginalFilename();
-            String realPath = uploadFileRealPath(file, destPath + fileName);
+            String realPath = uploadFileRealPath(file, destPath + fileName, width, height, quality);
             resultData.setData(realPath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,13 +184,13 @@ public class BaseController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Object upload(MultipartFile file) {
+    public Object upload(MultipartFile file, Integer width, Integer height, Float quality) {
         ReturnModel msg = new ReturnModel();
         try {
             String path = "/" + DateUtil.toDateString(DateUtil.getDateNow(), "yyyy-MM-dd") + "/";
             String destPath = getAbsolutePath(path);
             String fileName = file.getOriginalFilename();
-            String realPath = uploadFileRealPath(file, destPath + fileName);
+            String realPath = uploadFileRealPath(file, destPath + fileName, width, height, quality);
             if (StringUtil.isNotEmpty(realPath)) {
                 msg.setState(true);
                 msg.setMessage("上传成功");
@@ -215,7 +215,7 @@ public class BaseController {
      * @return
      * @throws IOException
      */
-    public String uploadFileRealPath(MultipartFile file, String path) throws IOException {
+    public String uploadFileRealPath(MultipartFile file, String path, Integer width, Integer height, Float quality) throws IOException {
         String fileName = file.getOriginalFilename();
         File tempFile = new File(path);
         if (!tempFile.getParentFile().exists()) {
@@ -229,10 +229,18 @@ public class BaseController {
         file.transferTo(tempFile);
         //图片压缩后路径
         String thumPath = tempFile.getParent() + "/thumbnail." + fileName;
-        Thumbnails.of(tempFile)
-                .scale(1f)
-                .outputQuality(0.5f)
-                .toFile(thumPath);
+        if (width != null && height != null) {
+            Thumbnails.of(tempFile)
+                    .size(width, height).keepAspectRatio(false)
+                    .outputQuality(quality == null ? 1f : quality)
+                    .toFile(thumPath);
+
+        } else {
+            Thumbnails.of(tempFile)
+                    .scale(1f)
+                    .outputQuality(quality == null ? 1f : quality)
+                    .toFile(thumPath);
+        }
         String relativePath = thumPath.replace("\\", "/");
         if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
             relativePath = relativePath.substring(getBasePath().length());
