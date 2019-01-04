@@ -72,7 +72,7 @@ Page({
         pageSize: 10
       }).then(res => {
         //这里既可以获取模拟的res
-        console.log(res)
+        // console.log(res)
         this.setData({
           list: override ? res.data.Items : this.data.list.concat(res.data.Items),
           more: res.data.Items != null && res.data.Items.length == 10,
@@ -81,7 +81,7 @@ Page({
         // 隐藏加载框
         wx.hideLoading();
       }).catch(err => {
-        console.log("==> [ERROR]", err)
+        // console.log("==> [ERROR]", err)
         // 隐藏加载框
         wx.hideLoading();
       })

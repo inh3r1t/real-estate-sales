@@ -37,19 +37,19 @@
       },
       {
         "pagePath": "pages/building/list",
-        "text": "所有楼盘",
+        "text": "楼盘",
         "iconPath": "images/building.png",
         "selectedIconPath": "images/building1.png"
       },
       {
         "pagePath": "pages/customer/index/index",
-        "text": "我的客户",
+        "text": "客户",
         "iconPath": "images/customer.png",
         "selectedIconPath": "images/customer1.png"
       },
       {
         "pagePath": "pages/member/member",
-        "text": "个人中心",
+        "text": "我的",
         "iconPath": "images/personal.png",
         "selectedIconPath": "images/personal1.png"
       }

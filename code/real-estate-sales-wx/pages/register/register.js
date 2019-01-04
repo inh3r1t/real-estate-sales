@@ -78,7 +78,7 @@ Page({
       pollCode: params.pollCode
     });
     app.post("/busUser/register", this.data).then((res) => {
-      console.log(res);
+      // console.log(res);
       wx.showModal({
         content: '恭喜您，注册成功',
         showCancel: false,

@@ -14,7 +14,7 @@ Page({
   },
   makePhoneCall: function() {
     wx.makePhoneCall({
-      phoneNumber: this.data.building.phone,
+      phoneNumber: this.data.building.manager.phoneNum,
     })
   },
 
@@ -25,7 +25,7 @@ Page({
     var id = options.id;
     if (id != undefined && id > 0) {
       app.get("/busRealEstate/getById/" + id).then(res => {
-        console.log(res);
+        // console.log(res);
         this.setData({
           building: res.data
         })

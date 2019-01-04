@@ -105,7 +105,7 @@ Page({
         formId: e.detail.formId
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         wx.showToast({
           title: `报备成功`,
           icon: 'success',

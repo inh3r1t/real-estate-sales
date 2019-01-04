@@ -169,9 +169,9 @@ Page({
         state: state
       }).then(res => {
         //这里既可以获取模拟的res
-        console.log(res)
+        // console.log(res)
         for (let i = 0; i < res.data.list.Items.length; i++) {
-          res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*?(\d{4})/, '$1****$2');
+          res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
         }
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
@@ -182,7 +182,7 @@ Page({
         // 隐藏加载框
         wx.hideLoading();
       }).catch(err => {
-        console.log("==> [ERROR]", err)
+        // console.log("==> [ERROR]", err)
         // 隐藏加载框
         wx.hideLoading();
       })

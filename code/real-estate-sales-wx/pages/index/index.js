@@ -18,7 +18,7 @@ Page({
       pageSize: 5,
       isTopRecommend: 1
     }).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.setData({
         topList: res.data.Items
       })
@@ -28,7 +28,7 @@ Page({
       pageSize: 10,
       isListRecommend: 1
     }).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.setData({
         recommendbuildings: res.data.Items
       })

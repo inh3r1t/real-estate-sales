@@ -66,7 +66,7 @@ Page({
 
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
-    console.log(arr);
+    // console.log(arr);
     this.setData({
       dateTimeArray: dateArr,
       dateTime: arr,
@@ -95,7 +95,7 @@ Page({
             },
             success: res => {
               uploadImgCount++;
-              console.log(res)
+              // console.log(res)
               if (res.data) {
                 this.data.images.push(JSON.parse(res.data).data);
                 this.setData({

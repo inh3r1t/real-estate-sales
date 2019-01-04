@@ -56,7 +56,7 @@ Page({
       passwd: params.passwd,
     });
     app.post("/busUser/login", this.data).then((res) => {
-      console.log(res);
+      // console.log(res);
       //1.存用户信息到本地存储
       wx.setStorageSync('userInfo', res.data.userInfo);
       wx.setStorageSync('token', res.data.token);
@@ -77,8 +77,8 @@ Page({
             var index = 0;
             for (var i = num - 1; i >= 0; i--) {
               index++;
-              console.log(i);
-              console.log(pages[i].route)
+              // console.log(i);
+              // console.log(pages[i].route)
               if (pages[i].route != 'pages/login/phone' && pages[i].route != 'pages/login/index') {
                 wx.navigateBack({
                   delta: index
