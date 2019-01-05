@@ -54,7 +54,7 @@ public class BusRealEstateServiceTest {
 //        final Long aLong = busRealEstateMapper.countByModel(busRealEstate);
 //        System.out.println(aLong);
 
-        final PagerModel<BusRealEstate> page = busRealEstateService.getPage(1, 100, busRealEstate);
+        final PagerModel<BusRealEstate> page = busRealEstateService.getPage(1, 100, new BusRealEstate());
         System.out.println(page);
     }
 

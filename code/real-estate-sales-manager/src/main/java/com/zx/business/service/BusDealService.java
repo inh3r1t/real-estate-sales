@@ -6,10 +6,12 @@ import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
 import com.zx.business.notify.model.WechatMessage;
+import com.zx.business.notify.model.YunzhixunSmsMessage;
 import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,8 +41,11 @@ public class BusDealService {
     @Resource
     private BusUserMapper busUserMapper;
 
-    @Resource(name = "wechatNotify")
+    @Resource(name = "yunzhixunMessageNotify")
     private Notify notify;
+
+    @Value("${custom.is_open_notify)")
+    private String isOpenNotify;
 
     public BusDeal getById(Integer id) {
         return busDealMapper.selectByPrimaryKey(id);
@@ -107,11 +112,10 @@ public class BusDealService {
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
 
-            WechatMessage wechatMessage = new WechatMessage();
-            wechatMessage.setForm_id(busDealVO.getFormId());
-            wechatMessage.setTouser(busRealEstate.getManager().getOpenId());
-            wechatMessage.setTemplate_id("QBGJDmxWv9nE16IXYHTJrArDbTSp37bUFaHKje5FC_Y");
-            notify.notify(wechatMessage);
+            // send sms message
+            if (Boolean.valueOf(isOpenNotify)) {
+                sendMessage(busRealEstate.getManager().getUserName(), "报备通知", agent.getPhoneNum());
+            }
         }
 
     }
@@ -134,12 +138,9 @@ public class BusDealService {
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
 
         // send sms message
-//        AliyunSmsMessage message = new AliyunSmsMessage();
-//        message.setPhoneNumbers("15395158022");
-//        message.setOutId("1");
-//        message.setTemplateParam("{\"flowType\":\"报备\", \"phoneNum\":\"15395158002\"}");
-//        notify.notify(message);
-
+        if (Boolean.valueOf(isOpenNotify)) {
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "预约通知", execBusDeal.getManager().getPhoneNum());
+        }
 
         return execBusDeal;
     }
@@ -174,6 +175,11 @@ public class BusDealService {
         busNotifyMsg.setMsgContent(subscribeMsg(execBusDeal.getReportUser().getCompanyName(), execBusDeal.getCustomerName(), execBusDeal.getBusCustomer().getSex(),
                 execBusDeal.getRealEstateName(), DateUtil.toDateString(execBusDeal.getSubscribeTime(), "yyyy-MM-dd HH:mm")));
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
+
+        // send sms message
+        if (Boolean.valueOf(isOpenNotify)) {
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "认购通知", execBusDeal.getManager().getPhoneNum());
+        }
         return execBusDeal;
     }
 
@@ -195,6 +201,11 @@ public class BusDealService {
         busNotifyMsg.setMsgContent(signMsg(execBusDeal.getReportUser().getCompanyName(), execBusDeal.getCustomerName(), execBusDeal.getBusCustomer().getSex(),
                 execBusDeal.getRealEstateName(), DateUtil.toDateString(execBusDeal.getSubscribeTime(), "yyyy-MM-dd HH:mm")));
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
+
+        // send sms message
+        if (Boolean.valueOf(isOpenNotify)) {
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "签约通知", execBusDeal.getManager().getPhoneNum());
+        }
         return execBusDeal;
     }
 
@@ -223,5 +234,12 @@ public class BusDealService {
         String sex = customerSex == 0 ? "先生" : "女士";
         String model = "【%s】 客户 【%s】已成功签约 【%s】 楼盘，签约时间：【%s】";
         return String.format(model, agentCompanyName, customerName + sex, realEstateName, subscribeTime);
+    }
+
+    private void sendMessage(String mobile, String notifyType, String contactName) {
+        YunzhixunSmsMessage message = new YunzhixunSmsMessage();
+        message.setMobile(mobile);
+        message.setParam(notifyType + "," + contactName);
+        notify.notify(message);
     }
 }
