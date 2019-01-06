@@ -33,8 +33,9 @@ function request(url, method, postData) {
           })
         } else if (res.data.resultCode == '001005') { //返回错误提示信息
           reject('用户名密码错误');
+        } else if (res.data.resultCode == '001006') {
+          reject('注册码错误');
         }
-
       },
       fail: function(e) {
         reject('网络出错');

@@ -100,7 +100,7 @@ Page({
         reportUserId: 3,
         realEstateIds: ids.toString(),
         customerName: params.name,
-        customerPhone: params.realPhone,
+        customerPhone: params.phone,
         customerSex: params.sex,
         formId: e.detail.formId
       })
@@ -125,22 +125,9 @@ Page({
   },
   handlePhone: function(e) {
     var value = e.detail.value
-    if (this.data.phone.length < 11) {
-      if (value.length > 11) {
-        this.setData({
-          phone: this.data.phone + value.substring(value.length - (11 - this.data.phone.length), value.length)
-        })
-        return this.data.phone + value.substring(value.length - (11 - this.data.phone.length), value.length);
-      } else {
-        this.setData({
-          phone: this.data.phone + value.substring(value.length - 1)
-        })
-      }
-    }
     if (value.length >= 4 && value.length <= 7) {
-      return value.replace(/(\d{3})[\s\S]*/, '$1') + Array(value.length - 3 + 1).join('*');
-    } else {
-      return value.substring(0, 11)
+      value.substring(0, 3)
+      return value.substring(0, 3) + Array(value.length - 3 + 1).join('*');
     }
   }
 })

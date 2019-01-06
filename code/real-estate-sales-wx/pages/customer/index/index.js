@@ -18,28 +18,30 @@ Page({
       arrive_count: 0,
       subscribe_count: 0,
     },
-    canOpt: false
+    isManager: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    this.setData({
-      isLogin: app.isLogin()
-    })
-    this.getList(1);
-  },
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    var prevLogin = this.data.isLogin;
+    this.setData({
+      isLogin: app.isLogin()
+    })
+    if (prevLogin != this.data.isLogin) {
+      this.getList(1);
+    }
     var user = app.globalData.userInfo;
     if (user != null) {
       this.setData({
-        canOpt: user.busRole.type == 0
-        // canOpt: true
+        isManager: user.busRole.type == 0
+        // isManager: true
       })
     }
   },
@@ -113,7 +115,8 @@ Page({
         "<br/>客户姓名：" + item.customerName +
         "<br/>客户电话：" + item.customerPhone +
         (item.reportTime != '' && item.reportTime != undefined ? "<br/>报备时间：" + item.reportTime : "") +
-        (item.arriveTime != '' && item.arriveTime != undefined ? "<br/>到访时间：" + item.arriveTime : "")
+        (item.arriveTime != '' && item.arriveTime != undefined ? "<br/>到访时间：" + item.arriveTime : "") +
+        "<br/>渠道公司：德信安居"
     })
   },
   modalCancel: function() {
@@ -122,7 +125,12 @@ Page({
       showShareModal: false
     })
   },
-
+  makePhoneCall: function(e) {
+    let phone = e.currentTarget.dataset.phone
+    wx.makePhoneCall({
+      phoneNumber: phone
+    })
+  },
 
   /**
    *  点击确认

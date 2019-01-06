@@ -10,6 +10,7 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
+    isLogin: false,
     building: {}
   },
   makePhoneCall: function() {
@@ -48,18 +49,16 @@ Page({
         icon: 'none'
       })
     }
-    // app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildingById").then(res => {
-    //   this.setData({
-    //     building: res.data
-    //   })
-    //   WxParse.wxParse('detail', 'html', this.data.building.detail, this, 20);
-    // })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {   },
+  onShow: function() {  
+    this.setData({
+      isLogin: app.isLogin()
+    }) 
+  },
   report: function() {
     wx.navigateTo({
       url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name,

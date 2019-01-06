@@ -27,17 +27,22 @@
     <view class='customer-item flow-step-{{item.state}}' wx:for="{{list}}" wx:key="index" bindtap='toDetail' data-id="{{item.id}}">
       <view class='item-base'>
         <view class='item-info'>
-          <view class='item-name'>客户姓名：{{item.customerName}}</view>
-          <view class='item-phone'>客户号码：{{item.customerPhone}}</view>
+          <view class='item-name'>客户姓名：{{item.busCustomer.name}}</view>
+          <view class='item-phone'>客户号码：{{item.busCustomer.phoneNum}}</view>
           <view class='item-building'>楼盘名称：{{item.realEstateName}}</view>
+          <view wx:if="{{isManager}}" class='item-phone'>
+            报备账号：{{item.reportUser.userName}} - {{item.reportUser.phoneNum}}
+            <text class="iconfont icon-dianhua" catchtap='makePhoneCall' data-phone="{{item.reportUser.phoneNum}}"></text>
+          </view>
         </view>
         <view class='item-tools'>
-          <text wx:if="{{item.state==0 && canOpt}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
-          <text wx:if="{{item.state==1 && canOpt}}" data-state="1" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
-          <text wx:if="{{item.state==2 && canOpt}}" data-state="2" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
-          <text wx:if="{{item.state==3 && canOpt}}" data-state="3" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户签约</text>
-          <text wx:if="{{item.state==4 && canOpt}}" class='item-opt-txt'>已签约</text>
-          <text class="item-share iconfont icon-fenxiang" data-index="{{index}}" catchtap='share'></text>
+          <text wx:if="{{item.state==0 && isManager}}" data-state="0" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>预约</text>
+          <text wx:if="{{item.state==1 && isManager}}" data-state="1" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户到访</text>
+          <text wx:if="{{item.state==2 && isManager}}" data-state="2" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户认购</text>
+          <text wx:if="{{item.state==3 && isManager}}" data-state="3" data-id="{{item.id}}" data-index="{{index}}" class='item-opt' catchtap='operate'>客户签约</text>
+          <text wx:if="{{item.state==4}}" class='item-opt-txt'>已签约</text>
+          <text wx:if="{{!isManager}}" class='item-opt item-opt-txt' catchtap='makePhoneCall' data-phone="{{item.manager.phoneNum}}">联系驻场</text>
+          <text wx:if="{{isManager}}" class="item-share iconfont icon-fenxiang" data-index="{{index}}" catchtap='share'></text>
         </view>
       </view>
       <view class='item-flows'>

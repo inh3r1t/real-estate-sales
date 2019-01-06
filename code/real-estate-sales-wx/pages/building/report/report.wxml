@@ -16,7 +16,7 @@
     </view>
     <view class="form-item">
       <text class="form-lable">联系方式</text> 
-      <input class='form-input hidden' name="realPhone" type="number" value='{{phone}}'></input>
+      <!-- <input class='form-input hidden' name="realPhone" type="number" value='{{phone}}'></input> -->
       <input class='form-input' name="phone" bindinput="handlePhone" placeholder="请输入手机号" type="number"></input>
     </view>
     <view class="item-report">

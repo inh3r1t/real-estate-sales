@@ -11,7 +11,7 @@
   <view class='building-title'>{{building.name}}</view>
   <view class='building-address'>地址：{{building.address}}</view>
   <view class='building-summary'>简介：{{building.summery}}</view>
-  <view class='building-commission'>佣金：{{building.commission}}</view>
+  <view class='building-commission' hidden="{{!isLogin}}">佣金：{{building.commission}}</view>
   <view class='building-principal'>项目负责人：{{building.manager.userName}} {{building.manager.phoneNum}}</view>
   <view class='building-detail'>
     <text class='bold'>楼盘详情</text>
