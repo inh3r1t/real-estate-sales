@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
+import com.zx.base.exception.WechatAuthException;
 import com.zx.business.common.DataStore;
 import com.zx.business.dao.BusAgentCompanyMapper;
 import com.zx.business.dao.BusRoleMapper;
@@ -12,6 +13,7 @@ import com.zx.business.model.BusAgentCompany;
 import com.zx.business.model.BusRole;
 import com.zx.business.model.BusUser;
 import com.zx.lib.utils.encrypt.Md5Util;
+import com.zx.system.model.SysUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,11 +38,12 @@ public class BusUserService {
         // 根据注册码设置roleId
         BusAgentCompany condition = new BusAgentCompany();
         condition.setPollCode(busUser.getPollCode());
-        BusAgentCompany busAgentCompany = busAgentCompanyMapper.selectByModel(condition).get(0);
-        if (busAgentCompany == null) {
-            throw new BusinessException("注册码不存在，请检查后在输入！");
+        List<BusAgentCompany> busAgentCompanies = busAgentCompanyMapper.selectByModel(condition);
+        if (busAgentCompanies == null || busAgentCompanies.size() == 0) {
+            throw new WechatAuthException(Const.POLL_CODE_ERROR);
         } else {
             BusRole busRole = new BusRole();
+            BusAgentCompany busAgentCompany = busAgentCompanies.get(0);
             busRole.setType(String.valueOf(busAgentCompany.getState()));
             Integer roleId = busRoleMapper.selectByModel(busRole).get(0).getId();
             busUser.setRoleId(roleId);

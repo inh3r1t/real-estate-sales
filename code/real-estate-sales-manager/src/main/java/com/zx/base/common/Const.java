@@ -14,4 +14,5 @@ public class Const {
     public static final String SESSION_EXPIRE = "001003"; // 接口返回的失败code
     public static final String TOKEN_ERROR = "001004"; // 接口返回的失败code
     public static final String PASSWORD_ERROR = "001005"; // 接口返回的失败code
+    public static final String POLL_CODE_ERROR = "001006"; // 接口返回的失败code
 }
