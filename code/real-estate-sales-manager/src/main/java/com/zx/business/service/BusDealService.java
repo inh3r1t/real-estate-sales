@@ -151,7 +151,7 @@ public class BusDealService {
         execBusDeal.setState(3);
         execBusDeal.setSubscribeTime(busDeal.getSubscribeTime());
         execBusDeal.setSubscribeMoney(busDeal.getSubscribeMoney());
-        execBusDeal.setSignPhotoPaths(busDeal.getSubscribePhotoPahts());
+        execBusDeal.setSubscribePhotoPahts(busDeal.getSubscribePhotoPahts());
         execBusDeal.setSubscribeOperateTime(new Date());
         execBusDeal.setUpdateTime(new Date());
         busDealMapper.updateByPrimaryKeySelective(execBusDeal);
