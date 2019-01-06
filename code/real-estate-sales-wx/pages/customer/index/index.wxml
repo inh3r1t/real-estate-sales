@@ -30,8 +30,7 @@
           <view class='item-name'>客户姓名：{{item.busCustomer.name}}</view>
           <view class='item-phone'>客户号码：{{item.busCustomer.phoneNum}}</view>
           <view class='item-building'>楼盘名称：{{item.realEstateName}}</view>
-          <view wx:if="{{isManager}}" class='item-phone'>
-            报备账号：{{item.reportUser.userName}} - {{item.reportUser.phoneNum}}
+          <view wx:if="{{isManager}}" class='item-phone'>报备账号：{{item.reportUser.userName}} - {{item.reportUser.phoneNum}}
             <text class="iconfont icon-dianhua" catchtap='makePhoneCall' data-phone="{{item.reportUser.phoneNum}}"></text>
           </view>
         </view>

@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-col-xs4">
+            <div class="layui-col-xs3">
                 <label class="layui-form-label">项目经理</label>
                 <div class="layui-input-block">
                     <select name="manager_id" lay-verify="required" id="manager_id">
@@ -55,8 +55,16 @@
                     </select>
                 </div>
             </div>
-            <div class="layui-col-xs8">
-                <input type="checkbox" name="extend1" title="楼盘需要显示完整号码" lay-skin="primary"
+            <div class="layui-col-xs3">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sortWeight" th:value="${model.sortWeight}" lay-verify="required"
+                           placeholder="请输入排序"
+                           autocomplete="off" class="layui-input required">
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <input type="checkbox" name="extend1" title="需要完整号码" lay-skin="primary"
                        th:checked="${model.extend1}">
                 <input type="checkbox" name="isTopRecommend" title="置顶推荐" lay-skin="primary"
                        th:checked="${model.isTopRecommend}">

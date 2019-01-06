@@ -15,9 +15,10 @@
       </radio-group>
     </view>
     <view class="form-item">
-      <text class="form-lable">联系方式</text> 
+      <text class="form-lable">联系方式</text>
       <!-- <input class='form-input hidden' name="realPhone" type="number" value='{{phone}}'></input> -->
-      <input class='form-input' name="phone" bindinput="handlePhone" placeholder="请输入手机号" type="number"></input>
+      <input class='form-input' wx:if='{{isReal}}' name="phone" placeholder="请输入完整手机号" type="number"></input>
+      <input class='form-input' wx:if='{{!isReal}}' name="phone" placeholder="请输入手机号" type="text"></input>
     </view>
     <view class="item-report">
       <text class="form-lable">报备楼盘</text>

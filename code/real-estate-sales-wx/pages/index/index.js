@@ -57,5 +57,15 @@ Page({
     wx.navigateTo({
       url: '/pages/building/detail/detail?id=' + id,
     })
+  },
+  btnRecommend: function() {
+    wx.navigateTo({
+      url: '/pages/building/report/report',
+    })
+  },
+  btnRegister: function() {
+    wx.navigateTo({
+      url: '/pages/register/register',
+    })
   }
 })

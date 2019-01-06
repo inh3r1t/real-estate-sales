@@ -34,6 +34,7 @@
                 <th style="text-align:center">项目经理</th>
                 <th class="text-center" style="text-align:center">推荐</th>
                 <th class="text-center" style="text-align:center">置顶</th>
+                <th class="text-center" style="text-align:center">排序</th>
                 <th class="text-center" style="text-align:center">创建时间</th>
                 <th style="text-align:center;width: 340px">操作</th>
             </tr>
@@ -43,10 +44,11 @@
             <tr class="CurrentRow">
                 <td class="text-ellipsis-300" data-bind="text:name"></td>
                 <td data-bind="text:commission"></td>
-                <td data-bind="text:managerName"></td>
+                <td class="text-center"  data-bind="text:managerName"></td>
 
                 <td class="text-center" data-bind="text:isListRecommend()?'已推荐':''"></td>
                 <td class="text-center" data-bind="text:isTopRecommend()?'已置顶':''"></td>
+                <td class="text-center" data-bind="text:sortWeight"></td>
                 <td class="text-center" data-bind="text:createTime"></td>
                 <td class="text-center">
                     <!--<a data-bind="click:btn_top.bind()" title="置顶" data-toggle="tooltip" data-placement="top">-->

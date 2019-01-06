@@ -11,16 +11,23 @@ Page({
   },
   onLoad: function(options) {
     app.checkLogin().then(res => {
+      debugger
       var buildingId = options.buildingId;
       var buildingName = options.buildingName;
-      var isReal = options.isReal;
-      this.setData({
-        list: [{
-          id: buildingId,
-          name: buildingName,
+      var isReal = options.isReal == '1';
+      if (buildingId == undefined || buildingName == undefined) {
+        this.setData({
           isReal: isReal
-        }]
-      });
+        });
+      } else {
+        this.setData({
+          list: [{
+            id: buildingId,
+            name: buildingName,
+          }],
+          isReal: isReal
+        });
+      }
       this.WxValidate = app.WxValidate({
         name: {
           required: true,

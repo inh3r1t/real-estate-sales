@@ -7,7 +7,10 @@
     </swiper-item>
   </block>
 </swiper>
-
+<view class='btns-recommend'>
+  <image src='/images/register.png' bindtap='btnRegister'></image>
+  <image src='/images/recommend.png' bindtap='btnRecommend'></image>
+</view>
 <view class="building-recommend">
   <view class="building-recommend-title">
     <view class='building-recommend-title-icon'></view>
