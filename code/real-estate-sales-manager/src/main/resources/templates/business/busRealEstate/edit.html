@@ -36,25 +36,12 @@
     <form id="editForm" th:method="post" class="layui-form  layui-form-pane" th:action="@{/busRealEstate/submit}">
         <input type="hidden" name="id" th:value="${model.id}"/>
         <div class="layui-form-item">
-            <div class="layui-col-xs8">
+            <div class="layui-col-xs12">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block">
                     <input type="text" name="name" th:value="${model.name}" lay-verify="required" placeholder="请输入标题"
                            autocomplete="off" class="layui-input required">
                 </div>
-            </div>
-            <div class="layui-col-xs4">
-                <input type="checkbox" name="isTopRecommend" title="置顶推荐" lay-skin="primary"
-                       th:checked="${model.isTopRecommend}">
-                <input type="checkbox" name="isListRecommend" title="精品推荐" lay-skin="primary"
-                       th:checked="${model.isListRecommend}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">地址</label>
-            <div class="layui-input-block">
-                <input type="text" name="address" th:value="${model.address}" lay-verify="required" placeholder="请输入地址"
-                       autocomplete="off" class="layui-input required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -68,6 +55,14 @@
                     </select>
                 </div>
             </div>
+            <div class="layui-col-xs8">
+                <input type="checkbox" name="extend1" title="楼盘需要显示完整号码" lay-skin="primary"
+                       th:checked="${model.extend1}">
+                <input type="checkbox" name="isTopRecommend" title="置顶推荐" lay-skin="primary"
+                       th:checked="${model.isTopRecommend}">
+                <input type="checkbox" name="isListRecommend" title="精品推荐" lay-skin="primary"
+                       th:checked="${model.isListRecommend}">
+            </div>
             <!--<div class="layui-col-xs4">-->
             <!--<label class="layui-form-label">排序</label>-->
             <!--<div class="layui-input-block">-->
@@ -75,6 +70,13 @@
             <!--autocomplete="off" class="layui-input required">-->
             <!--</div>-->
             <!--</div>-->
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="address" th:value="${model.address}" lay-verify="required" placeholder="请输入地址"
+                       autocomplete="off" class="layui-input required">
+            </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">佣金</label>

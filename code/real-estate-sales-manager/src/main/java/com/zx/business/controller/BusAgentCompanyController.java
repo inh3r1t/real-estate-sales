@@ -133,17 +133,17 @@ public class BusAgentCompanyController extends BaseController {
         return resultData;
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     @ResponseBody
-    public ResultData delete(@RequestBody Integer id) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "删除中介公司成功！");
+    public Object delete(Integer id) {
+        ReturnModel rm = new ReturnModel();
         try {
             busAgentCompanyService.delete(id);
+            rm.setInfo(true, "删除成功");
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("获取客户列表失败！");
             logger.error(e.getMessage(), e);
+            rm.setInfo(false, "删除失败");
         }
-        return resultData;
+        return rm;
     }
 }

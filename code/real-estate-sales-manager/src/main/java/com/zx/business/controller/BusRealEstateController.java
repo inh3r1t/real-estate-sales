@@ -158,4 +158,18 @@ public class BusRealEstateController extends BaseController {
             return new ReturnModel(false, String.format("%s失败", actionName));
         }
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public Object delete(Integer id) {
+        ReturnModel rm = new ReturnModel();
+        try {
+            busRealStateService.delete(id);
+            rm.setInfo(true, "删除成功");
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            rm.setInfo(false, "删除失败");
+        }
+        return rm;
+    }
 }

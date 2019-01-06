@@ -46,4 +46,9 @@ public class BusRealEstateService {
     public int update(BusRealEstate busRealEstate) {
         return busRealEstateMapper.updateByPrimaryKeySelective(busRealEstate);
     }
+
+    public int delete(Integer id) {
+        return busRealEstateMapper.deleteByPrimaryKey(id);
+    }
+
 }
