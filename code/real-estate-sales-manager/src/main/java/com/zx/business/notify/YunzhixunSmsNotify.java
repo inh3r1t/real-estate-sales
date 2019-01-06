@@ -20,19 +20,19 @@ import java.util.Map;
 @Component("yunzhixunMessageNotify")
 public class YunzhixunSmsNotify extends SmsNotify {
 
-    @Value("custom.yunzhixun.appid")
+    @Value("${custom.yunzhixun.appid}")
     private String appid;
 
-    @Value("custom.yunzhixun.sid")
+    @Value("${custom.yunzhixun.sid}")
     private String sid;
 
-    @Value("custom.yunzhixun.token")
+    @Value("${custom.yunzhixun.token}")
     private String token;
 
-    @Value("custom.yunzhixun.sms.send.url")
+    @Value("${custom.yunzhixun.sms.send.url}")
     private String sendUrl;
 
-    @Value("custom.yunzhixun.sms.send.templateid")
+    @Value("${custom.yunzhixun.sms.send.templateid}")
     private String templateid;
 
     @Override

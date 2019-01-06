@@ -37,10 +37,10 @@
             <arg column="sign_operate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-            <arg column="type1" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="type2" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="type3" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="type4" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="extend1" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="extend2" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="extend3" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="extend4" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
 
@@ -61,7 +61,7 @@
         arrive_time, subscribe_time, sign_time, manager_id, manager_phone, arrive_certify_photo_path,
         subscribe_money, subscribe_commision, subscribe_photo_pahts, sign_photo_paths, sign_money,
         appointment_operate_time, report_operate_time, arrive_operate_time, subscribe_operate_time,
-        sign_operate_time, create_time, update_time, type1, type2, type3, type4
+        sign_operate_time, create_time, update_time, extend1, extend2, extend3, extend4
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="AssociateResultMap">
         <!--
@@ -96,8 +96,8 @@
         sign_photo_paths, sign_money, appointment_operate_time,
         report_operate_time, arrive_operate_time,
         subscribe_operate_time, sign_operate_time,
-        create_time, update_time, type1,
-        type2, type3, type4
+        create_time, update_time, extend1,
+        extend2, extend3, extend4
         )
         values (#{id,jdbcType=INTEGER}, #{realEstateId,jdbcType=INTEGER}, #{realEstateName,jdbcType=VARCHAR},
         #{state,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{customerPhone,jdbcType=VARCHAR},
@@ -109,8 +109,8 @@
         #{signPhotoPaths,jdbcType=VARCHAR}, #{signMoney,jdbcType=VARCHAR}, #{appointmentOperateTime,jdbcType=TIMESTAMP},
         #{reportOperateTime,jdbcType=TIMESTAMP}, #{arriveOperateTime,jdbcType=TIMESTAMP},
         #{subscribeOperateTime,jdbcType=TIMESTAMP}, #{signOperateTime,jdbcType=TIMESTAMP},
-        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{type1,jdbcType=INTEGER},
-        #{type2,jdbcType=INTEGER}, #{type3,jdbcType=INTEGER}, #{type4,jdbcType=INTEGER}
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR},
+        #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.zx.business.model.BusDeal">
@@ -210,17 +210,17 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="type1 != null">
-                type1,
+            <if test="extend1 != null">
+                extend1,
             </if>
-            <if test="type2 != null">
-                type2,
+            <if test="extend2 != null">
+                extend2,
             </if>
-            <if test="type3 != null">
-                type3,
+            <if test="extend3 != null">
+                extend3,
             </if>
-            <if test="type4 != null">
-                type4,
+            <if test="extend4 != null">
+                extend4,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -314,17 +314,17 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="type1 != null">
-                #{type1,jdbcType=INTEGER},
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
             </if>
-            <if test="type2 != null">
-                #{type2,jdbcType=INTEGER},
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
             </if>
-            <if test="type3 != null">
-                #{type3,jdbcType=INTEGER},
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
             </if>
-            <if test="type4 != null">
-                #{type4,jdbcType=INTEGER},
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -422,17 +422,17 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="type1 != null">
-                type1 = #{type1,jdbcType=INTEGER},
+            <if test="extend1 != null">
+                extend1 = #{extend1,jdbcType=VARCHAR},
             </if>
-            <if test="type2 != null">
-                type2 = #{type2,jdbcType=INTEGER},
+            <if test="extend2 != null">
+                extend2 = #{extend2,jdbcType=VARCHAR},
             </if>
-            <if test="type3 != null">
-                type3 = #{type3,jdbcType=INTEGER},
+            <if test="extend3 != null">
+                extend3 = #{extend3,jdbcType=VARCHAR},
             </if>
-            <if test="type4 != null">
-                type4 = #{type4,jdbcType=INTEGER},
+            <if test="extend4 != null">
+                extend4 = #{extend4,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -472,10 +472,10 @@
         sign_operate_time = #{signOperateTime,jdbcType=TIMESTAMP},
         create_time = #{createTime,jdbcType=TIMESTAMP},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
-        type1 = #{type1,jdbcType=INTEGER},
-        type2 = #{type2,jdbcType=INTEGER},
-        type3 = #{type3,jdbcType=INTEGER},
-        type4 = #{type4,jdbcType=INTEGER}
+        extend1 = #{extend1,jdbcType=VARCHAR},
+        extend2 = #{extend2,jdbcType=VARCHAR},
+        extend3 = #{extend3,jdbcType=VARCHAR},
+        extend4 = #{extend4,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -500,16 +500,16 @@
         <if test="id != null"> and id = #{id}</if>
         <if test="reportUserId != null"> and report_user_id = #{reportUserId}</if>
         <if test="realEstateId != null"> and real_estate_id = #{realEstateId}</if>
-        <if test="type4 != null"> and type4 = #{type4}</if>
-        <if test="type3 != null"> and type3 = #{type3}</if>
+        <if test="extend4 != null"> and extend4 = #{extend4}</if>
+        <if test="extend3 != null"> and extend3 = #{extend3}</if>
         <if test="appointmentTime != null"> and appointment_time = #{appointmentTime}</if>
-        <if test="type2 != null"> and type2 = #{type2}</if>
+        <if test="extend2 != null"> and extend2 = #{extend2}</if>
         <if test="createTime != null"> and create_time = #{createTime}</if>
         <if test="signOperateTime != null"> and sign_operate_time = #{signOperateTime}</if>
         <if test="subscribeCommision != null"> and subscribe_commision = #{subscribeCommision}</if>
         <if test="arriveOperateTime != null"> and arrive_operate_time = #{arriveOperateTime}</if>
         <if test="customerPhone != null"> and customer_phone = #{customerPhone}</if>
-        <if test="type1 != null"> and type1 = #{type1}</if>
+        <if test="extend1 != null"> and extend1 = #{extend1}</if>
         <if test="subscribePhotoPahts != null"> and subscribe_photo_pahts = #{subscribePhotoPahts}</if>
         <if test="signTime != null"> and sign_time = #{signTime}</if>
         <if test="arriveTime != null"> and arrive_time = #{arriveTime}</if>
@@ -541,16 +541,16 @@
         <if test="busDeal.id != null"> and id = #{busDeal.id}</if>
         <if test="busDeal.reportUserId != null"> and report_user_id = #{busDeal.reportUserId}</if>
         <if test="busDeal.realEstateId != null"> and real_estate_id = #{busDeal.realEstateId}</if>
-        <if test="busDeal.type4 != null"> and type4 = #{busDeal.type4}</if>
-        <if test="busDeal.type3 != null"> and type3 = #{busDeal.type3}</if>
+        <if test="busDeal.extend4 != null"> and extend4 = #{busDeal.extend4}</if>
+        <if test="busDeal.extend3 != null"> and extend3 = #{busDeal.extend3}</if>
         <if test="busDeal.appointmentTime != null"> and appointment_time = #{busDeal.appointmentTime}</if>
-        <if test="busDeal.type2 != null"> and type2 = #{busDeal.type2}</if>
+        <if test="busDeal.extend2 != null"> and extend2 = #{busDeal.extend2}</if>
         <if test="busDeal.createTime != null"> and create_time = #{busDeal.createTime}</if>
         <if test="busDeal.signOperateTime != null"> and sign_operate_time = #{busDeal.signOperateTime}</if>
         <if test="busDeal.subscribeCommision != null"> and subscribe_commision = #{busDeal.subscribeCommision}</if>
         <if test="busDeal.arriveOperateTime != null"> and arrive_operate_time = #{busDeal.arriveOperateTime}</if>
         <if test="busDeal.customerPhone != null"> and customer_phone = #{busDeal.customerPhone}</if>
-        <if test="busDeal.type1 != null"> and type1 = #{busDeal.type1}</if>
+        <if test="busDeal.extend1 != null"> and extend1 = #{busDeal.extend1}</if>
         <if test="busDeal.subscribePhotoPahts != null"> and subscribe_photo_pahts = #{busDeal.subscribePhotoPahts}</if>
         <if test="busDeal.signTime != null"> and sign_time = #{busDeal.signTime}</if>
         <if test="busDeal.arriveTime != null"> and arrive_time = #{busDeal.arriveTime}</if>
@@ -591,16 +591,16 @@
         <if test="id != null"> and id = #{id}</if>
         <if test="reportUserId != null"> and report_user_id = #{reportUserId}</if>
         <if test="realEstateId != null"> and real_estate_id = #{realEstateId}</if>
-        <if test="type4 != null"> and type4 = #{type4}</if>
-        <if test="type3 != null"> and type3 = #{type3}</if>
+        <if test="extend4 != null"> and extend4 = #{extend4}</if>
+        <if test="extend3 != null"> and extend3 = #{extend3}</if>
         <if test="appointmentTime != null"> and appointment_time = #{appointmentTime}</if>
-        <if test="type2 != null"> and type2 = #{type2}</if>
+        <if test="extend2 != null"> and extend2 = #{extend2}</if>
         <if test="createTime != null"> and create_time = #{createTime}</if>
         <if test="signOperateTime != null"> and sign_operate_time = #{signOperateTime}</if>
         <if test="subscribeCommision != null"> and subscribe_commision = #{subscribeCommision}</if>
         <if test="arriveOperateTime != null"> and arrive_operate_time = #{arriveOperateTime}</if>
         <if test="customerPhone != null"> and customer_phone = #{customerPhone}</if>
-        <if test="type1 != null"> and type1 = #{type1}</if>
+        <if test="extend1 != null"> and extend1 = #{extend1}</if>
         <if test="subscribePhotoPahts != null"> and subscribe_photo_pahts = #{subscribePhotoPahts}</if>
         <if test="signTime != null"> and sign_time = #{signTime}</if>
         <if test="arriveTime != null"> and arrive_time = #{arriveTime}</if>

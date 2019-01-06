@@ -5,7 +5,6 @@ import com.zx.business.common.BusConstants;
 import com.zx.business.dao.*;
 import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
-import com.zx.business.notify.model.WechatMessage;
 import com.zx.business.notify.model.YunzhixunSmsMessage;
 import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
@@ -44,7 +43,7 @@ public class BusDealService {
     @Resource(name = "yunzhixunMessageNotify")
     private Notify notify;
 
-    @Value("${custom.is_open_notify)")
+    @Value("${custom.is_open_notify}")
     private String isOpenNotify;
 
     public BusDeal getById(Integer id) {
@@ -111,11 +110,6 @@ public class BusDealService {
             busNotifyMsg.setDealId(busDeal.getId());
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
-
-            // send sms message
-            if (Boolean.valueOf(isOpenNotify)) {
-                sendMessage(busRealEstate.getManager().getUserName(), "报备通知", agent.getPhoneNum());
-            }
         }
 
     }
@@ -136,11 +130,6 @@ public class BusDealService {
         busNotifyMsg.setMsgContent(appointmentMsg(execBusDeal.getBusCustomer().getName(), execBusDeal.getBusCustomer().getSex(), execBusDeal.getRealEstateName(),
                 DateUtil.toDateString(busDeal.getAppointmentTime(), "yyyy-MM-dd HH:mm")));
         busNotifyMsgMapper.insertSelective(busNotifyMsg);
-
-        // send sms message
-        if (Boolean.valueOf(isOpenNotify)) {
-            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "预约通知", execBusDeal.getManager().getPhoneNum());
-        }
 
         return execBusDeal;
     }
@@ -178,7 +167,7 @@ public class BusDealService {
 
         // send sms message
         if (Boolean.valueOf(isOpenNotify)) {
-            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "认购通知", execBusDeal.getManager().getPhoneNum());
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "认购通知", execBusDeal.getManager().getUserName());
         }
         return execBusDeal;
     }
@@ -204,7 +193,7 @@ public class BusDealService {
 
         // send sms message
         if (Boolean.valueOf(isOpenNotify)) {
-            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "签约通知", execBusDeal.getManager().getPhoneNum());
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "签约通知", execBusDeal.getManager().getUserName());
         }
         return execBusDeal;
     }
