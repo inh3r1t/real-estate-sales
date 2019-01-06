@@ -3,6 +3,7 @@ package com.zx.business.controller;
 import com.zx.base.annotation.AuthorizeIgnore;
 import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
+import com.zx.base.exception.WechatAuthException;
 import com.zx.base.model.ResultData;
 import com.zx.business.model.BusUser;
 import com.zx.business.service.BusUserService;
@@ -52,8 +53,12 @@ public class BusUserController extends BusBaseController {
                 resultData.setData(id);
             }
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("用户注册失败！");
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg(e.getMessage());
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;
