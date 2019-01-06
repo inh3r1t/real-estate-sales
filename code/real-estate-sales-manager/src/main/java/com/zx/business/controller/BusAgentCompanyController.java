@@ -15,10 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -58,6 +55,21 @@ public class BusAgentCompanyController extends BaseController {
         return "business/busAgentCompany/list";
     }
 
+    @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    @WechatAuthorize
+    public ResultData getById(@PathVariable Integer id) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取企业详细信息成功！");
+        try {
+            BusAgentCompany busAgentCompany = busAgentCompanyService.getById(id);
+            resultData.setData(busAgentCompany);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取企业详细信息失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
 
     @RequestMapping(value = "/getList", method = RequestMethod.POST)
     @ResponseBody

@@ -9,7 +9,8 @@ Page({
     userName: "",
     phoneNum: "",
     passwd: "",
-    pollCode: ""
+    pollCode: "",
+    contactPhone:''
   },
 
   /**
@@ -49,6 +50,11 @@ Page({
       pollCode: {
         required: '请输入注册码',
       }
+    })
+    app.get("/busAgentCompany/getById/1").then(res => {
+      this.setData({
+        contactPhone: res.data.phone
+      })
     })
   },
 

@@ -61,7 +61,7 @@ Page({
   },
   report: function() {
     wx.navigateTo({
-      url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name,
+      url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name + '&isReal=' + this.data.building.extend1,
     })
   }
 })

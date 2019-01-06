@@ -6,16 +6,19 @@ Page({
   data: {
     name: "",
     phone: '',
+    isReal: false,
     list: []
   },
   onLoad: function(options) {
     app.checkLogin().then(res => {
       var buildingId = options.buildingId;
       var buildingName = options.buildingName;
+      var isReal = options.isReal;
       this.setData({
         list: [{
           id: buildingId,
           name: buildingName,
+          isReal: isReal
         }]
       });
       this.WxValidate = app.WxValidate({
@@ -28,12 +31,11 @@ Page({
           required: true,
           minlength: 11,
           maxlength: 11,
-          // telfuzzy: true,
+          telfuzzy: true,
         }
       }, {
         name: {
           required: '请输入客户名称',
-          
         },
         phone: {
           required: '请输入手机号',
@@ -44,8 +46,9 @@ Page({
 
       // 自定义验证规则
       this.WxValidate.addMethod('telfuzzy', (value, param) => {
-        return this.WxValidate.optional(value) || /^1[345789][0-9]\*{4}\d{4}$/.test(value)
-      }, '请输入正确手机号码，中间4位隐藏')
+        regex = isReal ? '/^1[345789]\d{9}$/' : '/^1[345789][0-9]\*{4}\d{4}$/'
+        return this.WxValidate.optional(value) || regex.test(value)
+      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间四位****)')
     })
   },
   onReady: function() {
