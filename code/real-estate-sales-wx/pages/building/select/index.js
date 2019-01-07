@@ -61,7 +61,7 @@ Page({
         pageSize: 10
       }).then(res => {
         //这里既可以获取模拟的res
-        console.log(res)
+        // console.log(res)
         var pList = this.data.prevPageList;
         var list = override ? res.data.Items : this.data.list.concat(res.data.Items);
         for (var i = 0, len = list.length; i < len; i++) {
@@ -77,18 +77,18 @@ Page({
           page: pageNo
         })
 
-        console.log(this.data.list)
+        // console.log(this.data.list)
         // 隐藏加载框
         wx.hideLoading();
       }).catch(err => {
-        console.log("==> [ERROR]", err)
+        // console.log("==> [ERROR]", err)
         // 隐藏加载框
         wx.hideLoading();
       })
     }
   },
   formSubmit: function(e) {
-    console.log('form发生了submit事件，携带数据为：', e.detail.value.selectList)
+    // console.log('form发生了submit事件，携带数据为：', e.detail.value.selectList)
     if (e.detail.value.selectList != undefined) {
       var selectList = new Array();
       for (var i = 0; i < e.detail.value.selectList.length; i++) {

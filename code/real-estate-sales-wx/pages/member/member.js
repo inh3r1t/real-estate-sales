@@ -25,7 +25,7 @@ Page({
       isBindWechat: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').openId != null && wx.getStorageSync('userInfo').openId != '',
       username: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').userName,
       company: wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').companyName || '',
-      avatar: (wx.getStorageSync('userInfo') && wx.getStorageSync('wxUserInfo').avatarUrl) || '/images/avatar.jpg'
+      avatar: (wx.getStorageSync('userInfo') && wx.getStorageSync('wxUserInfo') && wx.getStorageSync('wxUserInfo').avatarUrl) || '/images/avatar.jpg'
     })
   },
   login: function() {
@@ -39,6 +39,7 @@ Page({
       content: '确定退出登录吗？',
       success: res => {
         wx.setStorageSync('userInfo', null);
+        wx.setStorageSync('wxUserInfo', null);
         wx.setStorageSync('token', null);
         app.globalData.userInfo = null;
         app.globalData.token = null;

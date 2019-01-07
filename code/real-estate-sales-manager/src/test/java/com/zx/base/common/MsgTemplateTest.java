@@ -30,7 +30,7 @@ public class MsgTemplateTest {
         params.put("type", "0");
         params.put("template_name", "公司内部通知模板");
         params.put("autograph", "安策系统通知");
-        params.put("content", "你好，有一条你的${1}通知，负责人电话：${2}。");
+        params.put("content", "你好，有一条你的{1}通知，业务订单号（{2}），联系人：{3}  详情请查看安策营销系统！");
 
         HttpEntity httpEntity = HttpKit.post(url, null, JSON.toJSONString(params), header, Charset.defaultCharset());
         System.out.println(httpEntity.getHtml());
@@ -73,7 +73,7 @@ public class MsgTemplateTest {
         params.put("sid", "dc0cc5d6997208a7f0cf35f02de9c48c");
         params.put("token", "eb115ffdb7cab2c14e26f862b5be7ccd");
         params.put("appid", "95c4984c0c7240eca3684e27bf29cad7");
-        params.put("templateid", "417477");
+        params.put("templateid", "417999");
 
         Map<String, String> header = new HashMap<>();
         header.put(HttpConst.CONTENT_TYPE, "application/json");

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @Author: ytxu3
@@ -27,14 +29,13 @@ public class BusAgentCompanyService {
 
     public BusAgentCompany addOrUpdate(BusAgentCompany busAgentCompany) {
         if (busAgentCompany.getId() == null) {
-            busAgentCompany.setPollCode(UUID.randomUUID().toString());
+            busAgentCompany.setPollCode(generateShortUuid());
             busAgentCompanyMapper.insertSelective(busAgentCompany);
         } else {
             busAgentCompanyMapper.updateByPrimaryKeySelective(busAgentCompany);
         }
         return busAgentCompany;
     }
-
 
     public BusAgentCompany getById(Integer id) {
         return busAgentCompanyMapper.selectByPrimaryKey(id);
@@ -60,4 +61,18 @@ public class BusAgentCompanyService {
     public int update(BusAgentCompany busRealEstate) {
         return busAgentCompanyMapper.updateByPrimaryKeySelective(busRealEstate);
     }
+
+    public String generateShortUuid() {
+        List<BusAgentCompany> busAgentCompanies = busAgentCompanyMapper.selectByPage(null, null, null, null, new BusAgentCompany());
+        List<String> pollCodes = busAgentCompanies.stream()
+                .map(BusAgentCompany::getPollCode)
+                .collect(Collectors.toList());
+        Random random = new Random();
+        String pollCode;
+        do {
+            pollCode = String.valueOf(random.nextInt(10000));
+        } while (pollCodes.contains(pollCode));
+        return pollCode;
+    }
+
 }

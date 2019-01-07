@@ -85,3 +85,27 @@ swiper .slide-title {
   font-size: 14px;
   padding-right: 20rpx;
 }
+
+.btns-recommend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btns-recommend image {
+  height: 80rpx;
+  margin: 20rpx 50rpx;
+  width: 300rpx;
+}
+
+/* .btns-recommend button {
+  background-color: #1296db;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 5rpx;
+  width: 300rpx; 
+} */

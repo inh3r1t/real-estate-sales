@@ -18,28 +18,30 @@ Page({
       arrive_count: 0,
       subscribe_count: 0,
     },
-    canOpt: false
+    isManager: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    this.setData({
-      isLogin: app.isLogin()
-    })
-    this.getList(1);
-  },
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    var prevLogin = this.data.isLogin;
+    this.setData({
+      isLogin: app.isLogin()
+    })
+    if (prevLogin != this.data.isLogin) {
+      this.getList(1);
+    }
     var user = app.globalData.userInfo;
     if (user != null) {
       this.setData({
-        canOpt: user.busRole.type == 0
-        // canOpt: true
+        isManager: user.busRole.type == 0
+        // isManager: true
       })
     }
   },
@@ -113,7 +115,8 @@ Page({
         "<br/>客户姓名：" + item.customerName +
         "<br/>客户电话：" + item.customerPhone +
         (item.reportTime != '' && item.reportTime != undefined ? "<br/>报备时间：" + item.reportTime : "") +
-        (item.arriveTime != '' && item.arriveTime != undefined ? "<br/>到访时间：" + item.arriveTime : "")
+        (item.arriveTime != '' && item.arriveTime != undefined ? "<br/>到访时间：" + item.arriveTime : "") +
+        "<br/>渠道公司：德信安居"
     })
   },
   modalCancel: function() {
@@ -122,7 +125,12 @@ Page({
       showShareModal: false
     })
   },
-
+  makePhoneCall: function(e) {
+    let phone = e.currentTarget.dataset.phone
+    wx.makePhoneCall({
+      phoneNumber: phone
+    })
+  },
 
   /**
    *  点击确认
@@ -169,9 +177,9 @@ Page({
         state: state
       }).then(res => {
         //这里既可以获取模拟的res
-        console.log(res)
+        // console.log(res)
         for (let i = 0; i < res.data.list.Items.length; i++) {
-          res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*?(\d{4})/, '$1****$2');
+          res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
         }
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
@@ -182,7 +190,7 @@ Page({
         // 隐藏加载框
         wx.hideLoading();
       }).catch(err => {
-        console.log("==> [ERROR]", err)
+        // console.log("==> [ERROR]", err)
         // 隐藏加载框
         wx.hideLoading();
       })

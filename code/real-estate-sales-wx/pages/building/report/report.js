@@ -6,18 +6,28 @@ Page({
   data: {
     name: "",
     phone: '',
+    isReal: false,
     list: []
   },
   onLoad: function(options) {
     app.checkLogin().then(res => {
+      debugger
       var buildingId = options.buildingId;
       var buildingName = options.buildingName;
-      this.setData({
-        list: [{
-          id: buildingId,
-          name: buildingName,
-        }]
-      });
+      var isReal = options.isReal == '1';
+      if (buildingId == undefined || buildingName == undefined) {
+        this.setData({
+          isReal: isReal
+        });
+      } else {
+        this.setData({
+          list: [{
+            id: buildingId,
+            name: buildingName,
+          }],
+          isReal: isReal
+        });
+      }
       this.WxValidate = app.WxValidate({
         name: {
           required: true,
@@ -28,12 +38,11 @@ Page({
           required: true,
           minlength: 11,
           maxlength: 11,
-          // telfuzzy: true,
+          telfuzzy: true,
         }
       }, {
         name: {
           required: '请输入客户名称',
-          
         },
         phone: {
           required: '请输入手机号',
@@ -44,8 +53,9 @@ Page({
 
       // 自定义验证规则
       this.WxValidate.addMethod('telfuzzy', (value, param) => {
-        return this.WxValidate.optional(value) || /^1[345789][0-9]\*{4}\d{4}$/.test(value)
-      }, '请输入正确手机号码，中间4位隐藏')
+        regex = isReal ? '/^1[345789]\d{9}$/' : '/^1[345789][0-9]\*{4}\d{4}$/'
+        return this.WxValidate.optional(value) || regex.test(value)
+      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间四位****)')
     })
   },
   onReady: function() {
@@ -100,12 +110,12 @@ Page({
         reportUserId: 3,
         realEstateIds: ids.toString(),
         customerName: params.name,
-        customerPhone: params.realPhone,
+        customerPhone: params.phone,
         customerSex: params.sex,
         formId: e.detail.formId
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         wx.showToast({
           title: `报备成功`,
           icon: 'success',
@@ -125,22 +135,9 @@ Page({
   },
   handlePhone: function(e) {
     var value = e.detail.value
-    if (this.data.phone.length < 11) {
-      if (value.length > 11) {
-        this.setData({
-          phone: this.data.phone + value.substring(value.length - (11 - this.data.phone.length), value.length)
-        })
-        return this.data.phone + value.substring(value.length - (11 - this.data.phone.length), value.length);
-      } else {
-        this.setData({
-          phone: this.data.phone + value.substring(value.length - 1)
-        })
-      }
-    }
     if (value.length >= 4 && value.length <= 7) {
-      return value.replace(/(\d{3})[\s\S]*/, '$1') + Array(value.length - 3 + 1).join('*');
-    } else {
-      return value.substring(0, 11)
+      value.substring(0, 3)
+      return value.substring(0, 3) + Array(value.length - 3 + 1).join('*');
     }
   }
 })

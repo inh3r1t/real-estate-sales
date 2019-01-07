@@ -82,7 +82,7 @@ Page({
             },
             success: res => {
               uploadImgCount++;
-              console.log(res)
+              // console.log(res)
               if (res.data) {
                 this.data.images.push(JSON.parse(res.data).data);
                 this.setData({

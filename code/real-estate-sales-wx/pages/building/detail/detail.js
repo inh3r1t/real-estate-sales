@@ -10,11 +10,12 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
+    isLogin: false,
     building: {}
   },
   makePhoneCall: function() {
     wx.makePhoneCall({
-      phoneNumber: this.data.building.phone,
+      phoneNumber: this.data.building.manager.phoneNum,
     })
   },
 
@@ -25,7 +26,7 @@ Page({
     var id = options.id;
     if (id != undefined && id > 0) {
       app.get("/busRealEstate/getById/" + id).then(res => {
-        console.log(res);
+        // console.log(res);
         this.setData({
           building: res.data
         })
@@ -48,21 +49,19 @@ Page({
         icon: 'none'
       })
     }
-    // app.get("https://www.easy-mock.com/mock/5c0fa08f5324d050e6ab1ada/real-estate-sales/getBuildingById").then(res => {
-    //   this.setData({
-    //     building: res.data
-    //   })
-    //   WxParse.wxParse('detail', 'html', this.data.building.detail, this, 20);
-    // })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {   },
+  onShow: function() {  
+    this.setData({
+      isLogin: app.isLogin()
+    }) 
+  },
   report: function() {
     wx.navigateTo({
-      url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name,
+      url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name + '&isReal=' + this.data.building.extend1,
     })
   }
 })

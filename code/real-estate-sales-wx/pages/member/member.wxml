@@ -1,7 +1,8 @@
 <view class="container">
   <view class="header center">
     <view class='avatar'>
-      <image src="{{avatar}}"></image>
+      <image src="/images/avatar.jpg" bindtap='login' wx:if="{{!isLogin}}"></image>
+      <image src="{{avatar}}" wx:if="{{isLogin}}"></image>
     </view>
     <view class='username' wx:if="{{isLogin}}">{{username}}</view>
     <view class="company" wx:if="{{isLogin}}">{{company}}</view>
@@ -9,10 +10,10 @@
   </view>
   <view class='divider'></view>
   <view class="list" wx:if="{{isLogin}}">
-    <view class="item" bindtap='toCompany'>
-      <text class="iconfont icon-gongsijianjie"></text>公司简介</view>
     <view class="item" bindtap='toMessage'>
       <text class="iconfont icon-icon"></text>消息中心</view>
+    <view class="item" bindtap='toCompany'>
+      <text class="iconfont icon-gongsijianjie"></text>公司简介</view>
     <view class="item" bindtap='toChangePassword'>
       <text class="iconfont icon-xiugaimima"></text>修改密码</view>
     <view class="item">

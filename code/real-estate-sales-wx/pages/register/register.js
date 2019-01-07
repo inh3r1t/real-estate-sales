@@ -9,7 +9,8 @@ Page({
     userName: "",
     phoneNum: "",
     passwd: "",
-    pollCode: ""
+    pollCode: "",
+    contactPhone:''
   },
 
   /**
@@ -50,6 +51,11 @@ Page({
         required: '请输入注册码',
       }
     })
+    app.get("/busAgentCompany/getById/1").then(res => {
+      this.setData({
+        contactPhone: res.data.phone
+      })
+    })
   },
 
   /**
@@ -78,7 +84,7 @@ Page({
       pollCode: params.pollCode
     });
     app.post("/busUser/register", this.data).then((res) => {
-      console.log(res);
+      // console.log(res);
       wx.showModal({
         content: '恭喜您，注册成功',
         showCancel: false,
