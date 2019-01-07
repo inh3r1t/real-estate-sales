@@ -175,7 +175,7 @@
                 return function (url, options, fnClose) {
                     options = $.extend({}, self.options, options);
                     options.size = self.getSize(options.size);
-                    parent.layer.open({
+                    var index = parent.layer.open({
                         type: 2,
                         title: options.title,
                         shadeClose: options.shadeClose,
@@ -185,9 +185,8 @@
                         content: url,
                         end: function () {
                             if (fnClose) {
-                                fnClose(self.getDialogResult(), self.getDialogResultObject());
+                                fnClose(self.getDialogResult());
                             }
-                            self.setDialogResultObject(null);
                             return self.setDialogResult(null);
                         }
                     });

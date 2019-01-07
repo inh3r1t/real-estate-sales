@@ -137,7 +137,7 @@
                     <div class="delete-cover">
                         <img id="imgRecommend"
                              th:class="${model.topRecommendImage!=''&&model.topRecommendImage!=null?'':'hidden'}"
-                             th:src="${model.thumbnail}"/>
+                             th:src="${model.topRecommendImage}"/>
                         <input type="hidden" id="topRecommendImage" name="topRecommendImage"
                                th:value="${model.topRecommendImage}"/>
                         <div id="deleteRecommendImageBtn"
@@ -219,13 +219,31 @@
                 "height": 160
             }
             , done: function (res) {
-                debugger
                 if (res.state) {
                     dialog.msg(res.message);
                     $("#img").attr('src', res.model);
                     $("#img").removeClass('hidden');
                     $('#deleteImageBtn').removeClass('hidden');
                     $("#imageUrl").val(res.model);
+                }
+                else {
+                    dialog.msg(res.message);
+                }
+            }
+        });
+
+        layui.upload.render({
+            elem: '#uploadRecommendImage'
+            , url: '/upload'
+            , size: 5000 //限制文件大小，单位 KB
+            , done: function (res) {
+                debugger
+                if (res.state) {
+                    dialog.msg(res.message);
+                    $("#imgRecommend").attr('src', res.model);
+                    $("#imgRecommend").removeClass('hidden');
+                    $('#deleteRecommendImageBtn').removeClass('hidden');
+                    $("#topRecommendImage").val(res.model);
                 }
                 else {
                     dialog.msg(res.message);
