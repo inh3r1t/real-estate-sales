@@ -167,7 +167,8 @@ public class BusDealService {
 
         // send sms message
         if (Boolean.valueOf(isOpenNotify)) {
-            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "认购通知", execBusDeal.getManager().getUserName());
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "认购通知", String.valueOf(execBusDeal.getId()),
+                    execBusDeal.getManager().getUserName());
         }
         return execBusDeal;
     }
@@ -193,7 +194,8 @@ public class BusDealService {
 
         // send sms message
         if (Boolean.valueOf(isOpenNotify)) {
-            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "签约通知", execBusDeal.getManager().getUserName());
+            sendMessage(execBusDeal.getReportUser().getPhoneNum(), "签约通知", String.valueOf(execBusDeal.getId()),
+                    execBusDeal.getManager().getUserName());
         }
         return execBusDeal;
     }
@@ -225,10 +227,10 @@ public class BusDealService {
         return String.format(model, agentCompanyName, customerName + sex, realEstateName, subscribeTime);
     }
 
-    private void sendMessage(String mobile, String notifyType, String contactName) {
+    private void sendMessage(String mobile, String notifyType, String busDealId, String contactName) {
         YunzhixunSmsMessage message = new YunzhixunSmsMessage();
         message.setMobile(mobile);
-        message.setParam(notifyType + "," + contactName);
+        message.setParam(notifyType + "," + contactName + "," + busDealId);
         notify.notify(message);
     }
 }
