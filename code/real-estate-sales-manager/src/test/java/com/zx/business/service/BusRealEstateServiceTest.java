@@ -76,4 +76,12 @@ public class BusRealEstateServiceTest {
         final int update = busRealEstateService.update(busRealEstate);
         System.out.println(update);
     }
+
+    @Test
+    public void test6() {
+        BusRealEstate busRealEstate = new BusRealEstate();
+        busRealEstate.setId(24);
+        final List<BusRealEstate> list = busRealEstateService.getList(busRealEstate);
+        System.out.println(list);
+    }
 }

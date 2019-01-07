@@ -167,6 +167,8 @@ public class BusRealEstate extends PageVO {
     private String topRecommendImage;
     // 楼盘详情顶部图
     private List<String> images;
+    // 顶部推荐图
+    private String topRecommendImage;
 
     private BusUser manager;
 

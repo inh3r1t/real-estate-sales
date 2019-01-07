@@ -30,6 +30,7 @@
   <resultMap id="AssociateResultMap" type="com.zx.business.model.BusRealEstate" extends="BaseResultMap">
     <association property="thumbnail" column="id" select="selectThumbnail" javaType="java.lang.String"/>
     <association property="images" column="id" select="selectImages" javaType="java.util.List"/>
+    <association property="topRecommendImage" column="id" select="selectTopRecommendImage" javaType="java.lang.String"/>
     <association property="manager" column="manager_id" select="com.zx.business.dao.BusUserMapper.selectByPrimaryKey" javaType="com.zx.business.model.BusUser"/>
   </resultMap>
 
@@ -392,5 +393,9 @@
 
   <select id="selectImages" resultType="java.lang.String">
     select path from file_infos where groupid = #{realEstateId} and remark = '2';
+  </select>
+
+  <select id="selectTopRecommendImage" resultType="java.lang.String">
+    select path from file_infos where groupid = #{realEstateId} and remark = '0';
   </select>
 </mapper>
