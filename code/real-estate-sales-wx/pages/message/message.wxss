@@ -43,7 +43,7 @@
   box-sizing: border-box;
   background: #fff;
   position: relative;
-  transition: transform 0.30s linear 0s;
+  transition: transform 0.10s linear 0s;
 }
 
 .card .delete {
