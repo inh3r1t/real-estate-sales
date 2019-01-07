@@ -228,7 +228,8 @@ public class BaseController {
         tempFile.createNewFile();
         file.transferTo(tempFile);
         //图片压缩后路径
-        String thumPath = tempFile.getParent() + "/thumbnail." + fileName;
+        String thumPath = tempFile.getParent() + "/thumbnail."
+                + UUID.randomUUID().toString().replace("-", "") + fileName;
         if (width != null && height != null) {
             Thumbnails.of(tempFile)
                     .size(width, height).keepAspectRatio(false)

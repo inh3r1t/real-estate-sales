@@ -51,6 +51,13 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">公司类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="state" value="本公司" title="本公司" th:checked="${model.state == 0}">
+                <input type="radio" name="state" value="中介公司" title="中介公司" th:checked="${model.state == 1}">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">电话</label>
             <div class="layui-input-block">
                 <input type="text" name="phone" th:value="${model.phone}" lay-verify="required" placeholder=""

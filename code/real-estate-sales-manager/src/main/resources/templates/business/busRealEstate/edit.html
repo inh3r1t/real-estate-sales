@@ -110,19 +110,41 @@
         <!--</div>-->
         <!--</div>-->
         <div class="layui-form-item">
-            <label class="layui-form-label">缩略图</label>
-            <div class="layui-input-block upload-thumbnail">
-                <button type="button" class="layui-btn layui-btn-danger" id="uploadImage">
-                    <i class="layui-icon"></i>上传图片
-                </button>
-                <div class="delete-cover">
-                    <img id="img" th:class="${model.thumbnail!=''&&model.thumbnail!=null?'':'hidden'}"
-                         th:src="${model.thumbnail}"/>
-                    <input type="hidden" id="imageUrl" name="thumbnail" th:value="${model.thumbnail}"/>
-                    <div id="deleteImageBtn"
-                         th:class="'icon-cover '+${model.thumbnail!=''&&model.thumbnail!=null?'':'hidden'}">
+            <div class="layui-col-xs6">
+                <label class="layui-form-label">缩略图</label>
+                <div class="layui-input-block upload-thumbnail">
+                    <button type="button" class="layui-btn layui-btn-danger" id="uploadImage">
+                        <i class="layui-icon"></i>上传图片
+                    </button>
+                    <div class="delete-cover">
+                        <img id="img" th:class="${model.thumbnail!=''&&model.thumbnail!=null?'':'hidden'}"
+                             th:src="${model.thumbnail}"/>
+                        <input type="hidden" id="imageUrl" name="thumbnail" th:value="${model.thumbnail}"/>
+                        <div id="deleteImageBtn"
+                             th:class="'icon-cover '+${model.thumbnail!=''&&model.thumbnail!=null?'':'hidden'}">
                     <span th:title="删除缩列图" onclick="deleteImage();" class="cover-center fa fa-trash"
                           style=""></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <label class="layui-form-label">推荐图</label>
+                <div class="layui-input-block upload-thumbnail">
+                    <button type="button" class="layui-btn layui-btn-danger" id="uploadRecommendImage">
+                        <i class="layui-icon"></i>上传图片
+                    </button>
+                    <div class="delete-cover">
+                        <img id="imgRecommend"
+                             th:class="${model.topRecommendImage!=''&&model.topRecommendImage!=null?'':'hidden'}"
+                             th:src="${model.thumbnail}"/>
+                        <input type="hidden" id="topRecommendImage" name="topRecommendImage"
+                               th:value="${model.topRecommendImage}"/>
+                        <div id="deleteRecommendImageBtn"
+                             th:class="'icon-cover '+${model.topRecommendImage!=''&&model.topRecommendImage!=null?'':'hidden'}">
+                            <span th:title="删除推荐图" onclick="deleteRecommendImage();" class="cover-center fa fa-trash"
+                                  style=""></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,8 +163,8 @@
                         <input type="hidden" name="images" th:value="${item}"/>
                         <div id="deleteImageBtns"
                              th:class="'icon-cover '+${item!=''&&item!=null?'':'hidden'}">
-                    <span th:title="删除" onclick="deleteImages(this);" class="cover-center fa fa-trash"
-                          style=""></span>
+                            <span th:title="删除" onclick="deleteImages(this);" class="cover-center fa fa-trash"
+                                  style=""></span>
                         </div>
                     </div>
                 </div>
@@ -193,8 +215,8 @@
             , url: '/upload'
             , size: 5000 //限制文件大小，单位 KB
             , data: {
-                "width": 130,
-                "height": 80
+                "width": 260,
+                "height": 160
             }
             , done: function (res) {
                 debugger
@@ -252,6 +274,13 @@
         $("#img").addClass('hidden');
         $('#deleteImageBtn').addClass('hidden');
         $("#imageUrl").val("");
+    }
+
+    function deleteRecommendImage() {
+        $("#imgRecommend").attr('src', "");
+        $("#imgRecommend").addClass('hidden');
+        $('#deleteRecommendImageBtn').addClass('hidden');
+        $("#imageRecommendUrl").val("");
     }
 
     function deleteImages(obj) {

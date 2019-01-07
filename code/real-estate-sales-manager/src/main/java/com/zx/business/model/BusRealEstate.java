@@ -161,6 +161,10 @@ public class BusRealEstate extends PageVO {
 
     // 缩略图
     private String thumbnail;
+    /**
+     * 首页推荐图
+     */
+    private String topRecommendImage;
     // 楼盘详情顶部图
     private List<String> images;
 
@@ -584,5 +588,13 @@ public class BusRealEstate extends PageVO {
 
     public void setManager(BusUser manager) {
         this.manager = manager;
+    }
+
+    public String getTopRecommendImage() {
+        return topRecommendImage;
+    }
+
+    public void setTopRecommendImage(String topRecommendImage) {
+        this.topRecommendImage = topRecommendImage;
     }
 }

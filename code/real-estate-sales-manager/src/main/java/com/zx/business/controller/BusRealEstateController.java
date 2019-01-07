@@ -130,6 +130,7 @@ public class BusRealEstateController extends BaseController {
             //处理图片
             List<FileInfo> fileInfos = new ArrayList<>();
             FileInfo fileInfo;
+            //滚动图
             if (estate.getImages() != null) {
                 for (String url : estate.getImages()) {
                     fileInfo = new FileInfo();
@@ -140,11 +141,21 @@ public class BusRealEstateController extends BaseController {
                     fileInfos.add(fileInfo);
                 }
             }
+            //缩略图
             if (StringUtil.isNotEmpty(estate.getThumbnail())) {
                 fileInfo = new FileInfo();
                 fileInfo.setGroupid(estate.getId());
                 fileInfo.setPath(estate.getThumbnail());
                 fileInfo.setRemark(PhotoType.THUMBNAIL.code());
+                fileInfo.setState(0);
+                fileInfos.add(fileInfo);
+            }
+            //推荐图
+            if (StringUtil.isNotEmpty(estate.getTopRecommendImage())) {
+                fileInfo = new FileInfo();
+                fileInfo.setGroupid(estate.getId());
+                fileInfo.setPath(estate.getTopRecommendImage());
+                fileInfo.setRemark(PhotoType.MAIN_PAGE_TOP.code());
                 fileInfo.setState(0);
                 fileInfos.add(fileInfo);
             }

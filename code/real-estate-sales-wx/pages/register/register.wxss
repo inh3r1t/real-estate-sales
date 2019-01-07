@@ -1,5 +1,5 @@
 .text-tip {
-  font-size: 12px;
+  font-size: 15px;
   color: #969696;
   margin: 30rpx;
 }

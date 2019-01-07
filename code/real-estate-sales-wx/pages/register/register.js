@@ -104,5 +104,11 @@ Page({
       })
     });
 
+  },
+  makePhoneCall: function (e) {
+    let phone = e.currentTarget.dataset.phone
+    wx.makePhoneCall({
+      phoneNumber: phone
+    })
   }
 })
