@@ -9,6 +9,10 @@
     <view class='username' bindtap='login' wx:if="{{!isLogin}}">点击登录</view>
   </view>
   <view class='divider'></view>
+  <view class="list" wx:if="{{!isLogin}}">
+    <view class="item" bindtap='toCompany'>
+      <text class="iconfont icon-gongsijianjie"></text>公司简介</view>
+  </view>
   <view class="list" wx:if="{{isLogin}}">
     <view class="item" bindtap='toMessage'>
       <text class="iconfont icon-icon"></text>消息中心</view>
