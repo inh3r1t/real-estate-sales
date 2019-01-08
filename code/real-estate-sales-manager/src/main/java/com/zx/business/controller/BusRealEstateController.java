@@ -119,6 +119,12 @@ public class BusRealEstateController extends BaseController {
         String actionName = insertAction ? "添加" : "更新";
         estate.setDetail(HtmlUtil.htmlUnescape(estate.getDetail()));
         estate.setCommission(estate.getCommission().replaceAll("%2B", "+"));
+        if (estate.getIsListRecommend() == null) {
+            estate.setIsListRecommend(false);
+        }
+        if (estate.getIsTopRecommend() == null) {
+            estate.setIsTopRecommend(false);
+        }
         try {
             if (insertAction) {
                 estate.setCreateTime(DateUtil.getDateNow());
