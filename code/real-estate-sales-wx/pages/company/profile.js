@@ -23,5 +23,11 @@ Page({
         content: res.data.extend1
       })
     })
+  },
+  makePhoneCall: function (e) {
+    let phone = e.currentTarget.dataset.phone
+    wx.makePhoneCall({
+      phoneNumber: phone
+    })
   }
 })

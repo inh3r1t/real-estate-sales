@@ -2,7 +2,9 @@
 <view class='company'>
   <image class='company-img' src='{{banner}}'></image>
   <view class='company-name'>{{name}}</view>
-  <view class='company-admin'>联系方式：{{contact}}</view>
+  <view class='company-admin'>联系方式：{{contact}}
+    <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{contact}}"></text>
+  </view>
   <rich-text class='company-info' nodes='{{content}}'>
   </rich-text>
 </view>

@@ -19,7 +19,8 @@
 }
 
 .company-admin {
-  padding: 20rpx 20rpx 0 20rpx;
+  padding: 20rpx;
+    text-align: center;
 }
 
 .company-info {
