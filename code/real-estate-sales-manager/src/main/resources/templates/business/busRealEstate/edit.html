@@ -48,7 +48,7 @@
             <div class="layui-col-xs3">
                 <label class="layui-form-label">项目经理</label>
                 <div class="layui-input-block">
-                    <select name="manager_id" lay-verify="required" id="manager_id">
+                    <select name="managerId" lay-verify="required" id="manager_id">
                         <option th:each="item:${managerList}" th:text="${item.userName}"
                                 th:selected="${item.id == model.managerId}"
                                 th:value="${item.id}"></option>
