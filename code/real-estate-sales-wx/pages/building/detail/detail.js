@@ -63,5 +63,13 @@ Page({
     wx.navigateTo({
       url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name + '&isReal=' + this.data.building.extend1,
     })
+  },
+  previewImage: function(e) {
+    debugger
+    var current = e.target.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: this.data.building.images // 需要预览的图片http链接列表
+    })
   }
 })
