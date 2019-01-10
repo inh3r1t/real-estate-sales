@@ -27,14 +27,15 @@
   line-height: 60rpx;
   height: 60rpx;
   display: flex;
-  margin-left: 220rpx;
+  margin-left: 200rpx;
   margin-top: 10rpx;
 }
 
 .form-body .radio {
-  display: block;
+  /* display: inline-block; */
   flex-basis: 200rpx;
-  font-size: 16px;
+  font-size: 14px;
+  margin-left: 20rpx;
 }
 
 .buiding-list .buiding-item {

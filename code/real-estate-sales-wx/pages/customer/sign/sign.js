@@ -127,8 +127,6 @@ Page({
   formSubmit: function(e) {
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
-    // 客户到访
-    debugger
     app.post("/busDeal/sign", {
         id: this.data.id,
         signMoney: e.detail.value.price,

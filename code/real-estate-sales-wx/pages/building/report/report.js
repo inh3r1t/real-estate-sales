@@ -11,7 +11,6 @@ Page({
   },
   onLoad: function(options) {
     app.checkLogin().then(res => {
-      debugger
       var buildingId = options.buildingId;
       var buildingName = options.buildingName;
       var isReal = options.isReal == '1';

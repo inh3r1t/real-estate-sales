@@ -54,18 +54,19 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {  
+  onShow: function() {
     this.setData({
       isLogin: app.isLogin()
-    }) 
+    })
   },
   report: function() {
-    wx.navigateTo({
-      url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name + '&isReal=' + this.data.building.extend1,
+    app.checkLogin().then(res => {
+      wx.navigateTo({
+        url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name + '&isReal=' + this.data.building.extend1,
+      })
     })
   },
   previewImage: function(e) {
-    debugger
     var current = e.target.dataset.src;
     wx.previewImage({
       current: current, // 当前显示图片的http链接
