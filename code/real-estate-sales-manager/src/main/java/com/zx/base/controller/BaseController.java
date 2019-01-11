@@ -235,12 +235,32 @@ public class BaseController {
                     .size(width, height).keepAspectRatio(false)
                     .outputQuality(quality == null ? 1f : quality)
                     .toFile(thumPath);
-
         } else {
-            Thumbnails.of(tempFile)
-                    .scale(1f)
-                    .outputQuality(quality == null ? 1f : quality)
-                    .toFile(thumPath);
+            if (file.getSize() > 3 * 1024 * 1024) {
+                Thumbnails.of(tempFile)
+                        .scale(1f)
+                        .outputQuality(quality == null ? 0.2f : quality)
+                        .outputFormat("jpg")
+                        .toFile(thumPath);
+            } else if (file.getSize() > 1 * 1024 * 1024) {
+                Thumbnails.of(tempFile)
+                        .scale(1f)
+                        .outputQuality(quality == null ? 0.5f : quality)
+                        .outputFormat("jpg")
+                        .toFile(thumPath);
+            } else if (file.getSize() > 0.5 * 1024 * 1024) {
+                Thumbnails.of(tempFile)
+                        .scale(1f)
+                        .outputQuality(quality == null ? 0.8f : quality)
+                        .outputFormat("jpg")
+                        .toFile(thumPath);
+            } else {
+                Thumbnails.of(tempFile)
+                        .scale(1f)
+                        .outputQuality(quality == null ? 1f : quality)
+                        .outputFormat("jpg")
+                        .toFile(thumPath);
+            }
         }
         String relativePath = thumPath.replace("\\", "/");
         if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {

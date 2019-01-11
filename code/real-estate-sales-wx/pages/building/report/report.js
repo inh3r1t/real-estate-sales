@@ -30,7 +30,7 @@ Page({
       this.WxValidate = app.WxValidate({
         name: {
           required: true,
-          minlength: 2,
+          minlength: 1,
           maxlength: 20,
         },
         phone: {

@@ -24,10 +24,10 @@ server:
 
 #Custom configuration
 custom:
-  system-url: https://inh3rit.top/test
+  system-url: https://localhost:8080
   system-name: 安策营销后台管理系统 - 测试环境
   version: V1.1.0111.1
-  directory-path: /home/tony/app
+  directory-path:
   is_open_notify: false
   upload-node: upload_files_test
 

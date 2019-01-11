@@ -59,8 +59,10 @@ Page({
     })
   },
   btnRecommend: function() {
-    wx.navigateTo({
-      url: '/pages/building/report/report',
+    app.checkLogin().then(res => {
+      wx.navigateTo({
+        url: '/pages/building/report/report',
+      })
     })
   },
   btnRegister: function() {

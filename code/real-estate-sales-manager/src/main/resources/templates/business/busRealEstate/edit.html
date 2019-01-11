@@ -213,7 +213,7 @@
         layui.upload.render({
             elem: '#uploadImage'
             , url: '/upload'
-            , size: 5000 //限制文件大小，单位 KB
+            , size: 20000 //限制文件大小，单位 KB
             , data: {
                 "width": 260,
                 "height": 160
@@ -235,9 +235,8 @@
         layui.upload.render({
             elem: '#uploadRecommendImage'
             , url: '/upload'
-            , size: 5000 //限制文件大小，单位 KB
+            , size: 20000 //限制文件大小，单位 KB
             , done: function (res) {
-                debugger
                 if (res.state) {
                     dialog.msg(res.message);
                     $("#imgRecommend").attr('src', res.model);
@@ -255,17 +254,21 @@
             elem: '#uploadImages'
             , url: '/upload'
             , multiple: true
-            , size: 5000 //限制文件大小，单位 KB
+            , size: 20000 //限制文件大小，单位 KB
             , done: function (res) {
-                console.log(res);
-                var html = '  <div class="delete-cover" >\n' +
-                    '           <img src="' + res.model + '"/>\n' +
-                    '           <input type="hidden" name="images" value="' + res.model + '"/>\n' +
-                    '           <div class="icon-cover">\n' +
-                    '              <span title="删除" onclick="deleteImages(this);" class="cover-center fa fa-trash"></span>\n' +
-                    '           </div>\n' +
-                    '       </div>';
-                $('#imageUrls').append(html);
+                if (res.state) {
+                    console.log(res);
+                    var html = '  <div class="delete-cover" >\n' +
+                        '           <img src="' + res.model + '"/>\n' +
+                        '           <input type="hidden" name="images" value="' + res.model + '"/>\n' +
+                        '           <div class="icon-cover">\n' +
+                        '              <span title="删除" onclick="deleteImages(this);" class="cover-center fa fa-trash"></span>\n' +
+                        '           </div>\n' +
+                        '       </div>';
+                    $('#imageUrls').append(html);
+                } else {
+                    dialog.msg(res.message);
+                }
             }
         });
     });
