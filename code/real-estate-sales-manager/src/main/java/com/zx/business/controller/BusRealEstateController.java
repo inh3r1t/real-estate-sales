@@ -114,7 +114,7 @@ public class BusRealEstateController extends BaseController {
 
     @RequestMapping(value = "/submit")
     @ResponseBody
-    public Object submit(BusRealEstate estate) {
+    public Object submit(BusRealEstate estate, Boolean needFullPhone) {
         boolean insertAction = estate.getId() == null || estate.getId() == 0;
         String actionName = insertAction ? "添加" : "更新";
         estate.setDetail(HtmlUtil.htmlUnescape(estate.getDetail()));
@@ -125,6 +125,7 @@ public class BusRealEstateController extends BaseController {
         if (estate.getIsTopRecommend() == null) {
             estate.setIsTopRecommend(false);
         }
+        estate.setExtend1(needFullPhone != null && needFullPhone ? "1" : "0");
         try {
             if (insertAction) {
                 estate.setCreateTime(DateUtil.getDateNow());

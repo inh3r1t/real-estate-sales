@@ -64,8 +64,8 @@
                 </div>
             </div>
             <div class="layui-col-xs6">
-                <input type="checkbox" name="extend1" title="需要完整号码" lay-skin="primary"
-                       th:checked="${model.extend1}">
+                <input type="checkbox" name="needFullPhone" title="需要完整号码" lay-skin="primary"
+                       th:checked="${model.extend1 == '1'}">
                 <input type="checkbox" name="isTopRecommend" title="置顶推荐" lay-skin="primary"
                        th:checked="${model.isTopRecommend}">
                 <input type="checkbox" name="isListRecommend" title="精品推荐" lay-skin="primary"
