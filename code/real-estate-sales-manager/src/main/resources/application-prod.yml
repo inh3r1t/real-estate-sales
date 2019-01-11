@@ -26,3 +26,4 @@ custom:
   version: V1.1.0111.1
   directory-path: /home/tony/app
   is_open_notify: true
+  upload-node: upload_files
