@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev  # 通过指定启动参数使用不同的profile
   thymeleaf:
     cache: false
     mode: LEGACYHTML5
@@ -11,43 +13,22 @@ spring:
     date-format: yyyy-MM-dd HH:mm #如果使用字符串表示，用这行设置格式
     time-zone: GMT+8
     serialization: false #使用时间戳，使用数值timestamp表示日期
-  datasource:
-    url: jdbc:mysql://47.106.143.175:3306/real-estate-sales?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
-  devtools:
-    restart:
-      enabled: true
 
 mybatis:
   mapper-locations: /mapper/**/*Mapper.xml
   type-aliases-package: com.zx.system.model
 
-logging:
-  level:
-    root: info
-
-server:
-  port: 8080
 #Custom configuration
 custom:
-#  system-url: http://localhost:8080
-  system-url: https://inh3rit.top/
-  system-name: real-estate-sales-manager
-  version: V1.1.0320.1
   page-size: 15
   captcha: 0  # 是否使用登录验证码 0:不使用 1:使用
   file-extension: jpg|png|gif|bmp|jpeg|txt|doc|xls|docx|xlsx|pdf|mp3|mp4|ppt|pptx|rtf|zip|rar|gz|7z|gzip
-  directory-path: /home/tony/app
-#  directory-path:
   upload-node: upload_files
   wechat.openid.api.url: https://api.weixin.qq.com/sns/jscode2session
   wechat.access_token.api.url: https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s
   wechat.send_template_message.api.url: https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=%s
   wechat.appid: wx4476c55348a31df8
   wechat.secret: 26754ef3189b3ef8a18d9b5e05d3bb23
-  is_open_notify: true
 #  云之讯短信推送配置
   yunzhixun.appid: 95c4984c0c7240eca3684e27bf29cad7
   yunzhixun.sid: dc0cc5d6997208a7f0cf35f02de9c48c
