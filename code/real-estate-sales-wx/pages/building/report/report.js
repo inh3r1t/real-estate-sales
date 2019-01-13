@@ -54,7 +54,7 @@ Page({
       this.WxValidate.addMethod('telfuzzy', (value, param) => {
         var regex = isReal ? /^1[345789]\d{9}$/ : /^1[345789][0-9]\*{4}\d{4}$/
         return this.WxValidate.optional(value) || regex.test(value)
-      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间四位****)')
+      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间四位为****)')
     })
   },
   onReady: function() {

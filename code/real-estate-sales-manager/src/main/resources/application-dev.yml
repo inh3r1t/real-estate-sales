@@ -17,14 +17,14 @@ spring:
       max-request-size: 50MB
 logging:
   level:
-    root: debug
+    root: info
 
 server:
   port: 8080
 
 #Custom configuration
 custom:
-  system-url: https://localhost:8080
+  system-url: https://trial.inh3rit.top
   system-name: 安策营销后台管理系统 - 测试环境
   version: V1.1.0111.1
   directory-path:
