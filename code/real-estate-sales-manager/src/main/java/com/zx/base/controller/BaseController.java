@@ -229,11 +229,12 @@ public class BaseController {
         file.transferTo(tempFile);
         //图片压缩后路径
         String thumPath = tempFile.getParent() + "/thumbnail."
-                + UUID.randomUUID().toString().replace("-", "") + fileName;
+                + UUID.randomUUID().toString().replace("-", "") + fileName + ".jpg";
         if (width != null && height != null) {
             Thumbnails.of(tempFile)
                     .size(width, height).keepAspectRatio(false)
                     .outputQuality(quality == null ? 1f : quality)
+                    .outputFormat("jpg")
                     .toFile(thumPath);
         } else {
             if (file.getSize() > 5 * 1024 * 1024) {
@@ -254,18 +255,23 @@ public class BaseController {
                         .outputQuality(quality == null ? 0.5f : quality)
                         .outputFormat("jpg")
                         .toFile(thumPath);
-            }  else if (file.getSize() > 0.5 * 1024 * 1024) {
+            } else if (file.getSize() > 0.5 * 1024 * 1024) {
                 Thumbnails.of(tempFile)
                         .scale(1f)
                         .outputQuality(quality == null ? 0.8f : quality)
                         .outputFormat("jpg")
                         .toFile(thumPath);
             } else {
-                Thumbnails.of(tempFile)
-                        .scale(1f)
-                        .outputQuality(quality == null ? 1f : quality)
-                        .outputFormat("jpg")
-                        .toFile(thumPath);
+                if (quality == null) {
+                    thumPath = tempFile.getPath();
+
+                } else {
+                    Thumbnails.of(tempFile)
+                            .scale(1f)
+                            .outputQuality(quality == null ? 1f : quality)
+                            .outputFormat("jpg")
+                            .toFile(thumPath);
+                }
             }
         }
         String relativePath = thumPath.replace("\\", "/");
