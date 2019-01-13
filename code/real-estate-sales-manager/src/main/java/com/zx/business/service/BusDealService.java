@@ -110,6 +110,9 @@ public class BusDealService {
             busNotifyMsg.setDealId(busDeal.getId());
             busNotifyMsg.setMsgContent(reportMsg(agent.getCompanyName(), agent.getUserName(), busRealEstate.getName()));
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
+
+            // send sms message
+            sendMessage(busRealEstate.getManager().getPhoneNum(), "报备通知", String.valueOf(busDeal.getId()), agent.getUserName());
         }
 
     }
