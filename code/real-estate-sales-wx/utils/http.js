@@ -35,6 +35,8 @@ function request(url, method, postData) {
           reject('用户名密码错误');
         } else if (res.data.resultCode == '001006') {
           reject('注册码错误');
+        } else if (res.data.resultCode == '001007') {
+          reject('该手机号已经被注册');
         }
       },
       fail: function(e) {
