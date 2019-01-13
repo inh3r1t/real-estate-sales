@@ -57,3 +57,9 @@
   display: inline-block;
   width: 400rpx;
 }
+
+.supply-star {
+  font-size: 12px;
+  color: #0076ff;
+  width: 120rpx;
+}

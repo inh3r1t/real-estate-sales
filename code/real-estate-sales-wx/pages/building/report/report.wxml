@@ -18,7 +18,8 @@
       <text class="form-lable">联系方式</text>
       <!-- <input class='form-input hidden' name="realPhone" type="number" value='{{phone}}'></input> -->
       <input class='form-input' wx:if='{{isReal}}' name="phone" placeholder="请输入完整手机号" type="number"></input>
-      <input class='form-input' wx:if='{{!isReal}}' name="phone" placeholder="请输入手机号" type="text"></input>
+      <input class='form-input' wx:if='{{!isReal}}' name="phone" placeholder="请输入手机号" type="number" value='{{phone}}' bindinput='handlePhone'></input>
+      <text wx:if='{{!isReal}}' class='supply-star' catchtap='supplyStar'>填充 *</text>
     </view>
     <view class="item-report">
       <text class="form-lable">报备楼盘</text>

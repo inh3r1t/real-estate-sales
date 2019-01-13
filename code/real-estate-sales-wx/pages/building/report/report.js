@@ -133,10 +133,18 @@ Page({
 
   },
   handlePhone: function(e) {
-    var value = e.detail.value
-    if (value.length >= 4 && value.length <= 7) {
-      value.substring(0, 3)
-      return value.substring(0, 3) + Array(value.length - 3 + 1).join('*');
-    }
+    // var value = e.detail.value
+    // if (value.length >= 4 && value.length <= 7) {
+    //   value.substring(0, 3)
+    //   return value.substring(0, 3) + Array(value.length - 3 + 1).join('*');
+    // }
+    this.setData({
+      phone: e.detail.value
+    })
+  },
+  supplyStar: function(e) {
+    this.setData({
+      phone: this.data.phone + "****"
+    })
   }
 })
