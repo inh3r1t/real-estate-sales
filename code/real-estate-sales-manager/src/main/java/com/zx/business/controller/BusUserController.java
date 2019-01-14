@@ -46,7 +46,7 @@ public class BusUserController extends BusBaseController {
             searchUser.setPhoneNum(busUser.getPhoneNum());
             searchUser = busUserService.getBusUser(searchUser);
             if (searchUser != null) {
-                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setResultCode(Const.USER_EXISTED_ERROR);
                 resultData.setMsg("该手机号已经被注册！");
             } else {
                 int id = busUserService.addBusUser(busUser);
@@ -101,6 +101,14 @@ public class BusUserController extends BusBaseController {
             busUser = busUserService.getBusUser(busUser);
             if (StringUtils.isNotEmpty(busUserVO.getJs_code())) {
                 String openid = getOpenid(busUserVO.getJs_code());
+                // 判断该微信号是否已被绑定
+                BusUser condition = new BusUser();
+                condition.setOpenId(openid);
+                if (null != busUserService.getBusUser(condition)) {
+                    resultData.setResultCode(Const.WECHAT_ALREADY_BIND_ERROR);
+                    resultData.setMsg("该微信已绑定过其他账号！");
+                    return resultData;
+                }
                 busUser.setOpenId(openid);
             } else if (StringUtils.isEmpty(busUserVO.getPasswd())) {
                 busUser.setOpenId("");
