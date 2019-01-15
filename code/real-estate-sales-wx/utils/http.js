@@ -36,7 +36,11 @@ function request(url, method, postData) {
         } else if (res.data.resultCode == '001006') {
           reject('注册码错误');
         } else if (res.data.resultCode == '001007') {
+          reject('微信已绑定过其他账号');
+        } else if (res.data.resultCode == '001008') {
           reject('该手机号已经被注册');
+        } else {
+          reject('系统异常，稍后再试');
         }
       },
       fail: function(e) {

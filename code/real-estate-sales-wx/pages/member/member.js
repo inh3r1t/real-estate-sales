@@ -126,7 +126,7 @@ Page({
                         })
                       }).catch((res) => {
                         wx.showToast({
-                          title: '微信绑定失败',
+                          title: res,
                           icon: 'none'
                         })
                       });
