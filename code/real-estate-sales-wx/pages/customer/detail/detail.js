@@ -24,7 +24,7 @@ Page({
       var arriveCertifyPhotoPathList = []
       if (res.data.arriveCertifyPhotoPath != null) {
         if (res.data.arriveCertifyPhotoPath.indexOf(',') > -1) {
-          arriveCertifyPhotoPathList = res.data.rriveCertifyPhotoPath.split(',');
+          arriveCertifyPhotoPathList = res.data.arriveCertifyPhotoPath.split(',');
         } else {
           arriveCertifyPhotoPathList.push(res.data.arriveCertifyPhotoPath)
         }
