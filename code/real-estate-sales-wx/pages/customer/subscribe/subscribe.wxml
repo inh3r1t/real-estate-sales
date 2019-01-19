@@ -36,7 +36,7 @@
       </view>
     </view>
     <view class="form-item-area form-upload-image">
-      <image src='{{item}}' wx:for="{{images}}" wx:key="index"></image>
+      <image src='{{item}}' wx:for="{{images}}" wx:key="index" mode='aspectFit'></image>
     </view>
   </view>
   <view class="form-footer">
