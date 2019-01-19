@@ -78,6 +78,7 @@ public class BusDealService {
         String customerName = busDealVO.getCustomerName();
         String customerPhone = busDealVO.getCustomerPhone();
         BusCustomer busCustomer = new BusCustomer(agentId, customerName, customerPhone, busDealVO.getCustomerSex());
+        busCustomer.setCreateTime(new Date());
         busCustomerMapper.insert(busCustomer);
 
         String[] realEstateIds = busDealVO.getRealEstateIds().split(",");
