@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentTab: 0,
+    currentTab: -1,
     showShareModal: false,
     shareData: "",
     isLogin: false,
@@ -161,8 +161,11 @@ Page({
         title: '加载中',
       })
       var state = '';
-      if (this.data.currentTab == 1) {
+      if (this.data.currentTab == 0) {
         state = 0;
+      }
+      if (this.data.currentTab == 1) {
+        state = 1;
       }
       if (this.data.currentTab == 2) {
         state = 2;

@@ -7,7 +7,8 @@ Page({
     name: "",
     phone: '',
     isReal: false,
-    list: []
+    list: [],
+    focus: false
   },
   onLoad: function(options) {
     app.checkLogin().then(res => {
@@ -52,9 +53,9 @@ Page({
 
       // 自定义验证规则
       this.WxValidate.addMethod('telfuzzy', (value, param) => {
-        var regex = isReal ? /^1[345789]\d{9}$/ : /^1[345789][0-9]\*{4}\d{4}$/
+        var regex = isReal ? /^1[345789]\d{9}$/ : /(^1[345789][0-9]\*{4}\d{4}$)|(^1[345789]\d{9}$)/
         return this.WxValidate.optional(value) || regex.test(value)
-      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间四位为****)')
+      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间4位可用****)')
     })
   },
   onReady: function() {
@@ -114,13 +115,14 @@ Page({
         formId: e.detail.formId
       })
       .then(res => {
-        // console.log(res)
         wx.showToast({
           title: `报备成功`,
           icon: 'success',
           duration: 2000,
           success: function() {
-            wx.navigateBack({})
+            setTimeout(function() {
+              wx.navigateBack({})
+            }, 1000)
           }
         })
       }).catch(res => {
@@ -138,13 +140,16 @@ Page({
     //   value.substring(0, 3)
     //   return value.substring(0, 3) + Array(value.length - 3 + 1).join('*');
     // }
+    const value = e.detail.value
     this.setData({
       phone: e.detail.value
     })
+    return value
   },
   supplyStar: function(e) {
     this.setData({
-      phone: this.data.phone + "****"
+      phone: this.data.phone + "****",
+      focus: true
     })
   }
 })

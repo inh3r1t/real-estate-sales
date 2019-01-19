@@ -116,14 +116,21 @@ Page({
                         wx.getUserInfo({
                           success(result) {
                             wx.setStorageSync('wxUserInfo', result.userInfo)
+                            this.setData({
+                              isBindWechat: true,
+                              avatar: result.userInfo.avatarUrl || '/images/avatar.jpg'
+                            })
+                          },
+                          fail(res) {
+                            this.setData({
+                              isBindWechat: false,
+                              avatar: '/images/avatar.jpg'
+                            })
                           }
                         })
                         wx.setStorageSync('userInfo', res.data)
                         app.globalData.userInfo = res.data
-                        this.setData({
-                          isBindWechat: true,
-                          avatar: wx.getStorageSync('wxUserInfo').avatarUrl || '/images/avatar.jpg'
-                        })
+
                       }).catch((res) => {
                         wx.showToast({
                           title: res,

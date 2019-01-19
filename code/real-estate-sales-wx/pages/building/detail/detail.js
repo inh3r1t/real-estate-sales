@@ -11,6 +11,7 @@ Page({
     interval: 3000,
     duration: 1000,
     isLogin: false,
+    isManager: false,
     building: {}
   },
   makePhoneCall: function() {
@@ -58,6 +59,12 @@ Page({
     this.setData({
       isLogin: app.isLogin()
     })
+    var user = app.globalData.userInfo;
+    if (user != null) {
+      this.setData({
+        isManager: user.busRole.type == 0
+      })
+    }
   },
   report: function() {
     app.checkLogin().then(res => {

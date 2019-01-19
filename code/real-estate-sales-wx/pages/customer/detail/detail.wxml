@@ -4,6 +4,7 @@
       <text class='item-step-num'>1</text>
       <text>报备 {{model.reportTime}}</text>
     </view>
+    <view class='item-name'>订单编号：{{model.id}}</view>
     <view class='item-name'>客户姓名：{{model.customerName}}</view>
     <view class='item-phone'>客户号码：{{model.customerPhone}}</view>
     <view class='item-building'>楼盘名称：{{model.realEstateName}}</view>
