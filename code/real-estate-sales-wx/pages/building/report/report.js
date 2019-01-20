@@ -140,15 +140,13 @@ Page({
     //   value.substring(0, 3)
     //   return value.substring(0, 3) + Array(value.length - 3 + 1).join('*');
     // }
-    const value = e.detail.value
     this.setData({
       phone: e.detail.value
-    })
-    return value
+    }) 
   },
   supplyStar: function(e) {
     this.setData({
-      phone: this.data.phone + "****"
+      phone: this.data.phone + "----"
     })
   }
 })

@@ -66,14 +66,15 @@ Page({
         //这里既可以获取模拟的res
         // console.log(res)
         var pList = this.data.prevPageList;
-        var list = override ? res.data.Items : this.data.list.concat(res.data.Items);
-        for (var i = 0, len = list.length; i < len; i++) {
+        var cPageList = res.data.Items;
+        for (var i = 0, len = cPageList.length; i < len; i++) {
           for (var j = 0, plen = pList.length; j < plen; j++) {
-            if (list[i].id == pList[j].id) {
-              list[i].checked = true;
+            if (cPageList[i].id == pList[j].id) {
+              cPageList[i].checked = true;
             }
           }
         }
+        var list = override ? cPageList : this.data.list.concat(cPageList);
         this.setData({
           list: list,
           more: res.data.Items != null && res.data.Items.length == 10,
@@ -94,32 +95,55 @@ Page({
     // console.log('form发生了submit事件，携带数据为：', e.detail.value.selectList)
     if (e.detail.value.selectList != undefined) {
       var selectList = new Array();
+      var pList = this.data.prevPageList;
       for (var i = 0; i < e.detail.value.selectList.length; i++) {
 
         var item = e.detail.value.selectList[i].split(',');
         var id = item[0];
         var name = item[1];
-        selectList.push({
-          id: id,
-          name: name
-        });
-
+        var exist = false;
+        for (var j = 0, plen = pList.length; j < plen; j++) {
+          if (id == pList[j].id) {
+            exist = true;
+          }
+        }
+        if (!exist) {
+          selectList.push({
+            id: id,
+            name: name
+          });
+        }
       }
       var pages = getCurrentPages(); // 获取页面栈 
       var prevPage = pages[pages.length - 2]; // 上一个页面
       prevPage.setData({
-        list: selectList
+        list: this.data.prevPageList.concat(selectList)
       })
       wx.navigateBack({})
     }
   },
   checkType: function(e) {
     console.log(e)
-    if (!this.data.isReal && e.currentTarget.dataset.real == '1')
-      wx.showToast({
-        title: '该楼盘需要输入完整号码，不可一同报备',
-        icon: 'none',
-        duration: 2000
+    var pList = this.data.list;
+    if (!this.data.isReal && e.currentTarget.dataset.real == '1') {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '该楼盘需要输入完整号码，不可一同报备',
+        success: res => {
+          if (res.confirm) {
+            for (var i = 0, plen = pList.length; i < plen; i++) {
+              if (e.currentTarget.dataset.id == pList[i].id) {
+                pList[i].checked = false
+              }
+            }
+            this.setData({
+              list: pList
+            })
+          }
+        }
       })
+    }
+
   }
 })

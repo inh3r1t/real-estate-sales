@@ -14,8 +14,9 @@
           <view class='summary'>简介：{{item.summery}}</view>
         </view>
         <view class='building-select'>
-          <checkbox wx:if="{{item.checked}}" value='{{item.id}},{{item.name}}' checked="{{item.checked}}" disabled='{{!isReal && item.extend1=="1"}}'></checkbox>
-          <checkbox wx:if="{{!item.checked}}" value='{{item.id}},{{item.name}}' disabled='{{!isReal && item.extend1=="1"}}'></checkbox>
+          <checkbox value='{{item.id}},{{item.name}}' checked="{{item.checked}}" data-id="{{item.id}}"></checkbox>
+          <!-- <checkbox wx:if="{{item.checked}}" value='{{item.id}},{{item.name}}' checked="{{item.checked}}" disabled='{{!isReal && item.extend1=="1"}}'></checkbox>
+          <checkbox wx:if="{{!item.checked}}" value='{{item.id}},{{item.name}}' disabled='{{!isReal && item.extend1=="1"}}'></checkbox> -->
         </view>
       </label>
     </checkbox-group>
