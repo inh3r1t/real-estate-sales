@@ -28,7 +28,7 @@
           <text class='select-building-name'>{{item.name}}</text>
           <text class='iconfont icon-shanchu' data-id='{{item.id}}' bindtap='delete'></text>
         </view>
-        <view class='bold' bindtap='toSelect'>
+        <view class='bold' bindtap='toSelect' data-real='{{isReal}}'>
           <text class='iconfont icon-jia'></text> 添加楼盘
         </view>
       </view>

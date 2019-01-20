@@ -12,7 +12,7 @@
   height: 80rpx;
   border-top: 1rpx solid #dcdfe6;
   border-bottom: 1rpx solid #dcdfe6;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .customer .customer-tabs .customer-tab-item {
@@ -41,7 +41,7 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 13px;
   margin-top: 80rpx;
 }
 
@@ -52,7 +52,7 @@
 
 .customer .customer-list .customer-item .item-base .item-info {
   flex-grow: 1;
-  line-height: 60rpx;
+  line-height: 40rpx;
 }
 
 .customer .customer-list .customer-item .item-base .item-tools {
@@ -116,10 +116,11 @@
 .item-flows .flow-item text {
   height: 40rpx;
   line-height: 40rpx;
+  font-size: 12px;
 }
 
 .item-flows .flow-item text:nth-child(2) {
-  font-size: 22px;
+  font-size: 16px;
 }
 
 .item-flows .flow-item text:nth-child(3) {
@@ -193,8 +194,7 @@
   width: 50%;
 }
 
-.flow-step-3 .flow-line-before, 
-.flow-step-4 .flow-line-before {
+.flow-step-3 .flow-line-before, .flow-step-4 .flow-line-before {
   width: 100%;
 }
 

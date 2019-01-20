@@ -141,8 +141,17 @@ Page({
           prevPage.setData({
             list: prevPage.data.list
           })
+          wx.showToast({
+            title: `认购成功`,
+            icon: 'success',
+            duration: 1000,
+            success: function () {
+              setTimeout(function () {
+                wx.navigateBack({})
+              }, 1000)
+            }
+          })
         }
-        wx.navigateBack({})
       })
   }
 })

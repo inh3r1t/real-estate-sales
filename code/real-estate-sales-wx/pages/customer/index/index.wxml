@@ -1,13 +1,17 @@
 <view class="customer">
   <view class='nav-box-top'>
     <view class="customer-tabs">
-      <view class="customer-tab-item {{currentTab==null || currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">
+      <view class="customer-tab-item {{currentTab==null || currentTab==-1?'active':''}}" data-current="-1" bindtap="clickTab">
         <text>全部</text>
         <text class="tab-item-count">{{count.total_count||0}}</text>
       </view>
-      <view class="customer-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">
+      <view class="customer-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">
         <text>报备</text>
         <text class="tab-item-count">{{count.report_count||0}}</text>
+      </view>
+      <view class="customer-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">
+        <text>预约</text>
+        <text class="tab-item-count">{{count.appointment_count||0}}</text>
       </view>
       <view class="customer-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">
         <text>到访</text>
@@ -27,6 +31,7 @@
     <view class='customer-item flow-step-{{item.state}}' wx:for="{{list}}" wx:key="index" bindtap='toDetail' data-id="{{item.id}}">
       <view class='item-base'>
         <view class='item-info'>
+          <view class='item-name'>订单编号：{{item.id}}</view>
           <view class='item-name'>客户姓名：{{item.busCustomer.name}}</view>
           <view class='item-phone'>客户号码：{{item.busCustomer.phoneNum}}</view>
           <view class='item-building'>楼盘名称：{{item.realEstateName}}</view>

@@ -127,8 +127,17 @@ Page({
           prevPage.setData({
             list: prevPage.data.list
           })
-        }
-        wx.navigateBack({})
+          wx.showToast({
+            title: `到访成功`,
+            icon: 'success',
+            duration: 1000,
+            success: function () {
+              setTimeout(function () {
+                wx.navigateBack({})
+              }, 1000)
+            }
+          })
+        } 
       })
   }
 })

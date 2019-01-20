@@ -1,7 +1,7 @@
 <form class="form" bindsubmit="formSubmit">
   <view class="form-body">
     <checkbox-group bindchange="checkboxChange" name="selectList">
-      <view class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
+      <label class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index" bindtap='checkType' data-real='{{item.extend1}}'>
         <text class='building-commission'>{{item.commission}}</text>
         <view class="thumb">
           <image src="{{item.thumbnail}}"></image>
@@ -11,13 +11,13 @@
           <view class="building-address">
             <text class='iconfont icon-weizhi'></text> {{item.address}}
           </view>
-          <text class='summary'>简介：{{item.summary}}</text>
+          <view class='summary'>简介：{{item.summery}}</view>
         </view>
         <view class='building-select'>
-          <checkbox wx:if="{{item.checked}}" value='{{item.id}},{{item.name}}' checked="{{item.checked}}"></checkbox>
-          <checkbox wx:if="{{!item.checked}}" value='{{item.id}},{{item.name}}'></checkbox>
+          <checkbox wx:if="{{item.checked}}" value='{{item.id}},{{item.name}}' checked="{{item.checked}}" disabled='{{!isReal && item.extend1=="1"}}'></checkbox>
+          <checkbox wx:if="{{!item.checked}}" value='{{item.id}},{{item.name}}' disabled='{{!isReal && item.extend1=="1"}}'></checkbox>
         </view>
-      </view>
+      </label>
     </checkbox-group>
     <view class='no-more' hidden='{{more}}'>没有更多数据了</view>
   </view>

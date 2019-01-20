@@ -40,6 +40,8 @@ Page({
     }, {
       userName: {
         required: '请输入姓名',
+        minlength: '姓名至少2个字符',
+        maxlength: '姓名不超过10个字符',
       },
       phoneNum: {
         required: '请输入手机号',

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentTab: 0,
+    currentTab: -1,
     showShareModal: false,
     shareData: "",
     isLogin: false,
@@ -145,7 +145,7 @@ Page({
       success(res) {
         wx.getClipboardData({
           success(res) {
-            console.log(res.data)
+            // console.log(res.data)
           }
         })
       }
@@ -161,8 +161,11 @@ Page({
         title: '加载中',
       })
       var state = '';
-      if (this.data.currentTab == 1) {
+      if (this.data.currentTab == 0) {
         state = 0;
+      }
+      if (this.data.currentTab == 1) {
+        state = 1;
       }
       if (this.data.currentTab == 2) {
         state = 2;
@@ -180,9 +183,12 @@ Page({
       }).then(res => {
         //这里既可以获取模拟的res
         // console.log(res)
-        for (let i = 0; i < res.data.list.Items.length; i++) {
-          res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
-        }
+        // for (let i = 0; i < res.data.list.Items.length; i++) {
+          // extend1
+          // if (res.data.list.Items[i].busRealEstate.extend1 != '1') {
+          //   res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
+          // }
+        // }
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),
           more: res.data.list.Items != null && res.data.list.Items.length == 5,

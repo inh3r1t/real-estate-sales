@@ -19,7 +19,7 @@
     <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
   </view>
 </view>
-<view class='nav-box'>
+<view class='nav-box' wx:if="{{!isManager}}">
   <view class='handle-btn'>
     <view class='handle-report' bindtap='report'>报备</view>
     <view class='handle-contact' bindtap='makePhoneCall'>电话咨询</view>

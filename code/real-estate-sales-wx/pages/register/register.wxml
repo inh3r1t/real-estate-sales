@@ -14,7 +14,7 @@
     </view>
     <view class="form-item">
       <text class="form-lable">注册码</text>
-      <input class='form-input' name="pollCode" placeholder="请输入注册码" type="text" value='{{pollCode}}'></input>
+      <input class='form-input' name="pollCode" placeholder="请输入注册码" type="number" value='{{pollCode}}'></input>
     </view>
     <view class='text-tip'>注册码请联系管理员 - 电话:{{contactPhone}}
       <text class="iconfont icon-dianhua" bindtap='makePhoneCall' data-phone="{{contactPhone}}"></text>
