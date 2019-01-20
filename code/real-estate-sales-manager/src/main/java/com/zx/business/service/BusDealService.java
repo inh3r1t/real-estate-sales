@@ -113,7 +113,9 @@ public class BusDealService {
             busNotifyMsgMapper.insertSelective(busNotifyMsg);
 
             // send sms message
-            sendMessage(busRealEstate.getManager().getPhoneNum(), "报备通知", String.valueOf(busDeal.getId()), agent.getUserName());
+            if (Boolean.valueOf(isOpenNotify)) {
+                sendMessage(busRealEstate.getManager().getPhoneNum(), "报备通知", String.valueOf(busDeal.getId()), agent.getUserName());
+            }
         }
 
     }
