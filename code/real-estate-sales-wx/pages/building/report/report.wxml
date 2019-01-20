@@ -17,8 +17,8 @@
     <view class="form-item">
       <text class="form-lable">联系方式</text>
       <!-- <input class='form-input hidden' name="realPhone" type="number" value='{{phone}}'></input> -->
-      <input class='form-input' wx:if='{{isReal}}' name="phone" placeholder="请输入完整手机号" type="number" focus='{{focus}}'></input>
-      <input class='form-input' wx:if='{{!isReal}}' name="phone" placeholder="请输入手机号" type="number" value='{{phone}}' bindinput='handlePhone' focus='{{focus}}'></input>
+      <input class='form-input' wx:if='{{isReal}}' name="phone" placeholder="请输入完整手机号" type="number"></input>
+      <input class='form-input' wx:if='{{!isReal}}' name="phone" placeholder="请输入手机号" type="number" value='{{phone}}' bindinput='handlePhone'></input>
       <text wx:if='{{!isReal}}' class='supply-star' catchtap='supplyStar'>填充 *</text>
     </view>
     <view class="item-report">
@@ -28,7 +28,7 @@
           <text class='select-building-name'>{{item.name}}</text>
           <text class='iconfont icon-shanchu' data-id='{{item.id}}' bindtap='delete'></text>
         </view>
-        <view class='bold' bindtap='toSelect'>
+        <view class='bold' bindtap='toSelect' data-real='{{isReal}}'>
           <text class='iconfont icon-jia'></text> 添加楼盘
         </view>
       </view>

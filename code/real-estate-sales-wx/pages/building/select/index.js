@@ -7,6 +7,7 @@ Page({
   data: {
     isLogin: false,
     more: true,
+    isReal: false,
     page: 1,
     list: [],
     prevPageList: []
@@ -16,10 +17,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var isReal = options.isReal == 'true';
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     this.setData({
-      prevPageList: prevPage.data.list
+      prevPageList: prevPage.data.list,
+      isReal: isReal
     })
     this.getList(1);
   },
@@ -92,6 +95,7 @@ Page({
     if (e.detail.value.selectList != undefined) {
       var selectList = new Array();
       for (var i = 0; i < e.detail.value.selectList.length; i++) {
+
         var item = e.detail.value.selectList[i].split(',');
         var id = item[0];
         var name = item[1];
@@ -99,6 +103,7 @@ Page({
           id: id,
           name: name
         });
+
       }
       var pages = getCurrentPages(); // 获取页面栈 
       var prevPage = pages[pages.length - 2]; // 上一个页面
@@ -108,4 +113,16 @@ Page({
       wx.navigateBack({})
     }
   },
+  checkType: function(e) {
+    console.log(e)
+    if (!this.data.isReal && e.currentTarget.dataset.real == '1')
+      wx.showToast({
+        title: '该楼盘需要输入完整号码，不可一同报备',
+        icon: 'none',
+        duration: 2000
+      })
+  },
+  checkboxChange:function(e){
+    console.log(e)
+  }
 })

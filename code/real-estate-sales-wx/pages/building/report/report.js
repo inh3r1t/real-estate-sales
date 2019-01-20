@@ -64,7 +64,7 @@ Page({
   onShow: function() {},
   toSelect: function() {
     wx.navigateTo({
-      url: '/pages/building/select/index',
+      url: '/pages/building/select/index?isReal=' + this.data.isReal,
     })
   },
   delete: function(e) {
@@ -148,8 +148,7 @@ Page({
   },
   supplyStar: function(e) {
     this.setData({
-      phone: this.data.phone + "****",
-      focus: true
+      phone: this.data.phone + "****"
     })
   }
 })
