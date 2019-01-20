@@ -66,15 +66,24 @@ Page({
         //这里既可以获取模拟的res
         // console.log(res)
         var pList = this.data.prevPageList;
-        var cPageList = res.data.Items;
-        for (var i = 0, len = cPageList.length; i < len; i++) {
+        // var cPageList = res.data.Items;
+        // for (var i = 0, len = cPageList.length; i < len; i++) {
+        //   for (var j = 0, plen = pList.length; j < plen; j++) {
+        //     if (cPageList[i].id == pList[j].id) {
+        //       cPageList[i].checked = true;
+        //     }
+        //   }
+        // }
+        // var list = override ? cPageList : this.data.list.concat(cPageList);
+
+        var list = override ? res.data.Items : this.data.list.concat(res.data.Items);
+        for (var i = 0, len = list.length; i < len; i++) {
           for (var j = 0, plen = pList.length; j < plen; j++) {
-            if (cPageList[i].id == pList[j].id) {
-              cPageList[i].checked = true;
+            if (list[i].id == pList[j].id) {
+              list[i].checked = true;
             }
           }
         }
-        var list = override ? cPageList : this.data.list.concat(cPageList);
         this.setData({
           list: list,
           more: res.data.Items != null && res.data.Items.length == 10,
@@ -96,16 +105,20 @@ Page({
     if (e.detail.value.selectList != undefined) {
       var selectList = new Array();
       var pList = this.data.prevPageList;
+      var isReal = false;
       for (var i = 0; i < e.detail.value.selectList.length; i++) {
-
         var item = e.detail.value.selectList[i].split(',');
         var id = item[0];
         var name = item[1];
+        var real = item[2] == '1';
         var exist = false;
         for (var j = 0, plen = pList.length; j < plen; j++) {
           if (id == pList[j].id) {
             exist = true;
           }
+        }
+        if (real) {
+          isReal = true;
         }
         if (!exist) {
           selectList.push({
@@ -117,21 +130,27 @@ Page({
       var pages = getCurrentPages(); // 获取页面栈 
       var prevPage = pages[pages.length - 2]; // 上一个页面
       prevPage.setData({
-        list: this.data.prevPageList.concat(selectList)
+        list: this.data.prevPageList.concat(selectList),
+        isReal: isReal
       })
       wx.navigateBack({})
     }
   },
   checkType: function(e) {
     console.log(e)
-    var pList = this.data.list;
     if (!this.data.isReal && e.currentTarget.dataset.real == '1') {
       wx.showModal({
         title: '提示',
         showCancel: false,
-        content: '该楼盘需要输入完整号码，不可一同报备',
+        content: '该楼盘需要输入完整号码',
         success: res => {
-          if (res.confirm) {}
+          if (res.confirm) {
+            // var pages = getCurrentPages(); // 获取页面栈 
+            // var prevPage = pages[pages.length - 2]; // 上一个页面
+            // prevPage.setData({
+            //   isReal: true
+            // })
+          }
         }
       })
     }

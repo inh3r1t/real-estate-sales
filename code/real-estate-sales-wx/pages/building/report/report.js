@@ -29,19 +29,26 @@ Page({
           isReal: isReal
         });
       }
-      this.WxValidate = app.WxValidate({
-        name: {
-          required: true,
-          minlength: 1,
-          maxlength: 20,
-        },
-        phone: {
-          required: true,
-          minlength: 11,
-          maxlength: 11,
-          telfuzzy: true,
-        }
-      }, {
+    })
+    
+  },
+  onReady: function() {
+
+  },
+  onShow: function() {
+    this.WxValidate = app.WxValidate({
+      name: {
+        required: true,
+        minlength: 1,
+        maxlength: 20,
+      },
+      phone: {
+        required: true,
+        minlength: 11,
+        maxlength: 11,
+        telfuzzy: true,
+      }
+    }, {
         name: {
           required: '请输入客户名称',
         },
@@ -52,17 +59,12 @@ Page({
         }
       })
 
-      // 自定义验证规则
-      this.WxValidate.addMethod('telfuzzy', (value, param) => {
-        var regex = isReal ? /^1[345789]\d{9}$/ : /(^1[345789][0-9]\*{4}\d{4}$)|(^1[345789]\d{9}$)/
-        return this.WxValidate.optional(value) || regex.test(value)
-      }, isReal ? '请输入完整手机号码' : '请输入手机号码(中间4位可用****)')
-    })
+    // 自定义验证规则
+    this.WxValidate.addMethod('telfuzzy', (value, param) => {
+      var regex = this.data.isReal ? /^1[345789]\d{9}$/ : /(^1[345789][0-9]\*{4}\d{4}$)|(^1[345789]\d{9}$)/
+      return this.WxValidate.optional(value) || regex.test(value)
+    }, this.data.isReal ? '请输入完整手机号码' : '请输入手机号码(中间4位可用****)')
   },
-  onReady: function() {
-
-  },
-  onShow: function() {},
   toSelect: function() {
     wx.navigateTo({
       url: '/pages/building/select/index?isReal=' + this.data.isReal,
@@ -150,7 +152,7 @@ Page({
       phone: this.data.phone + "****"
     })
   },
-  inputPassword: function(e) {
+  keyboardInput: function(e) {
     this.setData({
       phone: this.data.phone + e.currentTarget.dataset.key
     })

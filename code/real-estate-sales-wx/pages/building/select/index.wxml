@@ -14,8 +14,9 @@
           <view class='summary'>简介：{{item.summery}}</view>
         </view>
         <view class='building-select'>
-          <text class='iconfont icon-radio'  wx:if='{{!isReal && item.extend1=="1"}}'></text>
-          <checkbox value='{{item.id}},{{item.name}}' checked="{{item.checked}}" data-id="{{item.id}}" wx:if='{{!(!isReal && item.extend1=="1")}}'></checkbox>
+          <!-- <text class='iconfont icon-radio'  wx:if='{{!isReal && item.extend1=="1"}}'></text> -->
+          <checkbox wx:if="{{item.checked}}" value='{{item.id}},{{item.name}},{{item.extend1}}' checked="{{item.checked}}"></checkbox>
+          <checkbox wx:if="{{!item.checked}}" value='{{item.id}},{{item.name}},{{item.extend1}}'></checkbox>
           <!-- <checkbox wx:if="{{item.checked}}" value='{{item.id}},{{item.name}}' checked="{{item.checked}}" disabled='{{!isReal && item.extend1=="1"}}'></checkbox>
           <checkbox wx:if="{{!item.checked}}" value='{{item.id}},{{item.name}}' disabled='{{!isReal && item.extend1=="1"}}'></checkbox> -->
         </view>

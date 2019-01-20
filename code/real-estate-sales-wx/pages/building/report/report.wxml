@@ -17,7 +17,7 @@
     <view class="form-item" bindtap="keyboardShow">
       <text class="form-lable">联系方式</text>
       <!-- <input class='form-input hidden' name="realPhone" type="number" value='{{phone}}'></input> -->
-      <input class='form-input' wx:if='{{isReal}}' name="phone" placeholder="请输入完整手机号" type="number" hidden></input>
+      <input class='form-input' hidden wx:if='{{isReal}}' name="phone" value='{{phone}}' placeholder="请输入完整手机号" type="number"></input>
       <input class='form-input' hidden wx:if='{{!isReal}}' name="phone" placeholder="请输入手机号" type="number" value='{{phone}}' bindinput='handlePhone'></input>
       <text class='placeholder'>{{phone!=''?phone: (isReal?'请输入完整手机号':'请输入手机号')}}</text>
       <!-- <text wx:if='{{!isReal}}' class='supply-star' catchtap='supplyStar'>填充 *</text> -->
@@ -45,18 +45,20 @@
   <view class='tips'>{{phone}}</view>
   <view class='keyboard'>
     <view class='left number'>
-      <view data-key="1" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>1</view>
-      <view data-key="2" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>2</view>
-      <view data-key="3" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>3</view>
-      <view data-key="4" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>4</view>
-      <view data-key="5" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>5</view>
-      <view data-key="6" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>6</view>
-      <view data-key="7" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>7</view>
-      <view data-key="8" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>8</view>
-      <view data-key="9" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>9</view>
-      <view class='clear' hover-class='active' hover-stay-time='100'></view>
-      <view data-key="0" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>0</view>
-      <view data-key="*" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>*</view>
+      <view data-key="1" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>1</view>
+      <view data-key="2" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>2</view>
+      <view data-key="3" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>3</view>
+      <view data-key="4" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>4</view>
+      <view data-key="5" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>5</view>
+      <view data-key="6" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>6</view>
+      <view data-key="7" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>7</view>
+      <view data-key="8" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>8</view>
+      <view data-key="9" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>9</view>
+      <view class='clear' hover-class='active' hover-stay-time='100' bindtap='keyboardHidden'>
+        <text class='iconfont icon-shouqijianpan'></text>
+      </view>
+      <view data-key="0" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>0</view>
+      <view data-key="*" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>*</view>
     </view>
     <view class='right ctr-btn'>
       <view bindtap='keyboardHidden' class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='clear'>
