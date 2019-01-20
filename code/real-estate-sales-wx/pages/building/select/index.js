@@ -131,16 +131,7 @@ Page({
         showCancel: false,
         content: '该楼盘需要输入完整号码，不可一同报备',
         success: res => {
-          if (res.confirm) {
-            for (var i = 0, plen = pList.length; i < plen; i++) {
-              if (e.currentTarget.dataset.id == pList[i].id) {
-                pList[i].checked = false
-              }
-            }
-            this.setData({
-              list: pList
-            })
-          }
+          if (res.confirm) {}
         }
       })
     }

@@ -8,7 +8,8 @@ Page({
     phone: '',
     isReal: false,
     list: [],
-    focus: false
+    focus: false,
+    keyboardHidden: true, //hidden是true 默认隐藏
   },
   onLoad: function(options) {
     app.checkLogin().then(res => {
@@ -142,11 +143,38 @@ Page({
     // }
     this.setData({
       phone: e.detail.value
-    }) 
+    })
   },
   supplyStar: function(e) {
     this.setData({
-      phone: this.data.phone + "----"
+      phone: this.data.phone + "****"
     })
+  },
+  inputPassword: function(e) {
+    this.setData({
+      phone: this.data.phone + e.currentTarget.dataset.key
+    })
+  },
+  keyboardHidden: function() {
+    this.setData({
+      keyboardHidden: true
+    });
+
+  },
+  keyboardShow: function() {
+    this.setData({
+      keyboardHidden: false
+    });
+
+  },
+  //删除输入错误的密码
+  clear: function() {
+    var index = this.data.phone.length;
+    if (index > 0) {
+      var phone = this.data.phone.substr(0, index - 1);
+      this.setData({
+        phone: phone
+      });
+    }
   }
 })
