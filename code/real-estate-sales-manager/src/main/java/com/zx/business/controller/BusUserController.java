@@ -140,4 +140,33 @@ public class BusUserController extends BusBaseController {
         }
         return resultData;
     }
+
+    @RequestMapping(value = "getVerifyCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData getVerifyCode(String phoneNum) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取验证码成功！");
+        try {
+            String verifyCode = busUserService.getVerifyCode(phoneNum);
+            resultData.setData(verifyCode);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取验证码失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+    @RequestMapping(value = "sendMessage", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData sendMessage(String phoneNum) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "发送验证码成功！");
+        try {
+            busUserService.sendMessage(phoneNum);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("发送验证码失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
 }

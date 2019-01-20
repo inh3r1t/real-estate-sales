@@ -6,20 +6,22 @@ import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.exception.WechatAuthException;
 import com.zx.business.common.DataStore;
+import com.zx.business.dao.BusAccountManageMapper;
 import com.zx.business.dao.BusAgentCompanyMapper;
 import com.zx.business.dao.BusRoleMapper;
 import com.zx.business.dao.BusUserMapper;
+import com.zx.business.model.BusAccountManage;
 import com.zx.business.model.BusAgentCompany;
 import com.zx.business.model.BusRole;
 import com.zx.business.model.BusUser;
+import com.zx.business.notify.Notify;
+import com.zx.business.notify.model.YunzhixunSmsMessage;
 import com.zx.lib.utils.encrypt.Md5Util;
-import com.zx.system.model.SysUser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BusUserService {
@@ -32,6 +34,15 @@ public class BusUserService {
 
     @Resource
     private BusRoleMapper busRoleMapper;
+
+    @Resource
+    private BusAccountManageMapper busAccountManageMapper;
+
+    @Resource(name = "yunzhixunMessageNotify")
+    private Notify notify;
+
+    @Value("${custom.yunzhixun.sms.verify.templateid}")
+    private String templateid;
 
     public int addBusUser(BusUser busUser) {
         busUser.setPasswd(Md5Util.getMd5(busUser.getPasswd()));
@@ -116,5 +127,26 @@ public class BusUserService {
     public List<BusUser> getListByRoleType(Integer roleType) {
         List<BusUser> busUserList = busUserMapper.getListByRoleType(roleType);
         return busUserList;
+    }
+
+    public String getVerifyCode(String phoneNum) {
+        BusAccountManage busAccountManage = busAccountManageMapper.getVerifyCode(phoneNum);
+        return busAccountManage.getVerifyCode();
+    }
+
+    public void sendMessage(String phoneNum) {
+        String verifyCode = String.valueOf(new Random().nextInt(9000) + 1000);
+        BusAccountManage busAccountManage = new BusAccountManage();
+        busAccountManage.setVerifyCode(verifyCode);
+        busAccountManage.setPhoneNum(phoneNum);
+        busAccountManage.setLastTime(new Date());
+        busAccountManage.setCreateTime(new Date());
+        busAccountManageMapper.insertSelective(busAccountManage);
+
+        YunzhixunSmsMessage message = new YunzhixunSmsMessage();
+        message.setTemplateid(templateid);
+        message.setMobile(phoneNum);
+        message.setParam(verifyCode);
+        notify.notify(message);
     }
 }

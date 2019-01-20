@@ -17,4 +17,5 @@ public class Const {
     public static final String POLL_CODE_ERROR = "001006"; // 接口返回的失败code
     public static final String WECHAT_ALREADY_BIND_ERROR = "001007"; // 接口返回的失败code
     public static final String USER_EXISTED_ERROR = "001008"; // 接口返回的失败code
+    public static final String VERIFY_EXPIRE_ERROR = "001009"; // 接口返回的失败code
 }

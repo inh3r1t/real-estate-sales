@@ -32,9 +32,6 @@ public class YunzhixunSmsNotify extends SmsNotify {
     @Value("${custom.yunzhixun.sms.send.url}")
     private String sendUrl;
 
-    @Value("${custom.yunzhixun.sms.send.templateid}")
-    private String templateid;
-
     @Override
     public String notify(Message message) {
         YunzhixunSmsMessage smsMessage = (YunzhixunSmsMessage) message;
@@ -42,7 +39,6 @@ public class YunzhixunSmsNotify extends SmsNotify {
         smsMessage.setToken(token);
         smsMessage.setAppid(appid);
         smsMessage.setSid(sid);
-        smsMessage.setTemplateid(templateid);
         Map<String, String> header = new HashMap<>();
         header.put(HttpConst.CONTENT_TYPE, "application/json");
         String result = HttpKit.post(sendUrl, null, JSON.toJSONString(message), header, Charset.defaultCharset()).getHtml();

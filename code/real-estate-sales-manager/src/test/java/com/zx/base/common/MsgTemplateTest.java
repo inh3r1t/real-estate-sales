@@ -30,7 +30,7 @@ public class MsgTemplateTest {
         params.put("type", "0");
         params.put("template_name", "安策系统模板");
         params.put("autograph", "安策系统");
-        params.put("content", "您好，有一条您的{1}消息，联系人：{2}，订单号：{3}。详情请查看安策营销系统！");
+        params.put("content", "您好，本次密码重置密码的验证码为{1}。");
 
         HttpEntity httpEntity = HttpKit.post(url, null, JSON.toJSONString(params), header, Charset.defaultCharset());
         System.out.println(httpEntity.getHtml());

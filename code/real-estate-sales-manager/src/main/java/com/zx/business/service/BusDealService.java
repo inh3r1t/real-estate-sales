@@ -43,6 +43,9 @@ public class BusDealService {
     @Resource(name = "yunzhixunMessageNotify")
     private Notify notify;
 
+    @Value("${custom.yunzhixun.sms.send.templateid}")
+    private String templateid;
+
     @Value("${custom.is_open_notify}")
     private String isOpenNotify;
 
@@ -235,6 +238,7 @@ public class BusDealService {
 
     private void sendMessage(String mobile, String notifyType, String busDealId, String contactName) {
         YunzhixunSmsMessage message = new YunzhixunSmsMessage();
+        message.setTemplateid("");
         message.setMobile(mobile);
         message.setParam(notifyType + "," + contactName + "," + busDealId);
         notify.notify(message);
