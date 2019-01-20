@@ -121,8 +121,5 @@ Page({
         icon: 'none',
         duration: 2000
       })
-  },
-  checkboxChange:function(e){
-    console.log(e)
   }
 })
