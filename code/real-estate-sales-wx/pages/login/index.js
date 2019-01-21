@@ -92,5 +92,10 @@ Page({
     wx.navigateTo({
       url: '/pages/login/phone',
     })
+  },
+  passwordReset: function() {
+    wx.navigateTo({
+      url: '/pages/password/reset/reset',
+    })
   }
 })
