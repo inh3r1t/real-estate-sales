@@ -1,0 +1,28 @@
+<form class="form" bindsubmit="formSubmit" hidden='{{resetPassword}}'>
+  <view class="form-body">
+    <view class="form-item">
+      <text class="form-lable">手机号</text>
+      <input class='form-input' name="phone" placeholder="请输入手机号" type="number"></input>
+    </view>
+    <view class="form-item">
+      <text class="form-lable">验证码</text>
+      <input class='form-input form-input-aux' name="code" placeholder="请输入验证码" type="number"></input>
+      <button disabled="{{disabled}}" class='word-aux' catchtap='getCode'>获取验证码 <text>{{timer}}</text></button>
+    </view>
+  </view>
+
+  <view class="form-footer">
+    <button class='btn btn-primary' formType="submit">下一步</button>
+  </view>
+</form>
+<form class="form" bindsubmit="resetFormSubmit" hidden='{{!resetPassword}}'>
+  <view class="form-body">
+    <view class="form-item">
+      <text class="form-lable">新密码</text>
+      <input class='form-input' name="password" placeholder="6-12位数字和字母的组合" type="text" password='true'></input>
+    </view>
+  </view>
+  <view class="form-footer">
+    <button class='btn btn-primary' formType="submit">重置密码</button>
+  </view>
+</form>

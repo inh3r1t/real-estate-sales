@@ -71,7 +71,7 @@ Page({
           var num = pages.length
           if (num == 0) {
             wx.switchTab({
-              url: '/pages/index/index',
+              url: '/pages/member/member',
             })
           } else {
             var index = 0;
@@ -86,6 +86,9 @@ Page({
                 break;
               }
             }
+            wx.switchTab({
+              url: '/pages/member/member',
+            })
           }
         }
       })

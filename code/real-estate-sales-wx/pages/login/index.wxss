@@ -35,6 +35,11 @@
   bottom: 100rpx;
   text-align: center;
   width: 100%;
-  text-decoration: underline;
   font-size: 12px;
+  margin: 0;
+}
+
+.login .register text {
+  text-decoration: underline;
+  margin: 0 20rpx;
 }

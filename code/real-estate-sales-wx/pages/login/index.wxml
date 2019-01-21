@@ -9,5 +9,8 @@
   <view>
     <button class='login-phone' bindtap='loginByPhone'>手机号登录</button>
   </view>
-  <text class='register' bindtap='register'>立即注册</text>
+  <view class='register'>
+    <text bindtap='register'>立即注册</text>
+    <text bindtap='passwordReset'>忘记密码</text>
+  </view>
 </view>
