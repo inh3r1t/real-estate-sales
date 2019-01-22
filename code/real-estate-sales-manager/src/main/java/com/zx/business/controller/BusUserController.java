@@ -13,6 +13,7 @@ import com.zx.lib.utils.encrypt.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -88,7 +89,6 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
-
     @AuthorizeIgnore
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -127,6 +127,21 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
+    @AuthorizeIgnore
+    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData reset(@RequestBody BusUser busUser) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "密码重置成功！");
+        try {
+            busUserService.updateByPrimaryKeySelective(busUser);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("密码重置失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
     @RequestMapping(value = "getListByRoleId", method = RequestMethod.POST)
     @ResponseBody
     public ResultData getListByRoleId(@RequestBody Integer roleType) {
@@ -143,13 +158,16 @@ public class BusUserController extends BusBaseController {
     }
 
     @WechatAuthorize
-    @RequestMapping(value = "getVerifyCode/{phoneNum}", method = RequestMethod.GET)
+    @RequestMapping(value = "verifyCode/{phoneNum}", method = RequestMethod.GET)
     @ResponseBody
-    public ResultData getVerifyCode(@PathVariable String phoneNum) {
+    public ResultData verifyCode(@PathVariable String phoneNum, @PathVariable String verifyCode) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取验证码成功！");
         try {
-            String verifyCode = busUserService.getVerifyCode(phoneNum);
-            resultData.setData(verifyCode);
+            String realVerifyCode1 = busUserService.getVerifyCode(phoneNum);
+            if (!verifyCode.equals(realVerifyCode1)) {
+                resultData.setResultCode(Const.VERIFY_ERROR);
+                resultData.setMsg("验证码输入错误！");
+            }
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取验证码失败！");
