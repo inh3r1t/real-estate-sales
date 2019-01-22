@@ -126,8 +126,8 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
-    @AuthorizeIgnore
-    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @WechatAuthorize
+    @RequestMapping(value = "/reset/{phoneNum}/{password}", method = RequestMethod.GET)
     @ResponseBody
     public ResultData reset(@PathVariable String phoneNum, @PathVariable String password) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "密码重置成功！");
@@ -162,7 +162,7 @@ public class BusUserController extends BusBaseController {
     }
 
     @WechatAuthorize
-    @RequestMapping(value = "verifyCode/{phoneNum}", method = RequestMethod.GET)
+    @RequestMapping(value = "verifyCode/{phoneNum}/{verifyCode}", method = RequestMethod.GET)
     @ResponseBody
     public ResultData verifyCode(@PathVariable String phoneNum, @PathVariable String verifyCode) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取验证码成功！");

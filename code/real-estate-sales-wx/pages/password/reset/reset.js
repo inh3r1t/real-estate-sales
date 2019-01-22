@@ -40,26 +40,49 @@ Page({
       })
       return false
     }
-
+    app.get("/busUser/verifyCode/" + this.data.phone + '/' + params.code).then((res) => {
+      console.log(res);
+      this.setData({
+        resetPassword: true
+      })
+    }).catch((res) => {
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
+    });
 
   },
   resetFormSubmit: function(e) {
     const params = e.detail.value
-    this.setData({
-      password: params.password
-    });
-    wx.showModal({
-      content: '密码重置成功',
-      showCancel: false,
-      confirmText: "立即登录",
-      success(res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: '/pages/login/index',
-          })
+    if (/^[0-9A-Za-z]{6,12}$/.test(params.password) == false) {
+      wx.showToast({
+        title: '请输入6-12位数字和字母的组合',
+        icon: 'none'
+      })
+      return false;
+    }
+    app.get("/busUser/reset/" + this.data.phone + "/" + params.password).then((res) => {
+      console.log(res);
+      wx.showModal({
+        content: '密码重置成功',
+        showCancel: false,
+        confirmText: "重新登录",
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/login/index',
+            })
+          }
         }
-      }
-    })
+      })
+    }).catch((res) => {
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
+    });
+
   },
   //验证码倒计时函数
   getCode: function(e) {
@@ -77,7 +100,6 @@ Page({
       return false
     }
     app.get("/busUser/sendMessage/" + this.data.phone).then((res) => {
-      debugger
       console.log(res);
       wx.showToast({
         title: res.msg,
@@ -85,7 +107,6 @@ Page({
         duration: 2000
       })
     }).catch((res) => {
-      debugger
       wx.showToast({
         title: res,
         icon: 'none'
