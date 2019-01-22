@@ -13,7 +13,6 @@ import com.zx.lib.utils.encrypt.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -130,13 +129,18 @@ public class BusUserController extends BusBaseController {
     @AuthorizeIgnore
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData reset(@RequestBody BusUser busUser) {
+    public ResultData reset(@PathVariable String phoneNum, @PathVariable String password) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "密码重置成功！");
         try {
-            busUserService.updateByPrimaryKeySelective(busUser);
+            busUserService.reset(phoneNum, password);
         } catch (Exception e) {
-            resultData.setResultCode(Const.FAILED_CODE);
-            resultData.setMsg("密码重置失败！");
+            if (e instanceof BusinessException) {
+                resultData.setResultCode(e.getMessage());
+                resultData.setMsg("账号不存在，请检查手机号码！");
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("密码重置失败！");
+            }
             logger.error(e.getMessage(), e);
         }
         return resultData;

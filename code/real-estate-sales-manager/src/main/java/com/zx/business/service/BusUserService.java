@@ -154,4 +154,15 @@ public class BusUserService {
         notify.notify(message);
         return null;
     }
+
+    public void reset(String phoneNum, String password) {
+        BusUser condition = new BusUser();
+        condition.setPhoneNum(phoneNum);
+        List<BusUser> busUsers = busUserMapper.selectByModel(condition);
+        if (busUsers.size() == 0)
+            throw new BusinessException(Const.NO_EXIST_USER);
+        BusUser busUser = busUsers.get(0);
+        busUser.setPhoneNum(Md5Util.getMd5(password));
+        busUserMapper.updateByPrimaryKeySelective(busUser);
+    }
 }
