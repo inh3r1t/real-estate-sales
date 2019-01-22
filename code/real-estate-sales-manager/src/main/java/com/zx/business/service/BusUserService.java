@@ -130,11 +130,15 @@ public class BusUserService {
     }
 
     public String getVerifyCode(String phoneNum) {
-        BusAccountManage busAccountManage = busAccountManageMapper.getVerifyCode(phoneNum);
+        BusAccountManage busAccountManage = busAccountManageMapper.selectVerifyCode(phoneNum);
         return busAccountManage.getVerifyCode();
     }
 
-    public void sendMessage(String phoneNum) {
+    public String sendMessage(String phoneNum) {
+        BusAccountManage result = busAccountManageMapper.selectVerifyCode(phoneNum);
+        if (result.getLastTime().getTime() - 10 * 60 * 60 * 1000 < System.currentTimeMillis()) // 验证码过期时间为10分钟
+            return Const.VERIFY_NOT_EXPIRE;
+
         String verifyCode = String.valueOf(new Random().nextInt(9000) + 1000);
         BusAccountManage busAccountManage = new BusAccountManage();
         busAccountManage.setVerifyCode(verifyCode);
@@ -148,5 +152,6 @@ public class BusUserService {
         message.setMobile(phoneNum);
         message.setParam(verifyCode);
         notify.notify(message);
+        return null;
     }
 }

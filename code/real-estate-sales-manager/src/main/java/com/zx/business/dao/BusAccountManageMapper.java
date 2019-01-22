@@ -1,6 +1,9 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusAccountManage;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface BusAccountManageMapper {
     /**
@@ -51,5 +54,12 @@ public interface BusAccountManageMapper {
      */
     int updateByPrimaryKey(BusAccountManage record);
 
-    BusAccountManage getVerifyCode(String phoneNum);
+    BusAccountManage selectVerifyCode(@Param("phoneNum") String phoneNum);
+
+    List<BusAccountManage> selectByModel(BusAccountManage busAccountManage);
+
+    long countByModel(BusAccountManage busAccountManage);
+
+    List<BusAccountManage> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer size, @Param("orderField") String orderField,
+                                        @Param("orderType") String orderType, @Param("busAccountManage") BusAccountManage busAccountManage);
 }

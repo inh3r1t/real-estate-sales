@@ -148,4 +148,60 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByModel" parameterType="com.zx.business.model.BusAccountManage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bus_account_manage
+    where 1=1
+    <if test="updateTime != null"> and update_time = #{updateTime}</if>
+    <if test="createTime != null"> and create_time = #{createTime}</if>
+    <if test="forgetCount != null"> and forget_count = #{forgetCount}</if>
+    <if test="lastTime != null"> and last_time = #{lastTime}</if>
+    <if test="phoneNum != null"> and phone_num = #{phoneNum}</if>
+    <if test="id != null"> and id = #{id}</if>
+    <if test="verifyCode != null"> and verify_code = #{verifyCode}</if>
+  </select>
+
+  <select id="selectByPage" parameterType="com.zx.business.model.BusAccountManage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bus_account_manage
+    where 1=1
+    <if test="busAccountManage.updateTime != null"> and update_time = #{busAccountManage.updateTime}</if>
+    <if test="busAccountManage.createTime != null"> and create_time = #{busAccountManage.createTime}</if>
+    <if test="busAccountManage.forgetCount != null"> and forget_count = #{busAccountManage.forgetCount}</if>
+    <if test="busAccountManage.lastTime != null"> and last_time = #{busAccountManage.lastTime}</if>
+    <if test="busAccountManage.phoneNum != null"> and phone_num = #{busAccountManage.phoneNum}</if>
+    <if test="busAccountManage.id != null"> and id = #{busAccountManage.id}</if>
+    <if test="busAccountManage.verifyCode != null"> and verify_code = #{busAccountManage.verifyCode}</if>
+    <if test="orderField != null">
+      order by ${orderField}
+    </if>
+    <if test="orderType != null">
+      ${orderType}
+    </if>
+    <if test="start != null and pageSize != null">
+      limit #{start}, #{pageSize}
+    </if>
+  </select>
+
+  <select id="countByModel" parameterType="com.zx.business.model.BusCustomer" resultType="java.lang.Long">
+    select
+    count(1)
+    from bus_account_manage
+    where 1=1
+    <if test="updateTime != null"> and update_time = #{updateTime}</if>
+    <if test="createTime != null"> and create_time = #{createTime}</if>
+    <if test="forgetCount != null"> and forget_count = #{forgetCount}</if>
+    <if test="lastTime != null"> and last_time = #{lastTime}</if>
+    <if test="phoneNum != null"> and phone_num = #{phoneNum}</if>
+    <if test="id != null"> and id = #{id}</if>
+    <if test="verifyCode != null"> and verify_code = #{verifyCode}</if>
+  </select>
+
+  <select id="getVerifyCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from bus_account_manage where phone_num=#{phoneNum}
+    order by last_time limit 0,1
+  </select>
 </mapper>

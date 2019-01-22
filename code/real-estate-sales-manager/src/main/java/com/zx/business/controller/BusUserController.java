@@ -161,7 +161,11 @@ public class BusUserController extends BusBaseController {
     public ResultData sendMessage(String phoneNum) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "发送验证码成功！");
         try {
-            busUserService.sendMessage(phoneNum);
+            String code = busUserService.sendMessage(phoneNum);
+            if (code != null) {
+                resultData.setResultCode(code);
+                resultData.setData("验证码未过期！");
+            }
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("发送验证码失败！");
