@@ -2,7 +2,7 @@
   <view class="form-body">
     <view class="form-item">
       <text class="form-lable">手机号</text>
-      <input class='form-input' name="phone" placeholder="请输入手机号" type="number"></input>
+      <input class='form-input' name="phone" bindinput="bindinput" value='{{phone}}' placeholder="请输入手机号" type="number"></input>
     </view>
     <view class="form-item">
       <text class="form-lable">验证码</text>

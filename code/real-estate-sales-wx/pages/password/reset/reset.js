@@ -3,7 +3,8 @@ Page({
   data: {
     resetPassword: false,
     timer: "",
-    disabled: false
+    disabled: false,
+    phone: ""
 
   },
   onLoad: function(options) {
@@ -39,33 +40,7 @@ Page({
       })
       return false
     }
-    this.setData({
-      phone: params.phone,
-      code: params.code,
-      resetPassword: true
-    });
 
-    // app.post("/busUser/passwordReset", this.data).then((res) => {
-    //   // console.log(res);
-
-    //   wx.showModal({
-    //     content: '密码重置',
-    //     showCancel: false,
-    //     confirmText: "立即登录",
-    //     success(res) {
-    //       if (res.confirm) {
-    //         wx.redirectTo({
-    //           url: '/pages/login/index',
-    //         })
-    //       }
-    //     }
-    //   })
-    // }).catch((res) => {
-    //   wx.showToast({
-    //     title: res,
-    //     icon: 'none'
-    //   })
-    // });
 
   },
   resetFormSubmit: function(e) {
@@ -87,9 +62,37 @@ Page({
     })
   },
   //验证码倒计时函数
-  getCode: function(options) {
+  getCode: function(e) {
+    const params = {
+      phone: this.data.phone,
+      code: '1'
+    }
+    if (!this.WxValidate.checkForm(params)) {
+      const error = this.WxValidate.errorList[0]
+      wx.showToast({
+        title: `${error.msg} `,
+        icon: 'none',
+        duration: 2000
+      })
+      return false
+    }
+    app.get("/busUser/sendMessage/" + this.data.phone).then((res) => {
+      debugger
+      console.log(res);
+      wx.showToast({
+        title: res.msg,
+        icon: 'none',
+        duration: 2000
+      })
+    }).catch((res) => {
+      debugger
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
+    });
     var that = this;
-    var currentTime = 60;
+    var currentTime = 6;
     that.setData({
       timer: currentTime + '秒',
       disabled: true
@@ -103,11 +106,15 @@ Page({
         clearInterval(interval)
         that.setData({
           timer: '',
-          currentTime: 60,
+          currentTime: 6,
           disabled: false
         })
       }
     }, 1000)
+  },
+  bindinput: function(e) {
+    this.setData({
+      phone: e.detail.value
+    })
   }
-
 })

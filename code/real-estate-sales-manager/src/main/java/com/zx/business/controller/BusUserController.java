@@ -1,6 +1,7 @@
 package com.zx.business.controller;
 
 import com.zx.base.annotation.AuthorizeIgnore;
+import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.exception.WechatAuthException;
@@ -141,10 +142,10 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
-    @AuthorizeIgnore
-    @RequestMapping(value = "getVerifyCode", method = RequestMethod.POST)
+    @WechatAuthorize
+    @RequestMapping(value = "getVerifyCode/{phoneNum}", method = RequestMethod.GET)
     @ResponseBody
-    public ResultData getVerifyCode(String phoneNum) {
+    public ResultData getVerifyCode(@PathVariable String phoneNum) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取验证码成功！");
         try {
             String verifyCode = busUserService.getVerifyCode(phoneNum);
@@ -157,10 +158,10 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
-    @AuthorizeIgnore
-    @RequestMapping(value = "sendMessage", method = RequestMethod.POST)
+    @WechatAuthorize
+    @RequestMapping(value = "sendMessage/{phoneNum}", method = RequestMethod.GET)
     @ResponseBody
-    public ResultData sendMessage(String phoneNum) {
+    public ResultData sendMessage(@PathVariable String phoneNum) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "发送验证码成功！");
         try {
             String code = busUserService.sendMessage(phoneNum);

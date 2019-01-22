@@ -6,8 +6,8 @@ App({
     userInfo: null,
     token: null,
     // _baseUrl: 'https://inh3rit.top'
-    _baseUrl: 'https://trial.inh3rit.top'
-    // _baseUrl: 'http://127.0.0.1:8080'
+    // _baseUrl: 'https://trial.inh3rit.top'
+    _baseUrl: 'http://127.0.0.1:8080'
   },
   onLaunch: function() {
     const updateManager = wx.getUpdateManager()
