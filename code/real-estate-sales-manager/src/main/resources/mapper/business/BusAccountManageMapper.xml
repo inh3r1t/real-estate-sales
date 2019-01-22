@@ -200,7 +200,7 @@
     <if test="verifyCode != null"> and verify_code = #{verifyCode}</if>
   </select>
 
-  <select id="getVerifyCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectVerifyCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from bus_account_manage where phone_num=#{phoneNum}
     order by last_time limit 0,1
   </select>

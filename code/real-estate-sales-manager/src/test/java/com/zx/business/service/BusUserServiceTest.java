@@ -88,4 +88,15 @@ public class BusUserServiceTest extends BaseTest {
         final List<BusUser> listByRoleType = busUserService.getListByRoleType(0);
         System.out.println(listByRoleType);
     }
+
+    @Test
+    public void test7() {
+        busUserService.sendMessage("15395158022");
+    }
+
+    @Test
+    public void test8() {
+        final String verifyCode = busUserService.getVerifyCode("15395158022");
+        System.out.println(verifyCode);
+    }
 }
