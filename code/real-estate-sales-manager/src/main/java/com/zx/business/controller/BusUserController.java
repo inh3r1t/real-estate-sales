@@ -141,6 +141,7 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
+    @AuthorizeIgnore
     @RequestMapping(value = "getVerifyCode", method = RequestMethod.POST)
     @ResponseBody
     public ResultData getVerifyCode(String phoneNum) {
@@ -156,6 +157,7 @@ public class BusUserController extends BusBaseController {
         return resultData;
     }
 
+    @AuthorizeIgnore
     @RequestMapping(value = "sendMessage", method = RequestMethod.POST)
     @ResponseBody
     public ResultData sendMessage(String phoneNum) {
