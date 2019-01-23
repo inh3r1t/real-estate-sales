@@ -18,7 +18,8 @@ Page({
       arrive_count: 0,
       subscribe_count: 0,
     },
-    isManager: false
+    isManager: false,
+    isChange: false
   },
 
   /**
@@ -36,8 +37,10 @@ Page({
     this.setData({
       isLogin: app.isLogin()
     })
-    if (prevLogin != this.data.isLogin) {
-      this.getList(1);
+    if (this.data.isChange) {
+      this.getList(1, true);
+    } else if (prevLogin != this.data.isLogin) {
+      this.getList(1, true);
     }
     var user = app.globalData.userInfo;
     if (user != null) {
@@ -184,10 +187,10 @@ Page({
         //这里既可以获取模拟的res
         // console.log(res)
         // for (let i = 0; i < res.data.list.Items.length; i++) {
-          // extend1
-          // if (res.data.list.Items[i].busRealEstate.extend1 != '1') {
-          //   res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
-          // }
+        // extend1
+        // if (res.data.list.Items[i].busRealEstate.extend1 != '1') {
+        //   res.data.list.Items[i].customerPhone = res.data.list.Items[i].customerPhone.replace(/(\d{3})[\s\S]*(\d{4})/, '$1****$2');
+        // }
         // }
         this.setData({
           list: override ? res.data.list.Items : this.data.list.concat(res.data.list.Items),

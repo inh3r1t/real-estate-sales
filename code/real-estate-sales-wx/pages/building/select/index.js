@@ -115,6 +115,7 @@ Page({
         for (var j = 0, plen = pList.length; j < plen; j++) {
           if (id == pList[j].id) {
             exist = true;
+            break
           }
         }
         if (real) {
@@ -139,19 +140,24 @@ Page({
   checkType: function(e) {
     console.log(e)
     if (!this.data.isReal && e.currentTarget.dataset.real == '1') {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '该楼盘需要输入完整号码',
-        success: res => {
-          if (res.confirm) {
-            // var pages = getCurrentPages(); // 获取页面栈 
-            // var prevPage = pages[pages.length - 2]; // 上一个页面
-            // prevPage.setData({
-            //   isReal: true
-            // })
-          }
-        }
+      // wx.showModal({
+      //   title: '提示',
+      //   showCancel: false,
+      //   content: '该楼盘需要输入完整号码',
+      //   success: res => {
+      //     if (res.confirm) {
+      //       // var pages = getCurrentPages(); // 获取页面栈 
+      //       // var prevPage = pages[pages.length - 2]; // 上一个页面
+      //       // prevPage.setData({
+      //       //   isReal: true
+      //       // })
+      //     }
+      //   }
+      // })
+
+      wx.showToast({
+        title: '该楼盘需要输入完整号码',
+        icon: 'none'
       })
     }
 

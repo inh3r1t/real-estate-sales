@@ -125,7 +125,8 @@ Page({
         if (res.data != null) {
           prevPage.data.list[this.data.index] = res.data;
           prevPage.setData({
-            list: prevPage.data.list
+            list: prevPage.data.list,
+            isChange: true
           })
           wx.showToast({
             title: `到访成功`,
