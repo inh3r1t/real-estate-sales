@@ -148,6 +148,7 @@
   text-align: center;
   box-sizing: border-box;
   border-bottom: 1px solid #eee;
+  font-size: 20px;
 }
 
 .keyboard .ctr-btn view .iconfont {
@@ -156,7 +157,7 @@
 }
 
 .keyboard .ctr-btn view:nth-child(2) {
-  font-size: 46rpx;
+  /* font-size: 46rpx; */
   color: #1AAD19;
 }
 
