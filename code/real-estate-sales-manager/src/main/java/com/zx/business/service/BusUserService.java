@@ -136,7 +136,7 @@ public class BusUserService {
 
     public String sendMessage(String phoneNum) {
         BusAccountManage result = busAccountManageMapper.selectVerifyCode(phoneNum);
-        if (result != null && result.getLastTime().getTime() - 10 * 60 * 60 * 1000 < System.currentTimeMillis()) // 验证码过期时间为10分钟
+        if (result != null && result.getLastTime().getTime() + 10 * 60 * 60 * 1000 > System.currentTimeMillis()) // 验证码过期时间为10分钟
             return Const.VERIFY_NOT_EXPIRE;
 
         String verifyCode = String.valueOf(new Random().nextInt(9000) + 1000);
