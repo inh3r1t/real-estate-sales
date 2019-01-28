@@ -55,8 +55,8 @@ public class MsgTemplateTest {
         params.put("sid", "dc0cc5d6997208a7f0cf35f02de9c48c");
         params.put("token", "eb115ffdb7cab2c14e26f862b5be7ccd");
         params.put("appid", "95c4984c0c7240eca3684e27bf29cad7");
-        params.put("templateid", "417477");
-        params.put("param", "报备通知,张先生,153****1902,中岳中介公司,唐僧,19920392183,无");
+        params.put("templateid", "419429");
+        params.put("param", "报备通知,张先生,1");
         params.put("mobile", "15395158022");
         params.put("uid", "");
 

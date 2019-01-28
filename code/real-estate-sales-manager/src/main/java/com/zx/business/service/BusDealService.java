@@ -238,7 +238,7 @@ public class BusDealService {
 
     private void sendMessage(String mobile, String notifyType, String busDealId, String contactName) {
         YunzhixunSmsMessage message = new YunzhixunSmsMessage();
-        message.setTemplateid("");
+        message.setTemplateid(templateid);
         message.setMobile(mobile);
         message.setParam(notifyType + "," + contactName + "," + busDealId);
         notify.notify(message);
