@@ -8,8 +8,10 @@ import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
 import com.zx.business.enums.PhotoType;
+import com.zx.business.model.BusAgentCompany;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusUser;
+import com.zx.business.service.BusAgentCompanyService;
 import com.zx.business.service.BusRealEstateService;
 import com.zx.business.service.BusUserService;
 import com.zx.lib.utils.DateUtil;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,6 +45,8 @@ public class BusRealEstateController extends BaseController {
     private BusRealEstateService busRealStateService;
     @Resource
     private BusUserService busUserService;
+    @Resource
+    private BusAgentCompanyService busAgentCompanyService;
 
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
@@ -110,6 +115,26 @@ public class BusRealEstateController extends BaseController {
         model.addAttribute("model", estate);
         model.addAttribute("managerList", managerList);
         return "business/busRealEstate/edit";
+    }
+
+    @RequestMapping("/notice")
+    public String notice(Model model, Integer id) {
+        BusRealEstate estate = new BusRealEstate();
+        if (id != null && !id.equals(0)) {
+            estate = busRealStateService.getById(id);
+        }
+        BusAgentCompany busAgentCompany = new BusAgentCompany();
+        List<BusAgentCompany> busAgentCompanies = busAgentCompanyService.getList(busAgentCompany);
+
+        for (BusAgentCompany item : busAgentCompanies) {
+            BusUser busUser = new BusUser();
+            busUser.setCompanyId(item.getId());
+            List<BusUser> busUsers = busUserService.getList(busUser);
+            item.setBusUsers(busUsers);
+        }
+        model.addAttribute("busAgentCompanies", busAgentCompanies);
+        model.addAttribute("model", estate);
+        return "business/busRealEstate/notice";
     }
 
     @RequestMapping(value = "/submit")
@@ -190,4 +215,21 @@ public class BusRealEstateController extends BaseController {
         }
         return rm;
     }
+
+    @RequestMapping(value = "/noticeSubmit")
+    @ResponseBody
+    public Object noticeSubmit(Integer id, Integer type, String[] userIds) {
+        // String[] userIds = request.getParameterValues("userIds");
+
+        ReturnModel rm = new ReturnModel();
+        try {
+            busRealStateService.notice(id, type, Arrays.asList(userIds));
+            rm.setInfo(true, "发送完成");
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            rm.setInfo(false, "发送失败");
+        }
+        return rm;
+    }
+
 }

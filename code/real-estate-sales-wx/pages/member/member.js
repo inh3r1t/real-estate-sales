@@ -55,6 +55,11 @@ Page({
       url: '/pages/company/profile',
     })
   },
+  toHelp: function () {
+    wx.navigateTo({
+      url: '/pages/help/help',
+    })
+  },
   toMessage: function() {
     wx.navigateTo({
       url: '/pages/message/message',

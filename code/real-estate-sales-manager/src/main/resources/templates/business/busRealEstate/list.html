@@ -60,6 +60,9 @@
                     <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-trash-o"> 删除</i></a>
 
+                    <a data-bind="click:btn_notice.bind()" title="发送通知" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-paper-plane"> 发送通知</i></a>
+
                 </td>
             </tr>
             <!-- /ko -->
@@ -97,7 +100,6 @@
 
     //修改
     function btn_edit(model) {
-        debugger
         dialog.iframe('/busRealEstate/edit?id=' + model.id(), {
             title: "编辑楼盘",
             size: [900, 700],
@@ -123,6 +125,19 @@
                     dialog.error(data.message);
                 }
             });
+        });
+    }
+
+    //删除
+    function btn_notice(model) {
+        dialog.iframe('/busRealEstate/notice?id=' + model.id(), {
+            title: "楼盘通知",
+            size: [1000, 700],
+            maxmin: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
         });
     }
 

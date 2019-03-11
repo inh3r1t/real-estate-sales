@@ -35,6 +35,8 @@ custom:
   yunzhixun.sms.send.url: https://open.ucpaas.com/ol/sms/sendsms
   yunzhixun.sms.send.templateid: 419429
   yunzhixun.sms.verify.templateid: 424917
+  yunzhixun.sms.building.add.templateid: 440462
+  yunzhixun.sms.building.change.templateid: 441234
 #  阿里云短信推送配置
   aliyun.accessKey.id: LTAIJ2EjiIWq73En
   aliyun.accessKey.secret: KngDphy5Q2Ia1GdIo4BtnHuVS8lWBw
