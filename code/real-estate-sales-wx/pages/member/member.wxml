@@ -21,7 +21,7 @@
     <view class="item" bindtap='toCompany'>
       <text class="iconfont icon-gongsijianjie"></text>公司简介</view>
     <view class="item" bindtap='toHelp'>
-      <text class="iconfont icon-gongsijianjie"></text>使用帮助</view>
+      <text class="iconfont icon-woyaotuijian"></text>使用帮助</view>
     <view class="item" bindtap='toChangePassword'>
       <text class="iconfont icon-xiugaimima"></text>修改密码</view>
     <view class="item">
