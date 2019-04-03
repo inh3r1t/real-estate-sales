@@ -13,15 +13,22 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">通知类型</label>
+            <!--<div class="layui-input-block">-->
+            <!--<select name="type" class="required">-->
+            <!--<option value="">无</option>-->
+            <!--<option value="4">签约楼盘</option>-->
+            <!--<option value="5">政策变更</option>-->
+            <!--</select>-->
+            <!--</div>-->
             <div class="layui-input-block">
-                <select name="type" class="required">
-                    <option value="">无</option>
-                    <option value="4">签约楼盘</option>
-                    <option value="5">政策变更</option>
-                </select>
+                <input type="radio" name="type" value="4" title="签约楼盘" checked>
+                <input type="radio" name="type" value="5" title="政策变更">
             </div>
         </div>
-
+        <div style="margin-top: -15px;margin-bottom: 15px;padding-bottom: 15px;padding-right: 15px;">
+            <span id="allCancel" class="pull-right clickable margin-left-15">取消所有</span>
+            <span id="allSelect" class="pull-right clickable margin-left-15">全选所有</span>
+        </div>
         <div class="layui-form-item layui-form-text" th:each="item:${busAgentCompanies}">
             <label class="layui-form-label">
                 <span th:text="${item.getName()}"></span>
@@ -52,19 +59,34 @@
                 text: '正在发送通知，请稍等...'
             });
             $("#btnSubmit").attr("disabled", "disabled");
-            $("#btnSubmit").html("发送中...");
+            $("#btnSubmit").html("正在发送...");
         },
         ajaxSuccessHandler: function (data) {
+            dialog.loaded("#form");
             if (data.state) {
                 dialog.success(data.message);
                 dialog.closeAll(true);
             }
             else {
-                dialog.error(data.message);
+                parent.dialog.msg(data.message);
                 $("#btnSubmit").removeAttrs("disabled");
-                $("#btnSubmit").attr("style", "opacity:1");
+                $("#btnSubmit").html("发送");
             }
         }
+    });
+    $('#allSelect').click(function () {
+        var item = $('.c_one');
+        item.each(function () {
+            $(this).prop("checked", true);
+        });
+        form.render('checkbox');
+    });
+    $('#allCancel').click(function () {
+        var item = $('.c_one');
+        item.each(function () {
+            $(this).prop("checked", false);
+        });
+        form.render('checkbox');
     });
     $('.c_all').click(function () {
         var item = $(this).closest('.layui-form-item').find('.c_one');

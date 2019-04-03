@@ -1,6 +1,6 @@
 package com.zx.business.controller;
 
-import com.zx.base.annotation.AuthorizeIgnore;
+import com.alibaba.fastjson.JSON;
 import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
@@ -14,21 +14,31 @@ import com.zx.business.model.BusUser;
 import com.zx.business.service.BusAgentCompanyService;
 import com.zx.business.service.BusRealEstateService;
 import com.zx.business.service.BusUserService;
+import com.zx.lib.http.kit.HttpKit;
 import com.zx.lib.utils.DateUtil;
 import com.zx.lib.utils.StringUtil;
 import com.zx.lib.web.HtmlUtil;
 import com.zx.system.model.FileInfo;
+import com.zx.system.model.SysCategory;
 import com.zx.system.model.SysLog;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * @Author: ytxu3
@@ -48,11 +58,17 @@ public class BusRealEstateController extends BaseController {
     @Resource
     private BusAgentCompanyService busAgentCompanyService;
 
+    @Value("${custom.wechat.appid}")
+    public String appid;
+
+    @Value("${custom.wechat.secret}")
+    public String secret;
+
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
     public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
-        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
             PagerModel<BusRealEstate> busRealEstatePage =
                     busRealStateService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
@@ -98,6 +114,22 @@ public class BusRealEstateController extends BaseController {
         return resultData;
     }
 
+    @RequestMapping(value = "/category", method = RequestMethod.GET)
+    @ResponseBody
+    @WechatAuthorize
+    public ResultData category() {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘区域信息成功！");
+        try {
+            List<SysCategory> categories = sysCategoryService.selectListByType(0);
+            resultData.setData(categories);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取楼盘区域信息失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
     @RequestMapping("/list")
     public String list() {
         return "business/busRealEstate/list";
@@ -114,6 +146,8 @@ public class BusRealEstateController extends BaseController {
         managerList = busUserService.getListByRoleType(0);
         model.addAttribute("model", estate);
         model.addAttribute("managerList", managerList);
+        List<SysCategory> categories = sysCategoryService.selectListByType(0);
+        model.addAttribute("categories", categories);
         return "business/busRealEstate/edit";
     }
 
@@ -140,7 +174,7 @@ public class BusRealEstateController extends BaseController {
     @RequestMapping(value = "/submit")
     @ResponseBody
     public Object submit(BusRealEstate estate, Boolean needFullPhone) {
-        boolean insertAction = estate.getId() == null || estate.getId() == 0;
+         boolean insertAction = estate.getId() == null || estate.getId() == 0;
         String actionName = insertAction ? "添加" : "更新";
         estate.setDetail(HtmlUtil.htmlUnescape(estate.getDetail()));
         estate.setCommission(estate.getCommission().replaceAll("%2B", "+"));
@@ -223,13 +257,123 @@ public class BusRealEstateController extends BaseController {
 
         ReturnModel rm = new ReturnModel();
         try {
-            busRealStateService.notice(id, type, Arrays.asList(userIds));
-            rm.setInfo(true, "发送完成");
+            if (userIds == null || userIds.length <= 0) {
+                rm.setInfo(false, "至少选择一个通知用户");
+            } else {
+                busRealStateService.notice(id, type, Arrays.asList(userIds));
+                rm.setInfo(true, "发送完成");
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             rm.setInfo(false, "发送失败");
         }
         return rm;
+    }
+
+
+    /**
+     * 获取小程序码
+     *
+     * @param page  路径
+     * @param scene 参数
+     * @return
+     */
+    @RequestMapping("/gainMiniProgramCode")
+    @ResponseBody
+    @WechatAuthorize
+    public Object gainMiniProgramCode(String page, String scene) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取小程序码成功！");
+        try {
+            String fileName = "qrCode." + scene + ".jpg";
+            //图片文件存放地址
+            String filePath = "/qrcode/";
+            filePath = getAbsolutePath(filePath);
+            String relativePath = filePath + fileName;
+            File file = new File(relativePath);
+            if (!file.exists()) {
+                String accessToken = JSON.parseObject(HttpKit.get(String.format(accessTokenApiUrl, "client_credential", appid, secret)).getHtml()).get("access_token").toString();
+                if (StringUtils.isNotBlank(accessToken)) {
+                    String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + accessToken;
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("scene", scene);
+                    data.put("page", page);
+                    // data.put("width", 430);
+                    // data.put("auto_color", false);
+                    // data.put("line_color", null);
+                    // data.put("is_hyaline", false);
+                    InputStream inputStream = tempHttpClientUtil(url, data);
+                    if (inputStream != null) {
+                        saveToImgByInputStream(inputStream, filePath, fileName.replaceAll("/", ""));
+                    }
+                }
+            }
+            if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
+                relativePath = relativePath.substring(getBasePath().length());
+            }
+            resultData.setData(SYSTEM_URL + "/" + UPLOAD_NODE + relativePath);
+        } catch (Exception ex) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取小程序码失败！");
+        }
+
+        return resultData;
+    }
+
+    public InputStream tempHttpClientUtil(String url, Map<String, Object> data) {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json");
+        String body = JSON.toJSONString(data);
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(body);
+            entity.setContentType("image/png");
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            InputStream inputStream = response.getEntity().getContent();
+            return inputStream;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 保存图片
+     *
+     * @param instreams
+     * @param imgPath
+     * @param imgName
+     * @return
+     */
+    public int saveToImgByInputStream(InputStream instreams, String imgPath, String imgName) {
+        int stateInt = 1;
+        if (instreams != null) {
+            try {
+                //可以是任何图片格式.jpg,.png等
+                File file = new File(imgPath, imgName);
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+                FileOutputStream fos = new FileOutputStream(file);
+                byte[] b = new byte[1024];
+                int nRead = 0;
+                while ((nRead = instreams.read(b)) != -1) {
+                    fos.write(b, 0, nRead);
+                }
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+                stateInt = 0;
+                e.printStackTrace();
+            } finally {
+            }
+        }
+        return stateInt;
     }
 
 }

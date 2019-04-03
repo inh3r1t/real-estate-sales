@@ -1,13 +1,14 @@
 package com.zx.business.service;
 
 import com.zx.base.model.PagerModel;
-import com.zx.business.controller.BusRealEstateController;
 import com.zx.business.dao.BusRealEstateMapper;
 import com.zx.business.model.BusNotifyMsg;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusUser;
 import com.zx.business.notify.Notify;
 import com.zx.business.notify.model.YunzhixunSmsMessage;
+import com.zx.lib.utils.StringUtil;
+import com.zx.system.service.SysCategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,8 @@ public class BusRealEstateService {
     @Resource
     private BusUserService busUserService;
     @Resource
+    private SysCategoryService sysCategoryService;
+    @Resource
     private BusRealEstateMapper busRealEstateMapper;
     @Value("${custom.is_open_notify}")
     private String isOpenNotify;
@@ -44,6 +47,13 @@ public class BusRealEstateService {
         int start = (page - 1) * pageSize;
         List<BusRealEstate> busRealEstates = busRealEstateMapper.selectByPage(start, pageSize, "sort_weight",
                 "desc", busRealEstate);
+        for (BusRealEstate item : busRealEstates) {
+            if (StringUtil.isNotEmpty(item.getExtend2())) {
+                item.setCategory(sysCategoryService.selectById(Integer.parseInt(item.getExtend2())).getName());
+            }else{
+                item.setCategory("");
+            }
+        }
         PagerModel<BusRealEstate> busRealEstatePage = new PagerModel<>(pageSize, page, count.intValue(), busRealEstates);
         return busRealEstatePage;
     }

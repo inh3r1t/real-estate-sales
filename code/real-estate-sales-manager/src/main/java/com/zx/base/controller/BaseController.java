@@ -90,10 +90,10 @@ public class BaseController {
     String sendTemplateMessageApiUrl;
 
     @Value("${custom.wechat.appid}")
-    String appid;
+    public String appid;
 
     @Value("${custom.wechat.secret}")
-    String secret;
+    public String secret;
 
     //图片上传绝对路径的基础地址
     @Value("${custom.system-url}")
@@ -104,7 +104,7 @@ public class BaseController {
     @Value("${custom.upload-node}")
     public String UPLOAD_NODE;
     @Value("${custom.wechat.access_token.api.url}")
-    String accessTokenApiUrl;
+    public String accessTokenApiUrl;
 
     @Resource
     public RoleService roleService;
