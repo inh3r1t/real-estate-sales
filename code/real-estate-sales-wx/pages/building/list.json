@@ -1,4 +1,7 @@
 {
   "enablePullDownRefresh": true,
-  "navigationBarTitleText": "所有楼盘"
+  "navigationBarTitleText": "所有楼盘",
+  "usingComponents": {
+    "selector": "/components/selector/selector"
+  }
 }

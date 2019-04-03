@@ -1,3 +1,4 @@
+<selector selectData="{{selectData}}" bind:selected="selected"></selector>
 <view bindtap='toDetail' class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
   <text class='building-commission' hidden="{{!isLogin}}">{{item.commission}} </text>
   <view class="thumb">
@@ -6,7 +7,8 @@
   <view class="details">
     <view class="building-name">{{item.name}}</view>
     <view class="building-address">
-      <text class='iconfont icon-weizhi'></text> {{item.address}}
+      <text class='iconfont icon-weizhi'></text>
+      <text hidden='{{!item.category}}'>【{{item.category}}】</text> {{item.address}}
     </view>
     <view class='summary'>简介：{{item.summery}}</view>
   </view>
