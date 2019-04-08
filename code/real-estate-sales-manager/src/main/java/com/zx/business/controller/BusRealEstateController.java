@@ -68,7 +68,7 @@ public class BusRealEstateController extends BaseController {
     @ResponseBody
     @WechatAuthorize
     public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
-         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
             PagerModel<BusRealEstate> busRealEstatePage =
                     busRealStateService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
@@ -174,7 +174,7 @@ public class BusRealEstateController extends BaseController {
     @RequestMapping(value = "/submit")
     @ResponseBody
     public Object submit(BusRealEstate estate, Boolean needFullPhone) {
-         boolean insertAction = estate.getId() == null || estate.getId() == 0;
+        boolean insertAction = estate.getId() == null || estate.getId() == 0;
         String actionName = insertAction ? "添加" : "更新";
         estate.setDetail(HtmlUtil.htmlUnescape(estate.getDetail()));
         estate.setCommission(estate.getCommission().replaceAll("%2B", "+"));
@@ -284,29 +284,29 @@ public class BusRealEstateController extends BaseController {
     public Object gainMiniProgramCode(String page, String scene) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取小程序码成功！");
         try {
-            String fileName = "qrCode." + scene + ".jpg";
+            String fileName = "qrCode." + scene + "-" + System.currentTimeMillis() + ".jpg";
             //图片文件存放地址
             String filePath = "/qrcode/";
             filePath = getAbsolutePath(filePath);
             String relativePath = filePath + fileName;
-            File file = new File(relativePath);
-            if (!file.exists()) {
-                String accessToken = JSON.parseObject(HttpKit.get(String.format(accessTokenApiUrl, "client_credential", appid, secret)).getHtml()).get("access_token").toString();
-                if (StringUtils.isNotBlank(accessToken)) {
-                    String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + accessToken;
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("scene", scene);
-                    data.put("page", page);
-                    // data.put("width", 430);
-                    // data.put("auto_color", false);
-                    // data.put("line_color", null);
-                    // data.put("is_hyaline", false);
-                    InputStream inputStream = tempHttpClientUtil(url, data);
-                    if (inputStream != null) {
-                        saveToImgByInputStream(inputStream, filePath, fileName.replaceAll("/", ""));
-                    }
+            // File file = new File(relativePath);
+            // if (!file.exists()) {
+            String accessToken = JSON.parseObject(HttpKit.get(String.format(accessTokenApiUrl, "client_credential", appid, secret)).getHtml()).get("access_token").toString();
+            if (StringUtils.isNotBlank(accessToken)) {
+                String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + accessToken;
+                Map<String, Object> data = new HashMap<>();
+                data.put("scene", scene);
+                data.put("page", page);
+                // data.put("width", 430);
+                // data.put("auto_color", false);
+                // data.put("line_color", null);
+                // data.put("is_hyaline", false);
+                InputStream inputStream = tempHttpClientUtil(url, data);
+                if (inputStream != null) {
+                    saveToImgByInputStream(inputStream, filePath, fileName.replaceAll("/", ""));
                 }
             }
+            // }
             if (relativePath.startsWith(getBasePath().replace("\\", "/"))) {
                 relativePath = relativePath.substring(getBasePath().length());
             }
