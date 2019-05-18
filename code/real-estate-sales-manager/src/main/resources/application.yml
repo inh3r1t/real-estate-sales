@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev  # 通过指定启动参数使用不同的profile
+    active: test  # 通过指定启动参数使用不同的profile
   thymeleaf:
     cache: false
     mode: LEGACYHTML5

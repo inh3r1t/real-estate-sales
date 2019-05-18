@@ -38,6 +38,7 @@
   margin: 10rpx 0 0 10rpx;
   padding: 0 10rpx;
   color: #fff;
+  max-width:220rpx;
 }
 
 .building-item .thumb {

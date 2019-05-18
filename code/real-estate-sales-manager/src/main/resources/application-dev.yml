@@ -25,7 +25,7 @@ server:
 #Custom configuration
 custom:
   system-url: https://trial.inh3rit.top
-  system-name: 安策营销后台管理系统 - 测试环境
+  system-name: 安策系统 - 测试环境
   version: V1.1.0111.1
   directory-path: /home/tony/app    #上传文件存储路径，若本地调试可不设置，路径默认为this.getClass().getClassLoader().getResource("").getPath() + "static").substring(1)
   is_open_notify: false

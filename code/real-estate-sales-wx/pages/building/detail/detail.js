@@ -37,7 +37,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    debugger
     var source = options.source;
     console.log(options);
 
@@ -136,11 +135,17 @@ Page({
   },
   share: function() {
     let userInfo = wx.getStorageSync('userInfo');
-    var articleTitle = "买房请联系 " + userInfo.phoneNum + "";
+    var articleTitle = this.data.building.name;
+    var contact = "经纪人： " + userInfo.userName + " - " + userInfo.phoneNum + "";
     var articleShareDes = this.data.building.summery;
     // var articleTitleUrl = util.getCurrentPageUrlWithArgs() + "&source=share";
-    var articleTitleUrl = this.data.building.images[0];
-    var miniAppImg = "/images/logo.png";
+    var articleTitleUrl1 = this.data.building.images[0];
+    var articleTitleUrl2 = this.data.building.images[1];
+    var articleTitleUrl3 = this.data.building.images[2];
+    var articleTitleUrl4 = this.data.building.images[3];
+    var articleTitleUrl5 = this.data.building.images[4];
+    var articleTitleUrl6 = this.data.building.images[5];
+    var miniAppImg = "/images/logo-top.png";
     var miniCdoe = "";
     var bgPic = "/images/bg.png";
     app.get("/busRealEstate/gainMiniProgramCode?page=" + util.getCurrentPageUrl() + "&scene=" + this.data.building.id).then(res => {
@@ -148,7 +153,18 @@ Page({
       console.log(res);
       this.setData({
         showShareModal: true,
-        template: new Card().palette(bgPic, articleTitleUrl, miniCdoe, miniAppImg, articleTitle, articleShareDes),
+        template: new Card().palette(bgPic,
+          miniCdoe,
+          miniAppImg,
+          contact,
+          articleTitle,
+          articleShareDes,
+          articleTitleUrl1,
+          articleTitleUrl2,
+          articleTitleUrl3,
+          articleTitleUrl4,
+          articleTitleUrl5,
+          articleTitleUrl6),
       });
     })
 
@@ -161,7 +177,8 @@ Page({
     } else {
       let userInfo = wx.getStorageSync('userInfo');
       return {
-        title: "买房请联系 " + userInfo.phoneNum,
+        // title: "买房请联系 " + userInfo.phoneNum,
+        title: "经纪人： " + userInfo.userName + " - " + userInfo.phoneNum + "",
         path: util.getCurrentPageUrlWithArgs() + "&source=share",
         // imageUrl: this.data.building.images[0]
       }
@@ -174,9 +191,11 @@ Page({
     });
   },
   onImgOK(e) {
+    debugger
     this.setData({
       shareImage: e.detail.path
     })
+    this.eventSave();
   },
   eventSave() {
     let that = this;
@@ -184,7 +203,7 @@ Page({
       scope: 'scope.writePhotosAlbum',
       success() {
         // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-        console.log(that.data.hasPower)
+        // console.log(that.data.hasPower)
         let imgSrc = that.data.shareImage;
         wx.saveImageToPhotosAlbum({
           filePath: imgSrc,

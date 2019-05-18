@@ -90,7 +90,6 @@ Page({
     }
   },
   selected(e) {
-    debugger
     const id = e.detail.value;
     this.setData({
       type: id

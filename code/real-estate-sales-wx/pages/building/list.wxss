@@ -1,0 +1,11 @@
+.select-container {
+  position: fixed;
+  background-color: #fff;
+  width: 100%;
+  z-index: 99999;
+  top: 0;
+}
+
+.list-container {
+  margin-top: 100rpx;
+}

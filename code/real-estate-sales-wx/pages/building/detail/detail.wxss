@@ -99,8 +99,8 @@ swiper .slide-image {
 .modal .modal-content {
   position: fixed;
   z-index: 9500;
-  width: 650rpx;
-  height: 1080rpx;
+  width: 680rpx;
+  height: 900rpx;
   overflow: hidden;
   background: #fff;
   border-radius: 2rpx;
@@ -108,10 +108,9 @@ swiper .slide-image {
   flex-direction: column;
   top: 20rpx;
   left: 50%;
-  margin-left: -325rpx;
+  margin-left: -340rpx;
   box-sizing: border-box;
-  /* margin-top: -400rpx; */
-  /* padding: 5rpx; */
+  /* margin-top: -400rpx; *//* padding: 5rpx; */
 }
 
 .modal-content .share-title {
@@ -135,17 +134,21 @@ swiper .slide-image {
   justify-content: center;
   margin: 5rpx;
   /* background-color: #f56c6c; */
+  /* position: fixed; */
+  /* left: 60%; */
+  /* z-index: 99999; */
 }
 
 .share-btns .btn {
   text-align: center;
   border-radius: 0rpx;
   width: 250rpx;
+  /* margin-right: 10rpx; */
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   background-color: #f56c6c;
   height: 60rpx;
-  line-height: 60rpx;
+  line-height: 60rpx !important;
 }
 
 .share-btns .btn-cancel {
