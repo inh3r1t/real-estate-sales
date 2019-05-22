@@ -8,14 +8,20 @@
   </block>
 </swiper>
 <view class='building'>
-  <view class='building-title'>{{building.name}}
-    <!-- <button class="iconfont icon-fenxiang3 share" open-type="share"></button> -->
-    <button class="iconfont icon-fenxiang3 share" hidden='{{!isLogin}}' bindtap="share"></button>
+  <view>
+    <view class='building-title'>{{building.name}}</view>
+    <button class="iconfont icon-fenxiang1 share" open-type="share">
+      <span>转发</span>
+    </button>
+    <button class="iconfont icon-fenxiang3 share" hidden='{{!isLogin}}' bindtap="share">
+      <span>分享</span>
+    </button>
   </view>
   <view class='building-address'>
-    <text class='bold'>楼盘地址</text> <text hidden='{{!item.category}}'>【{{item.category}}】</text> 
+    <text class='bold'>楼盘地址</text>
+    <text hidden='{{!item.category}}'>【{{item.category}}】</text>
     <view>
-     {{building.address}}
+      {{building.address}}
     </view>
   </view>
   <view class='building-summary'>

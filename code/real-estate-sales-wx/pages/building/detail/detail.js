@@ -136,7 +136,7 @@ Page({
   share: function() {
     let userInfo = wx.getStorageSync('userInfo');
     var articleTitle = this.data.building.name;
-    var contact = "经纪人： " + userInfo.userName + " - " + userInfo.phoneNum + "";
+    var contact = "经纪人：" + userInfo.userName + " - " + userInfo.phoneNum + "";
     var articleShareDes = this.data.building.summery;
     // var articleTitleUrl = util.getCurrentPageUrlWithArgs() + "&source=share";
     var articleTitleUrl1 = this.data.building.images[0];
@@ -148,6 +148,9 @@ Page({
     var miniAppImg = "/images/logo-top.png";
     var miniCdoe = "";
     var bgPic = "/images/bg.png";
+    wx.showLoading({
+      title: '生成分享图片中...',
+    })
     app.get("/busRealEstate/gainMiniProgramCode?page=" + util.getCurrentPageUrl() + "&scene=" + this.data.building.id).then(res => {
       miniCdoe = res.data;
       console.log(res);
@@ -170,19 +173,26 @@ Page({
 
   },
   onShareAppMessage(res) {
-    if (res.from === 'button') {
-      this.setData({
-        showShareModal: true
-      });
-    } else {
-      let userInfo = wx.getStorageSync('userInfo');
-      return {
-        // title: "买房请联系 " + userInfo.phoneNum,
-        title: "经纪人： " + userInfo.userName + " - " + userInfo.phoneNum + "",
-        path: util.getCurrentPageUrlWithArgs() + "&source=share",
-        // imageUrl: this.data.building.images[0]
-      }
+    let userInfo = wx.getStorageSync('userInfo');
+    return {
+      // title: "买房请联系 " + userInfo.phoneNum,
+      title: "经纪人:" + userInfo.userName + "-" + userInfo.phoneNum + "",
+      path: util.getCurrentPageUrlWithArgs() + "&source=share",
+      // imageUrl: this.data.building.images[0]
     }
+    // if (res.from === 'button') {
+    //   this.setData({
+    //     showShareModal: true
+    //   });
+    // } else {
+    //   let userInfo = wx.getStorageSync('userInfo');
+    //   return {
+    //     // title: "买房请联系 " + userInfo.phoneNum,
+    //     title: "经纪人： " + userInfo.userName + " - " + userInfo.phoneNum + "",
+    //     path: util.getCurrentPageUrlWithArgs() + "&source=share",
+    //     // imageUrl: this.data.building.images[0]
+    //   }
+    // }
 
   },
   hideModal: function() {
@@ -191,7 +201,7 @@ Page({
     });
   },
   onImgOK(e) {
-    debugger
+    wx.hideLoading()
     this.setData({
       shareImage: e.detail.path
     })
@@ -209,7 +219,7 @@ Page({
           filePath: imgSrc,
           success: function(res) {
             wx.showToast({
-              title: '图片已保存至本地相册',
+              title: '图片已保存至本地相册，点击关闭',
               icon: 'none'
             })
           },
