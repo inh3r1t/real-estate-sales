@@ -21,8 +21,8 @@ server:
 
 #Custom configuration
 custom:
-  system-url: https://inh3rit.top
-  system-name: 安策系统
+  system-url: https://ac.eraop.com
+  system-name: 安策系统|Eraop
   version: V1.1.0312.1
   directory-path: /home/tony/app
   is_open_notify: true

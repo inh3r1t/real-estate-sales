@@ -7,7 +7,9 @@ Page({
     isLogin: false,
     more: true,
     page: 1,
-    list: []
+    type: 0,
+    list: [],
+    selectData: []
 
   },
   toDetail: function(e) {
@@ -20,7 +22,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getList(1);
+    app.get("/busRealEstate/category").then(res => {
+      this.setData({
+        selectData: res.data
+      })
+      console.log(res)
+      this.getList(1);
+    });
   },
 
   /**
@@ -55,13 +63,6 @@ Page({
   onReachBottom: function() {
     this.getList(this.data.page + 1)
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
   getList(pageNo, override) {
     if (this.data.more || override) {
       wx.showLoading({
@@ -69,14 +70,15 @@ Page({
       })
       return app.post("/busRealEstate/getPage", {
         page: pageNo,
-        pageSize: 10
+        pageSize: 10,
+        extend2: this.data.type > 0 ? this.data.type : null
       }).then(res => {
         //这里既可以获取模拟的res
         // console.log(res)
         this.setData({
           list: override ? res.data.Items : this.data.list.concat(res.data.Items),
           more: res.data.Items != null && res.data.Items.length == 10,
-          page:pageNo
+          page: pageNo
         })
         // 隐藏加载框
         wx.hideLoading();
@@ -85,6 +87,13 @@ Page({
         // 隐藏加载框
         wx.hideLoading();
       })
-    } 
+    }
+  },
+  selected(e) {
+    const id = e.detail.value;
+    this.setData({
+      type: id
+    })
+    this.getList(1, true)
   }
 })

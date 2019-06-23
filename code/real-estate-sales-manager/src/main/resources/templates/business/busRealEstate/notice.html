@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+<body>
+<div class="form-body" data-layout-fragment="renderBody">
+    <form id="form" th:method="post" class="layui-form  layui-form-pane" th:action="@{/busRealEstate/noticeSubmit}">
+        <input type="hidden" name="id" th:value="${model.id}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知楼盘</label>
+            <div class="layui-input-block">
+                <span class="layui-input" style="padding-top: 7px;" th:text="${model.getName()}"></span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知类型</label>
+            <!--<div class="layui-input-block">-->
+            <!--<select name="type" class="required">-->
+            <!--<option value="">无</option>-->
+            <!--<option value="4">签约楼盘</option>-->
+            <!--<option value="5">政策变更</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <div class="layui-input-block">
+                <input type="radio" name="type" value="4" title="签约楼盘" checked>
+                <input type="radio" name="type" value="5" title="政策变更">
+            </div>
+        </div>
+        <div style="margin-top: -15px;margin-bottom: 15px;padding-bottom: 15px;padding-right: 15px;">
+            <span id="allCancel" class="pull-right clickable margin-left-15">取消所有</span>
+            <span id="allSelect" class="pull-right clickable margin-left-15">全选所有</span>
+        </div>
+        <div class="layui-form-item layui-form-text" th:each="item:${busAgentCompanies}">
+            <label class="layui-form-label">
+                <span th:text="${item.getName()}"></span>
+                <span class="f_all pull-right clickable margin-left-15">取消</span>
+                <span class="c_all pull-right clickable margin-left-15">全选</span>
+            </label>
+
+            <div class="layui-col-xs3" th:each="user:${item.getBusUsers()}">
+                <input type="checkbox" class="c_one" name="userIds" th:value="${user.getId()}"
+                       th:title="${user.getUserName() + '('+user.getPhoneNum()+')'}"
+                       lay-skin="primary">
+            </div>
+        </div>
+
+        <div class="layui-form-item form-footer">
+            <button class="layui-btn" lay-submit lay-filter="formedit" id="btnSubmit" type="submit">发送</button>
+            <span class="layui-btn layui-btn-primary pull-right margin-left-15" onclick="dialog.close();">关闭</span>
+        </div>
+
+    </form>
+</div>
+<script th:inline="javascript" data-layout-fragment="renderScripts">
+    //表单验证提交
+    var form;
+    $('#form').initForm({
+        ajaxBefore: function () {
+            dialog.loading("#form", {
+                text: '正在发送通知，请稍等...'
+            });
+            $("#btnSubmit").attr("disabled", "disabled");
+            $("#btnSubmit").html("正在发送...");
+        },
+        ajaxSuccessHandler: function (data) {
+            dialog.loaded("#form");
+            if (data.state) {
+                dialog.success(data.message);
+                dialog.closeAll(true);
+            }
+            else {
+                parent.dialog.msg(data.message);
+                $("#btnSubmit").removeAttrs("disabled");
+                $("#btnSubmit").html("发送");
+            }
+        }
+    });
+    $('#allSelect').click(function () {
+        var item = $('.c_one');
+        item.each(function () {
+            $(this).prop("checked", true);
+        });
+        form.render('checkbox');
+    });
+    $('#allCancel').click(function () {
+        var item = $('.c_one');
+        item.each(function () {
+            $(this).prop("checked", false);
+        });
+        form.render('checkbox');
+    });
+    $('.c_all').click(function () {
+        var item = $(this).closest('.layui-form-item').find('.c_one');
+        item.each(function () {
+            $(this).prop("checked", true);
+        });
+        form.render('checkbox');
+    });
+    $('.f_all').click(function () {
+        var item = $(this).closest('.layui-form-item').find('.c_one');
+        item.each(function () {
+            $(this).prop("checked", false);
+        });
+        form.render('checkbox');
+    });
+    layui.use('form', function () {
+        form = layui.form;
+        // //全选
+        // form.on('checkbox(c_all)', function (data) {
+        //     var a = data.elem.checked;
+        //     if (a == true) {
+        //         $(".c_one").prop("checked", true);
+        //         form.render('checkbox');
+        //     } else {
+        //         $(".c_one").prop("checked", false);
+        //         form.render('checkbox');
+        //     }
+        //
+        // });
+        // //反选
+        // form.on('checkbox(f_all)', function (data) {
+        //     var item = $(".c_one");
+        //     item.each(function () {
+        //         if ($(this).prop("checked")) {
+        //             $(this).prop("checked", false);
+        //         } else {
+        //             $(this).prop("checked", true);
+        //         }
+        //     });
+        //     form.render('checkbox');
+        // });
+
+    });
+
+</script>
+</body>
+</html>

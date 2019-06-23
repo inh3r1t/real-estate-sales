@@ -8,20 +8,51 @@
   </block>
 </swiper>
 <view class='building'>
-  <view class='building-title'>{{building.name}}</view>
-  <view class='building-address'>地址：{{building.address}}</view>
-  <view class='building-summary'>简介：{{building.summery}}</view>
-  <view class='building-commission' hidden="{{!isLogin}}">佣金：{{building.commission}}</view>
-  <view class='building-principal'>项目负责人：{{building.manager.userName}} {{building.manager.phoneNum}}</view>
+  <view>
+    <view class='building-title'>{{building.name}}</view>
+    <button class="iconfont icon-fenxiang1 share" open-type="share">
+      <span>转发</span>
+    </button>
+    <button class="iconfont icon-fenxiang3 share" hidden='{{!isLogin}}' bindtap="share">
+      <span>分享</span>
+    </button>
+  </view>
+  <view class='building-address'>
+    <text class='bold'>楼盘地址</text>
+    <text hidden='{{!item.category}}'>【{{item.category}}】</text>
+    <view>
+      {{building.address}}
+    </view>
+  </view>
+  <view class='building-summary'>
+    <text class='bold'>楼盘简介</text>
+    <view>{{building.summery}}</view>
+  </view>
+  <view class='building-commission' hidden="{{!isLogin || isShare}}">佣金：{{building.commission}}</view>
+  <view class='building-principal' hidden='{{isShare}}'>项目负责人：{{building.manager.userName}} {{building.manager.phoneNum}}</view>
   <view class='building-detail'>
     <text class='bold'>楼盘详情</text>
     <!-- <text>{{building.detail}}</text> -->
     <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
   </view>
 </view>
-<view class='nav-box' wx:if="{{!isManager}}">
+<view class='nav-box' wx:if="{{!isManager && !isShare}}">
   <view class='handle-btn'>
     <view class='handle-report' bindtap='report'>报备</view>
     <view class='handle-contact' bindtap='makePhoneCall'>电话咨询</view>
+  </view>
+</view>
+<!--custom Modal-->
+<view class='modal' hidden="{{!showShareModal}}">
+  <view class="modal-mask" bindtap="hideModal"></view>
+  <view class="modal-content" bindtap="hideModal">
+    <!-- <view class='share-title'>生成分享图片</view> -->
+    <view class='share-content'>
+      <painter palette="{{template}}" bind:imgOK="onImgOK" />
+    </view>
+    <!-- <view class='share-btns'>
+      <view class='btn btn-cancel' bindtap="hideModal">取消</view>
+      <view class='btn' bindtap="eventSave">生成</view>
+    </view> -->
   </view>
 </view>

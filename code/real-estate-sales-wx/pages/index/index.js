@@ -4,7 +4,6 @@ Page({
     topList: [],
     recommendbuildings: [],
     imgUrls: [
-      '/images/banner_01.png',
     ],
     indicatorDots: true,
     autoplay: true,

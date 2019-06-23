@@ -30,7 +30,7 @@
       <view class="details">
         <view class="building-name">{{item.name}}</view>
         <view class="building-address">
-          <text class='iconfont icon-weizhi'></text> {{item.address}}
+          <text class='iconfont icon-weizhi'></text><text hidden='{{!item.category}}'>【{{item.category}}】</text> {{item.address}}
         </view>
         <view class='summary'>简介：{{item.summery}}</view>
       </view>

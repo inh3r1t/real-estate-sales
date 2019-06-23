@@ -19,7 +19,8 @@
     "pages/customer/subscribe/subscribe",
     "pages/customer/sign/sign",
     "pages/customer/appointment/appointment",
-    "pages/password/reset/reset"
+    "pages/password/reset/reset",
+    "pages/help/help"
   ],
   "window": {
     "backgroundTextStyle": "light",

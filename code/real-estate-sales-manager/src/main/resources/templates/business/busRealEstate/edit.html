@@ -56,6 +56,16 @@
                 </div>
             </div>
             <div class="layui-col-xs3">
+                <label class="layui-form-label">区域</label>
+                <div class="layui-input-block">
+                    <select name="extend2" lay-verify="required" id="extend2">
+                        <option th:each="item:${categories}" th:text="${item.name}"
+                                th:selected="${item.id.toString() == model.extend2}"
+                                th:value="${item.id}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
                 <label class="layui-form-label">排序</label>
                 <div class="layui-input-block">
                     <input type="number" name="sortWeight" th:value="${model.sortWeight}" lay-verify="required"

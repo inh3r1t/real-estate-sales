@@ -44,6 +44,11 @@ public class BusUserService {
     @Value("${custom.yunzhixun.sms.verify.templateid}")
     private String templateid;
 
+
+    public List<BusUser> getList(BusUser busUser) {
+        return busUserMapper.selectByPage(null, null, null, null, busUser);
+    }
+
     public int addBusUser(BusUser busUser) {
         busUser.setPasswd(Md5Util.getMd5(busUser.getPasswd()));
         // 根据注册码设置roleId
@@ -64,7 +69,7 @@ public class BusUserService {
         return busUserMapper.insertSelective(busUser);
     }
 
-    public int updateByPrimaryKeySelective(BusUser busUser){
+    public int updateByPrimaryKeySelective(BusUser busUser) {
         return busUserMapper.updateByPrimaryKeySelective(busUser);
     }
 

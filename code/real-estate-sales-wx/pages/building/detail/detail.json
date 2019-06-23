@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "楼盘详情"
+  "navigationBarTitleText": "楼盘详情",
+  "usingComponents": {
+    "painter": "/components/painter/painter"
+  }
 }

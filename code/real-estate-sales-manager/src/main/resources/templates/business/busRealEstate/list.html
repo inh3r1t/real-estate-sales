@@ -32,6 +32,7 @@
                 <th style="width:150px">楼盘名称</th>
                 <th style="text-align:center">佣金</th>
                 <th style="text-align:center">项目经理</th>
+                <th style="text-align:center">区域</th>
                 <th class="text-center" style="text-align:center">推荐</th>
                 <th class="text-center" style="text-align:center">置顶</th>
                 <th class="text-center" style="text-align:center">排序</th>
@@ -44,7 +45,8 @@
             <tr class="CurrentRow">
                 <td class="text-ellipsis-300" data-bind="text:name"></td>
                 <td data-bind="text:commission"></td>
-                <td class="text-center"  data-bind="text:manager.userName"></td>
+                <td class="text-center" data-bind="text:manager.userName"></td>
+                <td class="text-center" data-bind="text:category"></td>
 
                 <td class="text-center" data-bind="text:isListRecommend()?'已推荐':''"></td>
                 <td class="text-center" data-bind="text:isTopRecommend()?'已置顶':''"></td>
@@ -52,13 +54,16 @@
                 <td class="text-center" data-bind="text:createTime"></td>
                 <td class="text-center">
                     <!--<a data-bind="click:btn_top.bind()" title="置顶" data-toggle="tooltip" data-placement="top">-->
-                        <!--<i class="fa fa-arrow-up"> 置顶</i></a>-->
+                    <!--<i class="fa fa-arrow-up"> 置顶</i></a>-->
                     <!--<a data-bind="click:btn_recommend.bind()" title="推荐" data-toggle="tooltip" data-placement="top">-->
-                        <!--<i class="fa fa-star-o"> 推荐</i></a>-->
+                    <!--<i class="fa fa-star-o"> 推荐</i></a>-->
                     <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-edit"> 编辑</i></a>
                     <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">
                         <i class="fa fa-trash-o"> 删除</i></a>
+
+                    <a data-bind="click:btn_notice.bind()" title="发送通知" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-paper-plane"> 发送通知</i></a>
 
                 </td>
             </tr>
@@ -97,7 +102,6 @@
 
     //修改
     function btn_edit(model) {
-        debugger
         dialog.iframe('/busRealEstate/edit?id=' + model.id(), {
             title: "编辑楼盘",
             size: [900, 700],
@@ -123,6 +127,19 @@
                     dialog.error(data.message);
                 }
             });
+        });
+    }
+
+    //删除
+    function btn_notice(model) {
+        dialog.iframe('/busRealEstate/notice?id=' + model.id(), {
+            title: "楼盘通知",
+            size: [1000, 700],
+            maxmin: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
         });
     }
 
