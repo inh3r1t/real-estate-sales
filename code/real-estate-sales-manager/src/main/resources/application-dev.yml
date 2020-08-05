@@ -17,7 +17,7 @@ spring:
       max-request-size: 50MB
 logging:
   level:
-    root: info
+    root: debug
 
 server:
   port: 9000

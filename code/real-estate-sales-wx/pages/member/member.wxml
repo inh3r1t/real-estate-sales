@@ -1,43 +1,47 @@
 <view class="container">
-  <view class="header center">
-    <view class='avatar'>
-      <image src="/images/avatar.jpg" bindtap='login' wx:if="{{!isLogin}}"></image>
-      <image src="{{avatar}}" wx:if="{{isLogin}}"></image>
-    </view>
-    <view class='username' wx:if="{{isLogin}}">{{username}}</view>
-    <view class="company" wx:if="{{isLogin}}">{{company}}</view>
-    <view class='username' bindtap='login' wx:if="{{!isLogin}}">点击登录</view>
-  </view>
-  <view class='divider'></view>
-  <view class="list" wx:if="{{!isLogin}}">
-    <view class="item" bindtap='toCompany'>
-      <text class="iconfont icon-gongsijianjie"></text>公司简介</view>
-    <view class="item" bindtap='toHelp'>
-      <text class="iconfont icon-gongsijianjie"></text>使用帮助</view>
-  </view>
-  <view class="list" wx:if="{{isLogin}}">
-    <view class="item" bindtap='toMessage'>
-      <text class="iconfont icon-icon"></text>消息中心</view>
-    <view class="item" bindtap='toCompany'>
-      <text class="iconfont icon-gongsijianjie"></text>公司简介</view>
-    <view class="item" bindtap='toHelp'>
-      <text class="iconfont icon-woyaotuijian"></text>使用帮助</view>
-    <view class="item" bindtap='toChangePassword'>
-      <text class="iconfont icon-xiugaimima"></text>修改密码</view>
-    <view class="item">
-      <text class="iconfont icon-wechat1"></text>绑定微信
-      <button wx:if="{{canIUse && !isBindWechat}}" open-type="getUserInfo" class='text-right' bindgetuserinfo='toBindWechat'>
-        立即绑定
-        <text class="iconfont icon-gengduo"></text>
-      </button>
-      <button wx:if="{{isBindWechat}}" class='text-right' bindtap='toReliveWechat'>
-        已绑定
-        <text class="iconfont icon-gengduo"></text>
-      </button>
-    </view>
-  </view>
-  <view class='divider'></view>
-  <view class='list logout' bindtap='logout' wx:if="{{isLogin}}">
-    退出登录
-  </view>
+	<view class="header center">
+		<view class='avatar'>
+			<image src="/images/avatar.jpg" bindtap='login' wx:if="{{!isLogin}}"></image>
+			<image src="{{avatar}}" wx:if="{{isLogin}}"></image>
+		</view>
+		<view class='username' wx:if="{{isLogin}}">{{username}}</view>
+		<view class="company" wx:if="{{isLogin}}">{{company}}</view>
+		<view class='username' bindtap='login' wx:if="{{!isLogin}}">点击登录</view>
+	</view>
+	<view class='divider'></view>
+
+	<view class="list" wx:if="{{!isLogin}}">
+
+		<view class="item" bindtap='toVisitorRegister'>
+			<text class="iconfont icon-dengji"></text>来访登记</view>
+		<view class="item" bindtap='toCompany'>
+			<text class="iconfont icon-gongsijianjie"></text>公司简介</view>
+		<view class="item" bindtap='toHelp'>
+			<text class="iconfont icon-gongsijianjie"></text>使用帮助</view>
+	</view>
+	<view class="list" wx:if="{{isLogin}}">
+		<view class="item" bindtap='toMessage'>
+			<text class="iconfont icon-icon"></text>消息中心</view>
+		<view class="item" bindtap='toCompany'>
+			<text class="iconfont icon-gongsijianjie"></text>公司简介</view>
+		<view class="item" bindtap='toHelp'>
+			<text class="iconfont icon-woyaotuijian"></text>使用帮助</view>
+		<view class="item" bindtap='toChangePassword'>
+			<text class="iconfont icon-xiugaimima"></text>修改密码</view>
+		<view class="item">
+			<text class="iconfont icon-wechat1"></text>绑定微信
+			<button wx:if="{{canIUse && !isBindWechat}}" open-type="getUserInfo" class='text-right' bindgetuserinfo='toBindWechat'>
+				立即绑定
+				<text class="iconfont icon-gengduo"></text>
+			</button>
+			<button wx:if="{{isBindWechat}}" class='text-right' bindtap='toReliveWechat'>
+				已绑定
+				<text class="iconfont icon-gengduo"></text>
+			</button>
+		</view>
+	</view>
+	<view class='divider'></view>
+	<view class='list logout' bindtap='logout' wx:if="{{isLogin}}">
+		退出登录
+	</view>
 </view>

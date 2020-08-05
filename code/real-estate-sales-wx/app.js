@@ -5,10 +5,10 @@ App({
   globalData: {
     userInfo: null,
     token: null,
-     _baseUrl: 'https://ac.eraop.com'
+    //  _baseUrl: 'https://ac.eraop.com'
     // _baseUrl: 'https://inh3rit.top'
     // _baseUrl: 'https://trial.inh3rit.top'
-    // _baseUrl: 'http://127.0.0.1:8080'
+    _baseUrl: 'http://127.0.0.1:9000'
   },
   onLaunch: function() {
     const updateManager = wx.getUpdateManager()

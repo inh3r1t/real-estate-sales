@@ -65,6 +65,11 @@ Page({
       url: '/pages/message/message',
     })
   },
+  toVisitorRegister: function() {
+    wx.navigateTo({
+      url: '/pages/visitor/register',
+    })
+  },
   toChangePassword: function() {
     wx.navigateTo({
       url: '/pages/password/password',
