@@ -12,7 +12,7 @@ import com.zx.base.exception.BusinessException;
 import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
 import com.zx.base.model.TreeJsonEntity;
-import com.zx.lib.http.kit.HttpKit;
+import com.zx.lib.httpcomponents.HttpKits;
 import com.zx.lib.json.JsonUtil;
 import com.zx.lib.utils.*;
 import com.zx.lib.utils.encrypt.Md5Util;
@@ -717,7 +717,7 @@ public class BaseController {
     public List<SysDepartment> getDepartmentListIsOffSet(String code) {
         List<SysDepartment> list = deptService.getSubsetsBranchByCode(code);
         for (SysDepartment sysDepartment : list
-                ) {
+        ) {
             int leave = sysDepartment.getDcode().length() / 3;
             String dName = sysDepartment.getDname();
             if (leave > 1) {
@@ -805,7 +805,7 @@ public class BaseController {
     public List<SysCategory> getCategoryListIsOffSet(String code, TypeEnums.CategoryType categoryType) {
         List<SysCategory> list = sysCategoryService.getSubsetsBranchByCode(code, categoryType.getValue());
         for (SysCategory sysCategory : list
-                ) {
+        ) {
             int leave = sysCategory.getCode().length() / 3;
             String dName = sysCategory.getName();
             if (leave > 1) {
@@ -887,12 +887,13 @@ public class BaseController {
         if (js_code == null || js_code.equals(""))
             throw new BusinessException("js_code不能为空！");
         try {
-            Map<String, String> data = new HashMap<>();
+            HashMap<String, String> data = new HashMap<>();
             data.put("appid", appid);
             data.put("secret", secret);
             data.put("js_code", js_code);
             data.put("grant_type", "authorization_code");
-            String text = HttpKit.get(openIdApiUrl, data, Charset.defaultCharset()).getHtml();
+            //String text = HttpKit.get(openIdApiUrl, data, Charset.defaultCharset()).getHtml();
+            String text = HttpKits.getHttpWebContent(openIdApiUrl, "GET", data, null, null, null, Charset.defaultCharset());
             String openid = JSON.parseObject(text).get("openid").toString();
             return openid;
         } catch (Exception e) {

@@ -77,7 +77,7 @@ public class HomeController extends BaseController {
     /**
      * 系统登录页
      */
-    @FormReSubmitValidation
+    //@FormReSubmitValidation
     @AuthorizeIgnore
     @RequestMapping("/login")
     public String login(Model model) {
@@ -98,7 +98,7 @@ public class HomeController extends BaseController {
      * @param httpSession
      * @return
      */
-    @FormReSubmitValidation(true)
+    //@FormReSubmitValidation(true)
     @AuthorizeIgnore
     @RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
     @ResponseBody
