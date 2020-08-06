@@ -1,0 +1,27 @@
+<form class="form" bindsubmit="formSubmit" report-submit='true'>
+	<view class="form-body">
+		<view class="form-item">
+			<view class="form-lable">客户姓名</view>
+			<input class='form-input' name="name" placeholder="请输入姓名" type="text" value='{{name}}'></input>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">联系方式</view>
+			<input class='form-input' name="name" placeholder="请输入联系方式" type="text" value='{{name}}'></input>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">所属团队</view>
+			<select class="select-container" selectData="{{teamList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">置业顾问</view>
+			<input class='form-input' name="name" placeholder="请输入置业顾问" type="text" value='{{name}}'></input>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">居住区域</view>
+			<select class="select-container" selectData="{{addressList}}" bind:selected="selected"></select>
+		</view>
+	</view>
+	<view class="form-footer nav-fix">
+		<button class='btn btn-primary' formType="submit">立即报备</button>
+	</view>
+</form>

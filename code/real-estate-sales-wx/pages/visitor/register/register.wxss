@@ -1,0 +1,7 @@
+/* pages/visitor/register/register.wxss */
+.select-container {
+  flex-grow: 1;
+  color: #808080;
+  line-height: 90rpx;
+  height: 90rpx;
+}
