@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>来访登记列表</title>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <blockquote class="layui-elem-quote">
+        <form id="searchForm" class="layui-form">
+            <div class="layui-inline">
+                <label>名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="keyword" name="keyword" placeholder="请输入关键词" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline ">
+                <label>登记时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input date-range" name="time" id="time" lay-verify="timeRange"
+                           placeholder="请选择时间段" value=""/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn" onclick="btn_Search()"><i class="fa fa-search"></i> 检索</span>
+
+<!--                <span class="layui-btn layui-btn-normal" onclick="btn_add()"><i class="fa fa-plus"></i> 新增</span>-->
+            </div>
+        </form>
+    </blockquote>
+
+    <div class="table-wrapper" id="list">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th class="text-center" style="text-align:center">楼盘名称</th>
+                <th class="text-center" style="text-align:center">客户姓名</th>
+                <th class="text-center" style="text-align:center">联系方式</th>
+                <th class="text-center" style="text-align:center">所属团队</th>
+                <th class="text-center" style="text-align:center">置业顾问</th>
+                <th class="text-center" style="text-align:center">居住区域</th>
+                <th class="text-center" style="text-align:center">职业</th>
+                <th class="text-center" style="text-align:center">到访次数</th>
+                <th class="text-center" style="text-align:center">购买用途</th>
+                <th class="text-center" style="text-align:center">付款方式</th>
+                <th class="text-center" style="text-align:center">意向产品</th>
+                <th class="text-center" style="text-align:center">意向面积</th>
+                <th class="text-center" style="text-align:center">意向等级</th>
+                <th class="text-center" style="text-align:center">购买意向</th>
+                <th class="text-center" style="text-align:center">未成交原因</th>
+                <th class="text-center" style="text-align:center">报备人属性</th>
+                <th class="text-center" style="text-align:center">报备人姓名</th>
+                <th class="text-center" style="text-align:center">登记日期</th>
+                <th class="text-center" style="text-align:center">备注</th>
+
+
+
+                <th class="text-center" style="text-align:center">操作</th>
+            </tr>
+            </thead>
+            <tbody style="display:none" data-bind="visible: true">
+            <!-- ko foreach: Items() -->
+            <tr class="CurrentRow">
+                <td class="text-center" data-bind="text:$index()+1"></td>
+                <td class="text-center" data-bind="text:realEstateName"></td>
+                <td class="text-center" data-bind="text:customer"></td>
+                <td class="text-center" data-bind="text:phone"></td>
+                <td class="text-center" data-bind="text:team"></td>
+                <td class="text-center" data-bind="text:adviser"></td>
+                <td class="text-center" data-bind="text:address"></td>
+                <td class="text-center" data-bind="text:occupation"></td>
+                <td class="text-center" data-bind="text:times"></td>
+                <td class="text-center" data-bind="text:purpose"></td>
+                <td class="text-center" data-bind="text:payment"></td>
+                <td class="text-center" data-bind="text:productType"></td>
+                <td class="text-center" data-bind="text:area"></td>
+                <td class="text-center" data-bind="text:level"></td>
+                <td class="text-center" data-bind="text:intention"></td>
+                <td class="text-center" data-bind="text:nodeal"></td>
+                <td class="text-center" data-bind="text:property"></td>
+                <td class="text-center" data-bind="text:reporter"></td>
+                <td class="text-center" data-bind="text:createtime"></td>
+                <td class="text-center" data-bind="text:remark"></td>
+                <td class="text-center">
+                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-edit"></i></a>
+                </td>
+            </tr>
+            <!-- /ko -->
+            </tbody>
+        </table>
+
+        <ko-pager-state params="model: $data"></ko-pager-state>
+        <ko-pager params="model: $data"></ko-pager>
+    </div>
+</div>
+<script data-layout-fragment="renderScripts">
+
+    var viewModel = new PagerModel("/busVisitRegister/getList", $('#searchForm').serialize());
+    $(function () {
+        ko.applyBindings(viewModel, $("#list")[0]);
+    });
+
+    function btn_Search() {
+        viewModel.Reload($('#searchForm').serialize());
+    }
+
+    //新增
+    function btn_add() {
+        dialog.iframe('/busVisitRegister/edit', {
+            title: "新建楼盘",
+            size: [900, 700],
+            maxmin: true,
+            fullScreen: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+    }
+
+    //修改
+    function btn_edit(model) {
+        dialog.iframe('/busVisitRegister/edit?id=' + model.id(), {
+            title: "编辑楼盘",
+            size: [900, 700],
+            maxmin: true,
+            fullScreen: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+
+    }
+
+    //删除
+    function btn_del(model) {
+        dialog.confirm('确认删除[' + model.name() + ']楼盘吗？', function () {
+            $.getJSON('/busVisitRegister/delete?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+
+    //删除
+    function btn_notice(model) {
+        dialog.iframe('/busVisitRegister/notice?id=' + model.id(), {
+            title: "楼盘通知",
+            size: [1000, 700],
+            maxmin: true
+        }, function (result) {
+            if (result) {
+                viewModel.Reload($('#searchForm').serialize());
+            }
+        });
+    }
+
+    function btn_view(model) {
+        dialog.iframe('/busVisitRegister/detail?id=' + model.id(), {
+            title: "楼盘详情",
+            size: [900, 700]
+        });
+    }
+
+    function btn_top(model) {
+        dialog.iframe('/busVisitRegister/top?id=' + model.id(), {
+            title: "楼盘置顶",
+            size: [900, 700]
+        });
+    }
+
+    function btn_recommend(model) {
+        dialog.iframe('/busVisitRegister/recommend?id=' + model.id(), {
+            title: "楼盘推荐",
+            size: [900, 700]
+        });
+    }
+</script>
+
+</html>

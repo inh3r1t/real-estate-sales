@@ -56,10 +56,10 @@ public class LogController extends BaseController {
 
         Date startDateTime = null, endDateTime = null;
         if (StringUtils.isNotEmpty(time)) {
-            String[] seTime = time.split("-");
+            String[] seTime = time.split(" - ");
             if (seTime.length > 1) {
-                Calendar startTime = DateUtil.getCalendar(seTime[0], "yyyy/MM/dd HH:mm:ss");
-                Calendar endTime = DateUtil.getCalendar(seTime[1], "yyyy/MM/dd HH:mm:ss");
+                Calendar startTime = DateUtil.getCalendar(seTime[0], "yyyy-MM-dd HH:mm:ss");
+                Calendar endTime = DateUtil.getCalendar(seTime[1], "yyyy-MM-dd HH:mm:ss");
                 if (startTime.compareTo(Calendar.getInstance()) <= 0 && startTime.compareTo(endTime) < 0) {
                     startDateTime = startTime.getTime();
                     endDateTime = endTime.getTime();
