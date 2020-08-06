@@ -1,0 +1,13 @@
+<view class='selectBox'>
+  <view class='select' catchtap='selectTap'>
+    <text class='select_text'>{{showName}}</text>
+    <image class='select_img {{selectShow&&"select_img_rotate"}}' src='./images/arrow.jpg' background-size="contain">
+    </image>
+  </view>
+
+  <view class='optionBox' hidden='{{!selectShow}}'>
+    <text catchtap='optionTap' class='option {{currentIndex==0? "selected":""}}' data-index="0" data-title="全部" data-value="">全部</text>
+    <text class='option {{currentIndex==index+1? "selected":""}}' wx:for='{{selectData}}' wx:key='this' data-index='{{index+1}}' data-title="{{item.name}}" data-value="{{item.value}}" catchtap='optionTap'>{{item.name}}
+    </text>
+  </view>
+</view>

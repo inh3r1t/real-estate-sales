@@ -21,7 +21,8 @@
     "pages/customer/appointment/appointment",
     "pages/password/reset/reset",
     "pages/help/help",
-    "pages/visitor/register"
+    "pages/visitor/list",
+    "pages/visitor/register/register"
   ],
   "window": {
     "backgroundTextStyle": "light",

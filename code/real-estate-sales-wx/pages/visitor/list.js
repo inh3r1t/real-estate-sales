@@ -64,5 +64,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  toVisitorRegister: function () {
+    wx.navigateTo({
+      url: '/pages/visitor/register/register',
+    })
   }
 })
