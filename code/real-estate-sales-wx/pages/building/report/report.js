@@ -1,4 +1,4 @@
- const app = getApp();
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -11,7 +11,7 @@ Page({
     focus: false,
     keyboardHidden: true, //hidden是true 默认隐藏
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     app.checkLogin().then(res => {
       var buildingId = options.buildingId;
       var buildingName = options.buildingName;
@@ -30,12 +30,12 @@ Page({
         });
       }
     })
-    
-  },
-  onReady: function() {
 
   },
-  onShow: function() {
+  onReady: function () {
+
+  },
+  onShow: function () {
     this.WxValidate = app.WxValidate({
       name: {
         required: true,
@@ -49,15 +49,15 @@ Page({
         telfuzzy: true,
       }
     }, {
-        name: {
-          required: '请输入客户名称',
-        },
-        phone: {
-          required: '请输入手机号',
-          minlength: '请输入正确手机号码',
-          maxlength: '请输入正确手机号码',
-        }
-      })
+      name: {
+        required: '请输入客户名称',
+      },
+      phone: {
+        required: '请输入手机号',
+        minlength: '请输入正确手机号码',
+        maxlength: '请输入正确手机号码',
+      }
+    })
 
     // 自定义验证规则
     this.WxValidate.addMethod('telfuzzy', (value, param) => {
@@ -65,12 +65,12 @@ Page({
       return this.WxValidate.optional(value) || regex.test(value)
     }, this.data.isReal ? '请输入完整手机号码' : '请输入手机号码(中间4位可用****)')
   },
-  toSelect: function() {
+  toSelect: function () {
     wx.navigateTo({
       url: '/pages/building/select/index?isReal=' + this.data.isReal,
     })
   },
-  delete: function(e) {
+  delete: function (e) {
     var id = e.currentTarget.dataset.id
     let item;
     for (let i = 0; i < this.data.list.length; i++) {
@@ -84,7 +84,7 @@ Page({
       list: this.data.list
     })
   },
-  formSubmit: function(e) {
+  formSubmit: function (e) {
     //提交错误描述
     const params = e.detail.value
     if (!this.WxValidate.checkForm(params)) {
@@ -122,8 +122,8 @@ Page({
           title: `报备成功`,
           icon: 'success',
           duration: 2000,
-          success: function() {
-            setTimeout(function() {
+          success: function () {
+            setTimeout(function () {
               wx.navigateBack({})
             }, 1000)
           }
@@ -137,7 +137,7 @@ Page({
       })
 
   },
-  handlePhone: function(e) {
+  handlePhone: function (e) {
     // var value = e.detail.value
     // if (value.length >= 4 && value.length <= 7) {
     //   value.substring(0, 3)
@@ -147,30 +147,30 @@ Page({
       phone: e.detail.value
     })
   },
-  supplyStar: function(e) {
+  supplyStar: function (e) {
     this.setData({
       phone: this.data.phone + "****"
     })
   },
-  keyboardInput: function(e) {
+  keyboardInput: function (e) {
     this.setData({
       phone: this.data.phone + e.currentTarget.dataset.key
     })
   },
-  keyboardHidden: function() {
+  keyboardHidden: function () {
     this.setData({
       keyboardHidden: true
     });
 
   },
-  keyboardShow: function() {
+  keyboardShow: function () {
     this.setData({
       keyboardHidden: false
     });
 
   },
   //删除输入错误的密码
-  clear: function() {
+  clear: function () {
     var index = this.data.phone.length;
     if (index > 0) {
       var phone = this.data.phone.substr(0, index - 1);

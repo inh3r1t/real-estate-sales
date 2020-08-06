@@ -1,182 +1,124 @@
-// pages/visitor/register/register.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    name: "",
-    teamList: [{
-      "value": "1",
-      "name": "代理"
-    }, {
-      "value": "2",
-      "name": "自销"
-    }],
-    addressList: [{
-      "value": "1",
-      "name": "琅琊"
-    }, {
-      "value": "2",
-      "name": "南谯"
-    }, {
-      "value": "3",
-      "name": "定远"
-    }, {
-      "value": "4",
-      "name": "明光"
-    }, {
-      "value": "5",
-      "name": "来安"
-    }, {
-      "value": "6",
-      "name": "其他乡镇"
-    }, {
-      "value": "7",
-      "name": "外地"
-    }],
-    occupationList: [{
-      "value": "1",
-      "name": "公务员"
-    }, {
-      "value": "2",
-      "name": "医生"
-    }, {
-      "value": "3",
-      "name": "教师"
-    }, {
-      "value": "4",
-      "name": "个体"
-    }, {
-      "value": "5",
-      "name": "职工"
-    }, {
-      "value": "6",
-      "name": "其他"
-    }],
-    timesList: [{
-      "value": "1",
-      "name": "首访"
-    }, {
-      "value": "2",
-      "name": "二访"
-    }, {
-      "value": "3",
-      "name": "三访"
-    }, {
-      "value": "4",
-      "name": "多次到访"
-    }],
-    purposeList: [{
-      "value": "1",
-      "name": "刚需"
-    }, {
-      "value": "2",
-      "name": "婚房"
-    }, {
-      "value": "3",
-      "name": "改善"
-    }, {
-      "value": "4",
-      "name": "投资"
-    }],
-    paymentList: [{
-      "value": "1",
-      "name": "刚需"
-    }, {
-      "value": "2",
-      "name": "婚房"
-    }, {
-      "value": "3",
-      "name": "改善"
-    }, {
-      "value": "4",
-      "name": "投资"
-    }],
-    paymentList: [{
-      "value": "1",
-      "name": "商贷"
-    }, {
-      "value": "2",
-      "name": "公积金"
-    }, {
-      "value": "3",
-      "name": "组合贷"
-    }, {
-      "value": "4",
-      "name": "一次性"
-    }],
-    productTypeList: [{
-      "value": "1",
-      "name": "高层"
-    }, {
-      "value": "2",
-      "name": "洋房"
-    }, {
-      "value": "3",
-      "name": "大平层"
-    }, {
-      "value": "4",
-      "name": "别墅"
-    }, {
-      "value": "5",
-      "name": "商铺"
-    }],
-    areaList: [{
-      "value": "1",
-      "name": "100m²以内"
-    }, {
-      "value": "2",
-      "name": "100m²-120m²"
-    }, {
-      "value": "3",
-      "name": "120m²-140m²"
-    }, {
-      "value": "4",
-      "name": "140m²-200m²"
-    }, {
-      "value": "5",
-      "name": "200m²以上"
-    }],
-    levelList: [{
-      "value": "1",
-      "name": "A"
-    }, {
-      "value": "2",
-      "name": "B"
-    }, {
-      "value": "3",
-      "name": "C"
-    }],
-    intentionList: [{
-      "value": "1",
-      "name": "已成交"
-    }, {
-      "value": "2",
-      "name": "未成交"
-    }, {
-      "value": "3",
-      "name": "已小定"
-    }, {
-      "value": "4",
-      "name": "已验资/定存"
-    }],
-    propertyList: [{
-      "value": "1",
-      "name": "个人经纪人"
-    }, {
-      "value": "1",
-      "name": "中介"
-    }]
+    id: 0,
+    realEstateId: 0,
+    realEstateName: "",
+    customer: "",
+    phone: "",
+    team: "",
+    adviser: "",
+    address: "",
+    occupation: "",
+    times: "",
+    purpose: "",
+    payment: "",
+    product_type: "",
+    area: "",
+    level: "",
+    intention: "",
+    nodeal: "",
+    property: "",
+    reporter: "",
+    remark: "",
+    createtime: "",
+    teamList: ["代理 ", "自销 "],
+    addressList: ["琅琊", "南谯", "定远", "明光", "来安", "其他地区"],
+    occupationList: ["公务员", "医生", "教师", "个体", "职工", "其他"],
+    timesList: ["首访", "二访", "三访", "多次到访"],
+    purposeList: ["刚需", "婚房", "改善", "投资"],
+    paymentList: ["商贷", "公积金", "组合贷", "一次性"],
+    productTypeList: ["高层", "洋房", "大平层", "别墅", "商铺"],
+    areaList: ["100m²以内", "100m²-120m²", "120m²-140m²", "140m²-200m²", "200m²以上"],
+    levelList: ["A", "B", "C"],
+    intentionList: ["已成交", "未成交", "已小定", "已验资/定存"],
+    propertyList: ["个人经纪人", "中介"]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.WxValidate = app.WxValidate({
+      customer: {
+        required: true,
+        minlength: 2,
+        maxlength: 10,
+      }
+    }, {
+      customer: {
+        required: '请输入姓名',
+        minlength: '姓名至少2个字符',
+        maxlength: '姓名不超过10个字符',
+      }
+    })
+  },
+  formSubmit: function (e) {
+    const params = e.detail.value
+    if (!this.WxValidate.checkForm(params)) {
+      const error = this.WxValidate.errorList[0]
+      // `${error.param} : ${error.msg} `
+      wx.showToast({
+        title: `${error.msg} `,
+        icon: 'none',
+        duration: 2000
+      })
+      return false
+    }
+    //获取用户的openId
+    this.setData({
+      id: params.id,
+      realEstateId: params.realEstateId,
+      realEstateName: params.realEstateName,
+      customer: params.customer,
+      phone: params.phone,
+      team: params.team,
+      adviser: params.adviser,
+      address: params.address,
+      occupation: params.occupation,
+      times: params.times,
+      purpose: params.purpose,
+      payment: params.payment,
+      product_type: params.product_type,
+      area: params.area,
+      level: params.level,
+      intention: params.intention,
+      nodeal: params.nodeal,
+      property: params.property,
+      reporter: params.reporter,
+      remark: params.remark,
+      createrid: params.createrid
+    });
+    app.post("/busVisitRegister/report", this.data).then(res => {
+      wx.showToast({
+        title: `来访登记成功`,
+        icon: 'success',
+        duration: 2000,
+        success: function () {
+          setTimeout(function () {
+            wx.navigateBack({})
+          }, 1000)
+        }
+      })
+    }).catch(res => {
+      wx.showToast({
+        title: `来访登记失败`,
+        icon: 'none',
+        duration: 2000
+      })
+    })
+
 
   },
-
+  toSelect: function () {
+    wx.navigateTo({
+      url: '/pages/visitor/select/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -224,5 +166,115 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  getTeam: function () {
+    wx.showActionSheet({
+      itemList: this.data.teamList,
+      success: res => {
+        this.setData({
+          team: this.data.teamList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getAddress: function () {
+    wx.showActionSheet({
+      itemList: this.data.addressList,
+      success: res => {
+        this.setData({
+          address: this.data.addressList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getOccupation: function () {
+    wx.showActionSheet({
+      itemList: this.data.occupationList,
+      success: res => {
+        this.setData({
+          occupation: this.data.occupationList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getTimes: function () {
+    wx.showActionSheet({
+      itemList: this.data.timesList,
+      success: res => {
+        this.setData({
+          times: this.data.timesList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getPurpose: function () {
+    wx.showActionSheet({
+      itemList: this.data.purposeList,
+      success: res => {
+        this.setData({
+          purpose: this.data.purposeList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getPayment: function () {
+    wx.showActionSheet({
+      itemList: this.data.paymentList,
+      success: res => {
+        this.setData({
+          payment: this.data.paymentList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getProductType: function () {
+    wx.showActionSheet({
+      itemList: this.data.productTypeList,
+      success: res => {
+        this.setData({
+          productType: this.data.productTypeList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getArea: function () {
+    wx.showActionSheet({
+      itemList: this.data.areaList,
+      success: res => {
+        this.setData({
+          area: this.data.areaList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getLevel: function () {
+    wx.showActionSheet({
+      itemList: this.data.levelList,
+      success: res => {
+        this.setData({
+          level: this.data.levelList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getIntention: function () {
+    wx.showActionSheet({
+      itemList: this.data.intentionList,
+      success: res => {
+        this.setData({
+          intention: this.data.intentionList[res.tapIndex]
+        })
+      }
+    })
+  },
+  getProperty: function () {
+    wx.showActionSheet({
+      itemList: this.data.propertyList,
+      success: res => {
+        this.setData({
+          property: this.data.propertyList[res.tapIndex]
+        })
+      }
+    })
   }
 })

@@ -11,8 +11,6 @@
 	<view class='divider'></view>
 
 	<view class="list" wx:if="{{!isLogin}}">
-		<view class="item" bindtap='toVisitorList'>
-			<text class="iconfont icon-dengji"></text>来访登记</view>
 		<view class="item" bindtap='toCompany'>
 			<text class="iconfont icon-gongsijianjie"></text>公司简介</view>
 		<view class="item" bindtap='toHelp'>

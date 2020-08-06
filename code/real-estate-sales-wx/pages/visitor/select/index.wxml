@@ -1,0 +1,16 @@
+	<view class="form-body">
+		<label class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index" bindtap='select' data-name='{{item.name}}'>
+			<!-- <text class='building-commission'>{{item.commission}}</text> -->
+			<!-- <view class="thumb">
+				<image src="{{item.thumbnail}}"></image>
+			</view> -->
+			<view class="details">
+				<view class="building-name">{{item.name}}</view>
+				<view class="building-address">
+					<text class='iconfont icon-weizhi'></text><text hidden='{{!item.category}}'>【{{item.category}}】</text> {{item.address}}
+				</view>
+				<view class='summary'>简介：{{item.summery}}</view>
+			</view>
+		</label>
+		<view class='no-more' hidden='{{more}}'>没有更多数据了</view>
+	</view>

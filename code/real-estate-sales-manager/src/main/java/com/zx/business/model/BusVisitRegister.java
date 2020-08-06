@@ -124,6 +124,11 @@ public class BusVisitRegister extends PageVO {
     private String reporter;
 
     /**
+     * 创建用户
+     */
+    private Integer createrid;
+
+    /**
      * 备注
      */
     private String remark;
@@ -286,4 +291,11 @@ public class BusVisitRegister extends PageVO {
         this.remark = remark;
     }
 
+    public Integer getCreaterid() {
+        return createrid;
+    }
+
+    public void setCreaterid(Integer createrid) {
+        this.createrid = createrid;
+    }
 }

@@ -171,11 +171,13 @@
 
 .form .form-body .form-item .form-input {
   flex-grow: 1;
-  color: #808080;
+  /* color: #808080; */
   line-height: 90rpx;
   height: 90rpx;
   border-radius: 12rpx;
-  padding: 0 20rpx;
+  /* padding: 0 20rpx; */
+  padding: 5rpx 20rpx;
+  z-index: 0;
 }
 
 .form .form-footer {

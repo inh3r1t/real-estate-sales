@@ -22,7 +22,8 @@
     "pages/password/reset/reset",
     "pages/help/help",
     "pages/visitor/list",
-    "pages/visitor/register/register"
+    "pages/visitor/register/register",
+    "pages/visitor/select/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

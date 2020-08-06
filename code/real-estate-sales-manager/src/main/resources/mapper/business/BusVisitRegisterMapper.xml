@@ -28,6 +28,7 @@
         <result column="reporter" jdbcType="VARCHAR" property="reporter"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createrid" jdbcType="INTEGER" property="createrid"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--
@@ -37,7 +38,7 @@
         -->
         `id`, `real_estate_id`, `real_estate_name`, `customer`, `phone`, `team`, `adviser`,
         `address`, `occupation`, `times`, `purpose`, `payment`, `product_type`, `area`, `level`,
-        `intention`, `nodeal`, `property`, `reporter`, `remark`, `createtime`
+        `intention`, `nodeal`, `property`, `reporter`, `remark`, `createtime`, `createrid`
     </sql>
 
     <sql id="base_condition_filed">
@@ -91,7 +92,7 @@
         `times`, `purpose`, `payment`,
         `product_type`, `area`, `level`,
         `intention`, `nodeal`, `property`,
-        `reporter`, `remark`, `createtime`
+        `reporter`, `remark`, `createtime`, `createrid`
         )
         values (#{id,jdbcType=INTEGER}, #{realEstateId,jdbcType=INTEGER}, #{realEstateName,jdbcType=VARCHAR},
         #{customer,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR},
@@ -99,7 +100,8 @@
         #{times,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR},
         #{productType,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},
         #{intention,jdbcType=VARCHAR}, #{nodeal,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR},
-        #{reporter,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+        #{reporter,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+        #{createrid,jdbcType=INTEGER}
         )
     </insert>
 
@@ -128,7 +130,8 @@
         `property` = #{property,jdbcType=VARCHAR},
         `reporter` = #{reporter,jdbcType=VARCHAR},
         `remark` = #{remark,jdbcType=VARCHAR},
-        `createtime` = #{createtime,jdbcType=TIMESTAMP}
+        `createtime` = #{createtime,jdbcType=TIMESTAMP},
+        `createrid` = #{createrid,jdbcType=INTEGER}
         where `id` = #{id,jdbcType=INTEGER}
     </update>
 

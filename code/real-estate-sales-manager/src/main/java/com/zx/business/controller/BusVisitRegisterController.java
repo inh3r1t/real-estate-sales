@@ -3,12 +3,15 @@ package com.zx.business.controller;
 import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.controller.BaseController;
+import com.zx.base.exception.WechatAuthException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
+import com.zx.base.model.ReturnModel;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusVisitRegister;
 import com.zx.business.service.BusUserService;
 import com.zx.business.service.BusVisitRegisterService;
+import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,7 +34,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/busVisitRegister")
-public class BusVisitRegisterController extends BaseController {
+public class BusVisitRegisterController extends BusBaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BusVisitRegisterController.class);
     @Resource
@@ -93,5 +98,27 @@ public class BusVisitRegisterController extends BaseController {
         }
     }
 
+    @RequestMapping("/report")
+    @ResponseBody
+    @WechatAuthorize
+    public ResultData report(@RequestBody BusVisitRegister model, HttpServletRequest request) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "报备成功！");
+        try {
+            wechatAuthCheck(request);
 
+            String token = request.getHeader("token");
+            model.setCreaterid(getUserByToken(token).getId());
+            model.setCreatetime(DateUtil.getDateNow());
+            busVisitRegisterService.insert(model);
+        } catch (Exception e) {
+            if (e instanceof WechatAuthException) {
+                resultData.setResultCode(e.getMessage());
+            } else {
+                resultData.setResultCode(Const.FAILED_CODE);
+                resultData.setMsg("登记失败！");
+            }
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
 }

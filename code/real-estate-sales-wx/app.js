@@ -8,7 +8,8 @@ App({
     //  _baseUrl: 'https://ac.eraop.com'
     // _baseUrl: 'https://inh3rit.top'
     // _baseUrl: 'https://trial.inh3rit.top'
-    _baseUrl: 'http://127.0.0.1:9000'
+    // _baseUrl: 'http://127.0.0.1:9000'
+    _baseUrl: 'http://192.168.1.188:9000'
   },
   onLaunch: function() {
     const updateManager = wx.getUpdateManager()
