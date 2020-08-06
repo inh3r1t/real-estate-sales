@@ -5,3 +5,11 @@
   line-height: 90rpx;
   height: 90rpx;
 }
+
+.textarea-label {
+  padding: 30rpx;
+}
+
+.textarea-text {
+  padding: 10rpx 30rpx;
+}

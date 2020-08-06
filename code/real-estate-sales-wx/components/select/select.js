@@ -13,7 +13,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    showName:'全部',
+    showName:'请选择',
     selectShow: false, //控制下拉列表的显示隐藏，false隐藏、true显示
     currentIndex: 0, //选择的下拉列表下标
   },

@@ -1,9 +1,9 @@
 #Development Environment
 spring:
   datasource:
-    url: jdbc:mysql://47.106.143.175:3306/real-estate-sales-test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/real-estate-sales-test?serverTimezone=Asia/Shanghai&Unicode=true&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
     username: root
-    password: root
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
     cache: false
@@ -24,7 +24,7 @@ server:
 
 #Custom configuration
 custom:
-  system-url: https://trial.inh3rit.top
+  system-url: https://ac.eraop.com
   system-name: 安策系统 - 测试环境
   version: V1.1.0111.1
   directory-path: /home/tony/app    #上传文件存储路径，若本地调试可不设置，路径默认为this.getClass().getClassLoader().getResource("").getPath() + "static").substring(1)

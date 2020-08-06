@@ -20,6 +20,58 @@
 			<view class="form-lable">居住区域</view>
 			<select class="select-container" selectData="{{addressList}}" bind:selected="selected"></select>
 		</view>
+		<view class="form-item">
+			<view class="form-lable">职业</view>
+			<select class="select-container" selectData="{{occupationList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">到访次数</view>
+			<select class="select-container" selectData="{{purposeList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">购买用途</view>
+			<select class="select-container" selectData="{{timesList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">付款方式</view>
+			<select class="select-container" selectData="{{paymentList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">付款方式</view>
+			<select class="select-container" selectData="{{paymentList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">意向产品</view>
+			<select class="select-container" selectData="{{productTypeList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">意向面积</view>
+			<select class="select-container" selectData="{{areaList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">意向等级</view>
+			<select class="select-container" selectData="{{levelList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">购买意向</view>
+			<select class="select-container" selectData="{{intentionList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">未成交原因</view>
+			<input class='form-input' name="name" placeholder="请输入未成交原因" type="text" value='{{name}}'></input>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">报备人属性</view>
+			<select class="select-container" selectData="{{propertyList}}" bind:selected="selected"></select>
+		</view>
+		<view class="form-item">
+			<view class="form-lable">报备人姓名</view>
+			<input class='form-input' name="name" placeholder="请输入报备人姓名" type="text" value='{{name}}'></input>
+		</view>
+		<view>
+			<view class="textarea-label">备注</view>
+			<textarea class="textarea-text" placeholder="请输入备注" name="textarea" />
+		</view>
 	</view>
 	<view class="form-footer nav-fix">
 		<button class='btn btn-primary' formType="submit">立即报备</button>
