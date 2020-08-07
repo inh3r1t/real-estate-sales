@@ -19,6 +19,10 @@ public class BusVisitRegisterService {
         busVisitRegisterMapper.insert(model);
         return model;
     }
+    public BusVisitRegister updateByPrimaryKey(BusVisitRegister model) {
+        busVisitRegisterMapper.updateByPrimaryKey(model);
+        return model;
+    }
 
     public PagerModel<BusVisitRegister> getPage(Integer page, Integer pageSize, String startDateTime, String endDateTime) {
         Integer count = busVisitRegisterMapper.countByModel(startDateTime, endDateTime);

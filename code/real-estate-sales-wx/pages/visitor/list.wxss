@@ -50,7 +50,7 @@
   font-size: 16px;
   margin-bottom: 10rpx;
 }
-.visitor-item-building{
+.visitor-item-building,.visitor-item-detail,.visitor-item-remark{
   margin-bottom: 10rpx;
 }
 

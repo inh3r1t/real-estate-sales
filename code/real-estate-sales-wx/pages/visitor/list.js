@@ -108,18 +108,24 @@ Page({
       title: '提示',
       content: '确定删除该条来访登记吗？',
       success: res => {
-        app.post("/busVisitRegister/deleteById", {
-          id: id
-        }).then(res => {
-          var history = that.data.list;
-          history.splice(index, 1);
-          that.setData({
-            list: history
-          });
-        })
+        if (res.confirm) {
+          app.post("/busVisitRegister/deleteById", {
+            id: id
+          }).then(res => {
+            var history = that.data.list;
+            history.splice(index, 1);
+            that.setData({
+              list: history
+            });
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success'
+            })
+          })
+        }
       }
     })
-  
+
   },
   toDetail: function (e) {
     var id = e.currentTarget.dataset.id;

@@ -1,6 +1,9 @@
 package com.zx.business.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zx.business.vo.PageVO;
+import com.zx.lib.utils.DateUtil;
+import org.nutz.dao.entity.annotation.Column;
 
 import java.util.Date;
 
@@ -142,6 +145,22 @@ public class BusVisitRegister extends PageVO {
     }
 
     private Date createtime;
+
+    public Date getVisittime() {
+        return visittime;
+    }
+
+    public void setVisittime(Date visittime) {
+        this.visittime = visittime;
+    }
+
+    private Date visittime;
+
+    public String getVisittimeStr() {
+        return DateUtil.toDateString(visittime, "yyyy-MM-dd");
+    }
+
+    private String visittimeStr;
 
 
     public BusVisitRegister() {

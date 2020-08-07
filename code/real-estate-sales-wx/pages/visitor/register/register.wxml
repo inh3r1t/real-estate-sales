@@ -17,6 +17,18 @@
 			<input class='form-input' name="phone" placeholder="请输入联系方式" type="number" value='{{model.phone}}'></input>
 		</view>
 		<view class="form-item">
+			<text class="form-lable">来访时间</text>
+			<!-- 日期选择 -->
+			<view class="placeholder date">
+				<picker mode="multiSelector" value="{{dateTime}}" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+					<view class="tui-picker-detail">
+						{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{day}}
+					</view>
+				</picker>
+			</view>
+			<text class="form-word-aux iconfont icon-rili"></text>
+		</view>
+		<view class="form-item">
 			<view class="form-lable">所属团队</view>
 			<input disabled class='form-input' name="team" placeholder="请选择所属团队" type="text" value='{{model.team}}' bindtap="getTeam"></input>
 			<text class="iconfont icon-more form-input-select"></text>
@@ -89,6 +101,6 @@
 		</view>
 	</view>
 	<view class="form-footer nav-fix">
-		<button class='btn btn-primary' formType="submit">确认</button>
+		<button class='btn btn-primary' formType="submit">{{model.id!="" && model.id!=null?"修改":"提交"}}</button>
 	</view>
 </form>

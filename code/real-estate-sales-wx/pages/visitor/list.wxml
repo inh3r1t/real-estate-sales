@@ -3,18 +3,22 @@
 		<view bindtap='toDetail' bindlongpress="deleteItem" class="visitor-item" data-id="{{item.id}}" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
 			<view class="details">
 				<view class="visitor-item-name">
-					<text class="bold">{{item.customer}}</text>
-					<text class='iconfont icon-shijian pull-right'> {{item.createtime}}</text>
+					<text class="bold">{{item.customer}} </text>
+					<text>{{item.phone}}</text>
+					<!-- <text class='iconfont icon-dianhua'> {{item.phone}}</text> -->
 				</view>
 				<view class='visitor-item-building'>
 					<text class='iconfont icon-loupan1'> {{item.realEstateName}}</text>
 				</view>
 				<view class="visitor-item-detail">
-					<text class='iconfont icon-shijian'> {{item.phone}}</text>
 					<text class='iconfont icon-daofang1'> {{item.times}}</text>
 					<text class='iconfont icon-yixiangkehu'> {{item.intention}}</text>
 				</view>
-				<view class='visitor-item-building'>
+				<view class="visitor-item-detail">
+					<text class='iconfont icon-shijian'> {{item.visittimeStr}}</text>
+					<text class='iconfont icon-report'> {{item.createtime}}</text>
+				</view>
+				<view class='visitor-item-remark'>
 					<text class='iconfont icon-beizhu2' wx:if="{{item.remark!='' && item.remark!=undefind}}"> {{item.remark}}</text>
 				</view>
 			</view>

@@ -81,6 +81,7 @@ public class BaseController {
     public HttpSession session;
     @Autowired
     public HttpServletRequest request;
+    @Resource
     public HttpServletResponse response;
 
     @Value("${custom.wechat.openid.api.url}")

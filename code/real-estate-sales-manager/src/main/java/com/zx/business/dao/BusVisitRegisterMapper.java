@@ -10,6 +10,7 @@ import java.util.List;
 public interface BusVisitRegisterMapper {
     
     int insert(BusVisitRegister record);
+    int updateByPrimaryKey(BusVisitRegister record);
 
     Integer countByModel(
             @Param("startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);

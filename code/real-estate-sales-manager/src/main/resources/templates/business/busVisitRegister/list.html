@@ -4,6 +4,11 @@
 
 <head>
     <title>来访登记列表</title>
+    <style>
+        .layui-table td, .layui-table th {
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <div class="padding" data-layout-fragment="renderBody">
@@ -25,8 +30,10 @@
             </div>
             <div class="layui-inline">
                 <span class="layui-btn" onclick="btn_Search()"><i class="fa fa-search"></i> 检索</span>
-
-<!--                <span class="layui-btn layui-btn-normal" onclick="btn_add()"><i class="fa fa-plus"></i> 新增</span>-->
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn layui-btn-normal" onclick="btn_Export()"><i
+                        class="fa fa-file-excel-o"></i> 导出</span>
             </div>
         </form>
     </blockquote>
@@ -36,29 +43,29 @@
             <thead>
             <tr>
                 <th>序号</th>
-                <th class="text-center" style="text-align:center">楼盘名称</th>
-                <th class="text-center" style="text-align:center">客户姓名</th>
-                <th class="text-center" style="text-align:center">联系方式</th>
-                <th class="text-center" style="text-align:center">所属团队</th>
-                <th class="text-center" style="text-align:center">置业顾问</th>
-                <th class="text-center" style="text-align:center">居住区域</th>
-                <th class="text-center" style="text-align:center">职业</th>
-                <th class="text-center" style="text-align:center">到访次数</th>
-                <th class="text-center" style="text-align:center">购买用途</th>
-                <th class="text-center" style="text-align:center">付款方式</th>
-                <th class="text-center" style="text-align:center">意向产品</th>
-                <th class="text-center" style="text-align:center">意向面积</th>
-                <th class="text-center" style="text-align:center">意向等级</th>
-                <th class="text-center" style="text-align:center">购买意向</th>
-                <th class="text-center" style="text-align:center">未成交原因</th>
-                <th class="text-center" style="text-align:center">报备人属性</th>
-                <th class="text-center" style="text-align:center">报备人姓名</th>
-                <th class="text-center" style="text-align:center">登记日期</th>
-                <th class="text-center" style="text-align:center">备注</th>
+                <th class="text-center" style="text-align:center;">楼盘名称</th>
+                <th class="text-center" style="text-align:center;">客户姓名</th>
+                <th class="text-center" style="text-align:center;">联系方式</th>
+                <th class="text-center" style="text-align:center;">所属团队</th>
+                <th class="text-center" style="text-align:center;">置业顾问</th>
+                <th class="text-center" style="text-align:center;">居住区域</th>
+                <th class="text-center" style="text-align:center;">职业</th>
+                <th class="text-center" style="text-align:center;">到访次数</th>
+                <th class="text-center" style="text-align:center;">购买用途</th>
+                <th class="text-center" style="text-align:center;">付款方式</th>
+                <th class="text-center" style="text-align:center;">意向产品</th>
+                <th class="text-center" style="text-align:center;">意向面积</th>
+                <th class="text-center" style="text-align:center;">意向等级</th>
+                <th class="text-center" style="text-align:center;">购买意向</th>
+                <th class="text-center" style="text-align:center;">未成交原因</th>
+                <th class="text-center" style="text-align:center;">报备人属性</th>
+                <th class="text-center" style="text-align:center;">报备人姓名</th>
+                <th class="text-center" style="text-align:center;min-width: 120px">来访日期</th>
+                <th class="text-center" style="text-align:center;min-width: 120px">登记日期</th>
+                <th class="text-center" style="text-align:center;">备注</th>
 
 
-
-<!--                <th class="text-center" style="text-align:center">操作</th>-->
+                <!--                <th class="text-center" style="text-align:center">操作</th>-->
             </tr>
             </thead>
             <tbody style="display:none" data-bind="visible: true">
@@ -82,12 +89,13 @@
                 <td class="text-center" data-bind="text:nodeal"></td>
                 <td class="text-center" data-bind="text:property"></td>
                 <td class="text-center" data-bind="text:reporter"></td>
+                <td class="text-center" data-bind="text:visittime"></td>
                 <td class="text-center" data-bind="text:createtime"></td>
                 <td class="text-center" data-bind="text:remark"></td>
-<!--                <td class="text-center">-->
-<!--                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">-->
-<!--                        <i class="fa fa-edit"></i></a>-->
-<!--                </td>-->
+                <!--                <td class="text-center">-->
+                <!--                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">-->
+                <!--                        <i class="fa fa-edit"></i></a>-->
+                <!--                </td>-->
             </tr>
             <!-- /ko -->
             </tbody>
@@ -106,6 +114,15 @@
 
     function btn_Search() {
         viewModel.Reload($('#searchForm').serialize());
+    }
+
+    //导出
+    function btn_Export() {
+        dialog.confirm('确认导出当前查询的结果数据吗？', function () {
+            dialog.closeAll();
+            dialog.success('导出成功,文件下载中...');
+            location.href = '/busVisitRegister/export?' + $('#searchForm').serialize();
+        });
     }
 </script>
 

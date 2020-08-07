@@ -15,7 +15,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     app.checkLogin().then(res => {
       this.getList(1);
     })
@@ -23,7 +23,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.getList(1, true).then(() => {
       // 处理完成后，终止下拉刷新
       wx.stopPullDownRefresh()
@@ -33,7 +33,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.getList(this.data.page + 1)
   },
   getList(pageNo, override) {
@@ -61,13 +61,13 @@ Page({
       })
     }
   },
-  touchstart: function(e) {
+  touchstart: function (e) {
     this.setData({
       index: e.currentTarget.dataset.index,
       Mstart: e.changedTouches[0].pageX
     });
   },
-  touchmove: function(e) {
+  touchmove: function (e) {
     //列表项数组
     let list = this.data.list;
     //手指在屏幕上移动的距离
@@ -81,7 +81,7 @@ Page({
       list: list
     });
   },
-  touchend: function(e) {
+  touchend: function (e) {
     let list = this.data.list;
     let move = this.data.Mstart - e.changedTouches[0].pageX;
     list[this.data.index].x = move > 100 ? -180 : 0;
@@ -89,7 +89,7 @@ Page({
       list: list
     });
   },
-  deleteItem: function(e) {
+  deleteItem: function (e) {
     var id = e.currentTarget.dataset.id
     var index = e.currentTarget.dataset.index
     var that = this;
@@ -100,11 +100,18 @@ Page({
         app.post("/busNotifyMsg/deleteById", {
           id: id
         }).then(res => {
-          var history = that.data.list;
-          history.splice(index, 1);
-          that.setData({
-            list: history
-          });
+          if (res.confirm) {
+            var history = that.data.list;
+            history.splice(index, 1);
+            that.setData({
+              list: history
+            });
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success'
+            })
+          }
+
         })
       }
     })

@@ -1,3 +1,4 @@
+var dateTimePicker = require('../../../utils/dateTimePicker.js');
 const app = getApp();
 Page({
 
@@ -5,6 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    date: '',
+    dateTime: null,
+    dateTimeArray: null,
+    startYear: 2016,
+    endYear: 2050,
+    day: '',
     model: {},
     teamList: ["代理 ", "自销 "],
     addressList: ["琅琊", "南谯", "定远", "明光", "来安", "其他地区"],
@@ -15,7 +22,7 @@ Page({
     productTypeList: ["高层", "洋房", "大平层", "别墅", "商铺"],
     areaList: ["100m²以内", "100m²-120m²", "120m²-140m²", "140m²-200m²", "200m²以上"],
     levelList: ["A", "B", "C"],
-    intentionList: ["已成交", "未成交", "已小定", "已验资/定存"],
+    intentionList: ["已认购", "未认购", "已小定", "已验资/定存"],
     propertyList: ["个人经纪人", "中介"]
   },
 
@@ -24,26 +31,165 @@ Page({
    */
   onLoad: function (options) {
     this.WxValidate = app.WxValidate({
+      realEstateId: {
+        required: true
+      },
+      realEstateName: {
+        required: true
+      },
       customer: {
         required: true,
         minlength: 2,
         maxlength: 10,
+      },
+      phone: {
+        required: true
+      },
+      team: {
+        required: true
+      },
+      adviser: {
+        required: true
+      },
+      address: {
+        required: true
+      },
+      occupation: {
+        required: true
+      },
+      times: {
+        required: true
+      },
+      purpose: {
+        required: true
+      },
+      payment: {
+        required: true
+      },
+      productType: {
+        required: true
+      },
+      area: {
+        required: true
+      },
+      level: {
+        required: true
+      },
+      intention: {
+        required: true
+      },
+      nodeal: {
+        required: true
+      },
+      property: {
+        required: true
+      },
+      reporter: {
+        required: true
       }
     }, {
+      realEstateId: {
+        required: '楼盘主键是必填项'
+      },
+      realEstateName: {
+        required: '楼盘名称是必填项'
+      },
       customer: {
-        required: '请输入姓名',
+        required: '客户姓名是必填项',
         minlength: '姓名至少2个字符',
         maxlength: '姓名不超过10个字符',
+      },
+      phone: {
+        required: '联系方式是必填项'
+      },
+      team: {
+        required: '所属团队是必填项'
+      },
+      adviser: {
+        required: '置业顾问是必填项'
+      },
+      address: {
+        required: '居住区域是必填项'
+      },
+      occupation: {
+        required: '职业是必填项'
+      },
+      times: {
+        required: '到访次数是必填项'
+      },
+      purpose: {
+        required: '购买用途是必填项'
+      },
+      payment: {
+        required: '付款方式是必填项'
+      },
+      productType: {
+        required: '意向产品是必填项'
+      },
+      area: {
+        required: '意向面积是必填项'
+      },
+      level: {
+        required: '意向等级是必填项'
+      },
+      intention: {
+        required: '购买意向是必填项'
+      },
+      nodeal: {
+        required: '未成交原因是必填项'
+      },
+      property: {
+        required: '报备人属性是必填项'
+      },
+      reporter: {
+        required: '报备人姓名是必填项'
+      },
+      createtime: {
+        required: '创建时间是必填项'
+      },
+      createrid: {
+        required: '创建人是必填项'
       }
+
     })
     var id = options.id;
     if (id != undefined && id != '') {
       app.get("/busVisitRegister/getById/" + id).then(res => {
+        debugger
+        var obj = dateTimePicker.dateTimePicker(this.data.startYear, this.data.endYear, res.data.visittime);
+        obj.dateTime[2] = parseInt((obj.defaultDay).substring(0, 2)) - 1; //day 字符串 'xx日' 转 'int'
         this.setData({
-          model: res.data
-        })
+          model: res.data,
+          dateTime: obj.dateTime,
+          dateTimeArray: obj.dateTimeArray,
+          day: obj.defaultDay
+        });
       })
+    } else {
+      var obj = dateTimePicker.dateTimePicker(this.data.startYear, this.data.endYear);
+      obj.dateTime[2] = parseInt((obj.defaultDay).substring(0, 2)) - 1; //day 字符串 'xx日' 转 'int'
+      this.setData({
+        dateTime: obj.dateTime,
+        dateTimeArray: obj.dateTimeArray,
+        day: obj.defaultDay
+      });
     }
+  },
+  changeDateTimeColumn: function (e) {
+    var arr = this.data.dateTime,
+      dateArr = this.data.dateTimeArray;
+
+    arr[e.detail.column] = e.detail.value;
+    dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
+    //console.log(arr);
+    this.setData({
+      dateTimeArray: dateArr,
+      dateTime: arr,
+      day: dateArr[2][arr[2]].substring(0, 3),
+    });
+  },
+  getDate: function () {
+    return this.data.dateTimeArray[0][this.data.dateTime[0]] + '-' + this.data.dateTimeArray[1][this.data.dateTime[1]] + '-' + this.data.day + ' 00:00:00';
   },
   formSubmit: function (e) {
     const params = e.detail.value
@@ -71,7 +217,7 @@ Page({
       times: params.times,
       purpose: params.purpose,
       payment: params.payment,
-      product_type: params.product_type,
+      productType: params.productType,
       area: params.area,
       level: params.level,
       intention: params.intention,
@@ -79,7 +225,8 @@ Page({
       property: params.property,
       reporter: params.reporter,
       remark: params.remark,
-      createrid: params.createrid
+      createrid: params.createrid,
+      visittime: this.getDate()
     });
     app.post("/busVisitRegister/report", this.data).then(res => {
       wx.showToast({
