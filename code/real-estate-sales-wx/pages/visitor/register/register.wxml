@@ -96,7 +96,7 @@
 			<input class='form-input' name="reporter" placeholder="请输入报备人姓名" type="text" value='{{model.reporter}}'></input>
 		</view>
 		<view>
-			<view class="textarea-label">备注</view>
+			<view class="textarea-label">备注描述</view>
 			<textarea class="textarea-text" placeholder="请输入备注" name="remark" value="{{model.remark}}"></textarea>
 		</view>
 	</view>
