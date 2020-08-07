@@ -53,6 +53,17 @@ public class BusVisitRegisterController extends BusBaseController {
     public ResultData getPage(@RequestBody BusVisitRegister model, String time) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取列表成功！");
         try {
+
+            wechatAuthCheck(request);
+            String token = request.getHeader("token");
+            if (model.getPage() == null) {
+                model.setPage(1);
+            }
+            if (model.getPageSize() == null) {
+                model.setPageSize(PAGE_SIZE);
+            }
+
+            Map<String, Object> paramMap = new HashMap<String, Object>();
             String startDateTime = null, endDateTime = null;
             if (StringUtils.isNotEmpty(time)) {
                 String[] seTime = time.split(" - ");
@@ -60,12 +71,22 @@ public class BusVisitRegisterController extends BusBaseController {
                     startDateTime = seTime[0].trim();
                     endDateTime = seTime[1].trim();
 
+                    paramMap.put("startDateTime", startDateTime);
+                    paramMap.put("endDateTime", endDateTime);
                 }
             }
-            wechatAuthCheck(request);
-            String token = request.getHeader("token");
-            PagerModel<BusVisitRegister> busRealEstatePage =
-                    busVisitRegisterService.getPage(model.getPage(), model.getPageSize(), startDateTime, endDateTime, getUserByToken(token).getId());
+
+            paramMap.put("orderField", "createtime");
+            paramMap.put("orderType", "desc");
+            paramMap.put("createid", getUserByToken(token).getId());
+
+            int count = busVisitRegisterService.selectCount(paramMap);
+
+            paramMap.put("start", (model.getPage() - 1) * model.getPageSize());
+            paramMap.put("pageSize", model.getPageSize());
+            List<BusVisitRegister> busRealEstate =
+                    busVisitRegisterService.getPage(paramMap);
+            PagerModel<BusVisitRegister> busRealEstatePage = new PagerModel<>(model.getPageSize(), model.getPage(), count, busRealEstate);
             resultData.setData(busRealEstatePage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
@@ -77,7 +98,13 @@ public class BusVisitRegisterController extends BusBaseController {
 
     @RequestMapping(value = "/getList", method = RequestMethod.POST)
     @ResponseBody
-    public Object getList(BusVisitRegister model, String time) {
+    public Object getList(BusVisitRegister model,
+                          String time,
+                          String team,
+                          String level,
+                          String intention,
+                          String property,
+                          String times) {
         try {
             if (model.getPage() == null) {
                 model.setPage(1);
@@ -85,6 +112,8 @@ public class BusVisitRegisterController extends BusBaseController {
             if (model.getPageSize() == null) {
                 model.setPageSize(PAGE_SIZE);
             }
+
+            Map<String, Object> paramMap = new HashMap<String, Object>();
             String startDateTime = null, endDateTime = null;
             if (StringUtils.isNotEmpty(time)) {
                 String[] seTime = time.split(" - ");
@@ -92,9 +121,37 @@ public class BusVisitRegisterController extends BusBaseController {
                     startDateTime = seTime[0].trim();
                     endDateTime = seTime[1].trim();
 
+                    paramMap.put("startDateTime", startDateTime);
+                    paramMap.put("endDateTime", endDateTime);
                 }
             }
-            return busVisitRegisterService.getPage(model.getPage(), model.getPageSize(), startDateTime, endDateTime, null);
+
+            paramMap.put("orderField", "createtime");
+            paramMap.put("orderType", "desc");
+            if (StringUtil.isNotEmpty(team)) {
+                paramMap.put("team", team);
+            }
+            if (StringUtil.isNotEmpty(level)) {
+                paramMap.put("level", level);
+            }
+            if (StringUtil.isNotEmpty(intention)) {
+                paramMap.put("intention", intention);
+            }
+            if (StringUtil.isNotEmpty(property)) {
+                paramMap.put("property", property);
+            }
+            if (StringUtil.isNotEmpty(times)) {
+                paramMap.put("times", times);
+            }
+            int count = busVisitRegisterService.selectCount(paramMap);
+
+            paramMap.put("start", (model.getPage() - 1) * model.getPageSize());
+            paramMap.put("pageSize", model.getPageSize());
+            List<BusVisitRegister> busRealEstate =
+                    busVisitRegisterService.getPage(paramMap);
+            return new PagerModel<>(model.getPageSize(), model.getPage(), count, busRealEstate);
+
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new PagerModel<>(model.getPage(), model.getPageSize(), 0, new ArrayList<>());
@@ -164,7 +221,13 @@ public class BusVisitRegisterController extends BusBaseController {
      */
     @RequestMapping(value = "/export")
     @ResponseBody
-    public void export(String time) {
+    public void export(
+            String time,
+            String team,
+            String level,
+            String intention,
+            String property,
+            String times) {
         try {
             Map<String, Object> paramMap = new HashMap<String, Object>();
             String startDateTime = null, endDateTime = null;
@@ -173,9 +236,32 @@ public class BusVisitRegisterController extends BusBaseController {
                 if (seTime.length > 1) {
                     startDateTime = seTime[0].trim();
                     endDateTime = seTime[1].trim();
+
+                    paramMap.put("startDateTime", startDateTime);
+                    paramMap.put("endDateTime", endDateTime);
                 }
             }
-            List<BusVisitRegister> list = busVisitRegisterService.getList(startDateTime, endDateTime, null);
+
+            paramMap.put("orderField", "createtime");
+            paramMap.put("orderType", "desc");
+            if (StringUtil.isNotEmpty(team)) {
+                paramMap.put("team", team);
+            }
+            if (StringUtil.isNotEmpty(level)) {
+                paramMap.put("level", level);
+            }
+            if (StringUtil.isNotEmpty(intention)) {
+                paramMap.put("intention", intention);
+            }
+            if (StringUtil.isNotEmpty(property)) {
+                paramMap.put("property", property);
+            }
+            if (StringUtil.isNotEmpty(times)) {
+                paramMap.put("times", times);
+            }
+
+            List<BusVisitRegister> list =
+                    busVisitRegisterService.getPage(paramMap);
             if (list != null) {
                 LinkedHashMap<String, String> fmap = new LinkedHashMap<>();
                 fmap.put("_index", "序号");
@@ -200,7 +286,7 @@ public class BusVisitRegisterController extends BusBaseController {
                 fmap.put("reporter", "报备人姓名");
                 fmap.put("remark", "备注");
 
-                HSSFWorkbook book = ExcelUtil.createWorkBook("安策营销案场来访登记表", list, fmap);
+                HSSFWorkbook book = ExcelUtil.createWorkBook("安策营销案场来访登记表", list, fmap, true);
                 exportExcel("安策营销案场来访登记表", book);
             }
         } catch (Exception e) {

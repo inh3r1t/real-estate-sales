@@ -39,12 +39,33 @@
         -->
         `id`, `real_estate_id`, `real_estate_name`, `customer`, `phone`, `team`, `adviser`,
         `address`, `occupation`, `times`, `purpose`, `payment`, `product_type`, `area`, `level`,
-        `intention`, `nodeal`, `property`, `reporter`, `remark`, `createtime`,  `visittime`, `createrid`
+        `intention`, `nodeal`, `property`, `reporter`, `remark`, `createtime`, `visittime`, `createrid`
     </sql>
 
     <sql id="base_condition_filed">
         <if test="createrid != null">
             and createrid = #{createrid}
+        </if>
+        <if test="team != null and team!=''">
+            and team = #{team}
+        </if>
+        <if test="level != null and level!=''">
+            and level = #{level}
+        </if>
+        <if test="times != null and times!=''">
+            and times = #{times}
+        </if>
+        <if test="property != null and property!=''">
+            and property = #{property}
+        </if>
+        <if test="purpose != null and purpose!=''">
+            and purpose = #{purpose}
+        </if>
+        <if test="payment != null and payment!=''">
+            and payment = #{payment}
+        </if>
+        <if test="intention != null and intention!=''">
+            and intention = #{intention}
         </if>
         <if test="startDateTime != null">
             and <![CDATA[ createtime >= #{startDateTime}  ]]>
@@ -104,7 +125,8 @@
         #{times,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR},
         #{productType,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},
         #{intention,jdbcType=VARCHAR}, #{nodeal,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR},
-        #{reporter,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},#{visittime,jdbcType=TIMESTAMP},
+        #{reporter,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP},#{visittime,jdbcType=TIMESTAMP},
         #{createrid,jdbcType=INTEGER}
         )
     </insert>

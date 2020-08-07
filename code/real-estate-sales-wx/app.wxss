@@ -167,10 +167,10 @@
   font-size: 17px;
   box-sizing: border-box;
   padding: 0 30rpx;
-  border-bottom: 5rpx solid #f1f1f1;
+  border-bottom: 1rpx solid #dfdfdf;
   background-color: #fff;
-  border-top: 5rpx solid #f1f1f1;
-  margin-top: 20rpx;
+  /* border-top: 1rpx solid #f1f1f1; */
+  margin-top: 0rpx;
 }
 
 .form .form-body .form-item .form-lable {

@@ -2,10 +2,12 @@ package com.zx.business.dao;
 
 import com.zx.business.model.BusDeal;
 import com.zx.business.model.BusVisitRegister;
+import com.zx.system.model.SysLog;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface BusVisitRegisterMapper {
 
@@ -29,4 +31,19 @@ public interface BusVisitRegisterMapper {
     BusVisitRegister selectByPrimaryKey(Integer id);
 
     void deleteByPrimaryKey(Integer id);
+
+
+    /**
+     * 根据条件统计数量
+     *
+     * @param map 条件
+     **/
+    int countByModel(Map map);
+
+    /**
+     * 查询
+     *
+     * @param map 查询条件
+     **/
+    List<BusVisitRegister> selectByPage(Map map);
 }

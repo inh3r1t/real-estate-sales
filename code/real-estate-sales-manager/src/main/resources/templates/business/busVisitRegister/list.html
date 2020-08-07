@@ -8,6 +8,9 @@
         .layui-table td, .layui-table th {
             font-size: 12px;
         }
+        .select-short{
+            width: 100px;
+        }
     </style>
 </head>
 
@@ -21,11 +24,66 @@
                            class="layui-input">
                 </div>
             </div>
-            <div class="layui-inline ">
+            <div class="layui-inline">
                 <label>登记时间</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input date-range" name="time" id="time" lay-verify="timeRange"
                            placeholder="请选择时间段" value=""/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>所属团队</label>
+                <div class="layui-input-inline select-short">
+                    <select name="team">
+                        <option value="">全部</option>
+                        <option value="代理">代理</option>
+                        <option value="自销">自销</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>意向等级</label>
+                <div class="layui-input-inline select-short">
+                    <select name="level">
+                        <option value="">全部</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>购买意向</label>
+                <div class="layui-input-inline select-short">
+                    <select name="intention">
+                        <option value="">全部</option>
+                        <option value="已认购">已认购</option>
+                        <option value="未认购">未认购</option>
+                        <option value="已小定">已小定</option>
+                        <option value="已验资/定存">已验资/定存</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>报备人属性</label>
+                <div class="layui-input-inline select-short">
+                    <select name="property">
+                        <option value="">全部</option>
+                        <option value="个人经纪人">个人经纪人</option>
+                        <option value="中介">中介</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label>到访次数</label>
+                <div class="layui-input-inline select-short">
+                    <select name="times">
+                        <option value="">全部</option>
+                        <option value="首访">首访</option>
+                        <option value="二访">二访</option>
+                        <option value="三访">三访</option>
+                        <option value="多次到访">多次到访</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline">
@@ -43,26 +101,26 @@
             <thead>
             <tr>
                 <th>序号</th>
-                <th class="text-center" style="text-align:center;">楼盘名称</th>
-                <th class="text-center" style="text-align:center;">客户姓名</th>
-                <th class="text-center" style="text-align:center;">联系方式</th>
-                <th class="text-center" style="text-align:center;">所属团队</th>
-                <th class="text-center" style="text-align:center;">置业顾问</th>
-                <th class="text-center" style="text-align:center;">居住区域</th>
-                <th class="text-center" style="text-align:center;">职业</th>
-                <th class="text-center" style="text-align:center;">到访次数</th>
-                <th class="text-center" style="text-align:center;">购买用途</th>
-                <th class="text-center" style="text-align:center;">付款方式</th>
-                <th class="text-center" style="text-align:center;">意向产品</th>
-                <th class="text-center" style="text-align:center;">意向面积</th>
-                <th class="text-center" style="text-align:center;">意向等级</th>
-                <th class="text-center" style="text-align:center;">购买意向</th>
-                <th class="text-center" style="text-align:center;">未成交原因</th>
-                <th class="text-center" style="text-align:center;">报备人属性</th>
-                <th class="text-center" style="text-align:center;">报备人姓名</th>
-                <th class="text-center" style="text-align:center;min-width: 120px">来访日期</th>
-                <th class="text-center" style="text-align:center;min-width: 120px">登记日期</th>
-                <th class="text-center" style="text-align:center;">备注</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">楼盘名称</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">客户姓名</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">联系方式</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">所属团队</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">置业顾问</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">居住区域</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">职业</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">到访次数</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">购买用途</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">付款方式</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">意向产品</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">意向面积</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">意向等级</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">购买意向</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">未成交原因</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">报备人属性</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">报备人姓名</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 120px">来访日期</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 120px">登记日期</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">备注</th>
 
 
                 <!--                <th class="text-center" style="text-align:center">操作</th>-->

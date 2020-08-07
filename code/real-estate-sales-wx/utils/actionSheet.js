@@ -12,20 +12,20 @@ const showActionSheet = function (config) {
     myConfig.itemList = [];
     var successFun = config.success;
     myConfig.success = function (res) {
-      if (res.tapIndex == 5) {//下一页
+      if (res.tapIndex == 5) { //下一页
         myConfig.page++;
         showActionSheet(myConfig);
       } else {
-        res.tapIndex = res.tapIndex + 5 * (myConfig.page-1);
+        res.tapIndex = res.tapIndex + 5 * (myConfig.page - 1);
         successFun(res);
       }
     }
     showActionSheet(myConfig);
-    return ;
+    return;
   }
   if (!config.page) {
     wx.showActionSheet(config);
-  }else{
+  } else {
     var page = config.page;
     var itemListBak = config.itemListBak;
     var itemList = [];
@@ -37,7 +37,7 @@ const showActionSheet = function (config) {
     }
     config.itemList = itemList;
     wx.showActionSheet(config);
-  } 
+  }
 }
 
 module.exports = {

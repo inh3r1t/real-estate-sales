@@ -308,7 +308,6 @@ public class ExcelUtil {
         //5.创建第一行：标题行
         Row rowTitle = sheet.createRow((short) 0);
         rowTitle.setHeightInPoints(20);
-        rowTitle.setHeight((short) 80);
         //标题样式
         CellStyle styleTitle = getCellStyle(wb, 1);
         //创建单元格（第一个含标题）
