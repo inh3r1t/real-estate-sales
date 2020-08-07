@@ -1,1 +1,59 @@
-/* pages/visitor/list.wxss */
+.nav-fix {
+  position: fixed;
+  bottom: 0rpx;
+  background-color: #fff;
+  padding-top: 20rpx;
+  width: 100%;
+  padding: 60rpx 30rpx 20rpx;
+  box-sizing: border-box;
+
+}
+
+.visitor-list {
+  padding-bottom: 140rpx;
+}
+
+.visitor-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  border-bottom: 1px solid #efefef;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.visitor-item .details {
+  padding-left: 20rpx;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 16px;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.visitor-item .details view {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.visitor-item-name {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 16px;
+  margin-bottom: 10rpx;
+}
+.visitor-item-building{
+  margin-bottom: 10rpx;
+}
+
+.visitor-item-detail text {
+  margin-right: 10rpx;
+}

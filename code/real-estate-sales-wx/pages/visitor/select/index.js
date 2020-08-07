@@ -49,7 +49,7 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
-      return app.post("/busRealEstate/getPage", {
+      return app.post("/busRealEstate/my", {
         page: pageNo,
         pageSize: 10
       }).then(res => {
@@ -76,8 +76,8 @@ Page({
     var pages = getCurrentPages(); // 获取页面栈 
     var prevPage = pages[pages.length - 2]; // 上一个页面
     prevPage.setData({
-      realEstateId: realEstateId,
-      realEstateName: realEstateName
+      "model.realEstateId": realEstateId,
+      "model.realEstateName": realEstateName
     })
     wx.navigateBack({})
   }

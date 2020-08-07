@@ -23,7 +23,8 @@
     "pages/help/help",
     "pages/visitor/list",
     "pages/visitor/register/register",
-    "pages/visitor/select/index"
+    "pages/visitor/select/index",
+    "pages/visitor/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

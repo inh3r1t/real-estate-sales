@@ -5,27 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: 0,
-    realEstateId: 0,
-    realEstateName: "",
-    customer: "",
-    phone: "",
-    team: "",
-    adviser: "",
-    address: "",
-    occupation: "",
-    times: "",
-    purpose: "",
-    payment: "",
-    product_type: "",
-    area: "",
-    level: "",
-    intention: "",
-    nodeal: "",
-    property: "",
-    reporter: "",
-    remark: "",
-    createtime: "",
+    model: {},
     teamList: ["代理 ", "自销 "],
     addressList: ["琅琊", "南谯", "定远", "明光", "来安", "其他地区"],
     occupationList: ["公务员", "医生", "教师", "个体", "职工", "其他"],
@@ -56,6 +36,14 @@ Page({
         maxlength: '姓名不超过10个字符',
       }
     })
+    var id = options.id;
+    if (id != undefined && id != '') {
+      app.get("/busVisitRegister/getById/" + id).then(res => {
+        this.setData({
+          model: res.data
+        })
+      })
+    }
   },
   formSubmit: function (e) {
     const params = e.detail.value
@@ -100,7 +88,14 @@ Page({
         duration: 2000,
         success: function () {
           setTimeout(function () {
-            wx.navigateBack({})
+            wx.navigateBack({
+              success: res => {
+                let pages = getCurrentPages();
+                let prevPage = pages[pages.length - 1]; // 上一个页面的对象
+                // 当然, 也可以通过setData设置那个页面的其他数据
+                prevPage.onLoad(); // 触发上一个页面的onLoad生命周期函数
+              }
+            })
           }, 1000)
         }
       })
@@ -172,7 +167,7 @@ Page({
       itemList: this.data.teamList,
       success: res => {
         this.setData({
-          team: this.data.teamList[res.tapIndex]
+          "model.team": this.data.teamList[res.tapIndex]
         })
       }
     })
@@ -182,7 +177,7 @@ Page({
       itemList: this.data.addressList,
       success: res => {
         this.setData({
-          address: this.data.addressList[res.tapIndex]
+          "model.address": this.data.addressList[res.tapIndex]
         })
       }
     })
@@ -192,7 +187,7 @@ Page({
       itemList: this.data.occupationList,
       success: res => {
         this.setData({
-          occupation: this.data.occupationList[res.tapIndex]
+          "model.occupation": this.data.occupationList[res.tapIndex]
         })
       }
     })
@@ -202,7 +197,7 @@ Page({
       itemList: this.data.timesList,
       success: res => {
         this.setData({
-          times: this.data.timesList[res.tapIndex]
+          "model.times": this.data.timesList[res.tapIndex]
         })
       }
     })
@@ -212,7 +207,7 @@ Page({
       itemList: this.data.purposeList,
       success: res => {
         this.setData({
-          purpose: this.data.purposeList[res.tapIndex]
+          "model.purpose": this.data.purposeList[res.tapIndex]
         })
       }
     })
@@ -222,7 +217,7 @@ Page({
       itemList: this.data.paymentList,
       success: res => {
         this.setData({
-          payment: this.data.paymentList[res.tapIndex]
+          "model.payment": this.data.paymentList[res.tapIndex]
         })
       }
     })
@@ -232,7 +227,7 @@ Page({
       itemList: this.data.productTypeList,
       success: res => {
         this.setData({
-          productType: this.data.productTypeList[res.tapIndex]
+          "model.productType": this.data.productTypeList[res.tapIndex]
         })
       }
     })
@@ -242,7 +237,7 @@ Page({
       itemList: this.data.areaList,
       success: res => {
         this.setData({
-          area: this.data.areaList[res.tapIndex]
+          "model.area": this.data.areaList[res.tapIndex]
         })
       }
     })
@@ -252,7 +247,7 @@ Page({
       itemList: this.data.levelList,
       success: res => {
         this.setData({
-          level: this.data.levelList[res.tapIndex]
+          "model.level": this.data.levelList[res.tapIndex]
         })
       }
     })
@@ -262,7 +257,7 @@ Page({
       itemList: this.data.intentionList,
       success: res => {
         this.setData({
-          intention: this.data.intentionList[res.tapIndex]
+          "model.intention": this.data.intentionList[res.tapIndex]
         })
       }
     })
@@ -272,7 +267,7 @@ Page({
       itemList: this.data.propertyList,
       success: res => {
         this.setData({
-          property: this.data.propertyList[res.tapIndex]
+          "model.property": this.data.propertyList[res.tapIndex]
         })
       }
     })

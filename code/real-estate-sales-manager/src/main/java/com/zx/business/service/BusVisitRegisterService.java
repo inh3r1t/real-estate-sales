@@ -23,11 +23,15 @@ public class BusVisitRegisterService {
     public PagerModel<BusVisitRegister> getPage(Integer page, Integer pageSize, String startDateTime, String endDateTime) {
         Integer count = busVisitRegisterMapper.countByModel(startDateTime, endDateTime);
         int start = (page - 1) * pageSize;
-        List<BusVisitRegister> busVisitRegisters = busVisitRegisterMapper.selectByPage(start, pageSize, null, null, startDateTime, endDateTime);
+        List<BusVisitRegister> busVisitRegisters = busVisitRegisterMapper.selectByPage(start, pageSize, "createtime", "desc", startDateTime, endDateTime);
         return new PagerModel<>(pageSize, page, count.intValue(), busVisitRegisters);
     }
 
     public List<BusVisitRegister> getList(String startDateTime, String endDateTime) {
-        return busVisitRegisterMapper.selectByPage(null, null, null, null, startDateTime, endDateTime);
+        return busVisitRegisterMapper.selectByPage(null, null, "createtime", "desc", startDateTime, endDateTime);
+    }
+
+    public BusVisitRegister getById(Integer id) {
+        return busVisitRegisterMapper.selectByPrimaryKey(id);
     }
 }

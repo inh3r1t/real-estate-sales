@@ -37,6 +37,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.*;
 
@@ -47,7 +48,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/busRealEstate")
-public class BusRealEstateController extends BaseController {
+public class BusRealEstateController extends BusBaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BusRealEstateController.class);
 
@@ -70,6 +71,27 @@ public class BusRealEstateController extends BaseController {
     public ResultData getPage(@RequestBody BusRealEstate busRealEstate) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
         try {
+            PagerModel<BusRealEstate> busRealEstatePage =
+                    busRealStateService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
+            resultData.setData(busRealEstatePage);
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("获取楼盘列表失败！");
+            logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+
+    @RequestMapping(value = "/my", method = RequestMethod.POST)
+    @ResponseBody
+    @WechatAuthorize
+    public ResultData my(@RequestBody BusRealEstate busRealEstate, HttpServletRequest request) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取楼盘列表成功！");
+        try {
+            wechatAuthCheck(request);
+            String token = request.getHeader("token");
+            busRealEstate.setManagerId(getUserByToken(token).getId());
             PagerModel<BusRealEstate> busRealEstatePage =
                     busRealStateService.getPage(busRealEstate.getPage(), busRealEstate.getPageSize(), busRealEstate);
             resultData.setData(busRealEstatePage);

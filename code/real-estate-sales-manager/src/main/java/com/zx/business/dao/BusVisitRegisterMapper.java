@@ -17,4 +17,6 @@ public interface BusVisitRegisterMapper {
     List<BusVisitRegister> selectByPage(@Param("start") Integer start, @Param("pageSize") Integer pageSize,
                                         @Param("orderField") String orderField, @Param("orderType") String orderType,
                                         @Param("startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
+
+    BusVisitRegister selectByPrimaryKey(Integer id);
 }

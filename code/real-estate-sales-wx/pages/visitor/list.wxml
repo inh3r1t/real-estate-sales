@@ -1,17 +1,25 @@
 <view class='list-container'>
-	<view class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
-		<view class="details">
-			<view class="building-name">{{item.name}}</view>
-			<view class="building-address">
-				<text class='iconfont icon-weizhi'></text>
-				<text hidden='{{!item.category}}'>【{{item.category}}】</text> {{item.address}}
+	<view class="visitor-list">
+		<view bindtap='toDetail' class="visitor-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
+			<view class="details">
+				<view class="visitor-item-name">{{item.customer}} - {{item.phone}}</view>
+				<view class='visitor-item-building'>
+					<text class='iconfont icon-loupan1'> {{item.realEstateName}}</text>
+				</view>
+				<view class="visitor-item-detail">
+					<text class='iconfont icon-shijian'> {{item.createtime}}</text>
+					<text class='iconfont icon-daofang1'> {{item.times}}</text>
+					<text class='iconfont icon-yixiangkehu'> {{item.intention}}</text>
+				</view>
+				<view class='visitor-item-building'>
+					<text class='iconfont icon-beizhu2' wx:if="{{item.remark!='' && item.remark!=undefind}}"> {{item.remark}}</text>
+				</view>
 			</view>
-			<view class='summary'>简介：{{item.summery}}</view>
 		</view>
+		<view class='no-more' hidden='{{more}}'>没有更多数据了</view>
 	</view>
-	<view class='no-more' hidden='{{more}}'>没有更多数据了</view>
 
-	<view class="form-footer">
+	<view class="form-footer nav-fix">
 		<button class='btn btn-primary' bindtap="toVisitorRegister">来访登记</button>
 	</view>
 </view>
