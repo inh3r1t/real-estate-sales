@@ -1,6 +1,6 @@
 <view class='list-container'>
 	<view class="visitor-list">
-		<view bindtap='toDetail' bindlongpress="deleteItem" class="visitor-item" data-id="{{item.id}}" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
+		<view bindtap='toDetail' bindlongpress="deleteItem" class="visitor-item" data-id="{{item.id}}" data-customer="{{item.customer}}" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
 			<view class="details">
 				<view class="visitor-item-name">
 					<text class="bold">{{item.customer}} </text>

@@ -103,10 +103,11 @@ Page({
   deleteItem: function (e) {
     var id = e.currentTarget.dataset.id
     var index = e.currentTarget.dataset.index
+    var customer = e.currentTarget.dataset.customer
     var that = this;
     wx.showModal({
       title: '提示',
-      content: '确定删除该条来访登记吗？',
+      content: '确定删除' + customer + '该条来访记录吗？',
       success: res => {
         if (res.confirm) {
           app.post("/busVisitRegister/deleteById", {

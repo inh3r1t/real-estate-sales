@@ -1,5 +1,6 @@
 var dateTimePicker = require('../../../utils/dateTimePicker.js');
 const app = getApp();
+const as = require("../../../utils/actionSheet.js");
 Page({
 
   /**
@@ -13,8 +14,10 @@ Page({
     endYear: 2050,
     day: '',
     model: {},
+    realEstateList: [],
+    realEstateIdList: [],
     teamList: ["代理 ", "自销 "],
-    addressList: ["琅琊", "南谯", "定远", "明光", "来安", "其他地区"],
+    addressList: ["琅琊", "南谯", "定远", "明光", "来安", "其他乡镇", "外地"],
     occupationList: ["公务员", "医生", "教师", "个体", "职工", "其他"],
     timesList: ["首访", "二访", "三访", "多次到访"],
     purposeList: ["刚需", "婚房", "改善", "投资"],
@@ -78,9 +81,6 @@ Page({
       intention: {
         required: true
       },
-      nodeal: {
-        required: true
-      },
       property: {
         required: true
       },
@@ -89,10 +89,10 @@ Page({
       }
     }, {
       realEstateId: {
-        required: '楼盘主键是必填项'
+        required: '楼盘是必填项'
       },
       realEstateName: {
-        required: '楼盘名称是必填项'
+        required: '楼盘是必填项'
       },
       customer: {
         required: '客户姓名是必填项',
@@ -135,9 +135,6 @@ Page({
       intention: {
         required: '购买意向是必填项'
       },
-      nodeal: {
-        required: '未成交原因是必填项'
-      },
       property: {
         required: '报备人属性是必填项'
       },
@@ -155,7 +152,6 @@ Page({
     var id = options.id;
     if (id != undefined && id != '') {
       app.get("/busVisitRegister/getById/" + id).then(res => {
-        debugger
         var obj = dateTimePicker.dateTimePicker(this.data.startYear, this.data.endYear, res.data.visittime);
         obj.dateTime[2] = parseInt((obj.defaultDay).substring(0, 2)) - 1; //day 字符串 'xx日' 转 'int'
         this.setData({
@@ -174,6 +170,25 @@ Page({
         day: obj.defaultDay
       });
     }
+    // 获取驻场经理楼盘
+    app.post("/busRealEstate/my", {
+      page: 1,
+      pageSize: 100
+    }).then(res => {
+      let nameList = []
+      let realEstateIdList = []
+      if (res.data != null && res.data.Items != null) {
+        for (var i = 0; i < res.data.Items.length; i++) {
+          let item = res.data.Items[i]
+          nameList.push(item.name)
+          realEstateIdList.push(item.id)
+        }
+      }
+      this.setData({
+        realEstateList: nameList,
+        realEstateIdList: realEstateIdList
+      })
+    })
   },
   changeDateTimeColumn: function (e) {
     var arr = this.data.dateTime,
@@ -193,6 +208,9 @@ Page({
   },
   formSubmit: function (e) {
     const params = e.detail.value
+    wx.showLoading({
+      title: '提交中',
+    })
     if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0]
       // `${error.param} : ${error.msg} `
@@ -254,6 +272,11 @@ Page({
       url: '/pages/visitor/select/index',
     })
   },
+  toActionSheet: function () {
+    wx.navigateTo({
+      url: '/pages/visitor/action/sheet',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -302,6 +325,18 @@ Page({
   onShareAppMessage: function () {
 
   },
+  getRealEstateName: function () {
+    as.showActionSheet({
+      itemList: this.data.realEstateList,
+      success: res => {
+        this.setData({
+          "model.realEstateName": this.data.realEstateList[res.tapIndex],
+          "model.realEstateId": this.data.realEstateIdList[res.tapIndex]
+          
+        })
+      }
+    })
+  },
   getTeam: function () {
     wx.showActionSheet({
       itemList: this.data.teamList,
@@ -313,7 +348,7 @@ Page({
     })
   },
   getAddress: function () {
-    wx.showActionSheet({
+    as.showActionSheet({
       itemList: this.data.addressList,
       success: res => {
         this.setData({
@@ -321,6 +356,15 @@ Page({
         })
       }
     })
+
+    // wx.showActionSheet({
+    //   itemList: this.data.addressList,
+    //   success: res => {
+    //     this.setData({
+    //       "model.address": this.data.addressList[res.tapIndex]
+    //     })
+    //   }
+    // })
   },
   getOccupation: function () {
     wx.showActionSheet({

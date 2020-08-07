@@ -43,6 +43,9 @@
     </sql>
 
     <sql id="base_condition_filed">
+        <if test="createrid != null">
+            and createrid = #{createrid}
+        </if>
         <if test="startDateTime != null">
             and <![CDATA[ createtime >= #{startDateTime}  ]]>
         </if>

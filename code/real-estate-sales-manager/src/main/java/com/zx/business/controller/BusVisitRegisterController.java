@@ -62,8 +62,10 @@ public class BusVisitRegisterController extends BusBaseController {
 
                 }
             }
+            wechatAuthCheck(request);
+            String token = request.getHeader("token");
             PagerModel<BusVisitRegister> busRealEstatePage =
-                    busVisitRegisterService.getPage(model.getPage(), model.getPageSize(), startDateTime, endDateTime);
+                    busVisitRegisterService.getPage(model.getPage(), model.getPageSize(), startDateTime, endDateTime, getUserByToken(token).getId());
             resultData.setData(busRealEstatePage);
         } catch (Exception e) {
             resultData.setResultCode(Const.FAILED_CODE);
@@ -92,7 +94,7 @@ public class BusVisitRegisterController extends BusBaseController {
 
                 }
             }
-            return busVisitRegisterService.getPage(model.getPage(), model.getPageSize(), startDateTime, endDateTime);
+            return busVisitRegisterService.getPage(model.getPage(), model.getPageSize(), startDateTime, endDateTime, null);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new PagerModel<>(model.getPage(), model.getPageSize(), 0, new ArrayList<>());
@@ -107,6 +109,7 @@ public class BusVisitRegisterController extends BusBaseController {
         try {
             wechatAuthCheck(request);
             if (model.getId() != null && model.getId() > 0) {
+                model.setCreatetime(DateUtil.getDateNow());
                 busVisitRegisterService.updateByPrimaryKey(model);
             } else {
                 String token = request.getHeader("token");
@@ -161,7 +164,7 @@ public class BusVisitRegisterController extends BusBaseController {
      */
     @RequestMapping(value = "/export")
     @ResponseBody
-    public void export_repair(String time) {
+    public void export(String time) {
         try {
             Map<String, Object> paramMap = new HashMap<String, Object>();
             String startDateTime = null, endDateTime = null;
@@ -172,7 +175,7 @@ public class BusVisitRegisterController extends BusBaseController {
                     endDateTime = seTime[1].trim();
                 }
             }
-            List<BusVisitRegister> list = busVisitRegisterService.getList(startDateTime, endDateTime);
+            List<BusVisitRegister> list = busVisitRegisterService.getList(startDateTime, endDateTime, null);
             if (list != null) {
                 LinkedHashMap<String, String> fmap = new LinkedHashMap<>();
                 fmap.put("_index", "序号");
@@ -185,14 +188,14 @@ public class BusVisitRegisterController extends BusBaseController {
                 fmap.put("adviser", "置业顾问");
                 fmap.put("address", "居住区域");
                 fmap.put("occupation", "职业");
-                fmap.put("times", "到访次数（首访、二访、三访）");
-                fmap.put("purpose", "购买用途（刚需、婚房、改善、投资）");
-                fmap.put("payment", "付款方式（商贷、公积金、全款）");
-                fmap.put("level", "意向等级（A、B、C）");
-                fmap.put("productType", "意向/成交户型及面积（高层、洋房）");
+                fmap.put("times", "到访次数");
+                fmap.put("purpose", "购买用途");
+                fmap.put("payment", "付款方式");
+                fmap.put("level", "意向等级");
+                fmap.put("productType", "意向/成交户型及面积");
                 fmap.put("area", "意向面积");
                 fmap.put("intention", "购买意向");
-                fmap.put("nodeal", "未成交原因（短语简单描述）");
+                fmap.put("nodeal", "未成交原因");
                 fmap.put("property", "报备人属性");
                 fmap.put("reporter", "报备人姓名");
                 fmap.put("remark", "备注");

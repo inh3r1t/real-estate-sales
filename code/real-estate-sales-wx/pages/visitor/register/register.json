@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "来访登记",
-  "usingComponents": {
-    "select": "/components/select/select"
-  }
+  "navigationBarTitleText": "来访登记"
 }

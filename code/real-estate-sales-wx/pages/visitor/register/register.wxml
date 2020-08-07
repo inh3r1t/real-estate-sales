@@ -5,7 +5,9 @@
 		<input class='hidden' name="realEstateId" type="text" value='{{model.realEstateId}}'></input>
 		<view class="form-item">
 			<view class="form-lable">选择楼盘</view>
-			<input disabled class='form-input' name="realEstateName" disabled placeholder="请选择楼盘" type="text" value='{{model.realEstateName}}' bindtap="toSelect"></input>
+			<!-- <input disabled class='form-input' name="realEstateName" disabled placeholder="请选择楼盘" type="text" value='{{model.realEstateName}}' bindtap="toSelect"></input> -->
+			<!-- <text class="iconfont icon-more form-input-select"></text> -->
+			<input disabled class='form-input' name="realEstateName" placeholder="请选择楼盘" type="text" value='{{model.realEstateName}}' bindtap="getRealEstateName"></input>
 			<text class="iconfont icon-more form-input-select"></text>
 		</view>
 		<view class="form-item">
@@ -95,9 +97,9 @@
 			<view class="form-lable">报备人姓名</view>
 			<input class='form-input' name="reporter" placeholder="请输入报备人姓名" type="text" value='{{model.reporter}}'></input>
 		</view>
-		<view>
-			<view class="textarea-label">备注描述</view>
-			<textarea class="textarea-text" placeholder="请输入备注" name="remark" value="{{model.remark}}"></textarea>
+		<view class="form-item">
+			<view class="form-lable">备注描述</view>
+			<input class='form-input' name="remark" placeholder="请输入备注描述" type="text" value='{{model.remark}}'></input>
 		</view>
 	</view>
 	<view class="form-footer nav-fix">
