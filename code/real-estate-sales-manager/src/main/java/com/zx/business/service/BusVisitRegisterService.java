@@ -34,4 +34,8 @@ public class BusVisitRegisterService {
     public BusVisitRegister getById(Integer id) {
         return busVisitRegisterMapper.selectByPrimaryKey(id);
     }
+
+    public void deleteById(Integer id) {
+        busVisitRegisterMapper.deleteByPrimaryKey(id);
+    }
 }

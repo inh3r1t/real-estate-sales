@@ -19,4 +19,6 @@ public interface BusVisitRegisterMapper {
                                         @Param("startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
 
     BusVisitRegister selectByPrimaryKey(Integer id);
+
+    void deleteByPrimaryKey(Integer id);
 }

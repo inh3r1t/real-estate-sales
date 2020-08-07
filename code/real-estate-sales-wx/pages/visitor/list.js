@@ -17,7 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getList(1)
+    // this.getList(1)
   },
 
   /**
@@ -33,7 +33,8 @@ Page({
   onShow: function () {
     this.setData({
       isLogin: app.isLogin()
-    }) 
+    })
+    this.getList(1, true)
   },
 
   /**
@@ -98,6 +99,27 @@ Page({
         wx.hideLoading();
       })
     }
+  },
+  deleteItem: function (e) {
+    var id = e.currentTarget.dataset.id
+    var index = e.currentTarget.dataset.index
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该条来访登记吗？',
+      success: res => {
+        app.post("/busVisitRegister/deleteById", {
+          id: id
+        }).then(res => {
+          var history = that.data.list;
+          history.splice(index, 1);
+          that.setData({
+            list: history
+          });
+        })
+      }
+    })
+  
   },
   toDetail: function (e) {
     var id = e.currentTarget.dataset.id;

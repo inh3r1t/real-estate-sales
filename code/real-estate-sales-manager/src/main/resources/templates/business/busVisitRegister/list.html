@@ -58,7 +58,7 @@
 
 
 
-                <th class="text-center" style="text-align:center">操作</th>
+<!--                <th class="text-center" style="text-align:center">操作</th>-->
             </tr>
             </thead>
             <tbody style="display:none" data-bind="visible: true">
@@ -84,10 +84,10 @@
                 <td class="text-center" data-bind="text:reporter"></td>
                 <td class="text-center" data-bind="text:createtime"></td>
                 <td class="text-center" data-bind="text:remark"></td>
-                <td class="text-center">
-                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">
-                        <i class="fa fa-edit"></i></a>
-                </td>
+<!--                <td class="text-center">-->
+<!--                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">-->
+<!--                        <i class="fa fa-edit"></i></a>-->
+<!--                </td>-->
             </tr>
             <!-- /ko -->
             </tbody>
@@ -106,84 +106,6 @@
 
     function btn_Search() {
         viewModel.Reload($('#searchForm').serialize());
-    }
-
-    //新增
-    function btn_add() {
-        dialog.iframe('/busVisitRegister/edit', {
-            title: "新建楼盘",
-            size: [900, 700],
-            maxmin: true,
-            fullScreen: true
-        }, function (result) {
-            if (result) {
-                viewModel.Reload($('#searchForm').serialize());
-            }
-        });
-    }
-
-    //修改
-    function btn_edit(model) {
-        dialog.iframe('/busVisitRegister/edit?id=' + model.id(), {
-            title: "编辑楼盘",
-            size: [900, 700],
-            maxmin: true,
-            fullScreen: true
-        }, function (result) {
-            if (result) {
-                viewModel.Reload($('#searchForm').serialize());
-            }
-        });
-
-    }
-
-    //删除
-    function btn_del(model) {
-        dialog.confirm('确认删除[' + model.name() + ']楼盘吗？', function () {
-            $.getJSON('/busVisitRegister/delete?id=' + model.id(), function (data) {
-                dialog.closeAll();
-                if (data.state) {
-                    dialog.success(data.message);
-                    viewModel.Reload();
-                } else {
-                    dialog.error(data.message);
-                }
-            });
-        });
-    }
-
-    //删除
-    function btn_notice(model) {
-        dialog.iframe('/busVisitRegister/notice?id=' + model.id(), {
-            title: "楼盘通知",
-            size: [1000, 700],
-            maxmin: true
-        }, function (result) {
-            if (result) {
-                viewModel.Reload($('#searchForm').serialize());
-            }
-        });
-    }
-
-    function btn_view(model) {
-        dialog.iframe('/busVisitRegister/detail?id=' + model.id(), {
-            title: "楼盘详情",
-            size: [900, 700]
-        });
-    }
-
-    function btn_top(model) {
-        dialog.iframe('/busVisitRegister/top?id=' + model.id(), {
-            title: "楼盘置顶",
-            size: [900, 700]
-        });
-    }
-
-    function btn_recommend(model) {
-        dialog.iframe('/busVisitRegister/recommend?id=' + model.id(), {
-            title: "楼盘推荐",
-            size: [900, 700]
-        });
     }
 </script>
 

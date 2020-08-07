@@ -24,7 +24,7 @@
 }
 
 .visitor-item .details {
-  padding-left: 20rpx;
+  padding:0 20rpx;
   box-sizing: border-box;
   text-align: left;
   font-size: 16px;
@@ -57,3 +57,4 @@
 .visitor-item-detail text {
   margin-right: 10rpx;
 }
+

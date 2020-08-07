@@ -7,6 +7,7 @@ import com.zx.base.exception.WechatAuthException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
 import com.zx.base.model.ReturnModel;
+import com.zx.business.model.BusNotifyMsg;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusVisitRegister;
 import com.zx.business.service.BusUserService;
@@ -131,6 +132,20 @@ public class BusVisitRegisterController extends BusBaseController {
             resultData.setResultCode(Const.FAILED_CODE);
             resultData.setMsg("获取详细信息失败！");
             logger.error(e.getMessage(), e);
+        }
+        return resultData;
+    }
+
+    @RequestMapping(value = "deleteById", method = RequestMethod.POST)
+    @ResponseBody
+    @WechatAuthorize
+    public ResultData deleteById(@RequestBody BusVisitRegister condition) {
+        ResultData resultData = new ResultData(Const.SUCCESS_CODE, "删除成功！");
+        try {
+            busVisitRegisterService.deleteById(condition.getId());
+        } catch (Exception e) {
+            resultData.setResultCode(Const.FAILED_CODE);
+            resultData.setMsg("删除失败！");
         }
         return resultData;
     }

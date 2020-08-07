@@ -38,7 +38,7 @@
   margin: 10rpx 0 0 10rpx;
   padding: 0 10rpx;
   color: #fff;
-  max-width:220rpx;
+  max-width: 220rpx;
 }
 
 .building-item .thumb {
@@ -106,6 +106,14 @@
 
 .text-right {
   text-align: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
 }
 
 .center {
@@ -262,20 +270,20 @@
   display: none;
 }
 
- 
+
 .select-box {
-    background-color: #eee;
-    padding: 0 10rpx;
-    width: 93%;
-    position: absolute;
-    top: 130rpx;
-    z-index: 1;
-    overflow: hidden;
-    animation: myfirst 0.5s;
-} 
+  background-color: #eee;
+  padding: 0 10rpx;
+  width: 93%;
+  position: absolute;
+  top: 130rpx;
+  z-index: 1;
+  overflow: hidden;
+  animation: myfirst 0.5s;
+}
 
 .select-box .select-one {
-    height: 60rpx;
-    line-height: 60rpx;
-    border-bottom: 1px solid #ccc;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 1px solid #ccc;
 }

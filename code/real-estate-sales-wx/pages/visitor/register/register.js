@@ -88,14 +88,7 @@ Page({
         duration: 2000,
         success: function () {
           setTimeout(function () {
-            wx.navigateBack({
-              success: res => {
-                let pages = getCurrentPages();
-                let prevPage = pages[pages.length - 1]; // 上一个页面的对象
-                // 当然, 也可以通过setData设置那个页面的其他数据
-                prevPage.onLoad(); // 触发上一个页面的onLoad生命周期函数
-              }
-            })
+            wx.navigateBack({})
           }, 1000)
         }
       })
