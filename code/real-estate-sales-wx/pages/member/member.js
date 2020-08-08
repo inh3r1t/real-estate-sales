@@ -93,6 +93,7 @@ Page({
               avatar: '/images/avatar.jpg'
             })
             wx.setStorageSync('userInfo', res.data)
+            wx.removeStorageSync('wxUserInfo')
             app.globalData.userInfo = res.data
           }).catch((res) => {
             wx.showToast({
@@ -105,6 +106,7 @@ Page({
     })
   },
   toBindWechat: function() {
+    var $this = this
     wx.showModal({
       title: '提示',
       content: '确定绑定微信快捷登录吗？',
@@ -119,6 +121,7 @@ Page({
                       app.post("/busUser/update", {
                         js_code: res_login.code
                       }).then((res) => {
+                        debugger
                         wx.showToast({
                           title: '微信绑定成功',
                           icon: 'success'
@@ -126,7 +129,7 @@ Page({
                         wx.getUserInfo({
                           success(result) {
                             wx.setStorageSync('wxUserInfo', result.userInfo)
-                            this.setData({
+                            $this.setData({
                               isBindWechat: true,
                               avatar: result.userInfo.avatarUrl || '/images/avatar.jpg'
                             })
