@@ -386,7 +386,7 @@ Page({
       itemList: this.data.occupationList,
       success: res => {
         this.setData({
-          "model.address": this.data.occupationList[res.tapIndex]
+          "model.occupation": this.data.occupationList[res.tapIndex]
         })
       }
     })
