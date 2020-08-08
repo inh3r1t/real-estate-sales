@@ -203,7 +203,7 @@
 
 .form .form-word-aux {
   position: absolute;
-  right: 80rpx;
+  right: 30rpx;
 }
 
 .form .form-input-placeholder {

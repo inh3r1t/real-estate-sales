@@ -326,4 +326,48 @@
   <select id="getListByRoleType" parameterType="com.zx.business.model.BusUser" resultMap="AssociateResultMap">
     select * from bus_user bu left join bus_role br on bu.role_id = br.id where br.type = #{roleType}
   </select>
+
+
+  <sql id="base_condition_filed">
+    <if test="userName != null and userName!=''">
+      and user_name = #{userName}
+    </if>
+
+    <if test="phoneNum != null and phoneNum!=''">
+      and phone_num = #{phoneNum}
+    </if>
+
+  </sql>
+  <!-- 通用查询条件列-->
+  <sql id="query_condition">
+    <where>
+      <trim prefixOverrides="and">
+        <include refid="base_condition_filed"/>
+      </trim>
+    </where>
+  </sql>
+
+
+  <select id="selectList" parameterType="com.zx.business.model.BusVisitRegister" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bus_user
+    <include refid="query_condition"/>
+    <if test="orderField != null">
+      order by ${orderField}
+    </if>
+    <if test="orderType != null">
+      ${orderType}
+    </if>
+    <if test="start!=null and pageSize!=null">
+      limit #{start},#{pageSize}
+    </if>
+  </select>
+
+  <select id="count" parameterType="com.zx.business.model.BusVisitRegister" resultType="java.lang.Integer">
+    select
+    count(1)
+    from bus_user
+    <include refid="query_condition"/>
+  </select>
 </mapper>

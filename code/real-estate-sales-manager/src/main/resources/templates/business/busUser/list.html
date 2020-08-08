@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" data-layout-decorator="/shared/layout">
+
+<head>
+    <title>来访登记列表</title>
+    <style>
+        .layui-table td, .layui-table th {
+            font-size: 12px;
+        }
+
+        .select-short {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<div class="padding" data-layout-fragment="renderBody">
+    <blockquote class="layui-elem-quote">
+        <form id="searchForm" class="layui-form">
+            <div class="layui-inline hidden">
+                <label>名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="keyword" name="keyword" placeholder="请输入关键词" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn" onclick="btn_Search()"><i class="fa fa-search"></i> 检索</span>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-btn layui-btn-normal" onclick="btn_Export()"><i
+                        class="fa fa-file-excel-o"></i> 导出</span>
+            </div>
+        </form>
+    </blockquote>
+
+    <div class="table-wrapper" id="list">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">用户名</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">手机号</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">公司</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;">角色</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 120px">创建时间</th>
+                <th class="text-center" style="text-align:center">操作</th>
+            </tr>
+            </thead>
+            <tbody style="display:none" data-bind="visible: true">
+            <!-- ko foreach: Items() -->
+            <tr class="CurrentRow">
+                <td class="text-center" data-bind="text:$index()+1"></td>
+                <td class="text-center" data-bind="text:userName"></td>
+                <td class="text-center" data-bind="text:phoneNum"></td>
+                <td class="text-center" data-bind="text:companyName"></td>
+                <td class="text-center" data-bind="text:roleId"></td>
+                <td class="text-center" data-bind="text:createTime"></td>
+                <td class="text-center">
+                    <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-trash-o"> 删除</i></a>
+                </td>
+            </tr>
+            <!-- /ko -->
+            </tbody>
+        </table>
+
+        <ko-pager-state params="model: $data"></ko-pager-state>
+        <ko-pager params="model: $data"></ko-pager>
+    </div>
+</div>
+<script data-layout-fragment="renderScripts">
+
+    var viewModel = new PagerModel("/busUser/getList", $('#searchForm').serialize());
+    $(function () {
+        ko.applyBindings(viewModel, $("#list")[0]);
+    });
+
+    function btn_Search() {
+        viewModel.Reload($('#searchForm').serialize());
+    }
+
+    //删除
+    function btn_del(model) {
+        dialog.confirm('确认删除[' + model.userName() + ']用户吗？', function () {
+            $.getJSON('/busUser/delete?id=' + model.id(), function (data) {
+                dialog.closeAll();
+                if (data.state) {
+                    dialog.success(data.message);
+                    viewModel.Reload();
+                } else {
+                    dialog.error(data.message);
+                }
+            });
+        });
+    }
+
+
+</script>
+
+</html>

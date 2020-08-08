@@ -18,7 +18,7 @@ Page({
     realEstateIdList: [],
     teamList: ["代理 ", "自销 "],
     addressList: ["琅琊", "南谯", "定远", "明光", "来安", "其他乡镇", "外地"],
-    occupationList: ["公务员", "医生", "教师", "个体", "职工", "其他"],
+    occupationList: ["职工", "务农", "个体", "公务员", "医生", "教师", "其他"],
     timesList: ["首访", "二访", "三访", "多次到访"],
     purposeList: ["刚需", "婚房", "改善", "投资"],
     paymentList: ["商贷", "公积金", "组合贷", "一次性"],
@@ -374,11 +374,19 @@ Page({
     // })
   },
   getOccupation: function () {
-    wx.showActionSheet({
+    // wx.showActionSheet({
+    //   itemList: this.data.occupationList,
+    //   success: res => {
+    //     this.setData({
+    //       "model.occupation": this.data.occupationList[res.tapIndex]
+    //     })
+    //   }
+    // })
+    as.showActionSheet({
       itemList: this.data.occupationList,
       success: res => {
         this.setData({
-          "model.occupation": this.data.occupationList[res.tapIndex]
+          "model.address": this.data.occupationList[res.tapIndex]
         })
       }
     })

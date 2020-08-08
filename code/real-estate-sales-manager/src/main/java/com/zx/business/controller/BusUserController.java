@@ -5,21 +5,28 @@ import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.exception.BusinessException;
 import com.zx.base.exception.WechatAuthException;
+import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
+import com.zx.base.model.ReturnModel;
 import com.zx.business.model.BusUser;
+import com.zx.business.model.BusVisitRegister;
 import com.zx.business.service.BusUserService;
 import com.zx.business.vo.BusUserVO;
+import com.zx.lib.utils.StringUtil;
 import com.zx.lib.utils.encrypt.Md5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/busUser")
 public class BusUserController extends BusBaseController {
 
@@ -198,4 +205,75 @@ public class BusUserController extends BusBaseController {
         }
         return resultData;
     }
+
+
+    @RequestMapping("/list")
+    public String list() {
+        return "business/busUser/list";
+    }
+
+
+
+    @RequestMapping(value = "/getList", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getList(BusVisitRegister model,
+                          String time,
+                          String userName,
+                          String phoneNum) {
+        try {
+            if (model.getPage() == null) {
+                model.setPage(1);
+            }
+            if (model.getPageSize() == null) {
+                model.setPageSize(PAGE_SIZE);
+            }
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            String startDateTime = null, endDateTime = null;
+            if (StringUtils.isNotEmpty(time)) {
+                String[] seTime = time.split(" - ");
+                if (seTime.length > 1) {
+                    startDateTime = seTime[0].trim();
+                    endDateTime = seTime[1].trim();
+                    paramMap.put("startDateTime", startDateTime);
+                    paramMap.put("endDateTime", endDateTime);
+                }
+            }
+            if (StringUtil.isNotEmpty(userName)) {
+                paramMap.put("userName", userName);
+            }
+            if (StringUtil.isNotEmpty(phoneNum)) {
+                paramMap.put("phoneNum", phoneNum);
+            }
+            paramMap.put("orderField", "create_time");
+            paramMap.put("orderType", "desc");
+            int count = busUserService.selectCount(paramMap);
+
+            paramMap.put("start", (model.getPage() - 1) * model.getPageSize());
+            paramMap.put("pageSize", model.getPageSize());
+            List<BusUser> list =
+                    busUserService.getList(paramMap);
+            return new PagerModel<>(model.getPageSize(), model.getPage(), count, list);
+
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new PagerModel<>(model.getPage(), model.getPageSize(), 0, new ArrayList<>());
+        }
+    }
+
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public Object delete(Integer id) {
+        ReturnModel rm = new ReturnModel();
+        try {
+            busUserService.delete(id);
+            rm.setInfo(true, "删除成功");
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            rm.setInfo(false, "删除失败");
+        }
+        return rm;
+    }
+
 }

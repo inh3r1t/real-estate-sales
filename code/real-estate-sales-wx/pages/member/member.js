@@ -121,7 +121,6 @@ Page({
                       app.post("/busUser/update", {
                         js_code: res_login.code
                       }).then((res) => {
-                        debugger
                         wx.showToast({
                           title: '微信绑定成功',
                           icon: 'success'

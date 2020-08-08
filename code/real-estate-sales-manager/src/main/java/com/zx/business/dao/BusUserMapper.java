@@ -1,9 +1,11 @@
 package com.zx.business.dao;
 
 import com.zx.business.model.BusUser;
+import com.zx.business.model.BusVisitRegister;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BusUserMapper {
     /**
@@ -62,4 +64,19 @@ public interface BusUserMapper {
                                @Param("orderType") String orderType, @Param("busUser") BusUser busUser);
 
     List<BusUser> getListByRoleType(Integer roleType);
+
+
+    /**
+     * 根据条件统计数量
+     *
+     * @param map 条件
+     **/
+    int count(Map map);
+
+    /**
+     * 查询
+     *
+     * @param map 查询条件
+     **/
+    List<BusUser> selectList(Map map);
 }

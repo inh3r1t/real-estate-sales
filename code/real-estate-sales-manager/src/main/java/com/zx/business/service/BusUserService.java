@@ -10,10 +10,7 @@ import com.zx.business.dao.BusAccountManageMapper;
 import com.zx.business.dao.BusAgentCompanyMapper;
 import com.zx.business.dao.BusRoleMapper;
 import com.zx.business.dao.BusUserMapper;
-import com.zx.business.model.BusAccountManage;
-import com.zx.business.model.BusAgentCompany;
-import com.zx.business.model.BusRole;
-import com.zx.business.model.BusUser;
+import com.zx.business.model.*;
 import com.zx.business.notify.Notify;
 import com.zx.business.notify.model.YunzhixunSmsMessage;
 import com.zx.lib.utils.encrypt.Md5Util;
@@ -170,4 +167,17 @@ public class BusUserService {
         busUser.setPasswd(Md5Util.getMd5(password));
         busUserMapper.updateByPrimaryKeySelective(busUser);
     }
+
+    public  int selectCount(Map map){
+        return busUserMapper.count(map);
+    }
+    public List<BusUser> getList(Map map) {
+        return busUserMapper.selectList(map);
+        // return new PagerModel<>(pageSize, page, count.intValue(), busVisitRegisters);
+    }
+
+    public int delete(Integer id) {
+        return busUserMapper.deleteByPrimaryKey(id);
+    }
+
 }

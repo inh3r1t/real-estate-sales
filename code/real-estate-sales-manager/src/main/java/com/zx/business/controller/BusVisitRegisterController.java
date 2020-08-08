@@ -78,7 +78,7 @@ public class BusVisitRegisterController extends BusBaseController {
 
             paramMap.put("orderField", "createtime");
             paramMap.put("orderType", "desc");
-            paramMap.put("createid", getUserByToken(token).getId());
+            paramMap.put("createrid", getUserByToken(token).getId());
 
             int count = busVisitRegisterService.selectCount(paramMap);
 
