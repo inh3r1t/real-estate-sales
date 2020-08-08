@@ -18,11 +18,11 @@
 <div class="padding" data-layout-fragment="renderBody">
     <blockquote class="layui-elem-quote">
         <form id="searchForm" class="layui-form">
-            <div class="layui-inline hidden">
-                <label>名称</label>
+            <div class="layui-inline">
+                <label>关键词</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="keyword" name="keyword" placeholder="请输入关键词" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" id="keyword" name="keyword" placeholder="请输入名称、手机号或者公司名称" autocomplete="off"
+                           class="layui-input" style="width: 350px">
                 </div>
             </div>
             <div class="layui-inline">
@@ -39,7 +39,7 @@
         <table class="layui-table">
             <thead>
             <tr>
-                <th>序号</th>
+                <th style="font-weight: bold;text-align:center;">序号</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;">用户名</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;">手机号</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;">公司</th>
@@ -55,11 +55,11 @@
                 <td class="text-center" data-bind="text:userName"></td>
                 <td class="text-center" data-bind="text:phoneNum"></td>
                 <td class="text-center" data-bind="text:companyName"></td>
-                <td class="text-center" data-bind="text:roleId"></td>
+                <td class="text-center" data-bind="text:(roleId()==1?'驻场经理':'中介')"></td>
                 <td class="text-center" data-bind="text:createTime"></td>
                 <td class="text-center">
                     <a data-bind="click:btn_del.bind()" title="删除" data-toggle="tooltip" data-placement="top">
-                        <i class="fa fa-trash-o"> 删除</i></a>
+                        <i class="fa fa-trash-o"></i></a>
                 </td>
             </tr>
             <!-- /ko -->

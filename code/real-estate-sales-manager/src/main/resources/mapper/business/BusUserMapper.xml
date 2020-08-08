@@ -332,17 +332,15 @@
     <if test="userName != null and userName!=''">
       and user_name = #{userName}
     </if>
-
-    <if test="phoneNum != null and phoneNum!=''">
-      and phone_num = #{phoneNum}
-    </if>
-
   </sql>
   <!-- 通用查询条件列-->
   <sql id="query_condition">
     <where>
       <trim prefixOverrides="and">
         <include refid="base_condition_filed"/>
+        <if test="keyword!= null  and keyword!=''">
+          and (user_name like concat('%', #{keyword}, '%') or phone_num like concat('%', #{keyword}, '%') or company_name like concat('%', #{keyword}, '%') )
+        </if>
       </trim>
     </where>
   </sql>

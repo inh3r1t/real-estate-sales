@@ -218,7 +218,7 @@ public class BusUserController extends BusBaseController {
     @ResponseBody
     public Object getList(BusVisitRegister model,
                           String time,
-                          String userName,
+                          String keyword,
                           String phoneNum) {
         try {
             if (model.getPage() == null) {
@@ -238,11 +238,8 @@ public class BusUserController extends BusBaseController {
                     paramMap.put("endDateTime", endDateTime);
                 }
             }
-            if (StringUtil.isNotEmpty(userName)) {
-                paramMap.put("userName", userName);
-            }
-            if (StringUtil.isNotEmpty(phoneNum)) {
-                paramMap.put("phoneNum", phoneNum);
+            if (StringUtil.isNotEmpty(keyword)) {
+                paramMap.put("keyword", keyword);
             }
             paramMap.put("orderField", "create_time");
             paramMap.put("orderType", "desc");
