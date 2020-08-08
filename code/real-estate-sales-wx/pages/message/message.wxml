@@ -6,6 +6,7 @@
     <view class='card-title' wx:if="{{item.type == 2}}">到访信息</view>
     <view class='card-title' wx:if="{{item.type == 3}}">认购信息</view>
     <view class='card-title' wx:if="{{item.type == 4}}">签约信息</view>
+    <view class='card-title' wx:if="{{item.type == 5}}">政策变更</view>
     <view class='card-content'>{{item.msgContent}}</view>
     <view class='card-time'>{{item.createTime}}</view>
   </view>

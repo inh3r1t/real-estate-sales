@@ -97,10 +97,10 @@ Page({
       title: '提示',
       content: '确定删除该条消息吗？',
       success: res => {
-        app.post("/busNotifyMsg/deleteById", {
-          id: id
-        }).then(res => {
-          if (res.confirm) {
+        if (res.confirm) {
+          app.post("/busNotifyMsg/deleteById", {
+            id: id
+          }).then(res => {
             var history = that.data.list;
             history.splice(index, 1);
             that.setData({
@@ -110,9 +110,8 @@ Page({
               title: '删除成功',
               icon: 'success'
             })
-          }
-
-        })
+          })
+        }
       }
     })
   }
