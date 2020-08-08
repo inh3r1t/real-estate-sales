@@ -286,7 +286,7 @@ public class BusVisitRegisterController extends BusBaseController {
                 fmap.put("reporter", "报备人姓名");
                 fmap.put("remark", "备注");
 
-                HSSFWorkbook book = ExcelUtil.createWorkBook("安策营销案场来访登记表", list, fmap, true);
+                HSSFWorkbook book = ExcelUtil.createWorkBook("安策营销案场来访登记表", list, fmap);
                 exportExcel("安策营销案场来访登记表", book);
             }
         } catch (Exception e) {

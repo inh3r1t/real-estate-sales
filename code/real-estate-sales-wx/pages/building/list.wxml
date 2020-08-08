@@ -1,18 +1,28 @@
-<selector class="select-container" selectData="{{selectData}}" bind:selected="selected"></selector>
+<!-- <selector class="select-container" selectData="{{selectData}}" bind:selected="selected"></selector> -->
+<view class='index_tab'>
+	<scroll-view class="bottom_scroll" scroll-x="true" scroll-left="{{x}}" scroll-with-animation="{{true}}">
+		<view class='nav {{type == 0?"cur":""}}' data-type="0" bindtap='switchTap' data-index="0">
+			<view>全部</view>
+		</view>
+		<view class='nav {{item.id == type?"cur":""}}' wx:for="{{selectData}}" wx:key="id" data-type="{{item.id}}" bindtap='switchTap' data-index="{{index+1}}">
+			<view>{{item.name}}</view>
+		</view>
+	</scroll-view>
+</view>
 <view class='list-container'>
-  <view bindtap='toDetail' class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
-    <text class='building-commission' hidden="{{!isLogin}}">{{item.commission}} </text>
-    <view class="thumb">
-      <image src="{{item.thumbnail}}"></image>
-    </view>
-    <view class="details">
-      <view class="building-name">{{item.name}}</view>
-      <view class="building-address">
-        <text class='iconfont icon-weizhi'></text>
-        <text hidden='{{!item.category}}'>【{{item.category}}】</text> {{item.address}}
-      </view>
-      <view class='summary'>简介：{{item.summery}}</view>
-    </view>
-  </view>
-  <view class='no-more' hidden='{{more}}'>没有更多数据了</view>
+	<view bindtap='toDetail' class="building-item" data-id="{{item.id}}" wx:for="{{list}}" wx:key="index">
+		<text class='building-commission' hidden="{{!isLogin}}">{{item.commission}} </text>
+		<view class="thumb">
+			<image src="{{item.thumbnail}}"></image>
+		</view>
+		<view class="details">
+			<view class="building-name">{{item.name}}</view>
+			<view class="building-address">
+				<text class='iconfont icon-weizhi'></text>
+				<text hidden='{{!item.category}}'>【{{item.category}}】</text> {{item.address}}
+			</view>
+			<view class='summary'>简介：{{item.summery}}</view>
+		</view>
+	</view>
+	<view class='no-more' hidden='{{more}}'>没有更多数据了</view>
 </view>

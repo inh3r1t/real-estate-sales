@@ -6,6 +6,32 @@
   top: 0;
 }
 
-.list-container {
+/* .list-container {
   margin-top: 100rpx;
+} */
+
+.index_tab .bottom_scroll {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  /* line-height: 80rpx; */
+  height: 80rpx;
+}
+
+.index_tab .bottom_scroll .nav {
+  /* width: 20%; */
+  display: inline-block;
+  white-space: normal;
+  text-align: center;
+  padding: 0rpx 20rpx;
+  font-size: 32rpx;
+}
+
+.cur view {
+  color: #0d6e4b;
+  font-weight: 600;
+}
+
+.index_tab {
+  position: relative;
 }

@@ -1,4 +1,5 @@
 var app = getApp()
+const as = require("../../utils/actionSheet.js");
 Page({
   /**
    * 页面的初始数据
@@ -9,10 +10,11 @@ Page({
     page: 1,
     type: 0,
     list: [],
+    x: 0,
     selectData: []
 
   },
-  toDetail: function(e) {
+  toDetail: function (e) {
     var id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: '/pages/building/detail/detail?id=' + id,
@@ -21,7 +23,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     app.get("/busRealEstate/category").then(res => {
       this.setData({
         selectData: res.data
@@ -34,14 +36,14 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.setData({
       isLogin: app.isLogin()
     })
@@ -50,7 +52,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.getList(1, true).then(() => {
       // 处理完成后，终止下拉刷新
       wx.stopPullDownRefresh()
@@ -60,7 +62,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.getList(this.data.page + 1)
   },
   getList(pageNo, override) {
@@ -94,6 +96,28 @@ Page({
     this.setData({
       type: id
     })
+    this.getList(1, true)
+  },
+  switchTap(e) {
+    let screenWidth = wx.getSystemInfoSync().windowWidth;
+    let itemWidth = screenWidth / 5;
+    let {
+      index,
+      type
+    } = e.currentTarget.dataset;
+    let scrollX = itemWidth * index - itemWidth * 2;
+    let maxScrollX = (this.data.selectData.length + 1) * itemWidth;
+    if (scrollX < 0) {
+      scrollX = 0;
+    } else if (scrollX >= maxScrollX) {
+      scrollX = maxScrollX;
+    }
+    this.setData({
+      x: scrollX,
+      type: type
+    })
+    this.triggerEvent("switchTap", type); //点击了导航,通知父组件重新渲染列表数据
+
     this.getList(1, true)
   }
 })

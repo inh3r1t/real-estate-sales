@@ -326,16 +326,23 @@ Page({
 
   },
   getRealEstateName: function () {
-    as.showActionSheet({
-      itemList: this.data.realEstateList,
-      success: res => {
-        this.setData({
-          "model.realEstateName": this.data.realEstateList[res.tapIndex],
-          "model.realEstateId": this.data.realEstateIdList[res.tapIndex]
-          
-        })
-      }
-    })
+    if (this.data.realEstateList == null || this.data.realEstateList.length == 0) {
+      wx.showToast({
+        title: '没有可选择的楼盘',
+        icon: 'none'
+      })
+    } else {
+      as.showActionSheet({
+        itemList: this.data.realEstateList,
+        success: res => {
+          this.setData({
+            "model.realEstateName": this.data.realEstateList[res.tapIndex],
+            "model.realEstateId": this.data.realEstateIdList[res.tapIndex]
+
+          })
+        }
+      })
+    }
   },
   getTeam: function () {
     wx.showActionSheet({
