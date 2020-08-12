@@ -3,18 +3,14 @@ package com.zx.business.controller;
 import com.zx.base.annotation.WechatAuthorize;
 import com.zx.base.common.Const;
 import com.zx.base.common.ExcelUtil;
-import com.zx.base.controller.BaseController;
 import com.zx.base.enums.TypeEnums;
 import com.zx.base.exception.WechatAuthException;
 import com.zx.base.model.PagerModel;
 import com.zx.base.model.ResultData;
-import com.zx.base.model.ReturnModel;
-import com.zx.business.model.BusNotifyMsg;
 import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusVisitRegister;
-import com.zx.business.service.BusUserService;
+import com.zx.business.service.BusRealEstateService;
 import com.zx.business.service.BusVisitRegisterService;
-import com.zx.business.vo.BusDealVO;
 import com.zx.lib.utils.DateUtil;
 import com.zx.lib.utils.StringUtil;
 import com.zx.system.model.SysLog;
@@ -23,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,9 +37,21 @@ public class BusVisitRegisterController extends BusBaseController {
     private static Logger logger = LoggerFactory.getLogger(BusVisitRegisterController.class);
     @Resource
     private BusVisitRegisterService busVisitRegisterService;
+    @Resource
+    private BusRealEstateService busRealEstateService;
 
     @RequestMapping("/list")
-    public String list() {
+    public String list(Model model) {
+        List<BusRealEstate> list = busRealEstateService.getList(new BusRealEstate());
+        List<HashMap<String, Object>> selects = new ArrayList<>();
+
+        for (BusRealEstate item : list) {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("text", item.getName());
+            hashMap.put("value", item.getId());
+            selects.add(hashMap);
+        }
+        model.addAttribute("realEtates", selects);
         return "business/busVisitRegister/list";
     }
 
@@ -104,7 +113,8 @@ public class BusVisitRegisterController extends BusBaseController {
                           String level,
                           String intention,
                           String property,
-                          String times) {
+                          String times,
+                          Integer real_estate_id) {
         try {
             if (model.getPage() == null) {
                 model.setPage(1);
@@ -142,6 +152,9 @@ public class BusVisitRegisterController extends BusBaseController {
             }
             if (StringUtil.isNotEmpty(times)) {
                 paramMap.put("times", times);
+            }
+            if (real_estate_id!=null && real_estate_id>0) {
+                paramMap.put("real_estate_id", real_estate_id);
             }
             int count = busVisitRegisterService.selectCount(paramMap);
 

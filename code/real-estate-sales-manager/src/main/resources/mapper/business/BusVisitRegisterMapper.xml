@@ -46,6 +46,9 @@
         <if test="createrid != null">
             and createrid = #{createrid}
         </if>
+        <if test="real_estate_id != null">
+            and real_estate_id = #{real_estate_id}
+        </if>
         <if test="team != null and team!=''">
             and team = #{team}
         </if>
