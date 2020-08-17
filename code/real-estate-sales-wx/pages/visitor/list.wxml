@@ -1,4 +1,15 @@
 <view class='list-container'>
+	<view class="weui-search-bar">
+		<view class="weui-search-bar__form">
+			<!-- 搜索框 -->
+			<view class="weui-search-bar__box">
+				<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+				<input type="text" bindinput="keywordInput" class="weui-search-bar__input" placeholder="请输入搜索内容" />
+			</view>
+		</view>
+		<!-- 搜索按钮,调用搜索查询方法 -->
+		<view class="weui-search-bar__cancel-btn" bindtap='search'>搜索</view>
+	</view>
 	<view class="visitor-list">
 		<view bindtap='toDetail' bindlongpress="deleteItem" class="visitor-item" data-id="{{item.id}}" data-customer="{{item.customer}}" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
 			<view class="details">

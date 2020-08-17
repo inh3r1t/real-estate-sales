@@ -59,10 +59,9 @@ public class BusVisitRegisterController extends BusBaseController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
-    public ResultData getPage(@RequestBody BusVisitRegister model, String time) {
+    public ResultData getPage(@RequestBody BusVisitRegister model) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取列表成功！");
         try {
-
             wechatAuthCheck(request);
             String token = request.getHeader("token");
             if (model.getPage() == null) {
@@ -73,22 +72,24 @@ public class BusVisitRegisterController extends BusBaseController {
             }
 
             Map<String, Object> paramMap = new HashMap<String, Object>();
-            String startDateTime = null, endDateTime = null;
-            if (StringUtils.isNotEmpty(time)) {
-                String[] seTime = time.split(" - ");
-                if (seTime.length > 1) {
-                    startDateTime = seTime[0].trim();
-                    endDateTime = seTime[1].trim();
-
-                    paramMap.put("startDateTime", startDateTime);
-                    paramMap.put("endDateTime", endDateTime);
-                }
-            }
+            //String startDateTime = null, endDateTime = null;
+            //if (StringUtils.isNotEmpty(time)) {
+            //    String[] seTime = time.split(" - ");
+            //    if (seTime.length > 1) {
+            //        startDateTime = seTime[0].trim();
+            //        endDateTime = seTime[1].trim();
+            //
+            //        paramMap.put("startDateTime", startDateTime);
+            //        paramMap.put("endDateTime", endDateTime);
+            //    }
+            //}
 
             paramMap.put("orderField", "createtime");
             paramMap.put("orderType", "desc");
             paramMap.put("createrid", getUserByToken(token).getId());
-
+            if (StringUtil.isNotEmpty(model.getKeyword())) {
+                paramMap.put("keywordFuzzy", model.getKeyword());
+            }
             int count = busVisitRegisterService.selectCount(paramMap);
 
             paramMap.put("start", (model.getPage() - 1) * model.getPageSize());
@@ -153,7 +154,7 @@ public class BusVisitRegisterController extends BusBaseController {
             if (StringUtil.isNotEmpty(times)) {
                 paramMap.put("times", times);
             }
-            if (real_estate_id!=null && real_estate_id>0) {
+            if (real_estate_id != null && real_estate_id > 0) {
                 paramMap.put("real_estate_id", real_estate_id);
             }
             int count = busVisitRegisterService.selectCount(paramMap);

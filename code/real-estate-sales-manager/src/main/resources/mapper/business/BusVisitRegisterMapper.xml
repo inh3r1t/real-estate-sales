@@ -83,6 +83,13 @@
         <where>
             <trim prefixOverrides="and">
                 <include refid="base_condition_filed"/>
+                <if test="keywordFuzzy!= null  and keywordFuzzy!=''">
+                    and (
+                    customer like concat('%', #{keywordFuzzy}, '%')
+                    or phone like concat('%', #{keywordFuzzy}, '%')
+                    or intention like concat('%', #{keywordFuzzy}, '%')
+                    )
+                </if>
             </trim>
         </where>
     </sql>

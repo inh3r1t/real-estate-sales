@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    keyword: "",
     isLogin: false,
     more: true,
     page: 1,
@@ -79,9 +80,11 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
+      debugger
       return app.post("/busVisitRegister/getPage", {
         page: pageNo,
         pageSize: 10,
+        keyword: this.data.keyword,
         extend2: this.data.type > 0 ? this.data.type : null
       }).then(res => {
         //这里既可以获取模拟的res
@@ -138,5 +141,13 @@ Page({
     wx.navigateTo({
       url: '/pages/visitor/register/register',
     })
-  }
+  },
+  keywordInput: function (e) {
+    this.setData({
+      keyword: e.detail.value
+    })
+  },
+  search: function () {
+    this.getList(1, true)
+  },
 })
