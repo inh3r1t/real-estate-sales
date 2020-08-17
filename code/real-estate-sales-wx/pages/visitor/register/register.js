@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    keyboardHidden: true, //hidden是true 默认隐藏
     date: '',
     dateTime: null,
     dateTimeArray: null,
@@ -470,5 +471,31 @@ Page({
         })
       }
     })
+  },
+  keyboardInput: function (e) {
+    this.setData({
+      "model.phone": (this.data.model.phone === undefined ? "" : this.data.model.phone) + e.currentTarget.dataset.key
+    })
+  },
+  keyboardHidden: function () {
+    this.setData({
+      keyboardHidden: true
+    });
+
+  },
+  keyboardShow: function () {
+    this.setData({
+      keyboardHidden: false
+    });
+  },
+  //删除输入错误的密码
+  clear: function () {
+    var index = this.data.model.phone.length;
+    if (index > 0) {
+      var phone = this.data.model.phone.substr(0, index - 1);
+      this.setData({
+        "model.phone": phone
+      });
+    }
   }
 })

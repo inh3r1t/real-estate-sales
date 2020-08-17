@@ -114,6 +114,8 @@
             <thead>
             <tr>
                 <th style="font-weight: bold;text-align:center;min-width: 25px">序号</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 65px">来访日期</th>
+                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 100px">登记日期</th>
                 <th style="font-weight: bold;min-width: 80px">楼盘名称</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;min-width: 50px">客户姓名</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;min-width: 50px">联系方式</th>
@@ -131,8 +133,6 @@
                 <th class="text-center" style="font-weight: bold;text-align:center;min-width: 60px">未成交原因</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;min-width: 60px">报备人属性</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;min-width: 60px">报备人姓名</th>
-                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 65px">来访日期</th>
-                <th class="text-center" style="font-weight: bold;text-align:center;min-width: 100px">登记日期</th>
                 <th class="text-center" style="font-weight: bold;text-align:center;min-width: 50px">备注</th>
 
 
@@ -143,6 +143,8 @@
             <!-- ko foreach: Items() -->
             <tr class="CurrentRow">
                 <td class="text-center" data-bind="text:$index()+1"></td>
+                <td class="text-center" data-bind="text:visittimeStr"></td>
+                <td class="text-center" data-bind="text:createtime"></td>
                 <td data-bind="text:realEstateName"></td>
                 <td class="text-center" data-bind="text:customer"></td>
                 <td class="text-center" data-bind="text:phone"></td>
@@ -160,8 +162,6 @@
                 <td class="text-center" data-bind="text:nodeal"></td>
                 <td class="text-center" data-bind="text:property"></td>
                 <td class="text-center" data-bind="text:reporter"></td>
-                <td class="text-center" data-bind="text:visittimeStr"></td>
-                <td class="text-center" data-bind="text:createtime"></td>
                 <td class="text-center" data-bind="text:remark"></td>
                 <!--                <td class="text-center">-->
                 <!--                    <a data-bind="click:btn_edit.bind()" title="编辑" data-toggle="tooltip" data-placement="top">-->

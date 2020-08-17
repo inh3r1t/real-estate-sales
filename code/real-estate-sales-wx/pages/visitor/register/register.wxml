@@ -16,7 +16,7 @@
 		</view>
 		<view class="form-item">
 			<view class="form-lable">联系方式</view>
-			<input class='form-input' name="phone" placeholder="请输入联系方式" type="number" value='{{model.phone}}'></input>
+			<input class='form-input' name="phone" placeholder="请输入联系方式" type="text" value='{{model.phone}}' bindtap="keyboardShow"></input>
 		</view>
 		<view class="form-item">
 			<text class="form-lable">来访时间</text>
@@ -106,3 +106,34 @@
 		<button class='btn btn-primary' formType="submit">{{model.id!="" && model.id!=null?"修改":"提交"}}</button>
 	</view>
 </form>
+
+
+
+<!-- 自定义键盘 -->
+<action-sheet hidden="{{keyboardHidden}}">
+  <view class='tips'>{{model.phone}}</view>
+  <view class='keyboard'>
+    <view class='left number'>
+      <view data-key="1" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>1</view>
+      <view data-key="2" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>2</view>
+      <view data-key="3" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>3</view>
+      <view data-key="4" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>4</view>
+      <view data-key="5" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>5</view>
+      <view data-key="6" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>6</view>
+      <view data-key="7" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>7</view>
+      <view data-key="8" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>8</view>
+      <view data-key="9" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>9</view>
+      <view class='clear' hover-class='active' hover-stay-time='100' bindtap='keyboardHidden'>
+        <text class='iconfont icon-shouqijianpan'></text>
+      </view>
+      <view data-key="0" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>0</view>
+      <view data-key="*" hover-class='active' hover-stay-time='100' bindtap='keyboardInput'>*</view>
+    </view>
+    <view class='right ctr-btn'>
+      <view bindtap='keyboardHidden' class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='clear'>
+        删除
+      </view>
+      <view class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='keyboardHidden'>确定</view>
+    </view>
+  </view>
+</action-sheet>

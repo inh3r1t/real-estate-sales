@@ -28,7 +28,7 @@
 }
 
 .cur view {
-  color: #0d6e4b;
+  color: #208fc2;
   font-weight: 600;
 }
 

@@ -5,10 +5,10 @@ App({
   globalData: {
     userInfo: null,
     token: null,
-     _baseUrl: 'https://ac.eraop.com'
+    //  _baseUrl: 'https://ac.eraop.com'
     // _baseUrl: 'https://inh3rit.top'
     // _baseUrl: 'https://trial.inh3rit.top'
-    // _baseUrl: 'http://172.16.3.187:9000'
+    _baseUrl: 'http://172.16.3.187:9000'
     // _baseUrl: 'http://192.168.1.188:9000'
   },
   onLaunch: function () {
