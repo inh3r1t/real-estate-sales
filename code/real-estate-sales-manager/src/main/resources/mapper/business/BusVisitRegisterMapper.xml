@@ -76,6 +76,12 @@
         <if test="endDateTime != null">
             and  <![CDATA[ createtime <= #{endDateTime}  ]]>
         </if>
+        <if test="startVisitTime != null">
+            and <![CDATA[ visittime >= #{startVisitTime}  ]]>
+        </if>
+        <if test="endVisitTime != null">
+            and  <![CDATA[ visittime <= #{endVisitTime}  ]]>
+        </if>
 
     </sql>
     <!-- 通用查询条件列-->
@@ -87,6 +93,8 @@
                     and (
                     customer like concat('%', #{keywordFuzzy}, '%')
                     or phone like concat('%', #{keywordFuzzy}, '%')
+                    or adviser like concat('%', #{keywordFuzzy}, '%')
+                    or reporter like concat('%', #{keywordFuzzy}, '%')
                     or intention like concat('%', #{keywordFuzzy}, '%')
                     )
                 </if>

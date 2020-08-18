@@ -1,17 +1,26 @@
 var app = getApp()
+const as = require("../../utils/actionSheet.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    showSearch: false,
+    showDatePicker: false,
+    startDate: "",
+    endDate: "",
     keyword: "",
     isLogin: false,
     more: true,
     page: 1,
     type: 0,
     list: [],
-    selectData: []
+    selectData: [],
+    realEstateId: 0,
+    realEstateName: "",
+    realEstateList: [],
+    realEstateIdList: []
   },
 
   /**
@@ -19,6 +28,25 @@ Page({
    */
   onLoad: function (options) {
     // this.getList(1)
+    // 获取驻场经理楼盘
+    app.post("/busRealEstate/my", {
+      page: 1,
+      pageSize: 100
+    }).then(res => {
+      let nameList = ["全部"]
+      let realEstateIdList = [0]
+      if (res.data != null && res.data.Items != null) {
+        for (var i = 0; i < res.data.Items.length; i++) {
+          let item = res.data.Items[i]
+          nameList.push(item.name)
+          realEstateIdList.push(item.id)
+        }
+      }
+      this.setData({
+        realEstateList: nameList,
+        realEstateIdList: realEstateIdList
+      })
+    })
   },
 
   /**
@@ -80,12 +108,13 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
-      debugger
       return app.post("/busVisitRegister/getPage", {
         page: pageNo,
         pageSize: 10,
         keyword: this.data.keyword,
-        extend2: this.data.type > 0 ? this.data.type : null
+        realEstateId: this.data.realEstateId,
+        startDate: this.data.startDate,
+        endDate: this.data.endDate
       }).then(res => {
         //这里既可以获取模拟的res
         // console.log(res)
@@ -147,7 +176,74 @@ Page({
       keyword: e.detail.value
     })
   },
-  search: function () {
+  showInput: function (e) {
+    this.setData({
+      showSearch: true
+    })
+  },
+  search: function (e) {
     this.getList(1, true)
   },
+  hideInput: function (e) {
+    this.setData({
+      realEstateId: 0,
+      realEstateName: "",
+      showSearch: false,
+      showDatePicker: false,
+      startDate: "",
+      endDate: "",
+      keyword: ""
+    })
+    this.search()
+  },
+  resetForm: function (e) {
+    this.setData({
+      realEstateId: 0,
+      realEstateName: "",
+      startDate: "",
+      endDate: "",
+      keyword: ""
+    })
+  },
+  // 时间段选择  
+  bindStartDateChange(e) {
+    this.setData({
+      startDate: e.detail.value,
+    })
+  },
+  bindEndDateChange(e) {
+    this.setData({
+      endDate: e.detail.value,
+    })
+  },
+  showDatePicker(e) {
+    let d = this.data.showDatePicker
+    this.setData({
+      showDatePicker: !d
+    })
+    if (d) {
+      this.setData({
+        startDate: "",
+        endDate: ""
+      })
+    }
+  },
+  getRealEstateName: function () {
+    if (this.data.realEstateList == null || this.data.realEstateList.length == 0) {
+      wx.showToast({
+        title: '没有可选择的楼盘',
+        icon: 'none'
+      })
+    } else {
+      as.showActionSheet({
+        itemList: this.data.realEstateList,
+        success: res => {
+          this.setData({
+            realEstateName: this.data.realEstateList[res.tapIndex],
+            realEstateId: this.data.realEstateIdList[res.tapIndex]
+          })
+        }
+      })
+    }
+  }
 })

@@ -11,6 +11,7 @@ import com.zx.business.model.BusRealEstate;
 import com.zx.business.model.BusVisitRegister;
 import com.zx.business.service.BusRealEstateService;
 import com.zx.business.service.BusVisitRegisterService;
+import com.zx.business.vo.VisitRegisterVO;
 import com.zx.lib.utils.DateUtil;
 import com.zx.lib.utils.StringUtil;
 import com.zx.system.model.SysLog;
@@ -59,7 +60,7 @@ public class BusVisitRegisterController extends BusBaseController {
     @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     @ResponseBody
     @WechatAuthorize
-    public ResultData getPage(@RequestBody BusVisitRegister model) {
+    public ResultData getPage(@RequestBody VisitRegisterVO model) {
         ResultData resultData = new ResultData(Const.SUCCESS_CODE, "获取列表成功！");
         try {
             wechatAuthCheck(request);
@@ -71,18 +72,17 @@ public class BusVisitRegisterController extends BusBaseController {
                 model.setPageSize(PAGE_SIZE);
             }
 
-            Map<String, Object> paramMap = new HashMap<String, Object>();
-            //String startDateTime = null, endDateTime = null;
-            //if (StringUtils.isNotEmpty(time)) {
-            //    String[] seTime = time.split(" - ");
-            //    if (seTime.length > 1) {
-            //        startDateTime = seTime[0].trim();
-            //        endDateTime = seTime[1].trim();
-            //
-            //        paramMap.put("startDateTime", startDateTime);
-            //        paramMap.put("endDateTime", endDateTime);
-            //    }
-            //}
+            Map<String, Object> paramMap = new HashMap<>();
+
+            if (StringUtil.isNotEmpty(model.getStartDate())) {
+                paramMap.put("startVisitTime", model.getStartDate() + " 00:00:00");
+            }
+            if (StringUtil.isNotEmpty(model.getEndDate())) {
+                paramMap.put("endVisitTime", model.getEndDate() + " 23:59:59");
+            }
+            if (model.getRealEstateId() != null && model.getRealEstateId() > 0) {
+                paramMap.put("real_estate_id", model.getRealEstateId());
+            }
 
             paramMap.put("orderField", "createtime");
             paramMap.put("orderType", "desc");

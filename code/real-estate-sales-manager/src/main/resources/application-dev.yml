@@ -20,7 +20,7 @@ logging:
     root: debug
 
 server:
-  port: 9000
+  port: 9876
 
 #Custom configuration
 custom:

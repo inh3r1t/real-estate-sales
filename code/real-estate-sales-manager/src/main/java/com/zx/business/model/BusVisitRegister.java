@@ -162,8 +162,6 @@ public class BusVisitRegister extends PageVO {
 
     private String visittimeStr;
 
-    private String keyword;
-
 
     public BusVisitRegister() {
     }
@@ -320,11 +318,4 @@ public class BusVisitRegister extends PageVO {
         this.createrid = createrid;
     }
 
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
 }

@@ -1,36 +1,71 @@
 <view class='list-container'>
 	<view class="weui-search-bar">
+		<text class="iconfont icon-shaixuan weui-search-bar-date" hidden="{{!showSearch}}" bindtap="showDatePicker"></text>
 		<view class="weui-search-bar__form">
+			<!-- 待搜索的搜索框 -->
+			<label class="weui-search-bar__label" hidden="{{showSearch}}" bindtap="showInput">
+				<icon class="weui-icon-search" type="search" size="14"></icon>
+				<view class="weui-search-bar__text">搜索</view>
+			</label>
 			<!-- 搜索框 -->
 			<view class="weui-search-bar__box">
 				<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-				<input type="text" bindinput="keywordInput" class="weui-search-bar__input" placeholder="请输入搜索内容" />
+				<input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{keyword}}" bindblur="keywordInput" focus="{{showSearch}}" confirm-type="search" />
 			</view>
 		</view>
-		<!-- 搜索按钮,调用搜索查询方法 -->
-		<view class="weui-search-bar__cancel-btn" bindtap='search'>搜索</view>
+		<!-- 取消搜索 -->
+		<!-- <view class="weui-search-bar__cancel-btn" hidden="{{!showSearch}}" bindtap="hideInput">取消</view> -->
+		<view class="weui-search-bar__cancel-btn" hidden="{{!showSearch}}" bindtap="search" bindconfirm="search">搜索</view>
+	</view>
+	<view class="weui-search-other" hidden="{{!showDatePicker}}">
+		<view class="weui-search-other-date">
+			<!-- 时间段 -->
+			<view class="weui-search-other-item">
+				<text>来访时间</text>
+				<picker mode="date" value="{{startDate}}" end="{{endDate}}" bindchange="bindStartDateChange">
+					<view class="picker">
+						{{startDate}}
+					</view>
+				</picker>
+				至
+				<picker mode="date" value="{{endDate}}" start="{{startDate}}" end="2099-01-01" bindchange="bindEndDateChange">
+					<view class="picker">
+						{{endDate}}
+					</view>
+				</picker>
+			</view>
+			<view class="weui-search-other-item">
+				<text>登记楼盘</text>
+				<input disabled class='form-input' name="realEstateName" placeholder="请选择楼盘" type="text" value='{{realEstateName}}' bindtap="getRealEstateName"></input>
+				<text class="iconfont icon-more form-input-select"></text>
+				<text bindtap="resetForm" class="form-reset">重置</text>
+				<text bindtap="hideInput" class="form-reset">取消</text>
+			</view>
+		</view>
 	</view>
 	<view class="visitor-list">
 		<view bindtap='toDetail' bindlongpress="deleteItem" class="visitor-item" data-id="{{item.id}}" data-customer="{{item.customer}}" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
 			<view class="details">
 				<view class="visitor-item-name">
-					<text class="bold">{{item.customer}} </text>
+					<text class='iconfont icon-jilu1 bold'>{{item.customer}}</text>
 					<text>{{item.phone}}</text>
 					<!-- <text class='iconfont icon-dianhua'> {{item.phone}}</text> -->
 				</view>
 				<view class='visitor-item-building'>
-					<text class='iconfont icon-loupan1'> {{item.realEstateName}}</text>
+					<text class='iconfont icon-loupan1'>{{item.realEstateName}}</text>
 				</view>
 				<view class="visitor-item-detail">
-					<text class='iconfont icon-daofang1'> {{item.times}}</text>
-					<text class='iconfont icon-yixiangkehu'> {{item.intention}}</text>
+					<text class='iconfont icon-daofang1'>{{item.times}}</text>
+					<text class='iconfont icon-yixiangkehu'>{{item.intention}}</text>
+					<text class='iconfont icon-zhiyeguwen'>{{item.adviser}}</text>
+					<text class='iconfont icon-baobei1'>{{item.reporter}}</text>
 				</view>
 				<view class="visitor-item-detail">
-					<text class='iconfont icon-shijian'> {{item.visittimeStr}}</text>
-					<text class='iconfont icon-report'> {{item.createtime}}</text>
+					<text class='iconfont icon-shijian'>{{item.visittimeStr}}</text>
+					<text class='iconfont icon-report'>{{item.createtime}}</text>
 				</view>
 				<view class='visitor-item-remark'>
-					<text class='iconfont icon-beizhu2' wx:if="{{item.remark!='' && item.remark!=undefind}}"> {{item.remark}}</text>
+					<text class='iconfont icon-beizhu2' wx:if="{{item.remark!='' && item.remark!=undefind}}">{{item.remark}}</text>
 				</view>
 			</view>
 		</view>
