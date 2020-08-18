@@ -182,7 +182,9 @@ Page({
     })
   },
   search: function (e) {
-    this.getList(1, true)
+    setTimeout(() => {
+      this.getList(1, true)
+    }, 200)
   },
   hideInput: function (e) {
     this.setData({

@@ -48,7 +48,7 @@
 			<view class="details">
 				<view class="visitor-item-name">
 					<text class='iconfont icon-jilu1 bold'>{{item.customer}}</text>
-					<text>{{item.phone}}</text>
+					<text class="visitor-item-name-phone">{{item.phone}}</text>
 					<!-- <text class='iconfont icon-dianhua'> {{item.phone}}</text> -->
 				</view>
 				<view class='visitor-item-building'>

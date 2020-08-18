@@ -55,6 +55,11 @@
   margin-bottom: 10rpx;
 }
 
+.visitor-item-name-phone {
+  font-size: 12px !important;
+  margin-left: 10rpx;
+}
+
 .visitor-item-building,
 .visitor-item-detail,
 .visitor-item-remark {
