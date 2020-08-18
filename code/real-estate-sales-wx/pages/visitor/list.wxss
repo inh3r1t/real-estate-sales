@@ -113,7 +113,6 @@
   flex: auto;
   border-radius: 5rpx;
   background: #FFFFFF;
-  border: 1rpx solid #E6E6EA;
   height: 60rpx;
 }
 
@@ -149,10 +148,11 @@
 }
 
 .weui-search-bar__cancel-btn {
-  margin-left: 10rpx;
+  margin-left: 20rpx;
   line-height: 60rpx;
   color: #09BB07;
   white-space: nowrap;
+  font-size: 14px;
 }
 
 .weui-search-other {

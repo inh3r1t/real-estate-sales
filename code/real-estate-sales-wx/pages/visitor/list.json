@@ -1,4 +1,5 @@
 {
+  "navigationBarBackgroundColor": "#EFEFF4",
   "enablePullDownRefresh": true,
   "navigationBarTitleText": "登记列表"
 }
