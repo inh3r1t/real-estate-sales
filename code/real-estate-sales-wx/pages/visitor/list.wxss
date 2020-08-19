@@ -207,3 +207,7 @@
   flex-grow: 1;
   text-align: center;
 }
+
+.form-reset text {
+  margin: 0 20rpx;
+}
