@@ -284,7 +284,7 @@ public class BusVisitRegisterController extends BusBaseController {
                 fmap.put("realEstateName", "楼盘名称");
                 fmap.put("customer", "客户姓名");
                 fmap.put("phone", "联系方式");
-                fmap.put("_team_adviser", "所属团队");
+                fmap.put("team", "所属团队");
                 fmap.put("adviser", "置业顾问");
                 fmap.put("address", "居住区域");
                 fmap.put("occupation", "职业");
