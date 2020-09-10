@@ -23,8 +23,8 @@ Page({
     timesList: ["首访", "二访", "三访", "多次到访"],
     purposeList: ["刚需", "婚房", "改善", "投资"],
     paymentList: ["商贷", "公积金", "组合贷", "一次性"],
-    productTypeList: ["高层", "洋房", "大平层", "别墅", "商铺", "叠墅"],
-    areaList: ["100m²以内", "100m²-120m²", "120m²-140m²", "140m²-200m²", "200m²以上"],
+    productTypeList: ["高层", "洋房", "大平层", "别墅", "商铺", "叠墅", "公寓"],
+    areaList: ["50m²以下", "50-100m²", "100m²以内", "100m²-120m²", "120m²-140m²", "140m²-200m²", "200m²以上"],
     levelList: ["A", "B", "C"],
     intentionList: ["已认购", "未认购", "已小定", "已验资/定存"],
     propertyList: ["个人经纪人", "中介"]
@@ -423,7 +423,7 @@ Page({
     })
   },
   getProductType: function () {
-    wx.showActionSheet({
+    as.showActionSheet({
       itemList: this.data.productTypeList,
       success: res => {
         this.setData({
@@ -433,7 +433,7 @@ Page({
     })
   },
   getArea: function () {
-    wx.showActionSheet({
+    as.showActionSheet({
       itemList: this.data.areaList,
       success: res => {
         this.setData({
