@@ -103,7 +103,7 @@
 		</view>
 	</view>
 	<view class="form-footer nav-fix">
-		<button class='btn btn-primary' formType="submit">{{model.id!="" && model.id!=null?"修改":"提交"}}</button>
+		<button class='btn btn-primary' formType="submit">{{model.id!="" && model.id!=null?"再次来访登记":"提交"}}</button>
 	</view>
 </form>
 

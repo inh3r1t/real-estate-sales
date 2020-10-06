@@ -224,7 +224,7 @@ Page({
     }
     //获取用户的openId
     this.setData({
-      id: params.id,
+      id: 0,
       realEstateId: params.realEstateId,
       realEstateName: params.realEstateName,
       customer: params.customer,
