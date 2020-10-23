@@ -27,7 +27,7 @@ Page({
     template: {},
     shareImage: '',
   },
-  makePhoneCall: function() {
+  makePhoneCall: function () {
     wx.makePhoneCall({
       phoneNumber: this.data.building.manager.phoneNum,
     })
@@ -36,7 +36,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     var source = options.source;
     console.log(options);
 
@@ -83,7 +83,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.setData({
       isLogin: app.isLogin()
     })
@@ -119,21 +119,21 @@ Page({
       }
     })
   },
-  report: function() {
+  report: function () {
     app.checkLogin().then(res => {
       wx.navigateTo({
         url: '/pages/building/report/report?buildingId=' + this.data.building.id + '&buildingName=' + this.data.building.name + '&isReal=' + this.data.building.extend1,
       })
     })
   },
-  previewImage: function(e) {
+  previewImage: function (e) {
     var current = e.target.dataset.src;
     wx.previewImage({
       current: current, // 当前显示图片的http链接
       urls: this.data.building.images // 需要预览的图片http链接列表
     })
   },
-  share: function() {
+  share: function () {
     let userInfo = wx.getStorageSync('userInfo');
     var articleTitle = this.data.building.name;
     var contact = "经纪人：" + userInfo.userName + " - " + userInfo.phoneNum + "";
@@ -195,7 +195,15 @@ Page({
     // }
 
   },
-  hideModal: function() {
+  //用户点击右上角分享朋友圈
+  onShareTimeline() {
+    var articleTitle = this.data.building.name;
+    return {
+      title: articleTitle,
+      imageUrl: this.data.building.images[0]
+    }
+  },
+  hideModal: function () {
     this.setData({
       showShareModal: false
     });
@@ -217,13 +225,13 @@ Page({
         let imgSrc = that.data.shareImage;
         wx.saveImageToPhotosAlbum({
           filePath: imgSrc,
-          success: function(res) {
+          success: function (res) {
             wx.showToast({
               title: '图片已保存至本地相册，点击关闭',
               icon: 'none'
             })
           },
-          fail: function() {
+          fail: function () {
             wx.showToast({
               title: '保存失败',
               icon: 'none'
